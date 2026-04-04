@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Inner Shift · מפגש 2 · מדריך מנחה</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:     #f5f0e8;
+    --gold:      #d29e44;
+    --gold-dim:  rgba(210,158,68,.4);
+    --blush:     rgba(210,120,150,.85);
+    --sage:      rgba(139,184,150,.85);
+    --teal:      rgba(72,210,196,.75);
+    --ink:       #1a1714;
+    --ink-soft:  #2e2a26;
+    --text:      #3a3530;
+    --text-dim:  #6b6560;
+    --border:    rgba(58,53,48,.12);
+  }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: #faf8f4;
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  /* ── PAGE SHELL ── */
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 80px 60px;
+  }
+
+  /* ── DOCUMENT HEADER ── */
+  .doc-header {
+    text-align: center;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 64px;
+  }
+  .doc-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .doc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .doc-subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    letter-spacing: .08em;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 72px;
+  }
+  .section-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── TOPIC GROUP ── */
+  .topic {
+    margin-bottom: 36px;
+  }
+  .topic-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .topic ul {
+    list-style: none;
+    padding: 0;
+  }
+  .topic ul li {
+    position: relative;
+    padding-right: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .topic ul li::before {
+    content: '·';
+    position: absolute;
+    right: 0;
+    color: var(--gold);
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  .topic ul li strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .topic ul li em {
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  /* ── MEDITATION ── */
+  .meditation-card {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 10px;
+    padding: 52px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .meditation-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 55% at 50% 30%, rgba(210,120,150,.14) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .meditation-card.closing::before {
+    background: radial-gradient(ellipse 70% 55% at 50% 30%, rgba(139,184,150,.16) 0%, transparent 65%);
+  }
+  .meditation-meta {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .meditation-card.closing .meditation-meta {
+    color: var(--sage);
+  }
+  .meditation-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(245,240,232,.1);
+    position: relative;
+  }
+  .meditation-body {
+    position: relative;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(245,240,232,.88);
+    line-height: 2;
+  }
+  .meditation-body p {
+    margin-bottom: 20px;
+  }
+  .meditation-body p:last-child {
+    margin-bottom: 0;
+  }
+  .meditation-pause {
+    display: block;
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgba(210,120,150,.55);
+    margin: 28px 0;
+  }
+  .meditation-card.closing .meditation-pause {
+    color: rgba(139,184,150,.5);
+  }
+  .meditation-beat {
+    color: rgba(245,240,232,.4);
+    font-size: 15px;
+  }
+  .meditation-highlight {
+    color: var(--cream);
+    font-style: normal;
+    font-weight: 400;
+  }
+  .meditation-note {
+    display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: .06em;
+    color: rgba(245,240,232,.38);
+    margin-top: 4px;
+  }
+
+  /* ── CLOSING QUOTE ── */
+  .doc-footer {
+    margin-top: 72px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .doc-footer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text-dim);
+  }
+  .doc-footer-mark {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-top: 16px;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; font-size: 14px; }
+    .page { padding: 40px 48px; }
+    .meditation-card { background: #1a1714; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="doc-eyebrow">The Inner Shift · Session 02</div>
+    <div class="doc-title">מדריך מנחה</div>
+    <div class="doc-subtitle">פנינות מהמפגש · מדיטציית פתיחה · מדיטציית סגירה</div>
+  </div>
+
+  <!-- SECTION 1: PEARLS -->
+  <div class="section">
+    <div class="section-label">חלק ראשון</div>
+    <div class="section-title">פנינות מהשיחה</div>
+
+    <div class="topic">
+      <div class="topic-title">על האטום</div>
+      <ul>
+        <li>האטום הוא היחידה הבסיסית ביותר שממנה הכל בנוי — כולל הגוף, כולל הרגש, כולל מה שנקרא "מציאות".</li>
+        <li>מרבית האטום הוא ריק. הפרוטון קטן בממדים בלתי נתפסים מהמעטפת כולה. <strong>אנחנו בעיקר חלל.</strong></li>
+        <li>הקשר בין האלקטרון לגרעין אינו מגע פיזי — זה שדה. כוח שמחזיק הכל יחד מבלי לגעת.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">על השדה האלקטרומגנטי של הלב</div>
+      <ul>
+        <li>הלב מייצר את השדה האלקטרומגנטי החזק ביותר בגוף — חזק פי 60 מזה של המוח בממד החשמלי, ופי 5,000 בממד המגנטי.</li>
+        <li>השדה הזה אינו נשאר בתוך הגוף. הוא נפלט החוצה — ניתן למדידה במרחק של מטרים.</li>
+        <li>מה שמשנה את השדה: לא מחשבה, לא כוונה — <strong>רגש אמיתי</strong>. הלב מגיב לרגש לפני שהמוח מעבד אותו.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">על שדות שנפגשים</div>
+      <ul>
+        <li>שדות לא נשארים בנפרד. כשהם קרובים מספיק — הם נפגשים, מתקשרים, ומסתנכרנים.</li>
+        <li>זה לא מטפורה — זה עקרון פיזיקלי. שני מטרונומים על לוח אחד יגיעו לסנכרון. לבבות גם.</li>
+        <li>הסנכרון לא מחייב דיבור. הוא קורה ברמת השדה — מתחת למודעות.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">על מה שאנחנו משדרות</div>
+      <ul>
+        <li>הרגש שאנחנו נושאות פנימה — הוא השדה שאנחנו משדרות החוצה. לא מה שאנחנו אומרות — מה שאנחנו <strong>מרגישות</strong>.</li>
+        <li>השאלה "מה השדה שלי עכשיו?" היא שאלה מעשית, לא פילוסופית.</li>
+        <li>ניתן לבחור לשנות אותו — לא בכוח, אלא דרך פנייה אמיתית ללב.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- SECTION 2: OPENING MEDITATION -->
+  <div class="section">
+    <div class="section-label">חלק שני</div>
+    <div class="section-title">מדיטציית פתיחה</div>
+
+    <div class="meditation-card">
+      <div class="meditation-meta">כ-1 דקה · לפני תחילת התוכן</div>
+      <div class="meditation-title">להניח את היום · להגיע · להיות כאן</div>
+      <div class="meditation-body">
+
+        <p>מצאו תנוחה נוחה.<br>
+        גב ישר, כתפיים רפויות.<br>
+        ידיים על הברכיים.</p>
+
+        <p>עצמו עיניים.</p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p>קחו נשימה עמוקה פנימה <span class="meditation-beat">...</span><br>
+        ובנשיפה — הניחו.</p>
+
+        <p>הניחו את הטלפון.<br>
+        הניחו את מה שהיה קודם.<br>
+        הניחו את מה שעוד מחכה אחרי זה.</p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p>עוד אחת, פנימה <span class="meditation-beat">...</span><br>
+        ובשחרור — תנו לגוף לשקוע.</p>
+
+        <span class="meditation-pause">· שקט ·</span>
+
+        <p>הרגישו את הרגליים על הרצפה.<br>
+        את הנשימה שעולה ויורדת מעצמה.<br>
+        אתן כאן.</p>
+
+        <p>עוד נשימה, בקצב שלכן <span class="meditation-beat">...</span></p>
+
+        <span class="meditation-pause">· שקט קצר ·</span>
+
+        <p><span class="meditation-highlight">כשתהיו מוכנות — פקחו עיניים.</span></p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: CLOSING MEDITATION -->
+  <div class="section">
+    <div class="section-label">חלק שלישי</div>
+    <div class="section-title">מדיטציית סגירה · כלי 1</div>
+
+    <div class="meditation-card closing">
+      <div class="meditation-meta">כ-5–7 דקות · אחרי הצגת הכלים</div>
+      <div class="meditation-title">רגע עם הלב · להרגיש · לזהות · להדהד</div>
+      <div class="meditation-body">
+
+        <p>מצאו תנוחה נוחה.<br>
+        הניחו יד אחת על הלב.</p>
+
+        <p>עצמו עיניים.</p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p>קחו נשימה עמוקה פנימה <span class="meditation-beat">...</span><br>
+        ושחררו לאט.</p>
+
+        <p>עוד אחת <span class="meditation-beat">...</span><br>
+        ועוד אחת.</p>
+
+        <p>תנו לכתפיים לרדת.<br>
+        לפנים להירגע.<br>
+        לגוף להיות כבד וטוב.</p>
+
+        <span class="meditation-pause">· שקט — 10 שניות ·</span>
+
+        <span class="meditation-pause">· הבאת הזיכרון ·</span>
+
+        <p>ועכשיו — הביאו זיכרון אחד.<br>
+        לא מחשבה — <span class="meditation-highlight">זיכרון</span>.<br>
+        רגע שקרה. רגע שמרגישות אותו.</p>
+
+        <p>זיכרון טוב. רגע שבו הרגשתן משהו אמיתי —<br>
+        אהבה, שמחה, חמימות, הכרת תודה.<br>
+        יכול להיות גדול או קטן.</p>
+
+        <span class="meditation-pause">· שקט — 10 שניות ·</span>
+
+        <p>וכשהוא מגיע —<br>
+        שימו לב: אתן לא רק חושבות עליו.<br>
+        אתן <span class="meditation-highlight">מרגישות</span> אותו בגוף.</p>
+
+        <p>זה ההבדל בין מחשבה לזיכרון.<br>
+        מחשבה נשארת בראש.<br>
+        <span class="meditation-highlight">זיכרון יורד לגוף.</span><br>
+        יש לו תחושה, יש לו מקום.</p>
+
+        <span class="meditation-pause">· שקט — 10 שניות ·</span>
+
+        <span class="meditation-pause">· הרגש מתפשט ·</span>
+
+        <p>הניחו לרגש הזה לנוע.<br>
+        הוא לא יושב רק בראש — הוא מתפשט.</p>
+
+        <p>תחושו אותו בחזה <span class="meditation-beat">...</span><br>
+        בבטן <span class="meditation-beat">...</span><br>
+        בידיים <span class="meditation-beat">...</span><br>
+        עד הרגליים.</p>
+
+        <p>תנו לו להיות בכל הגוף.<br>
+        לא לחשוב עליו — לחוש אותו.</p>
+
+        <span class="meditation-pause">· שקט — 20 שניות ·</span>
+
+        <span class="meditation-pause">· זיהוי התדר ·</span>
+
+        <p>ועכשיו — בשקט בתוככן —<br>
+        שאלו: <span class="meditation-highlight">מה זה?</span><br>
+        מה השם של מה שאתן מרגישות?</p>
+
+        <p>אהבה? כפיות טובה? חמימות? שלווה?<br>
+        לא חייבת מילה מדויקת.<br>
+        פשוט תנו לה שם.</p>
+
+        <span class="meditation-pause">· שקט — 10 שניות ·</span>
+
+        <p>זה התדר שאתן נושאות עכשיו.<br>
+        <span class="meditation-highlight">זה השדה שאתן משדרות.</span></p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p>קחו נשימה עמוקה, תישארו עם זה עוד רגע <span class="meditation-beat">...</span></p>
+
+        <p>ולאט לאט —<br>
+        בקצב שלכן —<br>
+        <span class="meditation-highlight">חזרו לחדר.</span></p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div class="doc-footer-text">הדרך עוברת דרך הלב. כשהלב משתנה — המוח עוקב.</div>
+    <div class="doc-footer-mark">The Inner Shift · Session 02</div>
+  </div>
+
+</div>
+</body>
+</html>

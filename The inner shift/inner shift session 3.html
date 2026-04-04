@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Inner Shift, Session 3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:       #F5F0E8;
+      --cream-dim:   rgba(245,240,232,0.55);
+      --cream-faint: rgba(245,240,232,0.28);
+      --gold:        #C4A06B;
+      --gold-dim:    #A87B4F;
+      --sage:        #8BB896;
+      --sage-dim:    rgba(139,184,150,0.55);
+      --blush:       #D4957A;
+      --blush-dim:   rgba(212,149,122,0.55);
+      --border:      rgba(245,240,232,0.09);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    html, body {
+      width:100%; height:100%;
+      overflow:hidden;
+      background:#050504;
+      font-family:'Jost', sans-serif;
+    }
+
+    body { display:flex; align-items:center; justify-content:center; }
+
+    .stage {
+      position:relative;
+      width:min(100vw, 177.78vh);
+      height:min(56.25vw, 100vh);
+      overflow:hidden;
+    }
+
+    /* ── SLIDE BASE ── */
+    .slide {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      opacity:0;
+      transform:translateX(36px);
+      transition:opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
+      pointer-events:none;
+      overflow:hidden;
+      background:#080706;
+      color:var(--cream);
+    }
+    .slide.active { opacity:1; transform:translateX(0); pointer-events:all; }
+    .slide.exit   { opacity:0; transform:translateX(-36px); }
+
+    /* ── SNEW-LINE (progressive reveal base) ── */
+    .snew-line { opacity:0; transform:translateY(10px); transition:opacity .55s ease, transform .55s ease; }
+    .snew-line.visible { opacity:1; transform:translateY(0); }
+
+    /* ── BILINGUAL HEADER (sh2) ── */
+    .sh2         { padding:3.2% 6% 0; flex-shrink:0; }
+    .sh2-inner   { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:.75vw; gap:4%; }
+    .sh2-left    { display:flex; flex-direction:column; flex-shrink:0; }
+    .sh2-eye     { font-size:.75vw; letter-spacing:.3em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.42vw; }
+    .sh2-title   { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; line-height:1; color:var(--cream); white-space:nowrap; }
+    .sh2-right   { display:flex; flex-direction:column; align-items:stretch; direction:rtl; }
+    .sh2-he      { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; font-style:italic; color:rgba(210,158,68,.90); line-height:1.05; text-align:right; }
+    .sh2-he-sub  { font-family:'Cormorant Garamond',serif; font-size:1.15vw; font-weight:400; font-style:italic; color:rgba(245,240,232,.65); margin-top:.35vw; text-align:right; line-height:1.4; }
+    .sh2-bar     { height:1px; background:linear-gradient(90deg, rgba(210,158,68,.15) 0%, rgba(210,158,68,.55) 30%, rgba(210,158,68,.55) 70%, rgba(210,158,68,.15) 100%); }
+
+    /* ── NAV ── */
+    .nav {
+      position:fixed; bottom:14px; left:50%; transform:translateX(-50%);
+      display:flex; align-items:center; gap:10px; z-index:1000;
+      background:rgba(5,5,4,.7); padding:6px 16px; border-radius:40px;
+      backdrop-filter:blur(16px); border:1px solid var(--border);
+    }
+    .nav button {
+      background:none; border:1px solid rgba(255,255,255,.15);
+      color:rgba(255,255,255,.7); padding:4px 13px; border-radius:20px;
+      cursor:pointer; font-family:'Jost',sans-serif; font-size:11px;
+      letter-spacing:.06em; transition:all .2s;
+    }
+    .nav button:hover { background:rgba(255,255,255,.07); }
+    .ctr  { color:rgba(255,255,255,.3); font-size:11px; font-family:'Jost',sans-serif; letter-spacing:.1em; min-width:44px; text-align:center; }
+    .dots { display:flex; gap:5px; align-items:center; }
+    .dot  { width:4px; height:4px; border-radius:50%; background:rgba(255,255,255,.15); transition:all .3s; cursor:pointer; }
+    .dot.on { background:var(--gold); width:14px; border-radius:2px; }
+
+    /* ── WATERMARK ── */
+    .watermark { position:fixed; bottom:1.6vw; right:2vw; z-index:999; display:flex; align-items:center; gap:.55vw; opacity:.58; pointer-events:none; direction:rtl; }
+    .watermark svg { width:2.4vw; height:auto; flex-shrink:0; }
+    .watermark-name { font-family:'Cormorant Garamond',serif; font-size:.75vw; font-weight:600; letter-spacing:.22em; color:#d29e44; text-transform:uppercase; white-space:nowrap; }
+
+    /* ══════════════════════════════════
+       S1 · TITLE
+    ══════════════════════════════════ */
+    #s1 { justify-content:center; align-items:center; padding:6%; }
+    .s1-top   { position:relative; z-index:1; text-align:center; margin-bottom:3.2vw; }
+    .s1-session-num { font-family:'Cormorant Garamond',serif; font-size:1.15vw; letter-spacing:.32em; text-transform:uppercase; color:rgba(210,158,68,.92); margin-bottom:.9vw; font-weight:500; text-shadow:0 0 22px rgba(210,158,68,.35); }
+    .s1-session-he  { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; color:rgba(245,240,232,.55); direction:rtl; }
+    .s1-session-sub { font-family:'Cormorant Garamond',serif; font-size:1.2vw; font-weight:300; color:rgba(245,240,232,.32); direction:rtl; margin-top:.3vw; letter-spacing:.04em; }
+    .s1-rule-top    { width:40px; height:1px; background:rgba(210,158,68,.35); margin:1.5vw auto 0; }
+    .s1-block { text-align:center; position:relative; z-index:1; }
+    .s1-main  { font-family:'Cormorant Garamond',serif; font-size:8.4vw; font-weight:300; color:#F5F0E8; letter-spacing:-.01em; line-height:1; margin-bottom:.5vw; }
+    .s1-main em { font-style:normal; font-weight:600; color:rgba(210,158,68,.85); }
+    .s1-tagline { font-size:.9vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(245,240,232,.3); margin-top:1.4vw; }
+
+    /* ══════════════════════════════════
+       SWELCOME
+    ══════════════════════════════════ */
+    #swelcome { justify-content:center; align-items:center; padding:8%; }
+    .swelcome-wrap    { position:relative; z-index:1; text-align:center; }
+    .swelcome-eye     { font-size:.78vw; letter-spacing:.38em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:2.4vw; }
+    .swelcome-welcome { font-family:'Cormorant Garamond',serif; font-size:5.2vw; font-weight:300; color:var(--cream); letter-spacing:.01em; line-height:1.1; margin-bottom:2vw; direction:rtl; }
+    .swelcome-rule    { width:40px; height:1px; background:var(--sage-dim); margin:0 auto; }
+    .swelcome-sig     { position:absolute; bottom:3.5%; left:0; right:0; text-align:center; font-size:.68vw; letter-spacing:.22em; text-transform:uppercase; color:rgba(245,240,232,.18); }
+
+    /* ══════════════════════════════════
+       SRECAP · TWO-SESSION LAYOUT
+    ══════════════════════════════════ */
+    #srecap { justify-content:flex-start; align-items:stretch; }
+    .recap-body   { flex:1; display:flex; flex-direction:row-reverse; gap:0; padding:1.2% 4.5% 1.8%; }
+    .recap-col    { flex:1; display:flex; flex-direction:column; gap:.32vw; padding:0 2.2%; }
+    .recap-col-label {
+      font-size:.62vw; letter-spacing:.28em; text-transform:uppercase;
+      margin-bottom:.5vw; padding-bottom:.45vw;
+      border-bottom:1px solid rgba(245,240,232,.06);
+      text-align:right; direction:rtl;
+    }
+    .recap-col.s1-col .recap-col-label { color:rgba(210,158,68,.82); }
+    .recap-col.s2-col .recap-col-label { color:rgba(139,184,150,.82); }
+    .recap-divider { width:1px; background:rgba(245,240,232,.05); align-self:stretch; flex-shrink:0; margin:1vw 0; }
+    .sum-item {
+      display:flex; align-items:baseline; gap:1vw;
+      padding:.36vw .9vw; border-radius:4px;
+      border-right:2px solid rgba(210,158,68,.22);
+      direction:rtl;
+      font-family:'Cormorant Garamond',serif; font-size:1.28vw; font-weight:400;
+      color:rgba(245,240,232,.88); line-height:1.45;
+    }
+    .recap-col.s2-col .sum-item { border-right-color:rgba(139,184,150,.28); }
+    .sum-mark { flex-shrink:0; font-size:.95vw; color:rgba(210,158,68,.72); }
+    .recap-col.s2-col .sum-mark { color:rgba(139,184,150,.72); }
+
+    /* ══════════════════════════════════
+       SJOURNEY3 · MAP
+    ══════════════════════════════════ */
+    #sjourney3 { justify-content:flex-start; align-items:stretch; }
+    .journey-body  { flex:1; display:flex; align-items:center; justify-content:center; gap:1.4vw; padding:0 5% 3%; }
+    .journey-step  { flex:1; display:flex; flex-direction:column; align-items:center; text-align:center; padding:1.6vw 1.2vw; border-radius:6px; border:1px solid var(--border); background:rgba(245,240,232,.02); position:relative; }
+    .journey-step::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:40%; height:1px; background:rgba(210,158,68,.12); }
+    .journey-step.j-done   { border-color:rgba(139,184,150,.28); background:rgba(139,184,150,.03); }
+    .journey-step.j-done::before  { background:rgba(139,184,150,.28); width:60%; }
+    .journey-step.j-active { border-color:rgba(210,158,68,.45); background:rgba(210,158,68,.06); }
+    .journey-step.j-active::before { background:rgba(210,158,68,.55); width:60%; }
+    .jstep-num     { font-family:'Cormorant Garamond',serif; font-size:2.4vw; font-weight:300; color:rgba(210,158,68,.35); line-height:1; margin-bottom:.5vw; }
+    .j-active .jstep-num   { color:rgba(210,158,68,.85); font-size:2.8vw; }
+    .j-done   .jstep-num   { color:rgba(139,184,150,.5); font-size:2.4vw; }
+    .jstep-session { font-size:.65vw; letter-spacing:.2em; text-transform:uppercase; color:var(--cream-faint); margin-bottom:.45vw; }
+    .j-active .jstep-session { color:rgba(210,158,68,.6); }
+    .j-done   .jstep-session { color:rgba(139,184,150,.55); }
+    .jstep-title   { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:500; color:rgba(245,240,232,.5); direction:rtl; line-height:1.3; margin-bottom:.5vw; }
+    .j-active .jstep-title { color:var(--cream); font-size:1.35vw; }
+    .j-done   .jstep-title { color:rgba(245,240,232,.4); font-size:1.25vw; }
+    .jstep-desc    { font-size:.72vw; color:rgba(245,240,232,.28); direction:rtl; line-height:1.5; font-weight:300; }
+    .j-active .jstep-desc  { color:rgba(245,240,232,.55); }
+    .j-done   .jstep-desc  { color:rgba(245,240,232,.25); }
+    .jstep-dot     { width:5px; height:5px; border-radius:50%; background:rgba(210,158,68,.2); margin:.7vw auto 0; }
+    .j-active .jstep-dot   { background:rgba(210,158,68,.7); width:6px; height:6px; }
+    .j-done   .jstep-dot   { background:rgba(139,184,150,.38); }
+    .jstep-check   { font-size:.62vw; letter-spacing:.14em; text-transform:uppercase; color:rgba(139,184,150,.65); margin-top:.35vw; }
+
+    /* ══════════════════════════════════
+       SKAVANAH
+    ══════════════════════════════════ */
+    #skavanah { justify-content:center; align-items:center; }
+    @keyframes kavanah-breathe {
+      0%, 100% { transform:translate(-50%,-50%) scale(1);    opacity:.22; }
+      50%       { transform:translate(-50%,-50%) scale(1.55); opacity:.45; }
+    }
+    .kavanah-circle {
+      position:absolute; width:38vw; height:38vw; border-radius:50%;
+      top:50%; left:50%; transform:translate(-50%,-50%);
+      background:radial-gradient(circle, rgba(210,120,150,.22) 0%, rgba(185,90,120,.10) 45%, transparent 72%);
+      animation:kavanah-breathe 5s ease-in-out infinite; pointer-events:none;
+    }
+    .kavanah-circle-2 {
+      width:26vw; height:26vw;
+      background:radial-gradient(circle, rgba(210,120,150,.28) 0%, rgba(185,90,120,.12) 40%, transparent 68%);
+      animation-delay:-.8s;
+    }
+    .kavanah-title { font-family:'Cormorant Garamond',serif; font-size:3.8vw; font-weight:600; color:var(--cream); letter-spacing:.04em; text-align:center; position:relative; z-index:1; margin-bottom:1.4vw; }
+    .kavanah-sub   { font-family:'Jost',sans-serif; font-size:.88vw; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(210,120,150,.92); text-align:center; position:relative; z-index:1; direction:rtl; }
+
+    /* ══════════════════════════════════
+       STHREEINTRO · HOOK
+    ══════════════════════════════════ */
+    #sthreeintro { justify-content:center; align-items:center; padding:8%; }
+    .sti-wrap  { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2vw; }
+    .sti-pre   { font-family:'Cormorant Garamond',serif; font-size:1.85vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.42); }
+    .sti-punch { font-family:'Cormorant Garamond',serif; font-size:7vw; font-weight:300; color:var(--cream); line-height:1; margin-bottom:1.4vw; }
+    .sti-sub   { font-size:.82vw; letter-spacing:.22em; text-transform:uppercase; color:rgba(245,240,232,.3); line-height:2.2; }
+
+    /* ══════════════════════════════════
+       STHREEBRAINS · THREE CARDS
+    ══════════════════════════════════ */
+    #sthreebrains { justify-content:flex-start; align-items:stretch; }
+    .stb-body  { flex:none; display:flex; flex-direction:row-reverse; gap:1.1vw; padding:1% 5% 0; align-items:flex-start; }
+    .stb-card.stb-brain-focus { border-right-width:3px !important; background:rgba(210,158,68,.07) !important; box-shadow:0 0 2.5vw rgba(210,158,68,.10); }
+    .stb-brain-focus-label { font-size:.62vw; letter-spacing:.26em; text-transform:uppercase; color:rgba(210,158,68,.7); margin-bottom:.5vw; font-family:'Jost',sans-serif; font-weight:500; }
+    .stb-card  {
+      flex:1; display:flex; flex-direction:column; padding:1.2vw 1.5vw 1.3vw;
+      border-radius:8px; background:rgba(245,240,232,.02); border:1px solid var(--border);
+      direction:rtl; opacity:0; transform:translateY(12px);
+      transition:opacity .52s ease, transform .52s ease;
+    }
+    .stb-card.visible { opacity:1; transform:translateY(0); }
+    .stb-num   { font-family:'Cormorant Garamond',serif; font-size:3.2vw; font-weight:300; line-height:1; margin-bottom:.45vw; opacity:.85; direction:ltr; text-align:right; }
+    .stb-name  { font-family:'Cormorant Garamond',serif; font-size:1.65vw; font-weight:500; color:var(--cream); margin-bottom:.7vw; padding-bottom:.55vw; border-bottom:1px solid rgba(245,240,232,.06); }
+    .stb-count { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:300; line-height:1; margin-bottom:.15vw; }
+    .stb-count-lbl { font-size:.72vw; letter-spacing:.22em; text-transform:uppercase; color:rgba(245,240,232,.62); margin-bottom:.8vw; }
+    .stb-role  { font-size:.88vw; font-weight:300; color:rgba(245,240,232,.72); line-height:1.72; }
+    .stb-role strong { color:var(--cream); font-weight:500; font-size:.92vw; display:block; margin-bottom:.18vw; }
+
+    /* card accent colors */
+    .stb-card.brain { border-right:2px solid rgba(210,158,68,.4); }
+    .stb-card.brain .stb-num    { color:rgba(210,158,68,.85); }
+    .stb-card.brain .stb-count  { color:rgba(210,158,68,.92); }
+    .stb-card.brain .stb-signal { color:rgba(210,158,68,.45); }
+
+    .stb-card.heart { border-right:2px solid rgba(212,149,122,.4); }
+    .stb-card.heart .stb-num    { color:rgba(212,149,122,.85); }
+    .stb-card.heart .stb-count  { color:rgba(212,149,122,.92); }
+    .stb-card.heart .stb-signal { color:rgba(212,149,122,.45); }
+
+    .stb-card.gut { border-right:2px solid rgba(139,184,150,.4); }
+    .stb-card.gut .stb-num    { color:rgba(139,184,150,.85); }
+    .stb-card.gut .stb-count  { color:rgba(139,184,150,.92); }
+    .stb-card.gut .stb-signal { color:rgba(139,184,150,.45); }
+
+    .stb-vagus { direction:rtl; display:flex; align-items:center; gap:1.4vw; padding:1.4vw 5% 0; flex-shrink:0; opacity:0; transition:opacity .6s ease; }
+    .stb-vagus.visible { opacity:1; }
+    .stb-vagus-line { flex:1; height:1px; background:rgba(245,240,232,.1); }
+    .stb-vagus-text { font-size:.72vw; letter-spacing:.22em; text-transform:uppercase; color:rgba(245,240,232,.65); white-space:nowrap; font-weight:500; }
+    .stb-punch { direction:rtl; text-align:center; padding:.9vw 5% 1%; font-family:'Cormorant Garamond',serif; font-size:1.75vw; font-style:italic; color:rgba(210,158,68,.92); opacity:0; transition:opacity .6s ease; flex-shrink:0; }
+    .stb-punch.visible { opacity:1; }
+
+    /* ══════════════════════════════════
+       SNEURONS · מה זה נוירון
+    ══════════════════════════════════ */
+    #sneurons { justify-content:flex-start; align-items:stretch; }
+    .sneur-body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 8% 3%; direction:rtl; gap:1.1vw; }
+    .sneur-item { display:flex; align-items:flex-start; gap:1.4vw; padding:.95vw 1.4vw; border-radius:6px; background:rgba(245,240,232,.02); border:1px solid var(--border); border-right:2px solid rgba(210,158,68,.25); opacity:0; transform:translateY(8px); transition:opacity .5s ease, transform .5s ease; }
+    .sneur-item.visible { opacity:1; transform:translateY(0); }
+    .sneur-num { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; color:rgba(210,158,68,.65); line-height:1; flex-shrink:0; min-width:1.4vw; }
+    .sneur-main { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-weight:500; color:var(--cream); line-height:1.2; margin-bottom:.22vw; }
+    .sneur-sub { font-size:.88vw; color:rgba(245,240,232,.68); font-weight:300; line-height:1.65; }
+    .sneur-punch { direction:rtl; text-align:center; padding:1vw 8% 0; font-family:'Cormorant Garamond',serif; font-size:1.6vw; font-style:italic; color:rgba(210,158,68,.88); opacity:0; transition:opacity .6s ease; border-top:1px solid rgba(245,240,232,.06); }
+    .sneur-punch.visible { opacity:1; }
+
+    /* ══════════════════════════════════
+       SHEARTBACK · חזרה ללב
+    ══════════════════════════════════ */
+    #sheartback { justify-content:flex-start; align-items:stretch; }
+    .stb-card.stb-dim { opacity:0.2 !important; filter:saturate(.25); transition:opacity .4s ease; }
+    .stb-card.stb-heart-focus { border-right-width:3px !important; background:rgba(212,149,122,.07) !important; box-shadow:0 0 2.5vw rgba(212,149,122,.10); }
+    .sheartback-focus-label { font-size:.62vw; letter-spacing:.26em; text-transform:uppercase; color:rgba(212,149,122,.7); margin-bottom:.5vw; font-family:'Jost',sans-serif; font-weight:500; }
+
+    /* ══════════════════════════════════
+       SFIRE · Fire Together Wire Together
+    ══════════════════════════════════ */
+    #sfire { justify-content:flex-start; align-items:stretch; }
+    .sfire-body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 8% 3%; direction:rtl; gap:1.4vw; }
+    .sfire-bilingual { display:flex; flex-direction:column; align-items:center; text-align:center; gap:.45vw; padding-bottom:1.3vw; border-bottom:1px solid rgba(245,240,232,.08); }
+    .sfire-en { font-family:'Cormorant Garamond',serif; font-size:1.85vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.65); letter-spacing:.03em; }
+    .sfire-he { font-family:'Cormorant Garamond',serif; font-size:3vw; font-weight:400; color:var(--cream); line-height:1.15; }
+    .sfire-neuro { font-family:'Jost',sans-serif; font-size:.65vw; font-weight:500; letter-spacing:.28em; text-transform:uppercase; color:rgba(210,158,68,.45); text-align:center; }
+    .sfire-items { display:flex; flex-direction:column; gap:.8vw; }
+    .sfire-item { display:flex; align-items:flex-start; gap:1.2vw; padding:.75vw 1.3vw; border-radius:6px; background:rgba(245,240,232,.02); border:1px solid var(--border); border-right:2px solid rgba(210,158,68,.22); text-align:right; }
+    .sfire-item.s1-link { border-right-color:rgba(139,184,150,.4); background:rgba(139,184,150,.03); border-color:rgba(139,184,150,.1); }
+    .sfire-item-dot { color:rgba(210,158,68,.38); font-size:.9vw; flex-shrink:0; margin-top:.15vw; }
+    .sfire-item.s1-link .sfire-item-dot { color:rgba(139,184,150,.55); }
+    .sfire-item-text { font-family:'Cormorant Garamond',serif; font-size:1.32vw; font-weight:300; color:rgba(245,240,232,.7); line-height:1.62; }
+    .sfire-item-text strong { color:var(--cream); font-weight:400; }
+    .sfire-punch { font-family:'Cormorant Garamond',serif; font-size:1.82vw; font-style:italic; color:rgba(210,158,68,.92); line-height:1.5; text-align:center; padding-top:1vw; border-top:1px solid rgba(245,240,232,.06); }
+
+    /* ══════════════════════════════════
+       SEMBRYO · EMBRYO ANECDOTE
+    ══════════════════════════════════ */
+    #sembryo { justify-content:center; align-items:center; padding:8%; }
+    .sem-wrap  { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2vw; max-width:62%; }
+    .sem-eyebrow { font-size:.68vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(212,149,122,.88); }
+    .sem-day   { font-family:'Cormorant Garamond',serif; font-size:6.5vw; font-weight:300; color:rgba(212,149,122,.95); line-height:1; margin-top:.2vw; }
+    .sem-day-lbl { font-size:.65vw; letter-spacing:.25em; text-transform:uppercase; color:rgba(245,240,232,.62); margin-top:.3vw; margin-bottom:.8vw; }
+    .sem-rule  { width:36px; height:1px; background:rgba(212,149,122,.35); }
+    .sem-fact  { font-family:'Cormorant Garamond',serif; font-size:1.72vw; font-weight:300; color:rgba(245,240,232,.82); line-height:1.72; }
+    .sem-fact strong { color:var(--cream); font-weight:400; }
+    .sem-punch { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; font-style:italic; color:var(--cream); line-height:1.55; padding-top:1.2vw; border-top:1px solid rgba(245,240,232,.07); position:relative; }
+    .sem-punch::before { content:''; position:absolute; inset:-1.5vw -5vw; background:radial-gradient(ellipse 75% 68% at 50% 62%, rgba(212,149,122,.32) 0%, rgba(210,158,68,.08) 45%, transparent 70%); pointer-events:none; z-index:-1; }
+    .sem-punch em { color:rgba(210,158,68,.95); font-style:normal; text-shadow:0 0 2.2vw rgba(210,158,68,.55), 0 0 5vw rgba(210,158,68,.2); }
+    .sem-neurons { font-family:'Jost',sans-serif; font-size:1.1vw; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(212,149,122,.72); margin-bottom:1.2vw; }
+
+    /* ══════════════════════════════════
+       SHEARTQ · שאלת הגשר
+    ══════════════════════════════════ */
+    #sheartq { justify-content:center; align-items:center; padding:8%; }
+    .sheartq-wrap { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2.2vw; max-width:68%; }
+    .sheartq-pre { font-family:'Cormorant Garamond',serif; font-size:1.72vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.72); line-height:1.75; }
+    .sheartq-pre em { color:rgba(212,149,122,.95); font-style:normal; text-shadow:0 0 2vw rgba(212,149,122,.55), 0 0 4.5vw rgba(212,149,122,.22); }
+    .sheartq-rule { width:36px; height:1px; background:rgba(210,158,68,.3); }
+    .sheartq-q { font-family:'Cormorant Garamond',serif; font-size:3.4vw; font-weight:300; color:var(--cream); line-height:1.25; }
+    .sheartq-q em { color:rgba(210,158,68,.92); font-style:normal; }
+
+    /* ══════════════════════════════════
+       SCOCOH · מה זה קוהרנטיות
+    ══════════════════════════════════ */
+    #scocoh { justify-content:flex-start; align-items:stretch; }
+    .scocoh-body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 8% 3%; direction:rtl; gap:1.6vw; }
+    .scocoh-def { font-family:'Cormorant Garamond',serif; font-size:1.88vw; font-weight:300; color:rgba(245,240,232,.82); line-height:1.7; text-align:right; }
+    .scocoh-def em { color:rgba(139,184,150,.92); font-style:normal; font-weight:400; }
+    .scocoh-points { display:flex; flex-direction:column; gap:.8vw; }
+    .scocoh-point { display:flex; align-items:baseline; gap:1.2vw; text-align:right; }
+    .scocoh-dot { color:rgba(210,158,68,.42); font-size:1vw; flex-shrink:0; }
+    .scocoh-point-text { font-family:'Cormorant Garamond',serif; font-size:1.38vw; font-weight:300; color:rgba(245,240,232,.72); line-height:1.62; }
+    .scocoh-point-text strong { color:var(--cream); font-weight:400; }
+    .scocoh-punch { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-style:italic; color:rgba(210,158,68,.92); line-height:1.5; text-align:center; padding-top:1.2vw; border-top:1px solid rgba(245,240,232,.06); }
+
+    /* ══════════════════════════════════
+       SFIELDBACK · שדה הלב · callback
+    ══════════════════════════════════ */
+    #sfieldback { justify-content:flex-start; align-items:stretch; }
+    .sfb-body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 10% 4%; direction:rtl; gap:2vw; }
+    .sfb-callback { display:flex; align-items:center; gap:1.4vw; }
+    .sfb-callback-line { height:1px; background:rgba(139,184,150,.22); flex:1; }
+    .sfb-callback-text { font-size:.65vw; letter-spacing:.26em; text-transform:uppercase; color:var(--sage-dim); white-space:nowrap; }
+    .sfb-lead { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; color:rgba(245,240,232,.82); line-height:1.65; text-align:right; }
+    .sfb-lead em { color:rgba(212,149,122,.92); font-style:normal; font-weight:400; }
+    .sfb-stats { display:flex; gap:1.4vw; }
+    .sfb-stat { flex:1; display:flex; align-items:center; gap:1.4vw; padding:1.2vw 1.8vw; background:rgba(212,149,122,.04); border:1px solid rgba(212,149,122,.15); border-right:2px solid rgba(212,149,122,.4); border-radius:6px; }
+    .sfb-stat-value { font-family:'Cormorant Garamond',serif; font-size:3.2vw; font-weight:300; color:rgba(212,149,122,.92); line-height:1; flex-shrink:0; white-space:nowrap; }
+    .sfb-stat-label { font-size:.85vw; color:rgba(245,240,232,.52); font-weight:300; line-height:1.6; }
+    .sfb-punch { font-family:'Cormorant Garamond',serif; font-size:1.8vw; font-style:italic; color:rgba(210,158,68,.9); line-height:1.5; text-align:center; padding-top:.5vw; border-top:1px solid rgba(245,240,232,.06); }
+
+    /* ══════════════════════════════════
+       SCOBODY · מה קורה לגוף
+    ══════════════════════════════════ */
+    #scobody { justify-content:flex-start; align-items:stretch; }
+    .scobody-body { flex:1; display:flex; flex-direction:column; padding:0 6% 0; direction:rtl; gap:.9vw; }
+    .scobody-lead { font-family:'Cormorant Garamond',serif; font-size:1.6vw; font-weight:300; color:rgba(245,240,232,.65); line-height:1.6; text-align:right; padding:.5vw 2% 0; }
+    .scobody-lead em { color:rgba(139,184,150,.92); font-style:normal; font-weight:400; }
+    .scobody-metrics { display:flex; gap:1.1vw; flex-shrink:0; opacity:0; transform:translateY(8px); transition:opacity .5s ease .1s, transform .5s ease .1s; }
+    .scobody-metrics.visible { opacity:1; transform:translateY(0); }
+    .scoh-metric { flex:1; padding:1.1vw 1.4vw; border-radius:6px; background:rgba(139,184,150,.04); border:1px solid rgba(139,184,150,.15); direction:rtl; }
+    .scoh-metric-value { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:300; color:rgba(139,184,150,.92); line-height:1; margin-bottom:.25vw; }
+    .scoh-metric-label { font-size:.62vw; letter-spacing:.16em; text-transform:uppercase; color:rgba(245,240,232,.45); margin-bottom:.35vw; }
+    .scoh-metric-desc  { font-size:.78vw; color:rgba(245,240,232,.42); font-weight:300; line-height:1.6; }
+    .scobody-field { padding:.9vw 1.5vw; border-radius:6px; background:rgba(139,184,150,.04); border:1px solid rgba(139,184,150,.12); border-right:2px solid rgba(139,184,150,.35); text-align:right; opacity:0; transform:translateY(8px); transition:opacity .5s ease, transform .5s ease; }
+    .scobody-field.visible { opacity:1; transform:translateY(0); }
+    .scobody-field-text { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:300; color:rgba(245,240,232,.68); line-height:1.75; }
+    .scobody-field-text strong { color:rgba(139,184,150,.92); font-weight:400; }
+    .scobody-punch { font-family:'Cormorant Garamond',serif; font-size:1.72vw; font-style:italic; color:rgba(210,158,68,.92); line-height:1.45; text-align:center; padding-top:.8vw; border-top:1px solid rgba(245,240,232,.06); opacity:0; transition:opacity .6s ease; }
+    .scobody-punch.visible { opacity:1; }
+    .scobody-src { font-size:.58vw; color:rgba(245,240,232,.2); font-style:italic; text-align:center; padding:.3vw 0; margin-top:auto; border-top:1px solid rgba(245,240,232,.04); flex-shrink:0; }
+
+    /* ══════════════════════════════════
+       SCO5 · חוסר קוהרנטיות
+    ══════════════════════════════════ */
+    #sco5 { justify-content:center; align-items:center; padding:8%; }
+    .sco5-wrap { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2vw; max-width:68%; }
+    .sco5-label { font-size:.7vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(212,149,122,.65); }
+    .sco5-title { font-family:'Cormorant Garamond',serif; font-size:3.2vw; font-weight:300; color:var(--cream); line-height:1.2; }
+    .sco5-list { display:flex; flex-direction:column; gap:.65vw; text-align:right; width:100%; }
+    .sco5-item { display:flex; align-items:baseline; gap:1.2vw; padding:.55vw 1.2vw; border-radius:4px; background:rgba(212,149,122,.04); border-right:2px solid rgba(212,149,122,.28); font-family:'Cormorant Garamond',serif; font-size:1.3vw; font-weight:300; color:rgba(245,240,232,.72); line-height:1.5; }
+    .sco5-item-dot { color:rgba(212,149,122,.55); font-size:1vw; flex-shrink:0; }
+    .sco5-punch { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-style:italic; color:rgba(210,158,68,.92); line-height:1.45; padding-top:1vw; border-top:1px solid rgba(245,240,232,.07); }
+
+    /* ══════════════════════════════════
+       SRAS1 · RAS HOOK
+    ══════════════════════════════════ */
+    #sras1 { justify-content:center; align-items:center; padding:8%; }
+    .sras1-wrap { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2.2vw; max-width:75%; }
+    .sras1-eyebrow { font-size:.88vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(210,158,68,.88); }
+    .sras1-title { font-family:'Cormorant Garamond',serif; font-size:3.6vw; font-weight:400; color:var(--cream); line-height:1.1; }
+    .sras1-numbers { display:flex; align-items:center; justify-content:center; gap:2.5vw; }
+    .sras1-num { display:flex; flex-direction:column; align-items:center; gap:.35vw; }
+    .sras1-big { font-family:'Cormorant Garamond',serif; font-size:5.2vw; font-weight:300; line-height:1; }
+    .sras1-big.receive { color:rgba(212,149,122,.88); }
+    .sras1-big.conscious { color:rgba(139,184,150,.88); }
+    .sras1-num-lbl { font-size:.62vw; letter-spacing:.2em; text-transform:uppercase; color:rgba(245,240,232,.3); }
+    .sras1-vs { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:300; color:rgba(245,240,232,.18); }
+    .sras1-rule { width:36px; height:1px; background:rgba(210,158,68,.35); }
+    .sras1-question { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:300; font-style:italic; color:var(--cream); line-height:1.5; }
+    .sras1-question em { color:rgba(210,158,68,.92); font-style:normal; }
+
+    /* ══════════════════════════════════
+       SRAS2 · RAS FILTER
+    ══════════════════════════════════ */
+    #sras2 { justify-content:flex-start; align-items:stretch; }
+    .sras2-body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 8% 3%; direction:rtl; gap:1.5vw; }
+    .sras2-lead { font-family:'Cormorant Garamond',serif; font-size:1.72vw; font-weight:300; color:rgba(245,240,232,.72); line-height:1.65; text-align:right; }
+    .sras2-filters { display:flex; gap:1.4vw; }
+    .sras2-col { flex:1; padding:1.1vw 1.5vw; border-radius:6px; }
+    .sras2-col.stress { background:rgba(212,149,122,.04); border:1px solid rgba(212,149,122,.12); border-right:2px solid rgba(212,149,122,.4); }
+    .sras2-col.coherence { background:rgba(139,184,150,.05); border:1px solid rgba(139,184,150,.15); border-right:2px solid rgba(139,184,150,.45); }
+    .sras2-col-label { font-size:.72vw; letter-spacing:.22em; text-transform:uppercase; margin-bottom:.6vw; font-weight:500; }
+    .stress .sras2-col-label { color:rgba(212,149,122,.88); }
+    .coherence .sras2-col-label { color:rgba(139,184,150,.88); }
+    .sras2-col-text { font-family:'Cormorant Garamond',serif; font-size:1.42vw; font-weight:300; color:rgba(245,240,232,.85); line-height:1.7; }
+    .sras2-sync { padding:1vw 1.5vw; border-radius:6px; background:rgba(210,158,68,.03); border:1px solid rgba(210,158,68,.1); border-right:2px solid rgba(210,158,68,.28); text-align:right; }
+    .sras2-sync-text { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:300; color:rgba(245,240,232,.65); line-height:1.72; }
+    .sras2-sync-text em { color:rgba(210,158,68,.9); font-style:normal; font-weight:400; }
+    .sras2-punch { font-family:'Cormorant Garamond',serif; font-size:1.88vw; font-style:italic; color:rgba(210,158,68,.92); line-height:1.5; text-align:center; padding-top:1vw; border-top:1px solid rgba(245,240,232,.06); }
+
+    /* ══════════════════════════════════
+       SHOWTO · HOW TO REACH COHERENCE
+    ══════════════════════════════════ */
+    #showto { justify-content:center; align-items:center; padding:5% 10%; }
+    .sht-wrap  { position:relative; z-index:1; direction:rtl; display:flex; flex-direction:column; gap:1.5vw; max-width:66%; width:100%; }
+    .sht-title { font-size:.72vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(210,158,68,.55); margin-bottom:.2vw; text-align:center; }
+    .sht-step  { display:flex; align-items:flex-start; gap:1.6vw; padding:1.1vw 1.5vw; border-radius:6px; background:rgba(245,240,232,.02); border:1px solid var(--border); border-right:2px solid rgba(210,158,68,.3); opacity:0; transform:translateY(8px); transition:opacity .5s ease, transform .5s ease; }
+    .sht-step.visible { opacity:1; transform:translateY(0); }
+    .sht-num   { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:300; color:rgba(210,158,68,.42); line-height:1; flex-shrink:0; min-width:1.6vw; }
+    .sht-main  { font-family:'Cormorant Garamond',serif; font-size:1.5vw; font-weight:500; color:var(--cream); line-height:1.25; margin-bottom:.28vw; }
+    .sht-sub   { font-size:.82vw; color:rgba(245,240,232,.48); font-weight:300; line-height:1.65; }
+    .sht-note  { text-align:center; font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-style:italic; color:rgba(210,158,68,.72); opacity:0; transition:opacity .6s ease; padding-top:.3vw; }
+    .sht-note.visible { opacity:1; }
+
+    /* ── BACKGROUND GLOWS ── */
+    #s1, #swelcome, #srecap, #sjourney3 {
+      background: radial-gradient(ellipse 65% 55% at 50% 52%, rgba(210,158,68,.15) 0%, transparent 70%), #080706;
+    }
+    #skavanah {
+      background: radial-gradient(ellipse 60% 54% at 50% 50%, rgba(210,120,150,.18) 0%, transparent 72%), #080706;
+    }
+    #sthreeintro {
+      background: radial-gradient(ellipse 60% 52% at 50% 50%, rgba(210,158,68,.14) 0%, transparent 70%), #080706;
+    }
+    #sthreebrains {
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(160,120,60,.10) 0%, transparent 72%), #080706;
+    }
+    #sheartback {
+      background: radial-gradient(ellipse 55% 50% at 62% 55%, rgba(212,149,122,.2) 0%, transparent 65%), #080706;
+    }
+    #sneurons, #sfire, #ssynapse, #sfirequote, #shebb {
+      background: radial-gradient(ellipse 62% 54% at 50% 50%, rgba(210,158,68,.12) 0%, transparent 70%), #080706;
+    }
+
+    /* ══════════════════════════════════
+       SFIREQUOTE · הציטוט
+    ══════════════════════════════════ */
+    #sfirequote { justify-content:center; align-items:center; padding:8%; }
+
+    /* ══════════════════════════════════
+       SHEBB · Donald Hebb · 1949
+    ══════════════════════════════════ */
+    #shebb { justify-content:center; align-items:center; padding:8%; }
+    .shebb-wrap { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:1.8vw; max-width:74%; }
+    .shebb-eyebrow { font-size:.68vw; letter-spacing:.32em; text-transform:uppercase; color:rgba(210,158,68,.55); }
+    .shebb-book { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.65); letter-spacing:.04em; }
+    .shebb-rule { width:36px; height:1px; background:rgba(210,158,68,.3); }
+    .shebb-idea { font-family:'Cormorant Garamond',serif; font-size:1.82vw; font-weight:300; color:rgba(245,240,232,.82); line-height:1.75; }
+    .shebb-idea em { color:rgba(210,158,68,.92); font-style:normal; font-weight:400; }
+    .shebb-remarkable { display:flex; flex-direction:column; gap:.6vw; padding:1vw 1.6vw; border-radius:6px; background:rgba(210,158,68,.04); border:1px solid rgba(210,158,68,.12); border-right:2px solid rgba(210,158,68,.3); text-align:right; width:100%; }
+    .shebb-remarkable-label { font-size:.6vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(210,158,68,.52); }
+    .shebb-remarkable-text { font-family:'Cormorant Garamond',serif; font-size:1.28vw; font-weight:300; color:rgba(245,240,232,.7); line-height:1.8; }
+    .shebb-remarkable-text strong { color:var(--cream); font-weight:400; }
+    .shebb-link { font-family:'Cormorant Garamond',serif; font-size:1.3vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.38); line-height:1.75; padding-top:.5vw; border-top:1px solid rgba(245,240,232,.06); }
+    .shebb-link em { color:rgba(139,184,150,.75); font-style:normal; }
+    .sfq-wrap { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:1.8vw; }
+    .sfq-label { font-size:.68vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(210,158,68,.78); }
+    #sembryo {
+      background: radial-gradient(ellipse 58% 52% at 50% 48%, rgba(212,149,122,.18) 0%, transparent 70%), #080706;
+    }
+    #sheartq {
+      background: radial-gradient(ellipse 58% 52% at 50% 48%, rgba(212,149,122,.15) 0%, transparent 70%), #080706;
+    }
+    #scocoh {
+      background: radial-gradient(ellipse 62% 54% at 50% 50%, rgba(139,184,150,.12) 0%, transparent 70%), #080706;
+    }
+
+    /* ══════════════════════════════════
+       SCOCOHPTS · הלב מוביל · 4 עובדות
+    ══════════════════════════════════ */
+    #scocohpts { justify-content:flex-start; align-items:stretch; background: radial-gradient(ellipse 62% 54% at 50% 50%, rgba(139,184,150,.12) 0%, transparent 70%), #080706; }
+    .scocohpts-body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 8% 3%; direction:rtl; gap:1vw; }
+    .scocohpts-pt { display:flex; align-items:flex-start; gap:1.4vw; padding:.95vw 1.5vw; border-radius:6px; background:rgba(139,184,150,.04); border:1px solid rgba(139,184,150,.1); border-right:2px solid rgba(139,184,150,.35); text-align:right; }
+    .scocohpts-pt .scocoh-dot { color:rgba(139,184,150,.55); margin-top:.15vw; flex-shrink:0; }
+    .scocohpts-pt .scocoh-point-text { font-size:1.38vw; }
+    .scocohpts-pt .scocoh-point-text em { color:rgba(139,184,150,.92); font-style:normal; font-weight:400; }
+
+    /* ── SCOCOH WAVES ── */
+    .scocoh-waves { display:flex; gap:1.2vw; }
+    .scocoh-wave-col { flex:1; display:flex; flex-direction:column; gap:.45vw; padding:.9vw 1.3vw; border-radius:6px; direction:rtl; }
+    .scocoh-wave-col.chaos { background:rgba(212,149,122,.04); border:1px solid rgba(212,149,122,.1); border-right:2px solid rgba(212,149,122,.28); }
+    .scocoh-wave-col.harmony { background:rgba(139,184,150,.05); border:1px solid rgba(139,184,150,.13); border-right:2px solid rgba(139,184,150,.38); }
+    .scocoh-wave-lbl { font-family:'Jost',sans-serif; font-size:.58vw; letter-spacing:.24em; text-transform:uppercase; }
+    .chaos .scocoh-wave-lbl { color:rgba(212,149,122,.6); }
+    .harmony .scocoh-wave-lbl { color:rgba(139,184,150,.6); }
+    .scocoh-wave-svg { width:100%; height:auto; display:block; margin:.3vw 0; }
+    .scocoh-wave-desc { font-family:'Cormorant Garamond',serif; font-size:1.05vw; font-style:italic; font-weight:300; color:rgba(245,240,232,.42); line-height:1.5; }
+    #sfieldback {
+      background: radial-gradient(ellipse 58% 52% at 50% 48%, rgba(212,149,122,.16) 0%, transparent 70%), #080706;
+    }
+    #scobody {
+      background: radial-gradient(ellipse 65% 55% at 50% 50%, rgba(139,184,150,.11) 0%, transparent 70%), #080706;
+    }
+    #sco5 {
+      background: radial-gradient(ellipse 60% 52% at 50% 50%, rgba(212,149,122,.16) 0%, transparent 70%), #080706;
+    }
+    /* ══════════════════════════════════
+       SBRIDGERAS · גשר למסנן
+    ══════════════════════════════════ */
+    #sbridgeras { justify-content:center; align-items:center; padding:8%; }
+    .sbr-wrap { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2.4vw; max-width:70%; }
+    .sbr-pre { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-weight:300; color:rgba(245,240,232,.68); line-height:1.7; }
+    .sbr-punch { font-family:'Cormorant Garamond',serif; font-size:4.4vw; font-weight:300; color:var(--cream); line-height:1.1; }
+    .sbr-turn { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-weight:300; color:rgba(245,240,232,.78); line-height:1.6; }
+    .sbr-turn em { color:rgba(210,158,68,.92); font-style:normal; font-weight:400; }
+
+    #sbridgeras { background: radial-gradient(ellipse 60% 52% at 50% 50%, rgba(210,158,68,.12) 0%, transparent 70%), #080706; }
+    #sras1 {
+      background: radial-gradient(ellipse 62% 54% at 50% 50%, rgba(210,158,68,.14) 0%, transparent 70%), #080706;
+    }
+    #sras2 {
+      background: radial-gradient(ellipse 65% 55% at 50% 50%, rgba(139,184,150,.11) 0%, transparent 70%), #080706;
+    }
+    #showto {
+      background: radial-gradient(ellipse 62% 54% at 50% 50%, rgba(210,158,68,.13) 0%, transparent 70%), #080706;
+    }
+
+    /* ══════════════════════════════════
+       STOOL3 · תרגיל שילוב · סיום סיישן 3
+    ══════════════════════════════════ */
+    #stool3 { justify-content:center; align-items:center; padding:5% 10%;
+      background: radial-gradient(ellipse 62% 54% at 50% 50%, rgba(139,184,150,.10) 0%, rgba(210,158,68,.06) 50%, transparent 70%), #080706;
+    }
+    .stool3-eye { font-size:.62vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(139,184,150,.62); margin-bottom:.5vw; text-align:center; }
+
+    /* ══════════════════════════════════
+       SRAS3 · המסנן נבנה מהעבר
+    ══════════════════════════════════ */
+    #sras3 { justify-content:flex-start; align-items:stretch; }
+    .sras3-body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 8% 3%; direction:rtl; gap:1.5vw; }
+    .sras3-lead { font-family:'Cormorant Garamond',serif; font-size:1.72vw; font-weight:300; color:rgba(245,240,232,.72); line-height:1.65; text-align:right; }
+    .sras3-lead em { color:rgba(210,158,68,.9); font-style:normal; font-weight:400; }
+    .sras3-items { display:flex; flex-direction:column; gap:.8vw; }
+    .sras3-item { display:flex; align-items:flex-start; gap:1.2vw; padding:.75vw 1.3vw; border-radius:6px; background:rgba(245,240,232,.02); border:1px solid var(--border); border-right:2px solid rgba(210,158,68,.22); text-align:right; }
+    .sras3-item.s1-link { border-right-color:rgba(139,184,150,.4); background:rgba(139,184,150,.03); border-color:rgba(139,184,150,.1); }
+    .sras3-item-dot { color:rgba(210,158,68,.38); font-size:.9vw; flex-shrink:0; margin-top:.15vw; }
+    .sras3-item.s1-link .sras3-item-dot { color:rgba(139,184,150,.55); }
+    .sras3-item-text { font-family:'Cormorant Garamond',serif; font-size:1.32vw; font-weight:300; color:rgba(245,240,232,.7); line-height:1.62; }
+    .sras3-item-text strong { color:var(--cream); font-weight:400; }
+    .sras3-punch { font-family:'Cormorant Garamond',serif; font-size:1.82vw; font-style:italic; color:rgba(210,158,68,.92); line-height:1.5; text-align:center; padding-top:1vw; border-top:1px solid rgba(245,240,232,.06); }
+
+    /* ══════════════════════════════════
+       SRAS4 · הקושי לשנות
+    ══════════════════════════════════ */
+    #sras4 { justify-content:center; align-items:center; padding:8%; }
+    .sras4-wrap { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2vw; max-width:70%; }
+    .sras4-label { font-size:.7vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(212,149,122,.65); }
+    .sras4-title { font-family:'Cormorant Garamond',serif; font-size:3vw; font-weight:300; color:var(--cream); line-height:1.2; }
+    .sras4-list { display:flex; flex-direction:column; gap:.65vw; text-align:right; width:100%; }
+    .sras4-item { display:flex; align-items:baseline; gap:1.2vw; padding:.55vw 1.2vw; border-radius:4px; background:rgba(212,149,122,.04); border-right:2px solid rgba(212,149,122,.28); font-family:'Cormorant Garamond',serif; font-size:1.3vw; font-weight:300; color:rgba(245,240,232,.72); line-height:1.5; }
+    .sras4-item-dot { color:rgba(212,149,122,.55); font-size:1vw; flex-shrink:0; }
+    .sras4-punch { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-style:italic; color:rgba(210,158,68,.92); line-height:1.5; padding-top:1vw; border-top:1px solid rgba(245,240,232,.07); }
+    .sras4-punch em { color:var(--cream); font-style:normal; font-weight:400; }
+
+    /* ══════════════════════════════════
+       SRAS5 · תקווה · הגשר לסיישן 4
+    ══════════════════════════════════ */
+    #sras5 { justify-content:center; align-items:center; padding:8%; }
+    .sras5-wrap { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2.2vw; max-width:68%; }
+    .sras5-eyebrow { font-size:.7vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(139,184,150,.7); }
+    .sras5-title { font-family:'Cormorant Garamond',serif; font-size:3.6vw; font-weight:300; color:var(--cream); line-height:1.2; }
+    .sras5-title em { color:rgba(210,158,68,.92); font-style:normal; }
+    .sras5-points { display:flex; flex-direction:column; gap:.7vw; }
+    .sras5-point { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-weight:300; color:rgba(245,240,232,.68); line-height:1.65; }
+    .sras5-point strong { color:rgba(139,184,150,.92); font-weight:400; }
+    .sras5-footer { display:flex; flex-direction:column; align-items:center; gap:1.2vw; }
+    .sras5-rule { width:36px; height:1px; background:rgba(139,184,150,.35); }
+    .sras5-bridge { font-family:'Cormorant Garamond',serif; font-size:1.18vw; font-weight:300; color:rgba(245,240,232,.32); letter-spacing:.05em; }
+    .sras5-bridge em { color:rgba(210,158,68,.55); font-style:normal; }
+
+    /* ── SRAS2 STACK (vertical) ── */
+    .sras2-stack { display:flex; flex-direction:column; gap:.8vw; }
+    .sras2-stack .sras2-col { flex:none; }
+
+    /* ══════════════════════════════════
+       SSYNC · הסינכרוניות
+    ══════════════════════════════════ */
+    #ssync { justify-content:center; align-items:center; padding:8%; }
+    .ssync-wrap { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2.4vw; max-width:75%; }
+    .ssync-eye { font-size:.68vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(210,158,68,.42); }
+    .ssync-text { font-family:'Cormorant Garamond',serif; font-size:2.15vw; font-weight:300; color:rgba(245,240,232,.78); line-height:1.85; }
+    .ssync-text em { color:rgba(210,158,68,.92); font-style:normal; font-weight:400; }
+    .ssync-rule { width:36px; height:1px; background:rgba(210,158,68,.3); }
+    .ssync-footer { display:flex; flex-direction:column; align-items:center; gap:1.2vw; }
+    .ssync-punch { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.38); letter-spacing:.04em; }
+    #ssync { background: radial-gradient(ellipse 62% 54% at 50% 50%, rgba(210,158,68,.13) 0%, transparent 70%), #080706; }
+
+    #sras3 { background: radial-gradient(ellipse 65% 55% at 50% 50%, rgba(139,184,150,.11) 0%, transparent 70%), #080706; }
+    #sras4 { background: radial-gradient(ellipse 60% 52% at 50% 50%, rgba(212,149,122,.16) 0%, transparent 70%), #080706; }
+    #sras5 { background: radial-gradient(ellipse 62% 54% at 50% 50%, rgba(139,184,150,.15) 0%, transparent 70%), #080706; }
+
+    /* ══════════════════════════════════
+       SHEARTBACK BRIDGE · גשר מהייב ללב
+    ══════════════════════════════════ */
+    .shb-bridge { padding:.6vw 6% .2vw; font-family:'Cormorant Garamond',serif; font-size:1.28vw; font-style:italic; font-weight:300; color:rgba(245,240,232,.52); line-height:1.75; text-align:right; direction:rtl; }
+    .shb-bridge strong { color:rgba(212,149,122,.88); font-weight:400; font-style:normal; }
+    .shb-bridge em { color:rgba(210,158,68,.72); font-style:normal; }
+
+    /* ══════════════════════════════════
+       SSUM3 · סיכום סיישן 3
+    ══════════════════════════════════ */
+    #ssum3 { justify-content:flex-start; align-items:stretch; background: radial-gradient(ellipse 62% 54% at 50% 50%, rgba(210,158,68,.12) 0%, transparent 70%), #080706; }
+    .ssum3-body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 8% 3%; direction:rtl; gap:.85vw; }
+    .ssum3-item { display:flex; align-items:flex-start; gap:1.4vw; padding:.9vw 1.4vw; border-radius:6px; background:rgba(245,240,232,.02); border:1px solid var(--border); border-right:2px solid rgba(210,158,68,.25); }
+    .ssum3-num { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-weight:300; color:rgba(210,158,68,.32); line-height:1; flex-shrink:0; min-width:1.6vw; }
+    .ssum3-text { font-family:'Cormorant Garamond',serif; font-size:1.32vw; font-weight:300; color:rgba(245,240,232,.7); line-height:1.65; }
+    .ssum3-text strong { color:var(--cream); font-weight:400; }
+    .ssum3-punch { font-family:'Cormorant Garamond',serif; font-size:1.82vw; font-style:italic; color:rgba(210,158,68,.92); line-height:1.5; text-align:center; padding-top:1vw; border-top:1px solid rgba(245,240,232,.06); }
+
+    /* ══════════════════════════════════
+       SJOURNEY4 · מסע הפגישות · סוף סיישן 3
+    ══════════════════════════════════ */
+    #sjourney4 { justify-content:flex-start; align-items:stretch; background: radial-gradient(ellipse 65% 55% at 50% 52%, rgba(210,158,68,.12) 0%, transparent 70%), #080706; }
+
+    /* ══════════════════════════════════
+       SS4 · PREVIEW SESSION 4
+    ══════════════════════════════════ */
+    #ss4 { justify-content:center; align-items:center; padding:7%; background: radial-gradient(ellipse 55% 50% at 50% 48%, rgba(110,80,155,.24) 0%, rgba(210,158,68,.08) 55%, transparent 75%), #080706; }
+    .ss4-wrap { position:relative; z-index:1; direction:rtl; text-align:center; display:flex; flex-direction:column; align-items:center; gap:2vw; max-width:72%; }
+    .ss4-eye { font-size:.7vw; letter-spacing:.32em; text-transform:uppercase; color:rgba(210,158,68,.55); }
+    .ss4-title { font-family:'Cormorant Garamond',serif; font-size:5vw; font-weight:300; color:var(--cream); line-height:1; }
+    .ss4-subtitle { font-size:.72vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(245,240,232,.28); margin-top:-.4vw; }
+    .ss4-items { display:flex; flex-direction:column; gap:.8vw; width:100%; }
+    .ss4-item { display:flex; align-items:center; gap:1.4vw; padding:.9vw 1.5vw; border-radius:6px; background:rgba(245,240,232,.02); border:1px solid rgba(245,240,232,.06); border-right:2px solid rgba(210,158,68,.28); text-align:right; }
+    .ss4-icon { color:rgba(210,158,68,.38); font-size:.9vw; flex-shrink:0; }
+    .ss4-content { flex:1; }
+    .ss4-item-he { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-weight:500; color:var(--cream); line-height:1.25; margin-bottom:.2vw; }
+    .ss4-item-en { font-size:.72vw; letter-spacing:.12em; color:rgba(245,240,232,.38); font-weight:300; }
+    .ss4-punch { font-family:'Cormorant Garamond',serif; font-size:2.4vw; font-weight:300; color:rgba(245,240,232,.72); line-height:1.5; padding-top:1.2vw; border-top:1px solid rgba(245,240,232,.06); }
+    .ss4-punch em { color:rgba(210,158,68,.92); font-style:normal; font-weight:400; }
+  </style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <!-- ══ S1 · TITLE ══ -->
+  <div class="slide active" id="s1">
+    <div class="s1-top">
+      <div class="s1-session-num">מפגש שלישי &nbsp;·&nbsp; Session 03</div>
+      <div class="s1-session-he">שלושת המוחות</div>
+      <div class="s1-rule-top"></div>
+    </div>
+    <div class="s1-block">
+      <div class="s1-main">The <em>Inner</em> Shift</div>
+      <div class="s1-tagline">המסע לשינוי מבפנים</div>
+    </div>
+  </div>
+
+  <!-- ══ SWELCOME ══ -->
+  <div class="slide" id="swelcome">
+    <div class="swelcome-wrap">
+      <div class="swelcome-eye">The Inner Shift &nbsp;·&nbsp; Session 3 of 5</div>
+      <div class="swelcome-welcome">כיף להיפגש שוב</div>
+      <div class="swelcome-rule"></div>
+    </div>
+    <div class="swelcome-sig">Noa Eiland</div>
+  </div>
+
+  <!-- ══ SRECAP · מה למדנו עד כה ══ -->
+  <div class="slide" id="srecap">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Sessions 1 &amp; 2 · Recap</div>
+          <div class="sh2-title">What We Covered</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מה למדנו עד כה</div>
+          <div class="sh2-he-sub">שתי פגישות · ממצבי המח עד השדה שמחוצנו</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="recap-body">
+      <div class="recap-col s1-col">
+        <div class="recap-col-label">מפגש ראשון · מערכת ההפעלה</div>
+        <div class="sum-item"><span class="sum-mark">✦</span>הכל רוטט — הכל אטומים, הכל בתנועה.</div>
+        <div class="sum-item"><span class="sum-mark">✦</span>תדרי המח קובעים מה ניתן לשנות. בבטא הדלת סגורה. באלפא ותטא — הדלת פתוחה.</div>
+        <div class="sum-item"><span class="sum-mark">✦</span>95% מהתגובות שלנו אוטומטיות — מגיעות ישירות מהתת-מודע.</div>
+        <div class="sum-item"><span class="sum-mark">✦</span>האמונות המגבילות עוצבו לפני גיל 7. הן עדיין מנהלות אותנו.</div>
+      </div>
+      <div class="recap-divider"></div>
+      <div class="recap-col s2-col">
+        <div class="recap-col-label">מפגש שני · השדה שמסביבי</div>
+        <div class="sum-item"><span class="sum-mark">✦</span>לגוף יש שדה אלקטרומגנטי — פולט החוצה כי הכל בנוי מאטומים בתנועה.</div>
+        <div class="sum-item"><span class="sum-mark">✦</span>הרגשות שאת מרגישה משנים את צורת השדה. השדה בשליטתך.</div>
+        <div class="sum-item"><span class="sum-mark">✦</span>מה שאת נושאת — את משדרת. שדות יוצאים החוצה ומשפיעים על הסביבה.</div>
+        <div class="sum-item"><span class="sum-mark">✦</span>שדות מסתנכרנים — את משפיעה על מי שמסביבך בלי לדבר.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SJOURNEY3 · איפה אנחנו במסע ══ -->
+  <div class="slide" id="sjourney3">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">The Journey · Session Map</div>
+          <div class="sh2-title">Where We Are</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">איפה אנחנו במסע</div>
+          <div class="sh2-he-sub">שתי פגישות מאחורינו · הנה הפגישה השלישית</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="journey-body">
+      <div class="journey-step j-done">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">1</div>
+        <div class="jstep-session">מפגש ראשון · הושלם</div>
+        <div class="jstep-title">מערכת ההפעלה</div>
+        <div class="jstep-desc">זיהוי: הסיפור שמנהל אותי</div>
+        <div class="jstep-check">✓ נעשה</div>
+      </div>
+      <div class="journey-step j-done">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">2</div>
+        <div class="jstep-session">מפגש שני · הושלם</div>
+        <div class="jstep-title">השדה שמסביבי</div>
+        <div class="jstep-desc">הבנה: המחשבות שלי לא נשארות בראש</div>
+        <div class="jstep-check">✓ נעשה</div>
+      </div>
+      <div class="journey-step j-active">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">3</div>
+        <div class="jstep-session">מפגש שלישי · היום</div>
+        <div class="jstep-title">שלושת המוחות</div>
+        <div class="jstep-desc">חיבור: הקוהרנטיות שמשנה הכל</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">4</div>
+        <div class="jstep-session">מפגש רביעי</div>
+        <div class="jstep-title">יצירת מציאות</div>
+        <div class="jstep-desc">שינוי: לכוון את השדה בכוונה</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">5</div>
+        <div class="jstep-session">מפגש חמישי</div>
+        <div class="jstep-title">הגרסה החדשה שלי</div>
+        <div class="jstep-desc">אינטגרציה: מי אני כשאני לא מוגבלת</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SKAVANAH · רגע של התכווננות ══ -->
+  <div class="slide" id="skavanah">
+    <div class="kavanah-circle"></div>
+    <div class="kavanah-circle kavanah-circle-2"></div>
+    <div class="kavanah-title">רגע של התכווננות</div>
+    <div class="kavanah-sub">עצמי עיניים &nbsp;·&nbsp; שימי את היום בצד &nbsp;·&nbsp; הגיעי</div>
+  </div>
+
+
+  <!-- ══ STHREEINTRO · HOOK ══ -->
+  <div class="slide" id="sthreeintro">
+    <div class="sti-wrap">
+      <div class="sti-pre">כל חייך חשבת שיש לך מח אחד.</div>
+      <div class="snew-line" id="sti-1">
+        <div class="sti-punch">יש שלושה.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ STHREEBRAINS · THREE BRAINS ══ -->
+  <div class="slide" id="sthreebrains">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Neuroscience · Three Neural Networks</div>
+          <div class="sh2-title">Three Brains</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">שלושה מוחות</div>
+          <div class="sh2-he-sub">שלושה מרכזי עיבוד עצמאיים · שלושה קולות</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="stb-body">
+      <div class="stb-card brain visible stb-brain-focus" id="stb-1">
+        <div class="stb-brain-focus-label">→ מיקוד</div>
+        <div class="stb-num">01</div>
+        <div class="stb-name">המח</div>
+        <div class="stb-count">86 מיליארד</div>
+        <div class="stb-count-lbl">נוירונים</div>
+        <div class="stb-role">
+          <strong>חשיבה, ניתוח, שפה, תכנון</strong>
+          מנהל את מה שמודע לנו — בערך 5% מהפעילות הכוללת של המח.
+        </div>
+      </div>
+      <div class="stb-card heart" id="stb-2">
+        <div class="stb-num">02</div>
+        <div class="stb-name">הלב</div>
+        <div class="stb-count">40,000</div>
+        <div class="stb-count-lbl">נוירונים</div>
+        <div class="stb-role">
+          <strong>אינטליגנציה רגשית, חיבור, אמפתיה</strong>
+          מרגיש לפני שהמח יודע. מחובר לגוף דרך שדה אלקטרומגנטי.
+        </div>
+      </div>
+      <div class="stb-card gut" id="stb-3">
+        <div class="stb-num">03</div>
+        <div class="stb-name">המעיים</div>
+        <div class="stb-count">500 מיליון</div>
+        <div class="stb-count-lbl">נוירונים</div>
+        <div class="stb-role">
+          <strong>תחושת בטן, אינטואיציה, ויסות מצב רוח</strong>
+          מייצרים 90–95% מהסרוטונין של הגוף.
+        </div>
+      </div>
+    </div>
+    <div class="stb-vagus" id="stb-vagus">
+      <div class="stb-vagus-line"></div>
+      <div class="stb-vagus-text">עצב הוואגוס · מחבר את שלושת המוחות · חלק ממערכת העצבים האוטונומית</div>
+      <div class="stb-vagus-line"></div>
+    </div>
+    <div class="stb-punch" id="stb-punch">רובנו חיים כמעט רק במח אחד מתוך שלושה.</div>
+  </div>
+
+  <!-- ══ SNEURONS · מה זה נוירון ══ -->
+  <div class="slide" id="sneurons">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Neuroscience · The Basics</div>
+          <div class="sh2-title">What Is a Neuron?</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מה זה נוירון?</div>
+          <div class="sh2-he-sub">רגע · לפני שממשיכים — כי זה הבסיס של הכל</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="sneur-body">
+      <div class="sneur-item snew-line" id="sneur-1">
+        <div class="sneur-num">01</div>
+        <div>
+          <div class="sneur-main">תא עצב — היחידה הבסיסית של מחשבה, תחושה וזיכרון</div>
+          <div class="sneur-sub">כל מה שאת חושבת, מרגישה וזוכרת — עובר דרך נוירונים. הם הרשת שמפעילה אותך.</div>
+        </div>
+      </div>
+      <div class="sneur-item snew-line" id="sneur-2">
+        <div class="sneur-num">02</div>
+        <div>
+          <div class="sneur-main">שולח ומקבל אותות חשמליים וכימיים</div>
+          <div class="sneur-sub">כל נוירון מקבל אות, מעבד אותו ומעביר הלאה — בתוך פחות מאלפית שנייה. מיליארדים עושים את זה בו-זמנית.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SSYNAPSE · איך נוצר חיבור ══ -->
+  <div class="slide" id="ssynapse">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Neuroscience · Synapse · Neural Connection</div>
+          <div class="sh2-title">How Connections Form</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">איך נוצר חיבור</div>
+          <div class="sh2-he-sub">הסינפסה · הבסיס של כל למידה, כל הרגל, כל אמונה</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="sneur-body">
+      <div class="sneur-item snew-line" id="ssyn-1">
+        <div class="sneur-num">01</div>
+        <div>
+          <div class="sneur-main">הסינפסה — החיבור בין נוירונים</div>
+          <div class="sneur-sub">כשנוירון נורה, הוא שולח אות חשמלי לקצה — שם הוא הופך לכימי. נוירוטרנסמיטרים חוצים את הפער ומפעילים את הנוירון הבא.</div>
+        </div>
+      </div>
+      <div class="sneur-item snew-line" id="ssyn-2">
+        <div class="sneur-num">02</div>
+        <div>
+          <div class="sneur-main">כל חיבור מתחיל חלש</div>
+          <div class="sneur-sub">בפעם הראשונה — האות עובר בקושי. כמו שביל דק ביער שמישהו עבר בו פעם אחת.</div>
+        </div>
+      </div>
+      <div class="sneur-item snew-line" id="ssyn-3">
+        <div class="sneur-num">03</div>
+        <div>
+          <div class="sneur-main">חזרה בונה חיבור</div>
+          <div class="sneur-sub">כל פעם שהנוירונים נורים יחד — האות עובר מהיר יותר, החיבור חזק יותר. חזרה = חיזוק. זה הבסיס של כל למידה, הרגל ואמונה.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SFIREQUOTE · הציטוט ══ -->
+  <div class="slide" id="sfirequote">
+    <div class="sfq-wrap">
+      <div class="snew-line" id="sfq-r1">
+        <div class="sfq-label">Donald Hebb · 1949</div>
+        <div class="shebb-book">The Organization of Behavior</div>
+        <div class="sfire-en">Neurons that fire together — wire together.</div>
+      </div>
+      <div class="snew-line sfire-he" id="sfq-r2">נוירונים שיורים יחד — מתחברים יחד.</div>
+    </div>
+  </div>
+
+  <!-- ══ SHEBB · Donald Hebb · הסיפור מאחורי הכלל ══ -->
+  <div class="slide" id="shebb">
+    <div class="shebb-wrap">
+      <div class="shebb-eyebrow">Donald Hebb · 1949</div>
+      <div class="shebb-book">The Organization of Behavior</div>
+      <div class="shebb-rule"></div>
+      <div class="snew-line" id="shebb-r1">
+        <div class="shebb-idea">
+          הרעיון היה פשוט אבל מהפכני:<br>
+          כשני נוירונים מתפעלים בו-זמנית שוב ושוב — הקשר ביניהם מתחזק.<br>
+          <em>חזרה יוצרת חיבור פיזי במח.</em>
+        </div>
+      </div>
+      <div class="snew-line shebb-remarkable" id="shebb-r2">
+        <div class="shebb-remarkable-text">
+          הב הגיע למסקנה הזו <strong>בלי יכולת לראות נוירונים בפועל</strong>.<br>
+          לא היה MRI, לא היה הדמיה מוחית — הוא הסיק זאת מתצפית התנהגותית בלבד.<br>
+          עשרות שנים אחר כך, כשהטכנולוגיה התפתחה — המדע אישר שהוא צדק לחלוטין.
+        </div>
+      </div>
+      <div class="snew-line shebb-link" id="shebb-r3">
+        בדיוק כמו יונג — ידע לפני שאפשר היה למדוד.<br>
+        <em>אמון בידע שמגיע מתצפית עמוקה — לא רק מציוד.</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SFIRE · Fire Together Wire Together ══ -->
+  <div class="slide" id="sfire">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Neuroscience · Hebb's Rule · Neuroplasticity</div>
+          <div class="sh2-title">Fire Together, Wire Together</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">נוירופלסטיות — המח משתנה פיזית</div>
+          <div class="sh2-he-sub">כל חזרה בונה מסלול · כל מסלול הופך לדפוס</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="sfire-body">
+      <div class="sfire-items snew-line" id="sfire-r1">
+        <div class="sfire-item">
+          <span class="sfire-item-dot">—</span>
+          <span class="sfire-item-text">כל מחשבה חוזרת, כל רגש חוזר, כל התנהגות חוזרת — <strong>מחזקת מסלול עצבי.</strong> ככל שהמסלול נסלל יותר, כך הוא אוטומטי יותר.</span>
+        </div>
+        <div class="sfire-item">
+          <span class="sfire-item-dot">—</span>
+          <span class="sfire-item-text">זה עובד <strong>לשני הכיוונים</strong> — מסלולי פחד, ביקורת ודאגה מתחזקים. אבל גם מסלולי שקט, הכרת תודה ואהבה.</span>
+        </div>
+      </div>
+      <div class="sfire-item s1-link snew-line" id="sfire-r2">
+        <span class="sfire-item-dot">✦</span>
+        <span class="sfire-item-text">חיבור לסיישן 1 — <strong>האמונות המגבילות הן לא רק "מחשבות"</strong>. הן מסלולים עצביים פיזיים שנסללו בחזרה. ואפשר לבנות מסלולים חדשים.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SHEARTBACK · חזרה ללב ══ -->
+  <div class="slide" id="sheartback">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Neuroscience · Back to the Heart</div>
+          <div class="sh2-title">Three Brains</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">חוזרים ללב</div>
+          <div class="sh2-he-sub">40,000 נוירונים · ומשם נתחיל</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="shb-bridge">
+      הנוירופלסטיות לא עוצרת במח הראש.<br>
+      הלב גם הוא רשת עצבית — <strong>40,000 נוירונים</strong>.<br>
+      אותו חוק של הייב חל עליו בדיוק: כל רגש חוזר — <em>מחזק מסלול.</em>
+    </div>
+    <div class="stb-body">
+      <div class="stb-card brain visible stb-dim">
+        <div class="stb-num">01</div>
+        <div class="stb-name">המח</div>
+        <div class="stb-count">86 מיליארד</div>
+        <div class="stb-count-lbl">נוירונים</div>
+        <div class="stb-role">
+          <strong>חשיבה, ניתוח, שפה, תכנון</strong>
+          מנהל את מה שמודע לנו — בערך 5% מהפעילות הכוללת של המח.
+        </div>
+      </div>
+      <div class="stb-card heart visible stb-heart-focus">
+        <div class="sheartback-focus-label">→ מיקוד</div>
+        <div class="stb-num">02</div>
+        <div class="stb-name">הלב</div>
+        <div class="stb-count">40,000</div>
+        <div class="stb-count-lbl">נוירונים</div>
+        <div class="stb-role">
+          <strong>אינטליגנציה רגשית, חיבור, אמפתיה</strong>
+          מרגיש לפני שהמח יודע. מחובר לגוף דרך שדה אלקטרומגנטי.
+        </div>
+      </div>
+      <div class="stb-card gut visible stb-dim">
+        <div class="stb-num">03</div>
+        <div class="stb-name">המעיים</div>
+        <div class="stb-count">500 מיליון</div>
+        <div class="stb-count-lbl">נוירונים</div>
+        <div class="stb-role">
+          <strong>תחושת בטן, אינטואיציה, ויסות מצב רוח</strong>
+          מייצרים 90–95% מהסרוטונין של הגוף.
+        </div>
+      </div>
+    </div>
+    <div class="stb-vagus visible">
+      <div class="stb-vagus-line"></div>
+      <div class="stb-vagus-text">עצב הוואגוס · מחבר את שלושת המוחות · חלק ממערכת העצבים האוטונומית</div>
+      <div class="stb-vagus-line"></div>
+    </div>
+  </div>
+
+  <!-- ══ SEMBRYO · EMBRYO ANECDOTE ══ -->
+  <div class="slide" id="sembryo">
+    <div class="sem-wrap">
+      <div class="sem-neurons">מח הלב · הנוירונים האלה יגיעו בסופו של דבר ל-40,000</div>
+      <div class="snew-line" id="sem-0">
+        <div class="sem-eyebrow">שבוע שלישי להריון · יום 22 · ראשית מח הלב</div>
+        <div class="sem-day">22</div>
+        <div class="sem-day-lbl">ימים מהפריה</div>
+        <div class="sem-rule"></div>
+        <div class="sem-fact">
+          הלב מתחיל לפעום.<br>
+          עצב הוואגוס — המחבר בין הלב למח — <strong>עדיין בהיווצרותו הראשונית</strong>.<br>
+          הלב פועם מעצמו, מונע על ידי <strong>הנוירונים שלו בלבד</strong>.
+        </div>
+      </div>
+      <div class="snew-line" id="sem-1">
+        <div class="sem-punch">
+          לפני שהמח לוקח פיקוד —<br>
+          <em>הלב כבר יודע.</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ SFIELDBACK · השדה של הלב · תזכורת סיישן 2 ══ -->
+  <div class="slide" id="sfieldback">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">HeartMath · Electromagnetic Field</div>
+          <div class="sh2-title">The Heart's Field</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">השדה של הלב</div>
+          <div class="sh2-he-sub">חיבור לסיישן 2 · השדה יוצא מהלב</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="sfb-body">
+      <div class="sfb-callback">
+        <div class="sfb-callback-line"></div>
+        <div class="sfb-callback-text">סיישן 2 · מה שאת נושאת — את משדרת</div>
+        <div class="sfb-callback-line"></div>
+      </div>
+      <div class="sfb-lead">
+        דיברנו על השדה האלקטרומגנטי של הגוף.<br>
+        מי יוצר אותו? <em>הלב.</em>
+      </div>
+      <div class="sfb-stats snew-line" id="sfb-r1">
+        <div class="sfb-stat">
+          <div class="sfb-stat-value">×5,000</div>
+          <div class="sfb-stat-label">השדה האלקטרומגנטי של הלב חזק פי 5,000 מהשדה של המח.</div>
+        </div>
+        <div class="sfb-stat">
+          <div class="sfb-stat-value">1–3m</div>
+          <div class="sfb-stat-label">השדה נמדד עד 1–3 מטרים מחוץ לגוף — ומשפיע על מה שמסביבך.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SHEARTQ · שאלת הגשר ══ -->
+  <div class="slide" id="sheartq">
+    <div class="sheartq-wrap">
+      <div class="sheartq-pre">
+        השדה המשמעותי ביותר — משודר <em>מהלב</em>.
+      </div>
+      <div class="sheartq-rule"></div>
+      <div class="snew-line" id="sheartq-r1">
+        <div class="sheartq-q">אז מה בדיוק<br>קורה בין <em>הלב</em> למח?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCOCOH · מה זה קוהרנטיות ══ -->
+  <div class="slide" id="scocoh">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">HeartMath Institute · Heart-Brain Coherence</div>
+          <div class="sh2-title">What Is Coherence?</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">קוהרנטיות</div>
+          <div class="sh2-he-sub">הגדרה · מה זה אומר · ולמה הלב מוביל</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="scocoh-body">
+      <div class="scocoh-def">
+        קוהרנטיות היא מצב שבו הלב פולט <em>דפוס גלי מסודר ועקבי</em>.<br>
+        המח מזהה את הדפוס — ומסתנכרן אליו.
+      </div>
+      <div class="scocoh-waves snew-line" id="scocoh-r1">
+        <div class="scocoh-wave-col chaos">
+          <div class="scocoh-wave-lbl">חוסר קוהרנטיות</div>
+          <svg class="scocoh-wave-svg" viewBox="0 0 200 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,26 L9,18 L14,38 L20,8 L28,36 L35,16 L41,30 L48,10 L56,34 L62,22 L69,40 L77,12 L84,28 L90,18 L97,36 L104,10 L112,30 L118,20 L125,38 L133,8 L140,24 L146,18 L153,34 L160,12 L167,26 L174,16 L181,32 L188,10 L195,22 L200,18"
+                  stroke="rgba(212,149,122,0.65)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="scocoh-wave-desc">דפוס כאוטי — המח נכנס למצב הישרדות</div>
+        </div>
+        <div class="scocoh-wave-col harmony">
+          <div class="scocoh-wave-lbl">קוהרנטיות · לב + מח</div>
+          <svg class="scocoh-wave-svg" viewBox="0 0 200 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,26 C14,8 22,8 36,26 C50,44 58,44 72,26 C86,8 94,8 108,26 C122,44 130,44 144,26 C158,8 166,8 180,26 C194,44 198,44 200,40"
+                  stroke="rgba(212,149,122,0.78)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            <path d="M0,30 C14,12 22,12 36,30 C50,48 58,48 72,30 C86,12 94,12 108,30 C122,48 130,48 144,30 C158,12 166,12 180,30 C194,48 198,48 200,44"
+                  stroke="rgba(210,158,68,0.55)" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="4,3" fill="none"/>
+            <text x="3" y="9" fill="rgba(212,149,122,0.5)" font-size="6.5" font-family="Jost, sans-serif">לב</text>
+            <text x="3" y="50" fill="rgba(210,158,68,0.45)" font-size="6.5" font-family="Jost, sans-serif">מח</text>
+          </svg>
+          <div class="scocoh-wave-desc">דפוס מסודר ועקבי — המח מסתנכרן אליו</div>
+        </div>
+      </div>
+      <div class="scocoh-punch snew-line" id="scocoh-r2">
+        הלב לא רק מרגיש — הוא מנהל.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCOCOHPTS · הלב מוביל · 4 עובדות ══ -->
+  <div class="slide" id="scocohpts">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">HeartMath · Neurocardiology · Research</div>
+          <div class="sh2-title">The Heart Leads</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">הלב מוביל</div>
+          <div class="sh2-he-sub">מה שהמחקר גילה · 4 עובדות</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="scocohpts-body">
+      <div class="scocohpts-pt snew-line" id="scocohpts-r1">
+        <span class="scocoh-dot">✦</span>
+        <span class="scocoh-point-text">הלב שולח <strong>~80% מהמסרים</strong> למח — המח בעיקר מקשיב, לא מוביל.</span>
+      </div>
+      <div class="scocohpts-pt snew-line" id="scocohpts-r2">
+        <span class="scocoh-dot">✦</span>
+        <span class="scocoh-point-text">כשהלב בקוהרנטיות — <strong>המח מסתנכרן אליו</strong>. לא להפך.</span>
+      </div>
+      <div class="scocohpts-pt snew-line" id="scocohpts-r3">
+        <span class="scocoh-dot">✦</span>
+        <span class="scocoh-point-text">מה מפעיל את הקוהרנטיות? <strong>רגש אמיתי.</strong> לא מחשבה, לא כוונה — תחושה בגוף.</span>
+      </div>
+      <div class="scocohpts-pt snew-line" id="scocohpts-r4">
+        <span class="scocoh-dot">✦</span>
+        <span class="scocoh-point-text">הלב מגיב לגירויים <strong>לפני שהמח מודע להם</strong>. מחקרי HeartMath מצאו תגובה פיזיולוגית בלב — לפני שהמח מעבד את המידע. <em>לפני שהמח יודע — הלב כבר שם.</em></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCOBODY · מה קורה לגוף ══ -->
+  <div class="slide" id="scobody">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">HeartMath · Body · Field · Frequency</div>
+          <div class="sh2-title">What Coherence Does</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מה קורה לגוף</div>
+          <div class="sh2-he-sub">כשהלב מוביל — הכל משתנה</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="scobody-body">
+      <div class="scobody-lead">
+        5 דקות של <em>תחושה אמיתית</em> — לא מחשבה, לא כוונה — מספיקות לשנות מדידה ביולוגית.
+      </div>
+      <div class="scobody-metrics snew-line" id="scobody-r1">
+        <div class="scoh-metric">
+          <div class="scoh-metric-value">IgA ↑</div>
+          <div class="scoh-metric-label">מערכת חיסון</div>
+          <div class="scoh-metric-desc">נוגדן חיסוני עלה לאחר 5 דקות של תחושת טיפוח אמיתית.</div>
+        </div>
+        <div class="scoh-metric">
+          <div class="scoh-metric-value">↓ 23%</div>
+          <div class="scoh-metric-label">קורטיזול</div>
+          <div class="scoh-metric-desc">הורמון הסטרס ירד בממוצע אחרי 30 יום תרגול.</div>
+        </div>
+        <div class="scoh-metric">
+          <div class="scoh-metric-value">PFC ↑</div>
+          <div class="scoh-metric-label">קורטקס פרה-פרונטלי</div>
+          <div class="scoh-metric-desc">מרכז היצירתיות, קבלת ההחלטות והאמפתיה — מתעורר בקוהרנטיות.</div>
+        </div>
+      </div>
+      <div class="scobody-field snew-line" id="scobody-r2">
+        <div class="scobody-field-text">
+          <strong>השדה האלקטרומגנטי שלך גדל וממוקד</strong> — ומשפיע יותר על מה שמסביבך.<br>
+          תדרים גבוהים — הכרת תודה, אהבה, שמחה — יוצרים שדה עוצמתי ומסודר.<br>
+          תדרים נמוכים — פחד, כעס, דאגה — יוצרים שדה כאוטי ומפוזר.
+        </div>
+      </div>
+      <div class="scobody-punch snew-line" id="scobody-r3">
+        ברגע שהלב בקוהרנטיות — את לא רק מרגישה טוב.<br>
+        <span style="color:rgba(139,184,150,.92);font-style:normal">את משנה את מה שמסביבך.</span>
+      </div>
+      <div class="scobody-src">HeartMath Institute · McCraty et al. · Biological Psychology, 2009</div>
+    </div>
+  </div>
+
+  <!-- ══ SCO5 · חוסר קוהרנטיות ══ -->
+  <div class="slide" id="sco5">
+    <div class="sco5-wrap">
+      <div class="sco5-label">כשהלב לא בקוהרנטיות</div>
+      <div class="sco5-title">מה קורה בחוסר קוהרנטיות</div>
+      <div class="snew-line sco5-list" id="sco5-r1">
+        <div class="sco5-item"><span class="sco5-item-dot">—</span>המח נכנס למצב הישרדות</div>
+        <div class="sco5-item"><span class="sco5-item-dot">—</span>PFC — מרכז החשיבה הגבוהה — מכובה</div>
+        <div class="sco5-item"><span class="sco5-item-dot">—</span>קבלת החלטות נשלטת על ידי פחד, לא חוכמה</div>
+        <div class="sco5-item"><span class="sco5-item-dot">—</span>השדה שאת משדרת — כאוטי ומפוזר</div>
+      </div>
+      <div class="snew-line sco5-punch" id="sco5-r2">
+        את משדרת רעש.<br>ורעש מושך רעש.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SBRIDGERAS · גשר למסנן ══ -->
+  <div class="slide" id="sbridgeras">
+    <div class="sbr-wrap">
+      <div class="sbr-pre">ראינו מה קורה בגוף כשאת בחוסר קוהרנטיות.</div>
+      <div class="snew-line sbr-punch" id="sbr-r1">אבל יש עוד שכבה.</div>
+      <div class="snew-line sbr-turn" id="sbr-r2">
+        אותו מצב פנימי — הוא משפיע על <em>מה שאת בכלל מסוגלת לראות.</em>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SRAS1 · RAS HOOK ══ -->
+  <div class="slide" id="sras1">
+    <div class="sras1-wrap">
+      <div class="sras1-eyebrow">RAS · Reticular Activating System</div>
+      <div class="sras1-title">המסנן של המח</div>
+      <div class="sras1-numbers">
+        <div class="sras1-num">
+          <div class="sras1-big receive">11,000,000</div>
+          <div class="sras1-num-lbl">ביטים בשנייה מגיעים למח</div>
+        </div>
+        <div class="sras1-vs">vs</div>
+        <div class="sras1-num">
+          <div class="sras1-big conscious">50</div>
+          <div class="sras1-num-lbl">ביטים עוברים לתודעה</div>
+        </div>
+      </div>
+      <div class="sras1-rule"></div>
+      <div class="snew-line" id="sras1-r1">
+        <div class="sras1-question">מי מחליט מה עובר?<br><em>המצב שבו את נמצאת.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SRAS2 · RAS FILTER ══ -->
+  <div class="slide" id="sras2">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">RAS · Reticular Activating System</div>
+          <div class="sh2-title">The Filter</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">המסנן</div>
+          <div class="sh2-he-sub">המצב שלך קובע את המציאות שאת רואה</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="sras2-body">
+      <div class="sras2-lead">המסנן לא אקראי — הוא מחפש את מה שהמצב שלך מאמין שצריך למצוא.</div>
+      <div class="sras2-stack">
+        <div class="sras2-col stress snew-line" id="sras2-r1">
+          <div class="sras2-col-label">בסטרס — המסנן מחפש</div>
+          <div class="sras2-col-text">איומים, סכנות, מה שיכול להשתבש.<br>ורואה אותם — בכל מקום.</div>
+        </div>
+        <div class="sras2-col coherence snew-line" id="sras2-r2">
+          <div class="sras2-col-label">בקוהרנטיות — המסנן מחפש</div>
+          <div class="sras2-col-text">הזדמנויות, חיבורים, מה שיכול לעבוד.<br>ורואה אותם — בכל מקום.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SSYNC · הסינכרוניות ══ -->
+  <div class="slide" id="ssync">
+    <div class="ssync-wrap">
+      <div class="ssync-eye">RAS · תפיסה · מציאות</div>
+      <div class="snew-line ssync-text" id="ssync-r1">
+        הסינכרוניות שאנשים חווים אחרי מדיטציה<br>
+        לא קורה כי היקום שלח משהו חדש —<br>
+        קורה כי הן עכשיו <em>רואות מה שתמיד היה שם.</em>
+      </div>
+      <div class="snew-line ssync-footer" id="ssync-r2">
+        <div class="ssync-rule"></div>
+        <div class="ssync-punch">שינוי הפנים משנה את מה שרואים בחוץ.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SRAS3 · המסנן נבנה מהעבר ══ -->
+  <div class="slide" id="sras3">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">RAS · Subconscious · Memory</div>
+          <div class="sh2-title">The Filter Is Built from the Past</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">המסנן נבנה מהעבר</div>
+          <div class="sh2-he-sub">מה שמאוחסן בתת-מודע — קובע מה את רואה היום</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="sras3-body">
+      <div class="sras3-lead">
+        הRAS לא מחפש באקראי — הוא מחפש לפי מה שכבר <em>מאוחסן בתת-מודע</em>.<br>
+        כלומר: העבר שלך קובע מה את רואה בהווה.
+      </div>
+      <div class="sras3-items snew-line" id="sras3-r1">
+        <div class="sras3-item">
+          <span class="sras3-item-dot">—</span>
+          <span class="sras3-item-text">אם התת-מודע מאוחסן עם <strong>"אני לא מספיקה"</strong> — המסנן ימצא ראיות לכך בכל מקום. כשל קטן? ראיה. התעלמות? ראיה.</span>
+        </div>
+        <div class="sras3-item">
+          <span class="sras3-item-dot">—</span>
+          <span class="sras3-item-text">זה לא שהמציאות "רעה" — זה שהמסנן בוחר <strong>מה לספור.</strong></span>
+        </div>
+        <div class="sras3-item s1-link">
+          <span class="sras3-item-dot">✦</span>
+          <span class="sras3-item-text">חיבור לסיישן 1 — <strong>אמונות מגבילות לא רק מרגישות נכון</strong>. הן ממש מסננות את המציאות שאת חווה.</span>
+        </div>
+      </div>
+      <div class="snew-line sras3-punch" id="sras3-r2">
+        את לא רואה את העולם כמו שהוא —<br>
+        את רואה אותו כמו שאת.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SRAS4 · הקושי לשנות ══ -->
+  <div class="slide" id="sras4">
+    <div class="sras4-wrap">
+      <div class="sras4-label">מדוע שינוי קשה כל כך</div>
+      <div class="sras4-title">כשמנסים לשנות —<br>המסנן עדיין מחפש את הישן</div>
+      <div class="snew-line sras4-list" id="sras4-r1">
+        <div class="sras4-item"><span class="sras4-item-dot">—</span>אפירמציות לא עובדות כשהתת-מודע לא השתנה</div>
+        <div class="sras4-item"><span class="sras4-item-dot">—</span>המסנן פשוט לא מאמין להן — ולא מחפש ראיות לכך</div>
+        <div class="sras4-item"><span class="sras4-item-dot">—</span>לחשוב "אני שופעת" כשהגוף מרגיש פחד — זה רעש, לא שינוי</div>
+      </div>
+      <div class="snew-line sras4-punch" id="sras4-r2">
+        לשנות מחשבה — לא מספיק.<br>
+        צריך לשנות את <em>המצב הפנימי</em> שממנו המחשבה צומחת.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SRAS5 · תקווה · הגשר לסיישן 4 ══ -->
+  <div class="slide" id="sras5">
+    <div class="sras5-wrap">
+      <div class="sras5-eyebrow">הגשר לסיישן 4</div>
+      <div class="sras5-title">המסנן <em>ניתן לכיול מחדש</em></div>
+      <div class="snew-line" id="sras5-r1">
+        <div class="sras5-points">
+          <div class="sras5-point">לא בכוח רצון — אלא בשינוי <strong>המצב הפנימי</strong>.</div>
+          <div class="sras5-point">קוהרנטיות + חזרה = <strong>כיול חדש</strong>.</div>
+          <div class="sras5-point">כשהגוף מרגיש אחרת — המסנן מתחיל לחפש אחרת.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SHOWTO · HOW TO REACH COHERENCE ══ -->
+  <div class="slide" id="showto">
+    <div class="sht-wrap">
+      <div class="sht-title">איך מגיעים לקוהרנטיות</div>
+      <div class="sht-step snew-line" id="sht-1">
+        <div class="sht-num">1</div>
+        <div>
+          <div class="sht-main">תשומת לב ללב</div>
+          <div class="sht-sub">שימי יד על הלב. הכוונת תשומת הלב לשם מספיקה להתחיל את המעבר.</div>
+        </div>
+      </div>
+      <div class="sht-step snew-line" id="sht-2">
+        <div class="sht-num">2</div>
+        <div>
+          <div class="sht-main">נשימה דרך הלב</div>
+          <div class="sht-sub">5 שניות פנימה · 5 שניות החוצה. לא מהנחיריים — מאזור הלב.</div>
+        </div>
+      </div>
+      <div class="sht-step snew-line" id="sht-3">
+        <div class="sht-num">3</div>
+        <div>
+          <div class="sht-main">תחושה אמיתית בגוף</div>
+          <div class="sht-sub">לא לחשוב על הכרת תודה — לחוש אותה. זיכרון קטן אחד מספיק.</div>
+        </div>
+      </div>
+      <div class="sht-note snew-line" id="sht-4">זה לא טכניקה. זו שפה שהלב כבר מכיר.</div>
+    </div>
+  </div>
+
+  <!-- ══ STOOL3 · תרגיל שילוב · כלי לתרגול עצמאי ══ -->
+  <div class="slide" id="stool3">
+    <div class="sht-wrap">
+      <div class="stool3-eye">Sessions 01–03 · כלי לתרגול עצמאי</div>
+      <div class="sht-title">תרגיל שילוב</div>
+      <div class="sht-step snew-line" id="stool3-1">
+        <div class="sht-num">1</div>
+        <div>
+          <div class="sht-main">עצרי</div>
+          <div class="sht-sub">3 נשימות עמוקות. תני לגוף לעבור מביטא לאלפא. כשהגוף רגוע — המח פתוח לשינוי.</div>
+        </div>
+      </div>
+      <div class="sht-step snew-line" id="stool3-2">
+        <div class="sht-num">2</div>
+        <div>
+          <div class="sht-main">יד על הלב · נשמי 5–5</div>
+          <div class="sht-sub">5 שניות פנימה · 5 שניות החוצה — מאזור הלב. לא מהנחיריים.</div>
+        </div>
+      </div>
+      <div class="sht-step snew-line" id="stool3-3">
+        <div class="sht-num">3</div>
+        <div>
+          <div class="sht-main">הביאי רגש אמיתי</div>
+          <div class="sht-sub">זיכרון קטן אחד. לא לחשוב עליו — לחוש אותו בגוף. הלב כבר יודע.</div>
+        </div>
+      </div>
+      <div class="sht-step snew-line" id="stool3-4">
+        <div class="sht-num">4</div>
+        <div>
+          <div class="sht-main">שאלי: מה אני רוצה לראות?</div>
+          <div class="sht-sub">RAS שלך מסנן לפי מה שאת מחפשת. שאלה אחת מכוונת את המסנן.</div>
+        </div>
+      </div>
+      <div class="sht-step snew-line" id="stool3-5">
+        <div class="sht-num">5</div>
+        <div>
+          <div class="sht-main">כתבי — משפט אחד</div>
+          <div class="sht-sub">לא רשימה. משפט אחד. ידיים + לב + ראש — שלושת המוחות עובדים ביחד.</div>
+        </div>
+      </div>
+      <div class="sht-note snew-line" id="stool3-6">5 דקות בבוקר · לשבוע הקרוב</div>
+    </div>
+  </div>
+
+  <!-- ══ SSUM3 · סיכום סיישן 3 ══ -->
+  <div class="slide" id="ssum3">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Session 03 · Summary</div>
+          <div class="sh2-title">What We Learned</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מה שלמדנו</div>
+          <div class="sh2-he-sub">סיכום מפגש 3 · הנקודות שנשארות</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="ssum3-body">
+      <div class="ssum3-item snew-line" id="ssum3-r1">
+        <div class="ssum3-num">01</div>
+        <div class="ssum3-text"><strong>שלושה מוחות</strong> — ראש, לב, מעיים. לכל אחד אינטליגנציה עצמאית. רובנו חיים רק באחד.</div>
+      </div>
+      <div class="ssum3-item snew-line" id="ssum3-r2">
+        <div class="ssum3-num">02</div>
+        <div class="ssum3-text"><strong>נוירופלסטיות</strong> — המח משתנה פיזית. כל רגש חוזר, כל מחשבה חוזרת — מחזקת מסלול עצבי.</div>
+      </div>
+      <div class="ssum3-item snew-line" id="ssum3-r3">
+        <div class="ssum3-num">03</div>
+        <div class="ssum3-text"><strong>קוהרנטיות לב-מח</strong> — הלב מוביל, המח עוקב. 5 דקות של תחושה אמיתית משנות מדידה ביולוגית.</div>
+      </div>
+      <div class="ssum3-item snew-line" id="ssum3-r4">
+        <div class="ssum3-num">04</div>
+        <div class="ssum3-text"><strong>RAS — המסנן של המח</strong> — מ-11 מיליון ביטים בשנייה, רק 50 עוברים לתודעה. המצב שלך קובע מה עובר.</div>
+      </div>
+      <div class="ssum3-punch snew-line" id="ssum3-r5">
+        שינוי הפנים משנה את מה שרואים בחוץ.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SJOURNEY4 · מסע הפגישות · סוף סיישן 3 ══ -->
+  <div class="slide" id="sjourney4">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">The Inner Shift · Session Map</div>
+          <div class="sh2-title">Where We Are Now</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">איפה אנחנו</div>
+          <div class="sh2-he-sub">שלוש פגישות מאחורינו · מה לפנינו</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="journey-body">
+      <div class="journey-step j-done">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">1</div>
+        <div class="jstep-session">מפגש ראשון · הושלם</div>
+        <div class="jstep-title">מערכת ההפעלה</div>
+        <div class="jstep-desc">אמונות מגבילות · התת-מודע</div>
+        <div class="jstep-check">✓ נעשה</div>
+      </div>
+      <div class="journey-step j-done">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">2</div>
+        <div class="jstep-session">מפגש שני · הושלם</div>
+        <div class="jstep-title">השדה שמסביבי</div>
+        <div class="jstep-desc">מה שאת נושאת — את משדרת</div>
+        <div class="jstep-check">✓ נעשה</div>
+      </div>
+      <div class="journey-step j-done">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">3</div>
+        <div class="jstep-session">מפגש שלישי · הושלם</div>
+        <div class="jstep-title">שלושת המוחות</div>
+        <div class="jstep-desc">קוהרנטיות · RAS · המסנן</div>
+        <div class="jstep-check">✓ נעשה</div>
+      </div>
+      <div class="journey-step j-active">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">4</div>
+        <div class="jstep-session">מפגש רביעי · הבא</div>
+        <div class="jstep-title">יצירת מציאות</div>
+        <div class="jstep-desc">בלוטת האצטרובל · כוונה · שדה</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">5</div>
+        <div class="jstep-session">מפגש חמישי</div>
+        <div class="jstep-title">הגרסה החדשה שלי</div>
+        <div class="jstep-desc">אינטגרציה: מי אני כשאני לא מוגבלת</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SS4 · PREVIEW SESSION 4 ══ -->
+  <div class="slide" id="ss4">
+    <div class="ss4-wrap">
+      <div class="ss4-eye">The Inner Shift · Session 04</div>
+      <div class="ss4-title">יצירת מציאות</div>
+      <div class="ss4-subtitle">המדע והמיסטי</div>
+      <div class="ss4-items snew-line" id="ss4-r1">
+        <div class="ss4-item">
+          <div class="ss4-icon">✦</div>
+          <div class="ss4-content">
+            <div class="ss4-item-he">בלוטת האצטרובל</div>
+            <div class="ss4-item-en">האנטנה הפנימית · DMT · גלי תטא · מצבי תודעה</div>
+          </div>
+        </div>
+        <div class="ss4-item">
+          <div class="ss4-icon">✦</div>
+          <div class="ss4-content">
+            <div class="ss4-item-he">ויזואליזציה כשפה</div>
+            <div class="ss4-item-en">המח לא מבחין בין מדומיין לממשי — זה הכוח</div>
+          </div>
+        </div>
+        <div class="ss4-item">
+          <div class="ss4-icon">✦</div>
+          <div class="ss4-content">
+            <div class="ss4-item-he">תדר רגשי כמנוע</div>
+            <div class="ss4-item-en">קוהרנטיות + כוונה ברורה = תבנית מציאות חדשה</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /stage -->
+
+<div class="nav">
+  <button onclick="prev()">← Back</button>
+  <div class="dots" id="dots"></div>
+  <span class="ctr" id="ctr">1 / 5</span>
+  <button onclick="next()">Next →</button>
+</div>
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  const N = slides.length;
+
+  const dotsEl = document.getElementById('dots');
+  for (let i = 0; i < N; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' on' : '');
+    d.onclick = () => go(i);
+    dotsEl.appendChild(d);
+  }
+
+  // sthreeintro · 1-step reveal
+  let stiStep = 0;
+  const STI_TOTAL = 1;
+  function revealSti(step) { const el=document.getElementById('sti-1'); if(el) el.classList.toggle('visible',step>=1); }
+  function resetSti() { stiStep=0; revealSti(0); }
+
+  // sthreebrains · 4-step reveal (brain pre-visible + focused)
+  let stbStep = 0;
+  const STB_TOTAL = 4;
+  function revealStb(step) {
+    const el2=document.getElementById('stb-2'); if(el2) { el2.classList.toggle('visible',step>=1); el2.classList.toggle('stb-dim',step>=4); }
+    const el3=document.getElementById('stb-3'); if(el3) { el3.classList.toggle('visible',step>=2); el3.classList.toggle('stb-dim',step>=4); }
+    const el1=document.getElementById('stb-1'); if(el1)   el1.classList.toggle('stb-brain-focus', step<3 || step>=4);
+    const vag=document.getElementById('stb-vagus'); if(vag) vag.classList.toggle('visible',step>=3);
+    const punch=document.getElementById('stb-punch'); if(punch) punch.classList.toggle('visible',step>=4);
+  }
+  function resetStb() { stbStep=0; revealStb(0); }
+
+  // ssynapse · 3-step reveal
+  let ssynStep = 0;
+  const SSYN_TOTAL = 3;
+  function revealSsyn(step) {
+    ['ssyn-1','ssyn-2','ssyn-3'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSsyn() { ssynStep=0; revealSsyn(0); }
+
+  // sfirequote · 3-step reveal
+  let sfqStep = 0;
+  const SFQ_TOTAL = 2;
+  function revealSfq(step) {
+    ['sfq-r1','sfq-r2'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSfq() { sfqStep=0; revealSfq(0); }
+
+  // shebb · 3-step reveal
+  let shebbStep = 0;
+  const SHEBB_TOTAL = 3;
+  function revealShebb(step) {
+    ['shebb-r1','shebb-r2','shebb-r3'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetShebb() { shebbStep=0; revealShebb(0); }
+
+  // sfire · 3-step reveal
+  let sfireStep = 0;
+  const SFIRE_TOTAL = 2;
+  function revealSfire(step) {
+    ['sfire-r1','sfire-r2'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSfire() { sfireStep=0; revealSfire(0); }
+
+  // sneurons · 4-step reveal
+  let sneurStep = 0;
+  const SNEUR_TOTAL = 2;
+  function revealSneur(step) {
+    ['sneur-1','sneur-2'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSneur() { sneurStep=0; revealSneur(0); }
+
+  // sembryo · 2-step reveal
+  let semStep = 0;
+  const SEM_TOTAL = 2;
+  function revealSem(step) {
+    const el0=document.getElementById('sem-0'); if(el0) el0.classList.toggle('visible',step>=1);
+    const el1=document.getElementById('sem-1'); if(el1) el1.classList.toggle('visible',step>=2);
+  }
+  function resetSem() { semStep=0; revealSem(0); }
+
+  // sheartq · 1-step reveal
+  let sheartqStep = 0;
+  const SHEARTQ_TOTAL = 1;
+  function revealSheartq(step) { const el=document.getElementById('sheartq-r1'); if(el) el.classList.toggle('visible',step>=1); }
+  function resetSheartq() { sheartqStep=0; revealSheartq(0); }
+
+  // sras1 · 1-step reveal
+  let sras1Step = 0;
+  const SRAS1_TOTAL = 1;
+  function revealSras1(step) { const el=document.getElementById('sras1-r1'); if(el) el.classList.toggle('visible',step>=1); }
+  function resetSras1() { sras1Step=0; revealSras1(0); }
+
+  // sras2 · 2-step reveal
+  let sras2Step = 0;
+  const SRAS2_TOTAL = 2;
+  function revealSras2(step) {
+    ['sras2-r1','sras2-r2'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSras2() { sras2Step=0; revealSras2(0); }
+
+  // ssync · 2-step reveal
+  let ssyncStep = 0;
+  const SSYNC_TOTAL = 2;
+  function revealSsync(step) {
+    ['ssync-r1','ssync-r2'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSsync() { ssyncStep=0; revealSsync(0); }
+
+  // sfieldback · 2-step reveal
+  let sfbStep = 0;
+  const SFB_TOTAL = 1;
+  function revealSfb(step) {
+    ['sfb-r1'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSfb() { sfbStep=0; revealSfb(0); }
+
+  // scocoh · 2-step reveal
+  let scocohStep = 0;
+  const SCOCOH_TOTAL = 2;
+  function revealScocoh(step) {
+    ['scocoh-r1','scocoh-r2'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetScocoh() { scocohStep=0; revealScocoh(0); }
+
+  // scocohpts · 4-step reveal
+  let scocohptsStep = 0;
+  const SCOCOHPTS_TOTAL = 4;
+  function revealScocohpts(step) {
+    ['scocohpts-r1','scocohpts-r2','scocohpts-r3','scocohpts-r4'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetScocohpts() { scocohptsStep=0; revealScocohpts(0); }
+
+  // scobody · 3-step reveal
+  let scobodyStep = 0;
+  const SCOBODY_TOTAL = 3;
+  function revealScobody(step) {
+    const r1=document.getElementById('scobody-r1'); if(r1) r1.classList.toggle('visible',step>=1);
+    const r2=document.getElementById('scobody-r2'); if(r2) r2.classList.toggle('visible',step>=2);
+    const r3=document.getElementById('scobody-r3'); if(r3) r3.classList.toggle('visible',step>=3);
+  }
+  function resetScobody() { scobodyStep=0; revealScobody(0); }
+
+  // sco5 · 2-step reveal
+  let sco5Step = 0;
+  const SCO5_TOTAL = 2;
+  function revealSco5(step) {
+    ['sco5-r1','sco5-r2'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSco5() { sco5Step=0; revealSco5(0); }
+
+  // sbridgeras · 2-step reveal
+  let sbrStep = 0;
+  const SBR_TOTAL = 2;
+  function revealSbr(step) {
+    ['sbr-r1','sbr-r2'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSbr() { sbrStep=0; revealSbr(0); }
+
+  // sras3 · 2-step reveal
+  let sras3Step = 0;
+  const SRAS3_TOTAL = 2;
+  function revealSras3(step) {
+    ['sras3-r1','sras3-r2'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSras3() { sras3Step=0; revealSras3(0); }
+
+  // sras4 · 2-step reveal
+  let sras4Step = 0;
+  const SRAS4_TOTAL = 2;
+  function revealSras4(step) {
+    ['sras4-r1','sras4-r2'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSras4() { sras4Step=0; revealSras4(0); }
+
+  // sras5 · 2-step reveal
+  let sras5Step = 0;
+  const SRAS5_TOTAL = 1;
+  function revealSras5(step) {
+    ['sras5-r1'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSras5() { sras5Step=0; revealSras5(0); }
+
+  // showto · 4-step reveal
+  let shtStep = 0;
+  const SHT_TOTAL = 4;
+  function revealSht(step) {
+    ['sht-1','sht-2','sht-3','sht-4'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSht() { shtStep=0; revealSht(0); }
+
+  // stool3 · 6-step reveal
+  let stool3Step = 0;
+  const STOOL3_TOTAL = 6;
+  function revealStool3(step) {
+    ['stool3-1','stool3-2','stool3-3','stool3-4','stool3-5','stool3-6'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetStool3() { stool3Step=0; revealStool3(0); }
+
+  // ssum3 · 5-step reveal
+  let ssum3Step = 0;
+  const SSUM3_TOTAL = 5;
+  function revealSsum3(step) {
+    ['ssum3-r1','ssum3-r2','ssum3-r3','ssum3-r4','ssum3-r5'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSsum3() { ssum3Step=0; revealSsum3(0); }
+
+  // ss4 · 2-step reveal
+  let ss4Step = 0;
+  const SS4_TOTAL = 1;
+  function revealSs4(step) {
+    ['ss4-r1'].forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('visible',step>=i+1); });
+  }
+  function resetSs4() { ss4Step=0; revealSs4(0); }
+
+  function go(n) {
+    if (n < 0 || n >= N) return;
+    if (slides[cur].id === 'sthreeintro')  resetSti();
+    if (slides[cur].id === 'sthreebrains') resetStb();
+    if (slides[cur].id === 'sneurons') resetSneur();
+    if (slides[cur].id === 'ssynapse') resetSsyn();
+    if (slides[cur].id === 'sfirequote') resetSfq();
+    if (slides[cur].id === 'shebb')    resetShebb();
+    if (slides[cur].id === 'sfire')    resetSfire();
+    if (slides[cur].id === 'sembryo')      resetSem();
+    if (slides[cur].id === 'sras1') resetSras1();
+    if (slides[cur].id === 'sras2') resetSras2();
+    if (slides[cur].id === 'sheartq')    resetSheartq();
+    if (slides[cur].id === 'sfieldback') resetSfb();
+    if (slides[cur].id === 'scocoh')     resetScocoh();
+    if (slides[cur].id === 'scocohpts') resetScocohpts();
+    if (slides[cur].id === 'scobody') resetScobody();
+    if (slides[cur].id === 'sco5')    resetSco5();
+    if (slides[cur].id === 'sbridgeras') resetSbr();
+    if (slides[cur].id === 'ssync') resetSsync();
+    if (slides[cur].id === 'sras3') resetSras3();
+    if (slides[cur].id === 'sras4') resetSras4();
+    if (slides[cur].id === 'sras5') resetSras5();
+    if (slides[cur].id === 'showto')       resetSht();
+    if (slides[cur].id === 'stool3') resetStool3();
+    if (slides[cur].id === 'ssum3') resetSsum3();
+    if (slides[cur].id === 'ss4')   resetSs4();
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('exit');
+    const old = cur;
+    setTimeout(() => slides[old].classList.remove('exit'), 520);
+    cur = n;
+    slides[cur].classList.add('active');
+    document.getElementById('ctr').textContent = (cur + 1) + ' / ' + N;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('on', i === cur));
+  }
+
+  function next() {
+    if (slides[cur].id === 'sthreeintro'  && stiStep < STI_TOTAL) { stiStep++; revealSti(stiStep); return; }
+    if (slides[cur].id === 'sthreebrains' && stbStep < STB_TOTAL) { stbStep++; revealStb(stbStep); return; }
+    if (slides[cur].id === 'sneurons'    && sneurStep < SNEUR_TOTAL) { sneurStep++; revealSneur(sneurStep); return; }
+    if (slides[cur].id === 'ssynapse'    && ssynStep  < SSYN_TOTAL)  { ssynStep++;  revealSsyn(ssynStep);  return; }
+    if (slides[cur].id === 'sfirequote'  && sfqStep   < SFQ_TOTAL)   { sfqStep++;   revealSfq(sfqStep);   return; }
+    if (slides[cur].id === 'shebb'       && shebbStep < SHEBB_TOTAL) { shebbStep++; revealShebb(shebbStep); return; }
+    if (slides[cur].id === 'sfire'       && sfireStep < SFIRE_TOTAL) { sfireStep++; revealSfire(sfireStep); return; }
+    if (slides[cur].id === 'sembryo'      && semStep < SEM_TOTAL)  { semStep++;  revealSem(semStep);  return; }
+    if (slides[cur].id === 'sheartq' && sheartqStep < SHEARTQ_TOTAL) { sheartqStep++; revealSheartq(sheartqStep); return; }
+    if (slides[cur].id === 'sras1' && sras1Step < SRAS1_TOTAL) { sras1Step++; revealSras1(sras1Step); return; }
+    if (slides[cur].id === 'sras2' && sras2Step < SRAS2_TOTAL) { sras2Step++; revealSras2(sras2Step); return; }
+    if (slides[cur].id === 'sfieldback' && sfbStep     < SFB_TOTAL)     { sfbStep++;     revealSfb(sfbStep);         return; }
+    if (slides[cur].id === 'scocoh'    && scocohStep    < SCOCOH_TOTAL)    { scocohStep++;    revealScocoh(scocohStep);       return; }
+    if (slides[cur].id === 'scocohpts' && scocohptsStep < SCOCOHPTS_TOTAL) { scocohptsStep++; revealScocohpts(scocohptsStep); return; }
+    if (slides[cur].id === 'scobody'   && scobodyStep   < SCOBODY_TOTAL)   { scobodyStep++;   revealScobody(scobodyStep);     return; }
+    if (slides[cur].id === 'sco5'    && sco5Step    < SCO5_TOTAL)    { sco5Step++;    revealSco5(sco5Step);       return; }
+    if (slides[cur].id === 'sbridgeras' && sbrStep < SBR_TOTAL) { sbrStep++; revealSbr(sbrStep); return; }
+    if (slides[cur].id === 'ssync' && ssyncStep < SSYNC_TOTAL) { ssyncStep++; revealSsync(ssyncStep); return; }
+    if (slides[cur].id === 'sras3' && sras3Step < SRAS3_TOTAL) { sras3Step++; revealSras3(sras3Step); return; }
+    if (slides[cur].id === 'sras4' && sras4Step < SRAS4_TOTAL) { sras4Step++; revealSras4(sras4Step); return; }
+    if (slides[cur].id === 'sras5' && sras5Step < SRAS5_TOTAL) { sras5Step++; revealSras5(sras5Step); return; }
+    if (slides[cur].id === 'showto'       && shtStep < SHT_TOTAL)   { shtStep++;  revealSht(shtStep);  return; }
+    if (slides[cur].id === 'stool3' && stool3Step < STOOL3_TOTAL) { stool3Step++; revealStool3(stool3Step); return; }
+    if (slides[cur].id === 'ssum3' && ssum3Step < SSUM3_TOTAL) { ssum3Step++; revealSsum3(ssum3Step); return; }
+    if (slides[cur].id === 'ss4'   && ss4Step   < SS4_TOTAL)   { ss4Step++;   revealSs4(ss4Step);   return; }
+    go(cur + 1);
+  }
+
+  function prev() {
+    if (slides[cur].id === 'sthreeintro'  && stiStep > 0) { stiStep--; revealSti(stiStep); return; }
+    if (slides[cur].id === 'sthreebrains' && stbStep > 0) { stbStep--; revealStb(stbStep); return; }
+    if (slides[cur].id === 'sneurons'    && sneurStep > 0) { sneurStep--; revealSneur(sneurStep); return; }
+    if (slides[cur].id === 'ssynapse'    && ssynStep  > 0) { ssynStep--;  revealSsyn(ssynStep);  return; }
+    if (slides[cur].id === 'sfirequote'  && sfqStep   > 0) { sfqStep--;   revealSfq(sfqStep);   return; }
+    if (slides[cur].id === 'shebb'       && shebbStep > 0) { shebbStep--; revealShebb(shebbStep); return; }
+    if (slides[cur].id === 'sfire'       && sfireStep > 0) { sfireStep--; revealSfire(sfireStep); return; }
+    if (slides[cur].id === 'sembryo'      && semStep > 0)  { semStep--;  revealSem(semStep);  return; }
+    if (slides[cur].id === 'sheartq' && sheartqStep > 0) { sheartqStep--; revealSheartq(sheartqStep); return; }
+    if (slides[cur].id === 'sras1' && sras1Step > 0) { sras1Step--; revealSras1(sras1Step); return; }
+    if (slides[cur].id === 'sras2' && sras2Step > 0) { sras2Step--; revealSras2(sras2Step); return; }
+    if (slides[cur].id === 'sfieldback' && sfbStep     > 0) { sfbStep--;     revealSfb(sfbStep);         return; }
+    if (slides[cur].id === 'scocoh'    && scocohStep    > 0) { scocohStep--;    revealScocoh(scocohStep);       return; }
+    if (slides[cur].id === 'scocohpts' && scocohptsStep > 0) { scocohptsStep--; revealScocohpts(scocohptsStep); return; }
+    if (slides[cur].id === 'scobody'   && scobodyStep   > 0) { scobodyStep--;   revealScobody(scobodyStep);     return; }
+    if (slides[cur].id === 'sco5'    && sco5Step    > 0) { sco5Step--;    revealSco5(sco5Step);       return; }
+    if (slides[cur].id === 'sbridgeras' && sbrStep > 0) { sbrStep--; revealSbr(sbrStep); return; }
+    if (slides[cur].id === 'ssync' && ssyncStep > 0) { ssyncStep--; revealSsync(ssyncStep); return; }
+    if (slides[cur].id === 'sras3' && sras3Step > 0) { sras3Step--; revealSras3(sras3Step); return; }
+    if (slides[cur].id === 'sras4' && sras4Step > 0) { sras4Step--; revealSras4(sras4Step); return; }
+    if (slides[cur].id === 'sras5' && sras5Step > 0) { sras5Step--; revealSras5(sras5Step); return; }
+    if (slides[cur].id === 'showto'       && shtStep > 0)  { shtStep--;  revealSht(shtStep);  return; }
+    if (slides[cur].id === 'stool3' && stool3Step > 0) { stool3Step--; revealStool3(stool3Step); return; }
+    if (slides[cur].id === 'ssum3' && ssum3Step > 0) { ssum3Step--; revealSsum3(ssum3Step); return; }
+    if (slides[cur].id === 'ss4'   && ss4Step   > 0) { ss4Step--;   revealSs4(ss4Step);   return; }
+    go(cur - 1);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End')  go(N - 1);
+  });
+
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend',   e => {
+    const dx = tx - e.changedTouches[0].screenX;
+    if (Math.abs(dx) > 50) dx > 0 ? next() : prev();
+  });
+</script>
+
+<!-- ══ WATERMARK ══ -->
+<div class="watermark">
+  <svg viewBox="0 0 100 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50,68 C36,60 30,42 50,24 C70,42 64,60 50,68Z"
+          transform="rotate(-42,50,68)" stroke="#d29e44" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M50,68 C36,60 30,42 50,24 C70,42 64,60 50,68Z"
+          transform="rotate(42,50,68)" stroke="#d29e44" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M50,68 C38,52 36,26 50,6 C64,26 62,52 50,68Z"
+          stroke="#d29e44" stroke-width="2.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M12,72 Q50,79 88,72" stroke="#d29e44" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+    <path d="M4,76 Q50,84 96,76" stroke="#d29e44" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+  </svg>
+  <span class="watermark-name">נועה איילנד</span>
+</div>
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Inner Shift · מפגש 1 · מדריך מנחה</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:     #f5f0e8;
+    --gold:      #d29e44;
+    --gold-dim:  rgba(210,158,68,.4);
+    --blush:     rgba(210,120,150,.85);
+    --ink:       #1a1714;
+    --ink-soft:  #2e2a26;
+    --text:      #3a3530;
+    --text-dim:  #6b6560;
+    --border:    rgba(58,53,48,.12);
+  }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: #faf8f4;
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  /* ── PAGE SHELL ── */
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 80px 60px;
+  }
+
+  /* ── DOCUMENT HEADER ── */
+  .doc-header {
+    text-align: center;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 64px;
+  }
+  .doc-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .doc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .doc-subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    letter-spacing: .08em;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 72px;
+  }
+  .section-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── TOPIC GROUP ── */
+  .topic {
+    margin-bottom: 36px;
+  }
+  .topic-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .topic ul {
+    list-style: none;
+    padding: 0;
+  }
+  .topic ul li {
+    position: relative;
+    padding-right: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .topic ul li::before {
+    content: '·';
+    position: absolute;
+    right: 0;
+    color: var(--gold);
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  .topic ul li strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .topic ul li em {
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  /* ── MEDITATION ── */
+  .meditation-card {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 10px;
+    padding: 52px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .meditation-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 55% at 50% 30%, rgba(210,120,150,.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .meditation-meta {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .meditation-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(245,240,232,.1);
+    position: relative;
+  }
+  .meditation-body {
+    position: relative;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(245,240,232,.88);
+    line-height: 2;
+  }
+  .meditation-body p {
+    margin-bottom: 20px;
+  }
+  .meditation-body p:last-child {
+    margin-bottom: 0;
+  }
+  .meditation-pause {
+    display: block;
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgba(210,120,150,.55);
+    margin: 28px 0;
+  }
+  .meditation-beat {
+    color: rgba(245,240,232,.4);
+    font-size: 15px;
+  }
+  .meditation-highlight {
+    color: var(--cream);
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  /* ── CLOSING QUOTE ── */
+  .doc-footer {
+    margin-top: 72px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .doc-footer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text-dim);
+  }
+  .doc-footer-mark {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-top: 16px;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; font-size: 14px; }
+    .page { padding: 40px 48px; }
+    .meditation-card { background: #1a1714; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="doc-eyebrow">The Inner Shift · Session 01</div>
+    <div class="doc-title">מדריך מנחה</div>
+    <div class="doc-subtitle">פנינות מהמפגש · שתי מדיטציות · נקודות מפתח</div>
+  </div>
+
+  <!-- SECTION 1: PEARLS -->
+  <div class="section">
+    <div class="section-label">חלק ראשון</div>
+    <div class="section-title">פנינות מהשיחה</div>
+
+    <div class="topic">
+      <div class="topic-title">על גלים ותדרים</div>
+      <ul>
+        <li>גל זה התנועה. תדר זה האופן שבו אנחנו מודדים אותה. הרץ זו יחידת המידה.</li>
+        <li>האור הוא לא קשור לגל אלקטרומגנטי — הוא <strong>עצמו</strong> גל אלקטרומגנטי. ההבדל היחיד בין סוגי האור הוא התדר.</li>
+        <li>אנחנו רואות פחות מ-1% מהספקטרום. המציאות גדולה בהרבה ממה שאנחנו תופסות.</li>
+        <li>הצבע לא קיים "בחוץ" — הוא הפרשנות של המוח לתדר. הגוף גם הוא לא רואה, שומע, מריח — המוח הוא שמתרגם.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">על גלי המוח</div>
+      <ul>
+        <li>דלתא ותטא — מתחת לסף ההכרה. שם נוצרו האמונות הבסיסיות שלנו.</li>
+        <li>אלפא — השער. תטא — היעד. שם הדלת לתת מודע פתוחה.</li>
+        <li>בבטא גבוה — מצב הלחץ והסחת הדעת — הדלת לתת מודע סגורה. לא ניתן לשנות תבניות עמוקות ממנו.</li>
+        <li>גמא לא נכנסים אליו ישירות — הוא מגיע כתוצאה מעבודה עמוקה דרך אלפא ותטא. הוא תדר התובנה.</li>
+        <li>ילדים עד גיל 6–7 נמצאים בעיקר בתטא — בנוסף הקורטקס הפרה-פרונטלי לא מפותח. <strong>שתי הסיבות יחד</strong> מסבירות מדוע האמונות שנוצרו אז כל כך קשות לשינוי.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">על התת מודע</div>
+      <ul>
+        <li>התת מודע הוא לא האויב — הוא גאון. הוא מריץ הרגלים כדי לחסוך למוח אנרגיה.</li>
+        <li>הוא לא מריץ את הגוף הפיזי — זו מערכת העצבים האוטונומית. הוא מריץ את <strong>ההתנהגות</strong> — את התגובות, את הדפוסים, את הבחירות שאנחנו לא ממש "בוחרות".</li>
+        <li>95% ממי שאנחנו עד גיל 35 הוא קבוצה של התנהגויות שגורות, תגובות, הרגלים ואמונות. <em>(Dispenza)</em></li>
+        <li>"תת מודע" ו"תדרי תטא ודלתא" — לא אותו דבר. התת מודע <strong>נוצר</strong> בתטא, אבל פועל ומשפיע בכל תדר, כל הזמן.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">על אפירמציות ומדיטציה</div>
+      <ul>
+        <li>אפירמציה ללא גישה לתת מודע היא כמו רגל על גז בניוטרל — אומרת "שפע שפע שפע" אבל מאמינה בעומק ש"כסף מביא בעיות". היא לא תעבוד כי היא לא מגיעה למקום שבו האמונה יושבת.</li>
+        <li>מדיטציה היא לא רק כלי רוחני — היא הכלי המדעי לגשת למקום שבו האמונה נוצרה, ולשנות אותה מהשורש.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- SECTION 2: OPENING MEDITATION -->
+  <div class="section">
+    <div class="section-label">חלק שני</div>
+    <div class="section-title">מדיטציית פתיחה</div>
+
+    <div class="meditation-card">
+      <div class="meditation-meta">כ-3–4 דקות · קול רגוע, איטי</div>
+      <div class="meditation-title">להניח הכל · להיות כאן · להיות פתוחות</div>
+      <div class="meditation-body">
+
+        <p>מצאו תנוחה נוחה.<br>
+        גב ישר, כתפיים רפויות.<br>
+        ידיים על הברכיים, כפות פתוחות כלפי מעלה.</p>
+
+        <p>עצמו עיניים.</p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p>קחו נשימה עמוקה פנימה <span class="meditation-beat">...</span><br>
+        ובנשיפה — הניחו.</p>
+
+        <p>הניחו את הטלפון.<br>
+        הניחו את היום שהיה.<br>
+        הניחו את מה שעוד צריך לקרות אחרי זה.<br>
+        הניחו אפילו את מה שאתן חושבות שאתן צריכות להרגיש עכשיו.</p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p>עוד אחת, פנימה <span class="meditation-beat">...</span><br>
+        ובשחרור — תנו לגוף לשקוע קצת.</p>
+
+        <span class="meditation-pause">· שקט ·</span>
+
+        <p>הרגישו את המשקל של הגוף.<br>
+        את הרגליים על הרצפה.<br>
+        את הנשימה שעולה ויורדת מעצמה.</p>
+
+        <p>אתן כאן.<br>
+        לא לפני עשר דקות, לא מחר —<br>
+        <span class="meditation-highlight">כאן. עכשיו. רק זה.</span></p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p>אין צורך לדעת מה יבוא.<br>
+        אין צורך להסכים עם הכל.<br>
+        אין צורך לשפוט — לא את מה שתשמעו, לא את עצמכן.</p>
+
+        <p>פשוט בואו פתוחות.<br>
+        כמו חלון שנפתח —<br>
+        לא יודעות מה ייכנס, אבל מוכנות לקבל.</p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p><span class="meditation-highlight">הזמן הזה הוא עבורכן.</span><br>
+        תנו לו להיות.</p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: CLOSING MEDITATION -->
+  <div class="section">
+    <div class="section-label">חלק שלישי</div>
+    <div class="section-title">מדיטציית סגירה</div>
+
+    <div class="meditation-card">
+      <div class="meditation-meta">כ-7–10 דקות · אחרי הצגת הכלים</div>
+      <div class="meditation-title">לרדת לאלפא · לפגוש · לשחרר · לשתול</div>
+      <div class="meditation-body">
+
+        <p>עצמו עיניים.<br>
+        ידיים פתוחות על הברכיים.</p>
+
+        <p>קחו נשימה עמוקה פנימה <span class="meditation-beat">...</span> ושחררו לאט.</p>
+
+        <p>עוד אחת <span class="meditation-beat">...</span> פנימה <span class="meditation-beat">...</span> ושחררו.</p>
+
+        <p>תנו לגוף להיות כבד.<br>
+        לכתפיים לרדת.<br>
+        לפנים להירגע — המצח, הלסת, סביב העיניים.</p>
+
+        <span class="meditation-pause">· שלב א׳ — ירידה לאלפא ·</span>
+
+        <p>אנחנו יורדות עכשיו.<br>
+        מבטא — מהמחשבות, מהרשימות, מהיום —<br>
+        לאלפא. לשקט הערני שמתחת.</p>
+
+        <p>דמיינו גל רגיעה שמתחיל בקדקוד הראש <span class="meditation-beat">...</span><br>
+        יורד דרך הצוואר <span class="meditation-beat">...</span><br>
+        הכתפיים <span class="meditation-beat">...</span><br>
+        החזה, הבטן <span class="meditation-beat">...</span><br>
+        הרגליים עד כפות הרגליים.</p>
+
+        <p>אתן שם.<br>
+        ערות. שקטות. פתוחות.<br>
+        זה אלפא.</p>
+
+        <span class="meditation-pause">· נשימה — 20 שניות שקט ·</span>
+
+        <span class="meditation-pause">· שלב ב׳ — פגישה עם האמונה ·</span>
+
+        <p>ממקום הרגיעה הזה —<br>
+        הביאו בעדינות אמונה אחת מגבילה.<br>
+        זו שכתבתן. זו שמכירות.</p>
+
+        <p>אל תנסו לנתח אותה.<br>
+        פשוט תראו אותה. תתנו לה להיות שם.</p>
+
+        <p>ושימו לב — איפה אתן מרגישות אותה בגוף?<br>
+        בחזה? בגרון? בבטן?</p>
+
+        <span class="meditation-pause">· שקט — 15 שניות ·</span>
+
+        <span class="meditation-pause">· שלב ג׳ — סימן השאלה ·</span>
+
+        <p>ועכשיו — במקום להאמין לה בעיניים עצומות —<br>
+        שימו לידה סימן שאלה.</p>
+
+        <p>שאלו את עצמכן בשקט:<br>
+        <span class="meditation-highlight">"האם זה בהכרח נכון?<br>
+        מה אם זה לא כל הסיפור?"</span></p>
+
+        <p>לא צריך תשובה.<br>
+        רק לפתוח חלון קטן של ספק.<br>
+        לתת לאמונה להיות — פחות מוצקה.</p>
+
+        <span class="meditation-pause">· שקט — 20 שניות ·</span>
+
+        <span class="meditation-pause">· שלב ד׳ — ציור תמונה חדשה ·</span>
+
+        <p>ועכשיו, מאלפא —<br>
+        מהמקום השקט הזה שבו הכל עוד אפשרי —<br>
+        ציירו בדמיון תמונה.</p>
+
+        <p>תמונה של אתן, גרסת אתן שכבר לא מאמינה לאותו משפט ישן.<br>
+        מה היא עושה? איך היא נראית?<br>
+        איך היא מרגישה בבוקר?</p>
+
+        <p>אל תחשבו עליה —<br>
+        תראו אותה.<br>
+        תכנסו אליה.</p>
+
+        <span class="meditation-pause">· שקט — 30 שניות לפחות ·</span>
+
+        <p>תרגישו את התחושה הזאת בגוף.<br>
+        תנו לה להיות אמיתית — כי במקום הזה, היא כבר אמיתית.</p>
+
+        <span class="meditation-pause">· שקט — 15 שניות ·</span>
+
+        <p>קחו נשימה עמוקה <span class="meditation-beat">...</span><br>
+        ותישארו עם זה עוד רגע.</p>
+
+        <p>ולאט לאט —<br>
+        בקצב שלכן —<br>
+        <span class="meditation-highlight">חזרו לחדר.</span></p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div class="doc-footer-text">המודעות היא הצעד הראשון. הכלים הם הצעד הבא.</div>
+    <div class="doc-footer-mark">The Inner Shift · Session 01</div>
+  </div>
+
+</div>
+</body>
+</html>

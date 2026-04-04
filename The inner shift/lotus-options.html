@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>Lotus Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #080706;
+    color: #f5f0e8;
+    font-family: 'Jost', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 40px 80px;
+    gap: 70px;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(210,158,68,.45);
+    letter-spacing: .3em;
+    text-transform: uppercase;
+  }
+  .row {
+    display: flex;
+    gap: 70px;
+    align-items: flex-end;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .option svg.large { width: 150px; height: auto; }
+  .option-num {
+    font-size: 9px;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,.22);
+  }
+  .option-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(245,240,232,.55);
+  }
+
+  /* ── WATERMARK SIZE ── */
+  .wm-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(245,240,232,.05);
+    width: 100%;
+    max-width: 900px;
+  }
+  .wm-label-top {
+    font-size: 9px;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,.2);
+  }
+  .wm-row {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .wm-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .wm-context {
+    background: #050403;
+    border-radius: 8px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border: 1px solid rgba(245,240,232,.04);
+  }
+  .wm-context svg { width: 28px; height: auto; }
+  .wm-name-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: .18em;
+    color: rgba(210,158,68,.52);
+    white-space: nowrap;
+  }
+  .wm-tag {
+    font-size: 8px;
+    letter-spacing: .26em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,.18);
+  }
+  .sep { width: 1px; height: 36px; background: rgba(245,240,232,.07); }
+</style>
+</head>
+<body>
+
+<h1>Lotus · Open</h1>
+
+<div class="row">
+
+  <!-- ══ 01: CLASSIC — 5 petals, layered, traditional ══ -->
+  <div class="option">
+    <svg class="large" viewBox="0 0 110 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- outer petals (behind, wider, lower) -->
+      <path d="M55,70 C44,62 40,42 55,22 C70,42 66,62 55,70Z"
+            transform="rotate(-60,55,70)" stroke="#d29e44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+      <path d="M55,70 C44,62 40,42 55,22 C70,42 66,62 55,70Z"
+            transform="rotate(60,55,70)" stroke="#d29e44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+      <!-- inner side petals -->
+      <path d="M55,70 C46,56 44,32 55,12 C66,32 64,56 55,70Z"
+            transform="rotate(-30,55,70)" stroke="#d29e44" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M55,70 C46,56 44,32 55,12 C66,32 64,56 55,70Z"
+            transform="rotate(30,55,70)" stroke="#d29e44" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- central petal -->
+      <path d="M55,70 C46,54 44,28 55,8 C66,28 64,54 55,70Z"
+            stroke="#d29e44" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- base water lines -->
+      <path d="M16,74 Q55,80 94,74" stroke="#d29e44" stroke-width="0.85" stroke-linecap="round"/>
+      <path d="M8,78 Q55,85 102,78" stroke="#d29e44" stroke-width="0.6" stroke-linecap="round"/>
+    </svg>
+    <div class="option-num">01</div>
+    <div class="option-name">קלאסי</div>
+  </div>
+
+  <!-- ══ 02: FULL — 7 petals, richest, most presence ══ -->
+  <div class="option">
+    <svg class="large" viewBox="0 0 120 85" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- back outer pair (widest) -->
+      <path d="M60,73 C48,65 44,46 60,28 C76,46 72,65 60,73Z"
+            transform="rotate(-70,60,73)" stroke="#d29e44" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+      <path d="M60,73 C48,65 44,46 60,28 C76,46 72,65 60,73Z"
+            transform="rotate(70,60,73)" stroke="#d29e44" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+      <!-- mid-outer pair -->
+      <path d="M60,73 C49,63 46,40 60,20 C74,40 71,63 60,73Z"
+            transform="rotate(-46,60,73)" stroke="#d29e44" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M60,73 C49,63 46,40 60,20 C74,40 71,63 60,73Z"
+            transform="rotate(46,60,73)" stroke="#d29e44" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- inner side pair -->
+      <path d="M60,73 C50,58 48,32 60,10 C72,32 70,58 60,73Z"
+            transform="rotate(-22,60,73)" stroke="#d29e44" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M60,73 C50,58 48,32 60,10 C72,32 70,58 60,73Z"
+            transform="rotate(22,60,73)" stroke="#d29e44" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- central -->
+      <path d="M60,73 C50,56 48,28 60,7 C72,28 70,56 60,73Z"
+            stroke="#d29e44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- water lines -->
+      <path d="M18,77 Q60,83 102,77" stroke="#d29e44" stroke-width="0.9" stroke-linecap="round"/>
+      <path d="M8,81 Q60,88 112,81" stroke="#d29e44" stroke-width="0.6" stroke-linecap="round"/>
+    </svg>
+    <div class="option-num">02</div>
+    <div class="option-name">מלא</div>
+  </div>
+
+  <!-- ══ 03: ROUND — 5 petals, wide rounded, like classic icon ══ -->
+  <div class="option">
+    <svg class="large" viewBox="0 0 114 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- outer petals: wide, round, low -->
+      <path d="M57,68 C42,62 36,46 57,30 C78,46 72,62 57,68Z"
+            transform="rotate(-58,57,68)" stroke="#d29e44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M57,68 C42,62 36,46 57,30 C78,46 72,62 57,68Z"
+            transform="rotate(58,57,68)" stroke="#d29e44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- inner side petals: taller -->
+      <path d="M57,68 C46,56 44,32 57,12 C70,32 68,56 57,68Z"
+            transform="rotate(-28,57,68)" stroke="#d29e44" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M57,68 C46,56 44,32 57,12 C70,32 68,56 57,68Z"
+            transform="rotate(28,57,68)" stroke="#d29e44" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- central -->
+      <path d="M57,68 C47,52 45,26 57,6 C69,26 67,52 57,68Z"
+            stroke="#d29e44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- base line -->
+      <path d="M14,72 Q57,78 100,72" stroke="#d29e44" stroke-width="0.9" stroke-linecap="round"/>
+    </svg>
+    <div class="option-num">03</div>
+    <div class="option-name">עגול</div>
+  </div>
+
+  <!-- ══ 04: SIMPLE — 3 petals, generous, minimal ══ -->
+  <div class="option">
+    <svg class="large" viewBox="0 0 100 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- side petals: wide and full -->
+      <path d="M50,68 C36,60 30,42 50,24 C70,42 64,60 50,68Z"
+            transform="rotate(-42,50,68)" stroke="#d29e44" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M50,68 C36,60 30,42 50,24 C70,42 64,60 50,68Z"
+            transform="rotate(42,50,68)" stroke="#d29e44" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- central: wide -->
+      <path d="M50,68 C38,52 36,26 50,6 C64,26 62,52 50,68Z"
+            stroke="#d29e44" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- base -->
+      <path d="M12,72 Q50,79 88,72" stroke="#d29e44" stroke-width="0.95" stroke-linecap="round"/>
+      <path d="M4,76 Q50,84 96,76" stroke="#d29e44" stroke-width="0.6" stroke-linecap="round"/>
+    </svg>
+    <div class="option-num">04</div>
+    <div class="option-name">פשוט</div>
+  </div>
+
+</div>
+
+<!-- ── WATERMARK SIZE CONTEXT ── -->
+<div class="wm-section">
+  <div class="wm-label-top">בגודל הוואטרמארק בפועל</div>
+  <div class="wm-row">
+
+    <div class="wm-item">
+      <div class="wm-context">
+        <svg viewBox="0 0 110 82" fill="none">
+          <path d="M55,70 C44,62 40,42 55,22 C70,42 66,62 55,70Z" transform="rotate(-60,55,70)" stroke="#d29e44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+          <path d="M55,70 C44,62 40,42 55,22 C70,42 66,62 55,70Z" transform="rotate(60,55,70)" stroke="#d29e44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" opacity=".7"/>
+          <path d="M55,70 C46,56 44,32 55,12 C66,32 64,56 55,70Z" transform="rotate(-30,55,70)" stroke="#d29e44" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M55,70 C46,56 44,32 55,12 C66,32 64,56 55,70Z" transform="rotate(30,55,70)" stroke="#d29e44" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M55,70 C46,54 44,28 55,8 C66,28 64,54 55,70Z" stroke="#d29e44" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16,74 Q55,80 94,74" stroke="#d29e44" stroke-width="0.85" stroke-linecap="round"/>
+          <path d="M8,78 Q55,85 102,78" stroke="#d29e44" stroke-width="0.6" stroke-linecap="round"/>
+        </svg>
+        <div class="wm-name-text">נועה איילנד</div>
+      </div>
+      <div class="wm-tag">01 · קלאסי</div>
+    </div>
+
+    <div class="sep"></div>
+
+    <div class="wm-item">
+      <div class="wm-context">
+        <svg viewBox="0 0 120 85" fill="none">
+          <path d="M60,73 C48,65 44,46 60,28 C76,46 72,65 60,73Z" transform="rotate(-70,60,73)" stroke="#d29e44" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+          <path d="M60,73 C48,65 44,46 60,28 C76,46 72,65 60,73Z" transform="rotate(70,60,73)" stroke="#d29e44" stroke-width="1.0" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+          <path d="M60,73 C49,63 46,40 60,20 C74,40 71,63 60,73Z" transform="rotate(-46,60,73)" stroke="#d29e44" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M60,73 C49,63 46,40 60,20 C74,40 71,63 60,73Z" transform="rotate(46,60,73)" stroke="#d29e44" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M60,73 C50,58 48,32 60,10 C72,32 70,58 60,73Z" transform="rotate(-22,60,73)" stroke="#d29e44" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M60,73 C50,58 48,32 60,10 C72,32 70,58 60,73Z" transform="rotate(22,60,73)" stroke="#d29e44" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M60,73 C50,56 48,28 60,7 C72,28 70,56 60,73Z" stroke="#d29e44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M18,77 Q60,83 102,77" stroke="#d29e44" stroke-width="0.9" stroke-linecap="round"/>
+          <path d="M8,81 Q60,88 112,81" stroke="#d29e44" stroke-width="0.6" stroke-linecap="round"/>
+        </svg>
+        <div class="wm-name-text">נועה איילנד</div>
+      </div>
+      <div class="wm-tag">02 · מלא</div>
+    </div>
+
+    <div class="sep"></div>
+
+    <div class="wm-item">
+      <div class="wm-context">
+        <svg viewBox="0 0 114 78" fill="none">
+          <path d="M57,68 C42,62 36,46 57,30 C78,46 72,62 57,68Z" transform="rotate(-58,57,68)" stroke="#d29e44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M57,68 C42,62 36,46 57,30 C78,46 72,62 57,68Z" transform="rotate(58,57,68)" stroke="#d29e44" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M57,68 C46,56 44,32 57,12 C70,32 68,56 57,68Z" transform="rotate(-28,57,68)" stroke="#d29e44" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M57,68 C46,56 44,32 57,12 C70,32 68,56 57,68Z" transform="rotate(28,57,68)" stroke="#d29e44" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M57,68 C47,52 45,26 57,6 C69,26 67,52 57,68Z" stroke="#d29e44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14,72 Q57,78 100,72" stroke="#d29e44" stroke-width="0.9" stroke-linecap="round"/>
+        </svg>
+        <div class="wm-name-text">נועה איילנד</div>
+      </div>
+      <div class="wm-tag">03 · עגול</div>
+    </div>
+
+    <div class="sep"></div>
+
+    <div class="wm-item">
+      <div class="wm-context">
+        <svg viewBox="0 0 100 78" fill="none">
+          <path d="M50,68 C36,60 30,42 50,24 C70,42 64,60 50,68Z" transform="rotate(-42,50,68)" stroke="#d29e44" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M50,68 C36,60 30,42 50,24 C70,42 64,60 50,68Z" transform="rotate(42,50,68)" stroke="#d29e44" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M50,68 C38,52 36,26 50,6 C64,26 62,52 50,68Z" stroke="#d29e44" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12,72 Q50,79 88,72" stroke="#d29e44" stroke-width="0.95" stroke-linecap="round"/>
+          <path d="M4,76 Q50,84 96,76" stroke="#d29e44" stroke-width="0.6" stroke-linecap="round"/>
+        </svg>
+        <div class="wm-name-text">נועה איילנד</div>
+      </div>
+      <div class="wm-tag">04 · פשוט</div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

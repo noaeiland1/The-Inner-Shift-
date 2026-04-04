@@ -1,0 +1,3047 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Inner Shift, Session 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:      #F5F0E8;
+      --cream-dim:  rgba(245,240,232,0.55);
+      --cream-faint:rgba(245,240,232,0.28);
+      --gold:       #C4A06B;
+      --gold-dim:   #A87B4F;
+      --sage:       #8BB896;
+      --sage-dim:   rgba(139,184,150,0.55);
+      --blush:      #D4957A;
+      --blush-dim:  rgba(212,149,122,0.55);
+      --border:     rgba(245,240,232,0.09);
+      --bg-0:       #0D0C0A;
+      --bg-1:       #111110;
+      --bg-2:       #151310;
+      --bg-3:       #1A1814;
+      --bg-4:       #1C1C1A;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    html, body {
+      width:100%; height:100%;
+      overflow:hidden;
+      background:#050504;
+      font-family:'Jost', sans-serif;
+    }
+
+    body { display:flex; align-items:center; justify-content:center; }
+
+    .stage {
+      position:relative;
+      width:min(100vw, 177.78vh);
+      height:min(56.25vw, 100vh);
+      overflow:hidden;
+    }
+
+    /* ── SLIDE BASE ── */
+    .slide {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      opacity:0;
+      transform:translateX(36px);
+      transition:opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
+      pointer-events:none;
+      overflow:hidden;
+      background:var(--bg-3);
+      color:var(--cream);
+    }
+    .slide.active  { opacity:1; transform:translateX(0); pointer-events:all; }
+    .slide.exit    { opacity:0; transform:translateX(-36px); }
+
+    /* unified black base, glow comes from ::before per slide */
+    #s1,#s2,#s3,#s4,#s5,#s6,#s7,#s8,#s9,#s10,#s11,#s12,#s13,
+    #snew,#slimintro,#slimex,#slimid,#slimtask,#stool,
+    #sshare,#ssummary,#squote2,#sjourney,#sjung,
+    #swelcome,#svibrate,#swave,#sspectrum,#slight,#sspectruth,#sbody,#sbodysum,#sbridge,#sbeta,#satom,
+    #srecap,#sjourney2,#skavanah,#sopening2,#satom3,
+    #sfieldbridge,#sfield,#semotion,#sconnect,
+    #sresonance,#smyfield,#sreflect,#swaterfact,#swaterself,#sclosingloop,#sdonow2,#stool2,#stool2b { background:#080706; }
+
+    /* ── SHARED HEADER ── */
+    .sh { padding:3.2% 6% 0; flex-shrink:0; }
+    .sh-eye {
+      font-size:.82vw; letter-spacing:.28em; text-transform:uppercase;
+      color:var(--sage-dim); margin-bottom:.35vw;
+    }
+    .sh-title {
+      font-family:'Cormorant Garamond', serif;
+      font-size:2.8vw; font-weight:500; line-height:1.1;
+      color:var(--cream); margin-bottom:.22vw;
+    }
+    .sh-he {
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.8vw; font-weight:300;
+      color:var(--cream-dim); direction:rtl; margin-bottom:.6vw;
+    }
+    .sh-bar { width:36px; height:1px; background:var(--gold-dim); }
+    .sh-bar-blush { background:var(--blush); }
+
+    /* ── BILINGUAL HEADER (sh2) ── */
+    .sh2         { padding:3.2% 6% 0; flex-shrink:0; }
+    .sh2-inner   { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:.75vw; gap:4%; }
+    .sh2-left    { display:flex; flex-direction:column; flex-shrink:0; }
+    .sh2-eye     { font-size:.75vw; letter-spacing:.3em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.42vw; }
+    .sh2-title   { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; line-height:1; color:var(--cream); white-space:nowrap; }
+    .sh2-right   { display:flex; flex-direction:column; align-items:stretch; direction:rtl; }
+    .sh2-he      { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; font-style:italic; color:rgba(210,158,68,.90); line-height:1.05; text-align:right; }
+    .sh2-he-sub  { font-family:'Cormorant Garamond',serif; font-size:1.15vw; font-weight:400; font-style:italic; color:rgba(245,240,232,.65); margin-top:.35vw; text-align:right; line-height:1.4; }
+    .sh2-bar     { height:1px; background:linear-gradient(90deg, rgba(210,158,68,.15) 0%, rgba(210,158,68,.55) 30%, rgba(210,158,68,.55) 70%, rgba(210,158,68,.15) 100%); }
+
+    /* ── SOURCE BAR ── */
+    .src {
+      font-size:.88vw; color:var(--cream-faint); font-style:italic;
+      padding:.7vw 6% 1.2vw; border-top:1px solid var(--border);
+      margin-top:auto; flex-shrink:0;
+    }
+
+    /* ── GOLD RULE (recurring motif) ── */
+    .gold-rule { width:55px; height:1px; background:var(--gold-dim); }
+
+    /* ── NAV ── */
+    .nav {
+      position:fixed; bottom:14px; left:50%; transform:translateX(-50%);
+      display:flex; align-items:center; gap:10px; z-index:1000;
+      background:rgba(5,5,4,.7); padding:6px 16px; border-radius:40px;
+      backdrop-filter:blur(16px); border:1px solid var(--border);
+    }
+    .nav button {
+      background:none; border:1px solid rgba(255,255,255,.15);
+      color:rgba(255,255,255,.7); padding:4px 13px; border-radius:20px;
+      cursor:pointer; font-family:'Jost',sans-serif; font-size:11px;
+      letter-spacing:.06em; transition:all .2s;
+    }
+    .nav button:hover { background:rgba(255,255,255,.07); }
+    .ctr { color:rgba(255,255,255,.3); font-size:11px; font-family:'Jost',sans-serif; letter-spacing:.1em; min-width:44px; text-align:center; }
+    .dots { display:flex; gap:5px; align-items:center; }
+    .dot  { width:4px; height:4px; border-radius:50%; background:rgba(255,255,255,.15); transition:all .3s; cursor:pointer; }
+    .dot.on { background:var(--gold); width:14px; border-radius:2px; }
+
+    /* ══════════════════════════════════
+       S1, TITLE
+    ══════════════════════════════════ */
+    #s1 { justify-content:center; align-items:center; padding:6%; background:#080706; }
+    #s1::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 55% 50% at 50% 52%, rgba(210,158,68,.38) 0%, rgba(175,120,42,.20) 32%, rgba(120,76,18,.09) 58%, transparent 78%),
+        radial-gradient(ellipse 80% 65% at 50% 55%, rgba(150,95,22,.12), transparent 85%);
+    }
+    .s1-top { position:relative; z-index:1; text-align:center; margin-bottom:3.2vw; }
+    .s1-session-num { font-family:'Cormorant Garamond',serif; font-size:1.15vw; letter-spacing:.32em; text-transform:uppercase; color:rgba(210,158,68,.92); margin-bottom:.9vw; font-weight:500; text-shadow:0 0 22px rgba(210,158,68,.35); }
+    .s1-session-he { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; color:rgba(245,240,232,.55); direction:rtl; }
+    .s1-session-sub { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:300; color:rgba(245,240,232,.38); direction:rtl; margin-top:.3vw; letter-spacing:.03em; }
+    .s1-rule-top { width:40px; height:1px; background:rgba(210,158,68,.35); margin:1.5vw auto 0; }
+    .s1-block { text-align:center; position:relative; z-index:1; }
+    .s1-main { font-family:'Cormorant Garamond',serif; font-size:8.4vw; font-weight:300; color:#F5F0E8; letter-spacing:-.01em; line-height:1; margin-bottom:.5vw; }
+    .s1-main em { font-style:normal; font-weight:600; color:rgba(210,158,68,.85); }
+    .s1-tagline { font-size:.9vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(245,240,232,.3); margin-top:1.4vw; }
+
+    /* ══════════════════════════════════
+       S-NEW, AGE 0-7 PUNCH
+    ══════════════════════════════════ */
+    #snew { justify-content:center; align-items:center; padding:8%; }
+    #snew::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 52% 46% at 50% 46%, rgba(210,158,68,.30) 0%, rgba(175,120,42,.15) 34%, rgba(120,76,18,.06) 58%, transparent 78%),
+        radial-gradient(ellipse 75% 58% at 50% 50%, rgba(150,95,22,.09), transparent 84%);
+    }
+    .snew-supra { font-family:'Cormorant Garamond',serif; font-size:1.5vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.38); text-align:center; margin-bottom:.6vw; letter-spacing:.04em; }
+    .snew-title { font-family:'Cormorant Garamond',serif; font-size:4vw; font-weight:300; color:var(--cream); text-align:center; margin-bottom:.4vw; }
+    .snew-rule  { width:50px; height:1px; background:var(--gold-dim); margin:0 auto 2.8vw; }
+    .snew-punch { display:flex; flex-direction:column; gap:1.8vw; max-width:74%; margin:0 auto; }
+    .snew-line  { opacity:0; transform:translateY(10px); transition:opacity .55s ease, transform .55s ease; text-align:center; direction:rtl; }
+    .snew-line.visible { opacity:1; transform:translateY(0); }
+    .snew-main  { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-weight:500; color:var(--cream); line-height:1.3; margin-bottom:.3vw; }
+    .snew-sup   { font-size:1.1vw; font-weight:300; color:var(--cream-faint); line-height:1.6; }
+    .snew-main-gold { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:500; color:rgba(210,158,68,.92); line-height:1.3; margin-bottom:.3vw; }
+    .snew-sup-gold  { font-size:1.15vw; font-weight:300; color:rgba(210,158,68,.6); font-style:italic; line-height:1.6; }
+    .snew-src   { opacity:0; transform:translateY(6px); transition:opacity .5s ease .25s, transform .5s ease .25s; font-size:.68vw; color:var(--cream-faint); font-style:italic; margin-top:1.8vw; text-align:center; }
+    .snew-src.visible { opacity:1; transform:translateY(0); }
+
+    /* ══════════════════════════════════
+       SLIMINTRO, LIMITING BELIEFS INTRO
+    ══════════════════════════════════ */
+    #slimintro { justify-content:center; align-items:center; padding:8%; }
+    #slimintro::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 50% 44% at 50% 48%, rgba(210,158,68,.28) 0%, rgba(175,120,42,.14) 34%, rgba(120,76,18,.06) 58%, transparent 78%),
+        radial-gradient(ellipse 72% 56% at 50% 52%, rgba(150,95,22,.09), transparent 84%);
+    }
+    .slim-eye   { font-size:.78vw; letter-spacing:.32em; text-transform:uppercase; color:rgba(210,158,68,.55); text-align:center; margin-bottom:1vw; }
+    .slim-title { font-family:'Cormorant Garamond',serif; font-size:3.8vw; font-weight:300; color:var(--cream); text-align:center; margin-bottom:.3vw; }
+    .slim-sub   { font-family:'Cormorant Garamond',serif; font-size:1.8vw; font-weight:300; font-style:italic; color:rgba(210,158,68,.65); text-align:center; margin-bottom:.4vw; }
+    .slim-rule  { width:50px; height:1px; background:var(--gold-dim); margin:0 auto 2.2vw; }
+    .slim-body  { max-width:66%; margin:0 auto; text-align:center; direction:rtl; }
+    .slim-line  { font-family:'Cormorant Garamond',serif; font-size:1.65vw; font-weight:300; color:var(--cream-dim); line-height:1.7; }
+    .slim-line strong { color:var(--cream); font-weight:500; }
+
+    /* ══════════════════════════════════
+       SLIMEX, 5 LIMITING BELIEF EXAMPLES
+    ══════════════════════════════════ */
+    #slimex {}
+    #slimex::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 48% 44% at 26% 45%, rgba(210,158,68,.22) 0%, rgba(175,120,42,.11) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 68% 56% at 28% 48%, rgba(150,95,22,.07), transparent 82%);
+    }
+    .slimex-body  { flex:1; display:flex; flex-direction:column; gap:.5vw; padding:.8% 6% 0; }
+    .belief-card  { display:flex; flex-direction:row-reverse; gap:1.5vw; padding:.7vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(212,149,122,.5); align-items:flex-start; opacity:0; transform:translateY(8px); transition:opacity .45s ease, transform .45s ease; }
+    .belief-card.visible { opacity:1; transform:translateY(0); }
+    .bc-voice-wrap{ flex:0 0 38%; padding-left:1.5vw; border-left:1px solid var(--border); }
+    .bc-vlbl      { font-size:.6vw; text-transform:uppercase; letter-spacing:.14em; color:rgba(212,149,122,.7); margin-bottom:.2vw; }
+    .bc-voice     { font-family:'Cormorant Garamond',serif; font-size:1.3vw; font-weight:500; color:var(--cream); direction:rtl; line-height:1.3; }
+    .bc-root-wrap { flex:1; }
+    .bc-rlbl      { font-size:.6vw; text-transform:uppercase; letter-spacing:.14em; color:rgba(196,160,107,.7); margin-bottom:.2vw; }
+    .bc-root      { font-size:.85vw; color:rgba(245,240,232,.62); font-weight:300; line-height:1.5; direction:rtl; }
+
+    /* ══════════════════════════════════
+       STOOL, AWARENESS PRACTICE
+    ══════════════════════════════════ */
+    #stool {}
+    #stool::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 46% at 50% 45%, rgba(210,158,68,.24) 0%, rgba(175,120,42,.12) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 72% 58% at 50% 48%, rgba(150,95,22,.08), transparent 84%);
+    }
+    .stool-body  { flex:1; display:flex; flex-direction:column; justify-content:center; gap:.65vw; padding:.5% 8% 0; }
+    .stool-step  { display:flex; flex-direction:row-reverse; gap:1.5vw; align-items:flex-start; padding:.7vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(212,149,122,.5); opacity:0; transform:translateY(6px); transition:opacity .4s ease, transform .4s ease, background .35s ease, border-color .35s ease; }
+    .stool-right { flex:0 0 22%; padding-left:1.5vw; border-left:1px solid var(--border); display:flex; flex-direction:row-reverse; align-items:center; gap:.7vw; }
+    .stool-num   { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; color:rgba(210,158,68,.55); line-height:1; flex-shrink:0; transition:color .35s ease, font-size .35s ease; }
+    .stool-verb  { font-family:'Cormorant Garamond',serif; font-size:1.4vw; font-weight:600; color:var(--cream); line-height:1.2; transition:color .35s ease; }
+    .stool-desc  { font-size:1vw; color:rgba(245,240,232,.62); font-weight:300; line-height:1.55; direction:rtl; flex:1; transition:color .35s ease; }
+    /* step-past: visible but dimmed */
+    .stool-step.step-past  { opacity:1; transform:translateY(0); background:rgba(245,240,232,.015); border-color:var(--border); border-right-color:rgba(212,149,122,.18); }
+    .stool-step.step-past .stool-num  { color:rgba(210,158,68,.25); }
+    .stool-step.step-past .stool-verb { color:rgba(245,240,232,.28); }
+    .stool-step.step-past .stool-desc { color:rgba(245,240,232,.25); }
+    /* step-active: gold highlight */
+    .stool-step.step-active { opacity:1; transform:translateY(0); background:rgba(210,158,68,.07); border-right-color:rgba(210,158,68,.75); }
+    .stool-step.step-active .stool-num  { color:rgba(210,158,68,.9); font-size:2.3vw; }
+    .stool-step.step-active .stool-verb { color:rgba(210,158,68,.95); }
+    .stool-step.step-active .stool-desc { color:rgba(245,240,232,.85); }
+    /* step-shown: all normal together */
+    .stool-step.step-shown { opacity:1; transform:translateY(0); }
+    .stool-step.step-shown .stool-num  { color:rgba(210,158,68,.55); font-size:2vw; }
+    .stool-step.step-shown .stool-verb { color:var(--cream); }
+    .stool-step.step-shown .stool-desc { color:rgba(245,240,232,.62); }
+    .stool-punch { margin-top:.5vw; padding:1vw 1.4vw; border-top:1px solid var(--border); font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-style:italic; color:rgba(210,158,68,.75); text-align:center; direction:rtl; line-height:1.5; opacity:0; transition:opacity .5s ease .1s; }
+    .stool-punch.visible { opacity:1; }
+
+    /* ══════════════════════════════════
+       SLIMID, HOW TO IDENTIFY
+    ══════════════════════════════════ */
+    #slimid {}
+    #slimid::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 46% at 50% 45%, rgba(210,158,68,.26) 0%, rgba(175,120,42,.13) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 72% 58% at 50% 48%, rgba(150,95,22,.08), transparent 84%);
+    }
+    .slimid-body { flex:1; display:flex; flex-direction:column; justify-content:center; gap:1.2vw; padding:.5% 8% 0; }
+    .slimid-item { display:flex; gap:1.8vw; align-items:flex-start; padding:1.1vw 1.4vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(212,149,122,.4); direction:rtl; }
+    .slimid-num  { font-family:'Cormorant Garamond',serif; font-size:2.4vw; font-weight:300; color:rgba(210,158,68,.4); line-height:1; flex-shrink:0; }
+    .slimid-txt  { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:400; color:var(--cream); line-height:1.5; }
+    .slimid-txt span { display:block; font-size:.88vw; font-family:'Jost',sans-serif; font-weight:300; color:var(--cream-faint); margin-top:.3vw; font-style:italic; }
+
+    /* ══════════════════════════════════
+       SLIMTASK, EXERCISE
+    ══════════════════════════════════ */
+    #slimtask { padding:0; }
+    .stask-grid      { flex:1; display:flex; gap:1.8vw; padding:1.5% 6% 0; align-items:flex-start; }
+    .stask-col       { flex:1; display:flex; flex-direction:column; gap:.55vw; padding:1.2vw 1.4vw; background:rgba(245,240,232,.05); border:1px solid rgba(245,240,232,.12); border-radius:6px; direction:rtl; }
+    .stask-col-num   { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:300; color:rgba(210,158,68,.65); line-height:1; margin-bottom:.3vw; }
+    .stask-field-lbl { font-size:.78vw; letter-spacing:.12em; text-transform:uppercase; color:rgba(212,149,122,.9); font-weight:400; }
+    .stask-uline     { height:1px; background:rgba(245,240,232,.25); margin-bottom:.2vw; }
+    .stask-bottom-note { padding:.9vw 6% 0; font-size:.78vw; color:rgba(245,240,232,.45); font-style:italic; text-align:center; letter-spacing:.06em; }
+    #slimtask::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 46% 44% at 30% 44%, rgba(210,158,68,.22) 0%, rgba(175,120,42,.11) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 65% 56% at 32% 48%, rgba(150,95,22,.07), transparent 82%);
+    }
+    .stask-wrap   { display:flex; gap:5%; align-items:flex-start; position:relative; z-index:1; }
+    .stask-left   { flex:1; }
+    .stask-eye    { font-size:.78vw; letter-spacing:.22em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.4vw; }
+    .stask-title  { font-family:'Cormorant Garamond',serif; font-size:3vw; font-weight:400; direction:rtl; color:var(--cream); margin-bottom:.3vw; }
+    .stask-inst   { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:300; color:var(--cream-dim); direction:rtl; line-height:1.6; margin-bottom:1.6vw; }
+    .stask-eg-lbl { font-size:.7vw; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:.5vw; }
+    .stask-eg     { padding:1vw 1.4vw; background:rgba(196,160,107,.06); border:1px solid rgba(196,160,107,.2); border-radius:6px; }
+    .stask-eg-v   { font-family:'Cormorant Garamond',serif; font-size:1.4vw; font-weight:500; color:var(--cream); direction:rtl; margin-bottom:.3vw; }
+    .stask-eg-r   { font-size:.82vw; color:var(--cream-faint); font-weight:300; direction:rtl; line-height:1.5; }
+    .stask-eg-r span { color:var(--gold-dim); }
+    .stask-right  { flex:0 0 38%; background:rgba(245,240,232,.03); border:1px solid var(--border); border-radius:7px; padding:1.4vw; }
+    .stask-r-eye  { font-size:.72vw; letter-spacing:.15em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:1vw; }
+    .stask-prompt { margin-bottom:1.2vw; }
+    .stask-qlbl   { font-family:'Cormorant Garamond',serif; font-size:1.15vw; font-weight:500; direction:rtl; color:var(--cream-dim); margin-bottom:.5vw; }
+    .stask-uline  { height:1px; background:rgba(139,184,150,.3); margin-bottom:.4vw; }
+    .stask-note   { font-size:.78vw; color:var(--cream-faint); font-style:italic; direction:rtl; line-height:1.6; margin-top:.8vw; }
+
+    /* ══════════════════════════════════
+       S2, QUOTE
+    ══════════════════════════════════ */
+    #s2 { justify-content:center; align-items:center; padding:8%; }
+    #s2::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 50% 45% at 50% 36%, rgba(210,158,68,.32) 0%, rgba(175,120,42,.16) 34%, rgba(120,76,18,.07) 60%, transparent 78%),
+        radial-gradient(ellipse 72% 55% at 50% 40%, rgba(150,95,22,.10), transparent 82%);
+    }
+    .s2-qmark { font-family:'Cormorant Garamond',serif; font-size:7vw; color:var(--gold-dim); opacity:.3; line-height:.5; display:block; text-align:center; margin-bottom:.8vw; }
+    .s2-qt    { font-family:'Cormorant Garamond',serif; font-size:3vw; font-style:italic; font-weight:300; color:var(--cream); line-height:1.42; text-align:center; margin-bottom:1.8vw; }
+    .s2-rule  { width:55%; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); margin:0 auto 1.4vw; }
+    .s2-by    { font-size:.95vw; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); text-align:center; margin-bottom:2.4vw; }
+    .s2-sec   { font-size:1.25vw; font-weight:300; font-style:italic; color:var(--cream-faint); line-height:1.7; text-align:center; max-width:68%; margin:0 auto; }
+
+    /* ══════════════════════════════════
+       S3, QUESTION
+    ══════════════════════════════════ */
+    #s3 { justify-content:center; align-items:center; padding:8%; }
+    #s3::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 52% 48% at 50% 44%, rgba(210,158,68,.30) 0%, rgba(175,120,42,.15) 34%, rgba(120,76,18,.06) 60%, transparent 78%),
+        radial-gradient(ellipse 75% 60% at 50% 48%, rgba(150,95,22,.09), transparent 84%);
+    }
+    .s3-label { font-size:.88vw; letter-spacing:.28em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:2vw; text-align:center; }
+    .s3-qhe   { font-family:'Cormorant Garamond',serif; font-size:3.7vw; font-weight:500; direction:rtl; color:var(--cream); line-height:1.3; margin-bottom:1vw; text-align:center; }
+    .s3-qen   { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-style:italic; font-weight:300; color:var(--cream-dim); margin-bottom:3vw; text-align:center; }
+    .s3-sage-bar { width:40px; height:1px; background:var(--sage-dim); margin:0 auto 2vw; }
+    .s3-inst  { font-size:1.1vw; font-weight:300; color:var(--cream-dim); line-height:1.65; text-align:center; margin-bottom:.7vw; }
+    .s3-note  { font-size:.95vw; color:var(--blush-dim); font-style:italic; letter-spacing:.05em; text-align:center; }
+
+    /* ══════════════════════════════════
+       S4, 95/5
+    ══════════════════════════════════ */
+    #s4 {}
+    #s4::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 48% 44% at 22% 58%, rgba(210,158,68,.28) 0%, rgba(175,120,42,.14) 34%, rgba(120,76,18,.06) 58%, transparent 78%),
+        radial-gradient(ellipse 68% 55% at 25% 62%, rgba(150,95,22,.09), transparent 82%);
+    }
+    .s4-body  { flex:1; display:flex; gap:4%; align-items:center; padding:1.5% 6% 0; }
+    .s4-chart { flex:0 0 32%; display:flex; justify-content:center; align-items:center; }
+    .donut {
+      width:19vw; height:19vw; border-radius:50%;
+      background:conic-gradient(rgba(245,240,232,.9) 0% 95%, var(--blush) 95% 100%);
+      position:relative; display:flex; align-items:center; justify-content:center;
+    }
+    .donut::after { content:''; position:absolute; width:58%; height:58%; background:var(--bg-3); border-radius:50%; }
+    .donut-in  { position:absolute; z-index:1; text-align:center; }
+    .donut-in .dn { font-family:'Cormorant Garamond',serif; font-size:2.6vw; font-weight:600; color:var(--cream); display:block; line-height:1; }
+    .donut-in .dl { font-size:.68vw; color:var(--cream-faint); letter-spacing:.08em; text-transform:uppercase; }
+    .s4-legend { flex:1; display:flex; flex-direction:column; gap:1.7vw; }
+    .s4-item   { display:flex; gap:1.1vw; align-items:flex-start; }
+    .s4-bar    { width:3px; min-width:3px; border-radius:2px; align-self:stretch; margin-top:.3vw; }
+    .s4-pct    { font-family:'Cormorant Garamond',serif; font-size:3vw; font-weight:600; line-height:1; margin-bottom:.2vw; }
+    .s4-name   { font-size:1vw; font-weight:500; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.3vw; color:var(--cream-dim); }
+    .s4-desc   { font-size:.88vw; color:var(--cream-faint); font-weight:300; line-height:1.55; }
+    .s4-insight { padding:.9vw 1.2vw; background:rgba(245,240,232,.04); border-radius:6px; border-left:2px solid var(--gold-dim); font-size:.88vw; line-height:1.58; color:var(--cream-dim); }
+
+    /* ══════════════════════════════════
+       S5, CHILDHOOD
+    ══════════════════════════════════ */
+    #s5 {}
+    #s5::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 44% 46% at 24% 60%, rgba(210,158,68,.26) 0%, rgba(175,120,42,.13) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 65% 58% at 28% 65%, rgba(150,95,22,.08), transparent 82%);
+    }
+    .s5-body  { flex:1; display:flex; gap:5%; align-items:center; padding:1% 6% 0; }
+    .s5-brain { flex:0 0 40%; display:flex; flex-direction:column; align-items:center; }
+    .brain-badge { background:rgba(212,149,122,.18); border:1px solid rgba(212,149,122,.3); color:var(--blush); padding:.55vw 1.1vw; border-radius:4px; font-size:.85vw; font-weight:500; text-align:center; line-height:1.45; margin-top:1.2vw; }
+    .brain-note  { font-size:.82vw; color:var(--cream-faint); text-align:center; margin-top:.7vw; font-weight:300; line-height:1.5; }
+    .s5-q-col { flex:1; }
+    .s5-hint  { font-size:.88vw; color:var(--cream-faint); margin-bottom:1vw; font-weight:300; }
+    .s5-q     { display:flex; gap:1vw; align-items:flex-start; margin-bottom:1vw; padding:1vw 1.3vw; background:rgba(139,184,150,.06); border-left:2px solid rgba(139,184,150,.4); border-radius:0 6px 6px 0; }
+    .s5-qn    { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:600; color:var(--sage); opacity:.5; line-height:1; min-width:1.6vw; }
+    .s5-qt    { font-family:'Cormorant Garamond',serif; font-size:1.6vw; font-weight:400; color:var(--cream); line-height:1.35; }
+    .s5-stmt  { font-size:.95vw; font-weight:400; padding:1vw 1.3vw; background:rgba(245,240,232,.05); border-radius:6px; line-height:1.65; color:var(--cream-dim); border:1px solid var(--border); }
+    .s5-stmt strong { color:var(--gold); }
+
+    /* ══════════════════════════════════
+       S6, RAS
+    ══════════════════════════════════ */
+    #s6 {}
+    #s6::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 42% 48% at 20% 52%, rgba(210,158,68,.25) 0%, rgba(175,120,42,.12) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 60% 60% at 22% 56%, rgba(150,95,22,.08), transparent 82%);
+    }
+    .s6-body  { flex:1; display:flex; gap:5%; align-items:flex-start; padding:1.2% 6% 0; }
+    .s6-funnel{ flex:0 0 33%; }
+    .rf-top   { padding:.85vw 1vw; border-radius:4px; text-align:center; background:rgba(212,149,122,.08); border:1px solid rgba(212,149,122,.22); }
+    .rf-mid   { background:rgba(245,240,232,.06); border:1px solid var(--border); padding:.85vw 1vw; border-radius:4px; text-align:center; }
+    .rf-bot   { padding:.85vw 1vw; border-radius:4px; text-align:center; background:rgba(139,184,150,.08); border:1px solid rgba(139,184,150,.22); }
+    .rf-num   { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-weight:600; }
+    .rf-top .rf-num { color:var(--blush); }
+    .rf-bot .rf-num { color:var(--sage); }
+    .rf-mid .rf-num { color:var(--gold); }
+    .rf-lbl   { font-size:.76vw; color:var(--cream-faint); }
+    .rf-mid-title { font-size:.78vw; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:.25vw; }
+    .rf-mid-desc  { font-size:.75vw; color:var(--cream-faint); line-height:1.4; }
+    .rf-arrow { text-align:center; font-size:1.6vw; color:var(--cream-faint); line-height:1.15; margin:.2vw 0; }
+    .rf-cite  { font-size:.68vw; color:var(--cream-faint); font-style:italic; text-align:center; margin-top:.7vw; }
+    .s6-ex    { flex:1; }
+    .s6-hint  { font-size:.85vw; color:var(--cream-faint); margin-bottom:.8vw; font-weight:300; }
+    .ex-card  { padding:.85vw 1.1vw; border-radius:5px; border-left:2px solid var(--blush); background:rgba(212,149,122,.05); margin-bottom:.75vw; }
+    .ex-card.good { border-left-color:var(--sage); background:rgba(139,184,150,.05); }
+    .ex-bl    { font-size:.72vw; letter-spacing:.14em; text-transform:uppercase; color:var(--blush-dim); margin-bottom:.2vw; }
+    .ex-card.good .ex-bl { color:var(--sage-dim); }
+    .ex-bel   { font-size:.95vw; font-weight:500; color:var(--cream); margin-bottom:.22vw; }
+    .ex-rl    { font-size:.72vw; letter-spacing:.08em; color:var(--sage-dim); font-style:italic; margin-bottom:.18vw; }
+    .ex-sees  { font-size:.84vw; color:var(--cream-faint); font-weight:300; line-height:1.45; }
+
+    /* ══════════════════════════════════
+       S7, BRAIN WAVES
+    ══════════════════════════════════ */
+    #s7 {}
+    #s7::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 50% at 50% 55%, rgba(70,165,195,.18) 0%, rgba(45,125,155,.09) 40%, rgba(25,80,110,.04) 65%, transparent 82%),
+        radial-gradient(ellipse 80% 65% at 50% 58%, rgba(35,100,130,.06), transparent 88%);
+    }
+    .s7-grid { flex:1; display:flex; flex-direction:column; gap:.6vw; padding:1% 6% 0; max-width:96%; margin:0 auto; width:100%; }
+    .wave-row { display:flex; align-items:center; gap:1.3vw; padding:.85vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.02); border:1px solid var(--border); }
+    .wave-row.hi-blush { background:rgba(212,149,122,.06); border-color:rgba(212,149,122,.18); }
+    .wave-row.hi-sage  { background:rgba(139,184,150,.06); border-color:rgba(139,184,150,.18); }
+    .wname { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:600; min-width:5.5vw; }
+    .whz   { font-size:1vw; color:var(--cream-faint); min-width:5vw; font-weight:300; }
+    .wsvg  { flex:0 0 24vw; }
+    .wdesc { font-size:1vw; color:var(--cream-faint); min-width:11vw; line-height:1.4; }
+    .wex   { font-size:1vw; flex:1; line-height:1.4; color:var(--cream-dim); }
+    .wtag  { display:inline-block; padding:.15vw .55vw; border-radius:20px; font-size:.68vw; font-weight:500; letter-spacing:.04em; margin-left:.4vw; }
+    .t-key   { background:rgba(212,149,122,.18); color:var(--blush); }
+    .t-block { background:rgba(180,50,50,.14); color:#D05555; }
+
+    /* ══════════════════════════════════
+       S8, LOOP
+    ══════════════════════════════════ */
+    #s8 {}
+    #s8::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 46% 48% at 26% 60%, rgba(210,158,68,.26) 0%, rgba(175,120,42,.13) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 65% 60% at 28% 64%, rgba(150,95,22,.08), transparent 82%);
+    }
+    .s8-body { flex:1; display:flex; gap:3%; align-items:center; padding:.8% 5% 0; }
+    .s8-diag { flex:0 0 44%; position:relative; height:29vw; display:flex; align-items:center; justify-content:center; }
+    .loop-ring { position:absolute; width:25vw; height:25vw; border-radius:50%; border:1px dashed rgba(139,184,150,.18); }
+    .lnode {
+      position:absolute; width:10vw; height:10vw; border-radius:50%;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; padding:.8vw;
+    }
+    .ln-top    { top:0; left:50%; transform:translateX(-50%); }
+    .ln-right  { right:0; top:50%; transform:translateY(-50%); }
+    .ln-bottom { bottom:0; left:50%; transform:translateX(-50%); }
+    .ln-left   { left:0; top:50%; transform:translateY(-50%); }
+    .ln-1 { background:rgba(245,240,232,.05); border:1px solid rgba(245,240,232,.14); }
+    .ln-2 { background:rgba(139,184,150,.08); border:1px solid rgba(139,184,150,.25); }
+    .ln-3 { background:rgba(212,149,122,.1);  border:1px solid rgba(212,149,122,.28); }
+    .ln-4 { background:rgba(196,160,107,.07); border:1px solid rgba(196,160,107,.2); }
+    .lnode-he  { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:600; }
+    .lnode-en  { font-size:.62vw; color:var(--cream-faint); letter-spacing:.07em; text-transform:uppercase; }
+    .lnode-dsc { font-size:.58vw; color:var(--cream-faint); margin-top:.22vw; line-height:1.35; }
+    .larrow    { position:absolute; font-size:1.3vw; color:var(--sage-dim); }
+    .la-tr { top:4.5vw; right:1.5vw; transform:rotate(45deg); }
+    .la-br { bottom:4.5vw; right:1.5vw; transform:rotate(135deg); }
+    .la-bl { bottom:4.5vw; left:1.5vw; transform:rotate(225deg); }
+    .la-tl { top:4.5vw; left:1.5vw; transform:rotate(315deg); }
+    .s8-info { flex:1; display:flex; flex-direction:column; gap:1.1vw; }
+    .s8-callout { padding:1.2vw 1.4vw; background:rgba(245,240,232,.04); border:1px solid var(--border); border-radius:6px; }
+    .s8-cq { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-style:italic; font-weight:300; line-height:1.52; margin-bottom:.55vw; color:var(--cream-dim); }
+    .s8-cs { font-size:.7vw; color:var(--gold); letter-spacing:.09em; }
+    .s8-step { display:flex; gap:.9vw; align-items:flex-start; }
+    .s8-arr  { font-family:'Cormorant Garamond',serif; font-size:1.8vw; color:var(--sage-dim); line-height:1; flex-shrink:0; }
+    .s8-txt  { font-size:.88vw; color:var(--cream-dim); line-height:1.58; }
+    .s8-txt strong { color:var(--blush); }
+    .s8-txt .sage  { color:var(--sage); }
+
+    /* ══════════════════════════════════
+       S9, EM FIELD
+    ══════════════════════════════════ */
+    #s9 {}
+    #s9::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 42% 50% at 20% 58%, rgba(210,158,68,.24) 0%, rgba(175,120,42,.12) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 62% 62% at 22% 62%, rgba(150,95,22,.08), transparent 82%);
+    }
+    .s9-body { flex:1; display:flex; gap:5%; align-items:center; padding:.8% 6% 0; }
+    .s9-vis  { flex:0 0 37%; display:flex; justify-content:center; align-items:center; }
+    .field-wrap { position:relative; width:21vw; height:27vw; display:flex; align-items:center; justify-content:center; }
+    .fring { position:absolute; border-radius:50%; border-style:solid; }
+    .fr1 { width:21vw; height:27vw; border:1px solid rgba(139,184,150,.1);  }
+    .fr2 { width:17vw; height:22vw; border:1px solid rgba(139,184,150,.16); }
+    .fr3 { width:13vw; height:17vw; border:1.5px solid rgba(139,184,150,.26); }
+    .fr4 { width:9vw;  height:12vw; border:2px solid rgba(139,184,150,.38); }
+    .fr5 { width:5vw;  height:7.5vw; border:2px solid rgba(212,149,122,.45); background:rgba(212,149,122,.04); }
+    .body-sil { position:absolute; display:flex; flex-direction:column; align-items:center; z-index:2; }
+    .sil-head { width:2vw; height:2vw; border-radius:50%; background:rgba(245,240,232,.18); border:1px solid rgba(245,240,232,.25); }
+    .sil-body { width:2.9vw; height:4.2vw; background:rgba(245,240,232,.1); border:1px solid rgba(245,240,232,.2); border-radius:0 0 4px 4px; margin-top:-2px; }
+    .heart-glow { position:absolute; width:1.6vw; height:1.6vw; border-radius:50%; background:radial-gradient(circle, rgba(212,149,122,.85), transparent 70%); top:37%; z-index:3; }
+    .field-meas { position:absolute; bottom:-.4vw; left:50%; transform:translateX(-50%); font-size:.65vw; color:rgba(139,184,150,.5); white-space:nowrap; letter-spacing:.09em; }
+    .s9-info  { flex:1; display:flex; flex-direction:column; gap:1.2vw; }
+    .s9-stat  { display:flex; gap:1vw; align-items:flex-start; padding:.85vw 1.2vw; border-left:1.5px solid rgba(139,184,150,.4); }
+    .s9-snum  { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:600; color:var(--gold); line-height:1; min-width:5.2vw; }
+    .s9-stxt  { font-size:.86vw; color:var(--cream-faint); font-weight:300; line-height:1.58; }
+    .s9-stxt strong { color:var(--cream-dim); font-weight:500; }
+    .s9-stmt  { padding:1vw 1.3vw; border-top:1px solid var(--border); font-family:'Cormorant Garamond',serif; font-size:1.32vw; font-style:italic; font-weight:300; color:var(--cream-faint); line-height:1.58; }
+
+    /* ══════════════════════════════════
+       S10, EXERCISE
+    ══════════════════════════════════ */
+    #s10 {}
+    #s10::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 44% at 76% 52%, rgba(210,158,68,.24) 0%, rgba(175,120,42,.12) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 70% 58% at 74% 56%, rgba(150,95,22,.07), transparent 82%);
+    }
+    .s10-body { flex:1; display:flex; flex-direction:column; padding:1% 6% 0; gap:.75vw; }
+    .ex-grid  { display:grid; grid-template-columns:1fr 1fr; gap:.7vw 1.6vw; }
+    .ex-item  { padding:1vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); position:relative; }
+    .ex-num   { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:300; color:var(--sage); opacity:.2; position:absolute; top:.4vw; right:.8vw; line-height:1; }
+    .ex-q     { font-family:'Cormorant Garamond',serif; font-size:1.2vw; font-weight:500; direction:rtl; color:var(--cream); line-height:1.4; margin-bottom:.45vw; }
+    .ex-blank { height:1.3vw; border-bottom:1px solid rgba(139,184,150,.35); margin-bottom:.4vw; opacity:.7; }
+    .ex-feel  { font-size:.76vw; color:var(--cream-faint); font-style:italic; direction:rtl; }
+    .ex-full  { padding:1vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); position:relative; }
+    .ex-note  { padding:.7vw 1.1vw; background:rgba(245,240,232,.05); border-radius:4px; font-size:.9vw; font-weight:300; text-align:center; letter-spacing:.05em; color:var(--cream-dim); border:1px solid var(--border); }
+
+    /* ══════════════════════════════════
+       S11, MEDITATION
+    ══════════════════════════════════ */
+    #s11 { justify-content:center; align-items:center; }
+    #s11::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 52% 46% at 50% 28%, rgba(210,158,68,.34) 0%, rgba(175,120,42,.17) 34%, rgba(120,76,18,.07) 58%, transparent 78%),
+        radial-gradient(ellipse 75% 58% at 50% 32%, rgba(150,95,22,.10), transparent 84%);
+    }
+    .orb {
+      position:absolute; top:10%; left:50%; transform:translateX(-50%);
+      width:11vw; height:11vw; border-radius:50%;
+      background:radial-gradient(circle at 40% 40%, rgba(196,160,107,.1), rgba(139,184,150,.05) 50%, transparent 70%);
+      border:1px solid rgba(196,160,107,.07);
+      animation:orb-pulse 4s ease-in-out infinite;
+    }
+    @keyframes orb-pulse {
+      0%,100% { transform:translateX(-50%) scale(1);    opacity:.7; }
+      50%      { transform:translateX(-50%) scale(1.12); opacity:1; }
+    }
+    .med-text  { position:relative; z-index:1; text-align:center; margin-top:7vw; }
+    .med-main  { font-family:'Cormorant Garamond',serif; font-size:5.5vw; font-weight:300; color:var(--cream); letter-spacing:.06em; margin-bottom:.9vw; }
+    .med-sub   { font-size:1.35vw; font-weight:300; color:var(--cream-faint); letter-spacing:.2em; }
+
+    /* ══════════════════════════════════
+       S12, HOMEWORK
+    ══════════════════════════════════ */
+    #s12 { justify-content:center; padding:3.5% 7%; }
+    #s12::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 46% 44% at 28% 42%, rgba(210,158,68,.25) 0%, rgba(175,120,42,.13) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 65% 56% at 30% 46%, rgba(150,95,22,.08), transparent 82%);
+    }
+    .s12-row  { display:flex; gap:5%; align-items:flex-start; }
+    .s12-left { flex:1; }
+    .s12-eye  { font-size:.82vw; letter-spacing:.25em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.4vw; }
+    .s12-title{ font-family:'Cormorant Garamond',serif; font-size:3vw; font-weight:400; direction:rtl; color:var(--cream); margin-bottom:.35vw; }
+    .s12-sub  { font-size:.95vw; color:var(--cream-faint); font-weight:300; direction:rtl; text-align:right; margin-bottom:1.8vw; }
+    .s12-box  { background:rgba(139,184,150,.06); border:1px solid rgba(139,184,150,.18); border-radius:7px; padding:1.4vw 1.8vw; margin-bottom:1.1vw; }
+    .s12-inst { font-size:.95vw; color:var(--cream-dim); direction:rtl; text-align:right; margin-bottom:1.2vw; line-height:1.6; }
+    .s12-q    { display:flex; gap:.9vw; align-items:flex-start; margin-bottom:.85vw; direction:rtl; }
+    .s12-qn   { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:600; color:var(--blush); min-width:1.3vw; }
+    .s12-qt   { font-family:'Cormorant Garamond',serif; font-size:1.5vw; font-weight:400; color:var(--cream); direction:rtl; line-height:1.4; }
+    .s12-note { font-size:1.05vw; color:var(--cream-faint); font-weight:300; font-style:italic; direction:rtl; text-align:right; line-height:1.7; }
+    .s12-hint { font-size:.78vw; letter-spacing:.16em; text-transform:uppercase; color:rgba(212,149,122,.45); margin-top:.2vw; font-family:'Jost',sans-serif; font-weight:300; }
+    .s12-right{ flex:0 0 33%; background:rgba(245,240,232,.04); border:1px solid var(--border); border-radius:7px; padding:1.4vw; }
+    .s12-r-eye{ font-size:.76vw; letter-spacing:.14em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.85vw; }
+    .s12-r-item{ font-size:.88vw; color:var(--cream-dim); line-height:1.85; }
+    .s12-see  { margin-top:1.3vw; padding-top:.9vw; border-top:1px solid var(--border); font-family:'Cormorant Garamond',serif; font-size:1.2vw; font-style:italic; color:var(--cream-faint); }
+
+    /* ══════════════════════════════════
+       S13, CLOSING
+    ══════════════════════════════════ */
+    #s13 { justify-content:center; align-items:center; padding:8%; position:relative; overflow:hidden; }
+    #s13::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 58%, rgba(198, 90, 120, .22) 0%, rgba(180,70,100,.10) 38%, rgba(140,50,80,.04) 62%, transparent 82%),
+        radial-gradient(ellipse 55% 45% at 50% 55%, rgba(230,130,150,.10) 0%, transparent 65%),
+        radial-gradient(ellipse 100% 90% at 50% 62%, rgba(110,30,55,.08), transparent 90%);
+    }
+    @keyframes s13breathe {
+      0%,100% { opacity:.88; text-shadow:0 0 60px rgba(198,90,120,.12); }
+      50%     { opacity:1;   text-shadow:0 0 100px rgba(198,90,120,.28), 0 0 180px rgba(230,130,150,.10); }
+    }
+    @keyframes s13float {
+      0%   { opacity:0; transform:translateY(0) scale(1); }
+      15%  { opacity:1; }
+      85%  { opacity:.5; }
+      100% { opacity:0; transform:translateY(-9vw) scale(.5); }
+    }
+    @keyframes s13hug {
+      0%,100% { transform:scaleX(1) scaleY(1); opacity:.18; }
+      50%     { transform:scaleX(1.03) scaleY(1.04); opacity:.24; }
+    }
+    .s13-block    { text-align:center; position:relative; z-index:2; }
+    .s13-toda     { font-family:'Cormorant Garamond',serif; font-size:9.5vw; font-weight:300; color:var(--cream); letter-spacing:.04em; line-height:1; margin-bottom:1.8vw; direction:rtl; animation:s13breathe 4.5s ease-in-out infinite; }
+    .s13-lines    { display:flex; flex-direction:column; gap:.55vw; margin-bottom:2.2vw; direction:rtl; }
+    .s13-line     { font-family:'Cormorant Garamond',serif; font-size:1.5vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.55); line-height:1.4; }
+    .s13-rule     { width:40px; height:1px; background:rgba(198,90,120,.5); margin:0 auto 1.8vw; }
+    .s13-next     { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:400; color:rgba(230,150,165,.82); direction:rtl; letter-spacing:.02em; margin-bottom:3vw; }
+    .s13-brand    { font-size:.72vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(245,240,232,.18); }
+    .s13-pt       { position:absolute; border-radius:50%; pointer-events:none; z-index:1; animation:s13float linear infinite; }
+    .s13-embrace  { position:absolute; inset:0; pointer-events:none; z-index:1; animation:s13hug 6s ease-in-out infinite; }
+
+    /* ══════════════════════════════════
+       SSHARE, SHARING MOMENT
+    ══════════════════════════════════ */
+    #sshare::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 44% at 50% 50%, rgba(139,184,150,.18) 0%, rgba(100,148,110,.08) 42%, transparent 72%),
+        radial-gradient(ellipse 70% 55% at 50% 50%, rgba(100,148,110,.06), transparent 82%);
+    }
+    .sshare-center { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 12%; }
+    .sshare-eye    { font-size:.82vw; letter-spacing:.28em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:1.6vw; }
+    .sshare-title  { font-family:'Cormorant Garamond',serif; font-size:4.2vw; font-weight:400; color:var(--cream); line-height:1.15; margin-bottom:1.4vw; direction:rtl; }
+    .sshare-bar    { width:40px; height:1px; background:var(--sage); margin:0 auto 2vw; }
+    .sshare-prompt { font-family:'Cormorant Garamond',serif; font-size:1.85vw; font-weight:300; color:var(--cream-dim); direction:rtl; line-height:1.7; margin-bottom:1.8vw; }
+    .sshare-note   { font-size:.82vw; letter-spacing:.22em; text-transform:uppercase; color:rgba(139,184,150,.55); }
+
+    /* ══════════════════════════════════
+       SSUMMARY, SESSION SUMMARY
+    ══════════════════════════════════ */
+    #ssummary::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 48% at 50% 44%, rgba(210,158,68,.22) 0%, rgba(175,120,42,.10) 38%, rgba(120,76,18,.04) 62%, transparent 80%),
+        radial-gradient(ellipse 78% 60% at 50% 48%, rgba(150,95,22,.07), transparent 85%);
+    }
+    .summary-body  { flex:1; display:flex; flex-direction:column; justify-content:center; gap:.45vw; padding:0 9% 1.5%; }
+    .sum-item      { display:flex; align-items:baseline; gap:1.1vw; padding:.45vw 1.1vw; border-radius:4px; border-right:2px solid rgba(210,158,68,.25); direction:rtl; font-family:'Cormorant Garamond',serif; font-size:1.4vw; font-weight:400; color:rgba(245,240,232,.82); line-height:1.45; }
+    .sum-mark      { color:var(--gold); font-size:1vw; flex-shrink:0; }
+
+    /* ══════════════════════════════════
+       SQUOTE2, CLOSING QUOTE
+    ══════════════════════════════════ */
+    #squote2::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 52% 44% at 50% 52%, rgba(210,158,68,.28) 0%, rgba(175,120,42,.13) 36%, rgba(120,76,18,.05) 60%, transparent 78%),
+        radial-gradient(ellipse 72% 56% at 50% 52%, rgba(150,95,22,.08), transparent 83%);
+    }
+    .squote2-center { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 10%; }
+    .squote2-he     { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:400; color:var(--cream); direction:rtl; line-height:1.65; margin-bottom:2.2vw; }
+    .squote2-gold   { color:var(--gold); }
+    .squote2-src    { font-size:.78vw; letter-spacing:.3em; text-transform:uppercase; color:var(--cream-faint); }
+
+    /* ══════════════════════════════════
+       SJOURNEY, 5-SESSION MAP
+    ══════════════════════════════════ */
+    #sjourney::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 55%, rgba(210,158,68,.15) 0%, rgba(150,95,22,.07) 50%, transparent 78%),
+        radial-gradient(ellipse 80% 62% at 50% 55%, rgba(120,76,18,.05), transparent 85%);
+    }
+    .journey-body   { flex:1; display:flex; align-items:center; justify-content:center; gap:1.4vw; padding:0 5% 3%; }
+    .journey-step   { flex:1; display:flex; flex-direction:column; align-items:center; text-align:center; padding:1.6vw 1.2vw; border-radius:6px; border:1px solid var(--border); background:rgba(245,240,232,.02); position:relative; }
+    .journey-step::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:40%; height:1px; background:rgba(210,158,68,.12); }
+    .journey-step.j-active { border-color:rgba(210,158,68,.45); background:rgba(210,158,68,.06); }
+    .journey-step.j-active::before { background:rgba(210,158,68,.55); width:60%; }
+    .jstep-num      { font-family:'Cormorant Garamond',serif; font-size:2.4vw; font-weight:300; color:rgba(210,158,68,.35); line-height:1; margin-bottom:.5vw; }
+    .j-active .jstep-num { color:rgba(210,158,68,.85); font-size:2.8vw; }
+    .jstep-session  { font-size:.65vw; letter-spacing:.2em; text-transform:uppercase; color:var(--cream-faint); margin-bottom:.45vw; }
+    .j-active .jstep-session { color:rgba(210,158,68,.6); }
+    .jstep-title    { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:500; color:rgba(245,240,232,.5); direction:rtl; line-height:1.3; margin-bottom:.5vw; }
+    .j-active .jstep-title { color:var(--cream); font-size:1.35vw; }
+    .jstep-desc     { font-size:.72vw; color:rgba(245,240,232,.28); direction:rtl; line-height:1.5; font-weight:300; }
+    .j-active .jstep-desc { color:rgba(245,240,232,.55); }
+    .jstep-dot      { width:5px; height:5px; border-radius:50%; background:rgba(210,158,68,.2); margin:.7vw auto 0; }
+    .j-active .jstep-dot { background:rgba(210,158,68,.7); width:6px; height:6px; }
+
+    /* ══════════════════════════════════
+       NEW, WELCOME · VIBRATION · WAVE · SPECTRUM · LIGHT · BODY
+    ══════════════════════════════════ */
+
+    /* ── S-WELCOME ── */
+    #swelcome { justify-content:center; align-items:center; padding:8%; }
+    #swelcome::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 50% 46% at 50% 50%, rgba(139,184,150,.22) 0%, rgba(100,148,110,.10) 40%, transparent 72%),
+        radial-gradient(ellipse 70% 55% at 50% 50%, rgba(100,148,110,.06), transparent 82%);
+    }
+    .swelcome-wrap   { position:relative; z-index:1; text-align:center; }
+    .swelcome-eye    { font-size:.78vw; letter-spacing:.38em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:2.4vw; }
+    .swelcome-welcome{ font-family:'Cormorant Garamond',serif; font-size:5.2vw; font-weight:300; color:var(--cream); letter-spacing:.01em; line-height:1.1; margin-bottom:2vw; direction:rtl; }
+    .swelcome-rule   { width:40px; height:1px; background:var(--sage-dim); margin:0 auto 1.8vw; }
+    .swelcome-name   { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:400; color:rgba(210,158,68,.88); letter-spacing:.06em; margin-bottom:.6vw; }
+    .swelcome-role   { font-family:'Cormorant Garamond',serif; font-size:1.15vw; font-weight:300; font-style:italic; color:var(--cream-faint); direction:rtl; }
+    .swelcome-sig    { position:absolute; bottom:3.5%; left:0; right:0; text-align:center; font-size:.68vw; letter-spacing:.22em; text-transform:uppercase; color:rgba(245,240,232,.18); }
+
+    /* ── S7 BRAIN WAVES (from session 1) ── */
+    .s7c-body   { flex:1; display:flex; flex-direction:column; gap:.42vw; padding:1% 6% 0; }
+    .s7c-card   { display:flex; align-items:center; gap:2.2vw; padding:.7vw 1.4vw; border-radius:5px; background:rgba(245,240,232,.02); border:1px solid var(--border); direction:rtl; opacity:0; transform:translateY(7px); transition:opacity .48s ease, transform .48s ease, background .5s ease, border-color .5s ease, box-shadow .5s ease; }
+    .s7c-card.visible  { opacity:1; transform:translateY(0); }
+    .s7c-theta  { background:rgba(212,149,122,.05); border-color:rgba(212,149,122,.22); }
+    .s7c-alpha  { background:rgba(139,184,150,.05); border-color:rgba(139,184,150,.22); }
+    .s7c-beta   { background:rgba(180,50,50,.04); border-color:rgba(160,55,55,.18); }
+    .s7c-left   { display:flex; flex-direction:column; align-items:flex-end; flex:0 0 26%; gap:.22vw; }
+    .s7c-name   { font-family:'Cormorant Garamond',serif; font-size:1.95vw; font-weight:600; line-height:1; }
+    .s7c-hz     { font-size:.78vw; color:var(--cream-faint); font-weight:300; }
+    .s7c-wave   { width:100%; height:1.7vw; }
+    .s7c-right  { flex:1; }
+    .s7c-example{ font-family:'Cormorant Garamond',serif; font-size:1.1vw; font-weight:400; color:var(--cream); line-height:1.5; margin-bottom:.22vw; }
+    .s7c-desc   { font-size:.82vw; color:rgba(245,240,232,.42); font-weight:300; line-height:1.4; }
+    .s7c-tag    { display:inline-block; padding:.12vw .55vw; border-radius:20px; font-size:.7vw; font-weight:500; letter-spacing:.03em; margin-right:.4vw; }
+    .s7c-tag-gate  { background:rgba(139,184,150,.15); color:rgba(139,184,150,.92); }
+    .s7c-tag-warn  { background:rgba(180,50,50,.12); color:#D05555; }
+    .s7c-tag-theta { background:rgba(212,149,122,.15); color:rgba(212,149,122,.92); }
+    .s7c-card.s7c-dim { opacity:.32; }
+    .s7c-theta.s7c-highlighted { background:rgba(212,149,122,.14); border-color:rgba(212,149,122,.7); box-shadow:0 0 18px rgba(212,149,122,.18); }
+    .s7c-alpha.s7c-highlighted { background:rgba(139,184,150,.14); border-color:rgba(139,184,150,.7); box-shadow:0 0 18px rgba(139,184,150,.18); }
+    .s7c-punch  { opacity:0; transition:opacity .6s ease .1s; font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-style:italic; color:rgba(210,158,68,.85); text-align:center; direction:rtl; padding:.75vw 4% 0; border-top:1px solid rgba(210,158,68,.15); flex-shrink:0; margin-top:.2vw; }
+    .s7c-punch.visible { opacity:1; }
+
+    /* ── SATOM, THE ATOM ── */
+    #satom::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 45% 55% at 50% 52%, rgba(210,158,68,.13) 0%, rgba(140,80,20,.05) 55%, transparent 78%),
+        radial-gradient(ellipse 70% 65% at 50% 52%, rgba(70,165,195,.04), transparent 85%);
+    }
+    .satom-body      { flex:1; display:flex; align-items:center; gap:5%; padding:0 6% 2.5%; }
+    .satom-vis       { flex:0 0 50%; display:flex; align-items:center; justify-content:center; }
+    .satom-svg       { width:100%; height:auto; overflow:visible; }
+    .satom-info      { flex:1; direction:rtl; display:flex; flex-direction:column; justify-content:center; gap:1.4vw; }
+    .satom-pct-wrap  { border-right:3px solid rgba(210,158,68,.5); padding-right:1.2vw; }
+    .satom-pct       { font-family:'Cormorant Garamond',serif; font-size:5.2vw; font-weight:300; color:rgba(210,158,68,.95); line-height:1; }
+    .satom-pct-lbl   { font-size:.78vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(245,240,232,.38); margin-top:.25vw; }
+    .satom-points    { display:flex; flex-direction:column; gap:.65vw; }
+    .satom-point     { font-size:.95vw; color:rgba(245,240,232,.62); line-height:1.6; padding-right:.9vw; border-right:1px solid rgba(210,158,68,.15); }
+    .satom-point strong { color:rgba(245,240,232,.88); font-weight:500; }
+    .satom-punch     { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-style:italic; color:rgba(210,158,68,.82); line-height:1.5; padding-top:.8vw; border-top:1px solid rgba(210,158,68,.15); }
+
+    /* ── S-VIBRATE ── */
+    #svibrate::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 54% 50% at 50% 50%, rgba(210,158,68,.28) 0%, rgba(175,120,42,.14) 36%, rgba(120,76,18,.06) 60%, transparent 78%),
+        radial-gradient(ellipse 76% 62% at 50% 52%, rgba(150,95,22,.09), transparent 84%);
+    }
+    .svib-wrap  { flex:1; display:grid; grid-template-columns:1fr 24%; grid-template-rows:auto 1fr; column-gap:4%; padding:2.5% 6% 2%; }
+    .svib-header{ grid-column:2; grid-row:1/3; align-self:start; display:flex; flex-direction:column; align-items:flex-end; text-align:right; direction:rtl; padding-top:.4vw; }
+    .svib-h-eye { font-size:.72vw; letter-spacing:.28em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.7vw; }
+    .svib-h-title{ font-family:'Cormorant Garamond',serif; font-size:3.8vw; font-weight:300; color:var(--cream); line-height:1; margin-bottom:.5vw; }
+    .svib-h-en  { font-family:'Cormorant Garamond',serif; font-size:1.1vw; font-weight:300; font-style:italic; color:rgba(210,158,68,.65); line-height:1.4; margin-bottom:.9vw; white-space:nowrap; }
+    .svib-h-bar { width:36px; height:1px; background:var(--gold-dim); }
+    .svib-body  { grid-column:1; grid-row:2; display:flex; flex-direction:column; justify-content:flex-start; gap:.55vw; padding-top:6.5vw; }
+    .svib-step  { display:flex; flex-direction:row; gap:1.4vw; align-items:flex-start; padding:.7vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.02); border:1px solid var(--border); border-right:2px solid rgba(210,158,68,.18); direction:rtl; opacity:0; transform:translateY(6px); transition:opacity .4s ease, transform .4s ease, background .35s ease, border-color .35s ease; }
+    .svib-num   { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; color:rgba(210,158,68,.3); line-height:1; flex-shrink:0; transition:color .35s ease, font-size .35s ease; }
+    .svib-content { flex:1; }
+    .svib-text  { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:500; color:var(--cream); line-height:1.35; margin-bottom:.25vw; transition:color .35s ease, font-size .35s ease; }
+    .svib-sub   { font-size:.82vw; color:rgba(245,240,232,.52); font-weight:300; line-height:1.55; transition:color .35s ease; }
+    /* past */
+    .svib-step.step-past  { opacity:1; transform:translateY(0); background:rgba(245,240,232,.01); border-color:var(--border); border-right-color:rgba(210,158,68,.1); }
+    .svib-step.step-past .svib-num  { color:rgba(210,158,68,.18); }
+    .svib-step.step-past .svib-text { color:rgba(245,240,232,.22); font-size:1.35vw; }
+    .svib-step.step-past .svib-sub  { color:rgba(245,240,232,.18); }
+    /* active */
+    .svib-step.step-active { opacity:1; transform:translateY(0); background:rgba(210,158,68,.07); border-right-color:rgba(210,158,68,.75); }
+    .svib-step.step-active .svib-num  { color:rgba(210,158,68,.9); font-size:2.3vw; }
+    .svib-step.step-active .svib-text { color:rgba(210,158,68,.95); font-size:1.45vw; }
+    .svib-step.step-active .svib-sub  { color:rgba(245,240,232,.82); }
+    /* shown: all normal at end */
+    .svib-step.step-shown { opacity:1; transform:translateY(0); }
+    .svib-step.step-shown .svib-num  { color:rgba(210,158,68,.38); font-size:2vw; }
+    .svib-step.step-shown .svib-text { color:var(--cream); font-size:1.35vw; }
+    .svib-step.step-shown .svib-sub  { color:rgba(245,240,232,.52); }
+    .svib-punch { margin-top:.6vw; padding:1.2vw 1.6vw; background:rgba(210,158,68,.10); border:1px solid rgba(210,158,68,.3); border-right:3px solid rgba(210,158,68,.82); border-radius:0 6px 6px 0; direction:rtl; opacity:0; transition:opacity .6s ease .1s; }
+    .svib-punch.visible { opacity:1; }
+    .svib-punch-main { font-family:'Cormorant Garamond',serif; font-size:1.8vw; font-weight:600; color:rgba(210,158,68,.96); line-height:1.45; margin-bottom:.4vw; }
+    .svib-punch-sub  { font-size:.9vw; color:rgba(210,158,68,.65); font-style:italic; letter-spacing:.12em; }
+
+    /* ── S-WAVE ── */
+    #swave::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 46% at 28% 52%, rgba(210,158,68,.24) 0%, rgba(175,120,42,.12) 36%, rgba(120,76,18,.05) 60%, transparent 78%),
+        radial-gradient(ellipse 70% 58% at 30% 56%, rgba(150,95,22,.08), transparent 84%);
+    }
+    .swave-intro        { padding:1.2% 6% 0; direction:rtl; display:flex; flex-direction:column; gap:.55vw; }
+    .swave-intro-main   { font-family:'Cormorant Garamond',serif; font-size:1.4vw; font-weight:300; color:rgba(245,240,232,.82); line-height:1.6; }
+    .swave-intro-bridge { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:300; color:rgba(245,240,232,.5); line-height:1.6; }
+    .swave-body-wrap    { flex:1; display:flex; flex-direction:column; }
+    .swave-body     { flex:1; display:flex; gap:5%; align-items:center; padding:.8% 6% 0; }
+    .swave-left     { flex:0 0 52%; }
+    .swave-vis      { margin-bottom:2vw; }
+    .swave-lbl      { font-size:.72vw; letter-spacing:.16em; text-transform:uppercase; color:rgba(245,240,232,.58); margin-bottom:.5vw; }
+    .swave-svg-wrap { background:rgba(245,240,232,.02); border:1px solid var(--border); border-radius:6px; padding:.8vw 1vw; }
+    .swave-right    { flex:1; }
+    .swave-ritem    { display:flex; gap:1.1vw; align-items:flex-start; margin-bottom:1.2vw; padding:.9vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); direction:rtl; }
+    .swave-ricon    { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:600; color:var(--gold); min-width:1.5vw; line-height:1; }
+    .swave-rtxt strong { color:var(--cream); font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:500; display:block; margin-bottom:.2vw; }
+    .swave-rtxt span   { font-size:.82vw; color:var(--cream-faint); font-weight:300; line-height:1.5; }
+    .swave-law { margin-top:1vw; padding:1vw 1.4vw; background:rgba(210,158,68,.06); border-right:2px solid var(--gold-dim); border-radius:0 5px 5px 0; direction:rtl; font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-style:italic; color:rgba(210,158,68,.85); line-height:1.5; }
+
+    /* ── S-SPECTRUM ── */
+    #sspectrum::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 65%, rgba(210,158,68,.18) 0%, rgba(175,120,42,.09) 44%, rgba(120,76,18,.04) 65%, transparent 80%),
+        radial-gradient(ellipse 80% 55% at 50% 68%, rgba(150,95,22,.06), transparent 85%);
+    }
+    .sspec-body     { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 6% 2%; gap:1.5vw; }
+    .sspec-bar-wrap { position:relative; }
+    .sspec-bar      { position:relative; height:3vw; border-radius:4px; overflow:hidden; background:rgba(245,240,232,.04); border:1px solid rgba(245,240,232,.1); }
+    .sspec-em-bg    { position:absolute; inset:0; background:repeating-linear-gradient(90deg, rgba(245,240,232,.045) 0, rgba(245,240,232,.045) 1px, transparent 1px, transparent 18px); }
+    .sspec-vis-seg  { position:absolute; top:0; bottom:0; left:41%; width:9%; background:linear-gradient(90deg, #DC2626 0%, #EA580C 18%, #FBBF24 36%, #16A34A 54%, #2563EB 72%, #7C3AED 100%); }
+    .sspec-vis-row  { position:relative; height:2.6vw; }
+    .sspec-vis-pin  { position:absolute; left:41%; width:9%; display:flex; flex-direction:column; align-items:center; padding-top:.2vw; }
+    .sspec-vis-pin-line { width:1px; height:.55vw; background:rgba(245,240,232,.28); flex-shrink:0; }
+    .sspec-vis-pin-txt  { font-size:.62vw; color:rgba(245,240,232,.65); text-align:center; line-height:1.45; white-space:nowrap; margin-top:.15vw; }
+    .sspec-vis-pin-txt span { color:rgba(245,240,232,.38); display:block; font-size:.56vw; margin-top:.1vw; }
+    .sspec-labels   { display:flex; justify-content:space-between; margin-top:.3vw; }
+    .sspec-lbl      { font-size:.8vw; color:rgba(245,240,232,.72); text-align:center; line-height:1.3; }
+    .sspec-arrows   { display:flex; justify-content:space-between; align-items:center; margin-bottom:.5vw; }
+    .sspec-arr-txt  { font-size:.85vw; letter-spacing:.14em; text-transform:uppercase; color:rgba(210,158,68,.82); font-weight:500; }
+    .sspec-insight  { display:grid; grid-template-columns:1fr 1fr; gap:.8vw; }
+    .sspec-card     { padding:.85vw 1.1vw; background:rgba(245,240,232,.03); border:1px solid var(--border); border-radius:5px; direction:rtl; }
+    .sspec-card-lbl { font-size:.65vw; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:.3vw; }
+    .sspec-card-txt { font-family:'Cormorant Garamond',serif; font-size:1.2vw; color:var(--cream); line-height:1.4; }
+    .sspec-card-sub { font-size:.78vw; color:var(--cream-faint); margin-top:.2vw; font-weight:300; line-height:1.5; }
+
+    /* ── S-SPEC-VIS (slight), wave × body interaction ── */
+    #slight { justify-content:flex-start; align-items:stretch; padding:0; }
+    #slight::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 45% at 50% 65%, rgba(210,158,68,.17) 0%, rgba(175,120,42,.09) 40%, rgba(120,76,18,.04) 65%, transparent 82%),
+        radial-gradient(ellipse 78% 55% at 50% 68%, rgba(150,95,22,.05), transparent 85%);
+    }
+    .sspecvis-mini-bar { padding:0 6% .5vw; }
+    .sspecvis-mini-bar .sspec-bar { height:1.8vw; }
+    .sspecvis-mini-bar .sspec-vis-row { height:1.8vw; }
+    .sspecvis-mini-bar .sspec-labels { margin-top:.2vw; }
+    .sspecvis-ilist   { flex:1; display:flex; flex-direction:column; padding:0 6%; gap:.55vw; justify-content:flex-start; }
+    .sspecvis-irow    { display:flex; align-items:flex-start; gap:1.8vw; padding:.7vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.025); border:1px solid var(--border); border-right:2px solid rgba(210,158,68,.18); direction:rtl; }
+    .sspecvis-itag    { flex-shrink:0; width:9vw; padding-top:.1vw; }
+    .sspecvis-itag-name { font-size:.7vw; letter-spacing:.14em; text-transform:uppercase; color:rgba(210,158,68,.82); }
+    .sspecvis-imain   { flex:1; }
+    .sspecvis-imain-title { font-family:'Cormorant Garamond',serif; font-size:1.22vw; font-weight:500; color:var(--cream); margin-bottom:.18vw; }
+    .sspecvis-imain-text  { font-size:.78vw; color:rgba(245,240,232,.48); font-weight:300; line-height:1.6; }
+    .sspecvis-cpunch      { padding:.9vw 1.4vw; background:rgba(210,158,68,.08); border:1px solid rgba(210,158,68,.25); border-right:3px solid rgba(210,158,68,.75); border-radius:0 5px 5px 0; direction:rtl; margin:0 6% .8%; }
+    .sspecvis-cpunch-main { font-family:'Cormorant Garamond',serif; font-size:1.3vw; color:rgba(210,158,68,.92); line-height:1.45; margin-bottom:.3vw; }
+    .sspecvis-cpunch-sub  { font-size:.78vw; color:rgba(245,240,232,.45); font-weight:300; line-height:1.65; }
+    .sspec-dim-left  { position:absolute; top:0; bottom:0; left:0; width:41%; background:rgba(8,7,6,.8); pointer-events:none; }
+    .sspec-dim-right { position:absolute; top:0; bottom:0; left:50%; right:0; background:rgba(8,7,6,.8); pointer-events:none; }
+    .sspec-vis-glow  { position:absolute; top:-2px; bottom:-2px; left:40.5%; width:10%; box-shadow:0 0 18px 6px rgba(180,130,255,.18), 0 0 8px 2px rgba(255,180,80,.12); pointer-events:none; border-radius:3px; }
+    .sspec-lbl-dim   { opacity:.18; }
+    .sspecvis-lower  { display:flex; align-items:center; justify-content:center; gap:8%; padding:2.5vw 8% 1%; direction:rtl; }
+    .sspecvis-stat   { text-align:center; flex-shrink:0; }
+    .sspecvis-num    { font-family:'Cormorant Garamond',serif; font-size:6vw; font-weight:300; color:var(--cream); line-height:.9; letter-spacing:-.02em; }
+    .sspecvis-lbl    { font-size:.72vw; letter-spacing:.2em; text-transform:uppercase; color:rgba(245,240,232,.4); margin-top:.5vw; }
+    .sspecvis-divider{ width:1px; height:6vw; background:var(--border); flex-shrink:0; }
+    .sspecvis-text   { flex:1; }
+    .sspecvis-main   { font-family:'Cormorant Garamond',serif; font-size:1.7vw; font-weight:300; color:var(--cream); line-height:1.45; margin-bottom:.8vw; }
+    .sspecvis-sub    { font-size:.88vw; color:rgba(245,240,232,.5); font-weight:300; line-height:1.7; }
+
+    /* ── S-SPECTRUM step reveals ── */
+    .sspec-ov        { position:absolute; top:0; bottom:0; background:rgba(8,7,6,.8); pointer-events:none; opacity:0; transition:opacity .55s ease; }
+    .sspec-ov.visible{ opacity:1; }
+    .sspec-ov-left   { left:0; width:41%; }
+    .sspec-ov-right  { left:50%; right:0; }
+    .sspec-vglow     { position:absolute; top:-3px; bottom:-3px; left:40.5%; width:10%; box-shadow:0 0 18px 6px rgba(180,130,255,.18), 0 0 8px 2px rgba(255,180,80,.12); border-radius:3px; pointer-events:none; opacity:0; transition:opacity .55s ease; }
+    .sspec-vglow.visible { opacity:1; }
+    .sspec-step      { opacity:0; transform:translateY(8px); transition:opacity .5s ease, transform .5s ease; }
+    .sspec-step.visible { opacity:1; transform:none; }
+    .sspec-stat-row  { display:flex; align-items:center; justify-content:center; gap:3vw; padding:.8vw 6% 0; direction:rtl; }
+    .sspec-stat-num  { font-family:'Cormorant Garamond',serif; font-size:5.5vw; font-weight:300; color:var(--cream); line-height:1; }
+    .sspec-stat-div  { width:1px; height:4.5vw; background:rgba(245,240,232,.12); }
+    .sspec-stat-text { text-align:right; }
+    .sspec-stat-main { font-size:1.05vw; color:rgba(245,240,232,.65); font-weight:300; line-height:1.65; }
+    .sspec-punch-row { padding:.6vw 6% 0; text-align:center; direction:rtl; }
+    .sspec-punch-txt { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:300; font-style:italic; color:rgba(210,158,68,.92); line-height:1.5; }
+
+    /* ── S-SPEC-TRUTH, 4 cards build-up ── */
+    #sspectruth::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 45% at 50% 65%, rgba(210,158,68,.17) 0%, rgba(175,120,42,.09) 40%, rgba(120,76,18,.04) 65%, transparent 82%),
+        radial-gradient(ellipse 78% 55% at 50% 68%, rgba(150,95,22,.05), transparent 85%);
+    }
+    .struth-wrap       { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 8%; gap:1vw; }
+    .struth-card       { padding:1.1vw 1.6vw; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(210,158,68,.2); border-radius:0 6px 6px 0; direction:rtl; opacity:0; transform:translateY(8px); transition:opacity .45s ease, transform .45s ease; }
+    .struth-card.step-shown { opacity:1; transform:none; }
+    .struth-card-title { font-family:'Cormorant Garamond',serif; font-size:1.6vw; font-weight:500; color:var(--cream); margin-bottom:.3vw; }
+    .struth-card-text  { font-size:.86vw; color:rgba(245,240,232,.52); font-weight:300; line-height:1.7; }
+
+    /* ── S-BODY-SUM ── */
+    #sbodysum::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 60% at 50% 46%, rgba(139,184,150,.22) 0%, rgba(100,148,110,.10) 38%, rgba(212,149,122,.06) 60%, transparent 80%),
+        radial-gradient(ellipse 76% 72% at 50% 50%, rgba(100,148,110,.05), transparent 86%);
+    }
+    .sbsum-wrap     { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2.8vw; padding:2% 8%; position:relative; z-index:1; }
+    .sbsum-vis      { position:relative; width:30vw; height:14vw; display:flex; align-items:center; justify-content:center; }
+    /* outgoing rings */
+    .sbsum-ring1    { position:absolute; width:28vw; height:13.5vw; border-radius:50%; border:1px solid rgba(139,184,150,.07); }
+    .sbsum-ring2    { position:absolute; width:20vw; height:10vw; border-radius:50%; border:1px solid rgba(139,184,150,.13); }
+    .sbsum-ring3    { position:absolute; width:13vw; height:6.5vw; border-radius:50%; border:1.5px solid rgba(139,184,150,.22); }
+    /* body silhouette */
+    .sbsum-sil      { position:absolute; z-index:2; display:flex; flex-direction:column; align-items:center; }
+    .sbsum-head     { width:2vw; height:2vw; border-radius:50%; background:rgba(245,240,232,.18); border:1px solid rgba(245,240,232,.25); }
+    .sbsum-torso    { width:2.8vw; height:4vw; background:rgba(245,240,232,.1); border:1px solid rgba(245,240,232,.18); border-radius:0 0 4px 4px; margin-top:-2px; }
+    .sbsum-glow     { position:absolute; width:3.5vw; height:3.5vw; border-radius:50%; background:radial-gradient(circle, rgba(139,184,150,.6), transparent 70%); z-index:1; }
+    /* incoming waves */
+    .sbsum-waves-in { position:absolute; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:.5vw; }
+    .sbsum-waves-in.left  { right:54%; align-items:flex-end; }
+    .sbsum-waves-in.right { left:54%; align-items:flex-start; transform:translateY(-50%) scaleX(-1); }
+    /* labels */
+    .sbsum-lbl      { position:absolute; top:50%; font-size:.62vw; letter-spacing:.18em; text-transform:uppercase; }
+    .sbsum-lbl.recv { right:58%; transform:translateY(-50%); color:rgba(210,158,68,.55); text-align:right; }
+    .sbsum-lbl.emit { left:58%; transform:translateY(-50%); color:rgba(139,184,150,.55); }
+    /* punch */
+    .sbsum-punch    { text-align:center; direction:rtl; max-width:72%; }
+    .sbsum-punch-txt { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:300; color:var(--cream); line-height:1.6; }
+
+    /* ── S-BETA, bridge: brain waves → subconscious ── */
+    #sbeta::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 52% at 50% 55%, rgba(70,165,195,.18) 0%, rgba(45,125,155,.09) 40%, rgba(25,80,110,.04) 65%, transparent 82%),
+        radial-gradient(ellipse 80% 65% at 50% 58%, rgba(35,100,130,.06), transparent 88%);
+    }
+    .sbeta-body       { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 9%; gap:1.1vw; direction:rtl; position:relative; z-index:1; }
+    .sbeta-block      { opacity:0; transform:translateY(7px); transition:opacity .5s ease, transform .5s ease; }
+    .sbeta-block.visible { opacity:1; transform:none; }
+    .sbeta-para       { font-size:1vw; color:rgba(245,240,232,.65); font-weight:300; line-height:1.82; }
+    .sbeta-para + .sbeta-para { margin-top:.55vw; }
+    .sbeta-para strong { color:rgba(245,240,232,.9); font-weight:500; }
+    .sbeta-punch-wrap  { padding:1.1vw 1.6vw; background:rgba(210,158,68,.08); border:1px solid rgba(210,158,68,.22); border-right:3px solid rgba(210,158,68,.78); border-radius:0 6px 6px 0; display:flex; align-items:flex-start; gap:2vw; }
+    .sbeta-num         { font-family:'Cormorant Garamond',serif; font-size:5.5vw; font-weight:300; color:rgba(210,158,68,.92); line-height:.9; flex-shrink:0; }
+    .sbeta-punch-text  { flex:1; }
+    .sbeta-punch-main  { font-family:'Cormorant Garamond',serif; font-size:1.5vw; color:rgba(210,158,68,.9); line-height:1.35; margin-bottom:.5vw; font-weight:400; }
+    .sbeta-punch-sub   { font-size:.88vw; color:rgba(245,240,232,.55); font-weight:300; line-height:1.72; }
+
+    /* ── S-BRIDGE ── */
+    #sbridge::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 52% at 50% 55%, rgba(70,165,195,.20) 0%, rgba(45,125,155,.10) 40%, rgba(25,80,110,.05) 65%, transparent 82%),
+        radial-gradient(ellipse 80% 65% at 50% 58%, rgba(35,100,130,.06), transparent 88%);
+    }
+    .sbridge-wrap    { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 15%; text-align:center; direction:rtl; position:relative; z-index:1; }
+    .sbridge-eye     { font-size:.72vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(90,185,210,.55); margin-bottom:2vw; }
+    .sbridge-from    { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; color:rgba(245,240,232,.45); line-height:1.6; margin-bottom:1.4vw; }
+    .sbridge-name    { font-family:'Cormorant Garamond',serif; font-size:5.5vw; font-weight:300; color:rgba(90,198,222,.92); line-height:.95; letter-spacing:-.01em; margin-bottom:1.2vw; }
+    .sbridge-divider { width:56px; height:1px; background:rgba(90,185,210,.3); margin:0 auto 1.5vw; }
+    .sbridge-sub     { font-size:1.05vw; color:rgba(245,240,232,.52); font-weight:300; line-height:1.75; margin-bottom:2vw; }
+    .sbridge-cta     { font-size:.72vw; letter-spacing:.24em; text-transform:uppercase; color:rgba(90,185,210,.65); }
+
+    /* ── S-BODY ── */
+    #sbody::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 48% 46% at 24% 52%, rgba(139,184,150,.20) 0%, rgba(100,148,110,.10) 40%, transparent 72%),
+        radial-gradient(ellipse 68% 58% at 26% 56%, rgba(100,148,110,.06), transparent 82%);
+    }
+    .sbody-content  { flex:1; display:flex; gap:5%; align-items:center; padding:1.5% 6% 0; }
+    .sbody-vis      { flex:0 0 28%; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .sbody-figure   { position:relative; width:12vw; height:19vw; display:flex; align-items:center; justify-content:center; }
+    .sbody-ring1    { position:absolute; width:12vw; height:19vw; border-radius:50%; border:1px solid rgba(139,184,150,.08); }
+    .sbody-ring2    { position:absolute; width:9vw; height:14.5vw; border-radius:50%; border:1px solid rgba(139,184,150,.14); }
+    .sbody-ring3    { position:absolute; width:6.5vw; height:10.5vw; border-radius:50%; border:1.5px solid rgba(139,184,150,.22); }
+    .sbody-sil      { position:absolute; z-index:2; display:flex; flex-direction:column; align-items:center; }
+    .sbody-head     { width:2vw; height:2vw; border-radius:50%; background:rgba(245,240,232,.18); border:1px solid rgba(245,240,232,.25); }
+    .sbody-torso    { width:2.8vw; height:4vw; background:rgba(245,240,232,.1); border:1px solid rgba(245,240,232,.18); border-radius:0 0 4px 4px; margin-top:-2px; }
+    .sbody-hglow    { position:absolute; width:1.4vw; height:1.4vw; border-radius:50%; background:radial-gradient(circle, rgba(212,149,122,.9), transparent 70%); top:36%; z-index:3; }
+    .sbody-lbl      { font-size:.68vw; color:rgba(139,184,150,.5); letter-spacing:.1em; text-transform:uppercase; margin-top:.8vw; }
+    .sbody-list     { flex:1; display:flex; flex-direction:column; gap:.9vw; }
+    .sbody-item     { display:flex; gap:1.5vw; align-items:flex-start; padding:1vw 1.3vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(139,184,150,.4); direction:rtl; }
+    .sbody-icon     { font-size:1.8vw; line-height:1; flex-shrink:0; }
+    .sbody-ititle   { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:500; color:var(--cream); margin-bottom:.2vw; }
+    .sbody-idesc    { font-size:.82vw; color:var(--cream-faint); font-weight:300; line-height:1.55; }
+    .sbody-isrc     { font-size:.65vw; color:rgba(139,184,150,.55); font-style:italic; margin-top:.25vw; }
+    .sbody-punch    { margin-top:.4vw; padding:.9vw 1.3vw; border-top:1px solid var(--border); border-right:2px solid var(--gold-dim); background:rgba(210,158,68,.04); direction:rtl; border-radius:0 5px 5px 0; }
+    .sbody-punch-txt{ font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-style:italic; color:rgba(210,158,68,.8); line-height:1.5; }
+
+    /* ── J-DONE, completed session ── */
+    .journey-step.j-done { border-color:rgba(139,184,150,.28); background:rgba(139,184,150,.03); }
+    .journey-step.j-done::before { background:rgba(139,184,150,.28); width:60%; }
+    .j-done .jstep-num     { color:rgba(139,184,150,.5); font-size:2.4vw; }
+    .j-done .jstep-session { color:rgba(139,184,150,.55); }
+    .j-done .jstep-title   { color:rgba(245,240,232,.4); font-size:1.25vw; }
+    .j-done .jstep-desc    { color:rgba(245,240,232,.25); }
+    .j-done .jstep-dot     { background:rgba(139,184,150,.38); }
+    .jstep-check { font-size:.62vw; letter-spacing:.14em; text-transform:uppercase; color:rgba(139,184,150,.65); margin-top:.35vw; }
+
+    /* ── SKAVANAH ── */
+    #skavanah { justify-content:center; align-items:center; }
+    #skavanah::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 54% at 50% 50%, rgba(210,120,150,.32) 0%, rgba(185,90,120,.14) 38%, rgba(140,60,90,.05) 64%, transparent 82%),
+        radial-gradient(ellipse 82% 64% at 50% 50%, rgba(160,70,100,.08), transparent 86%);
+    }
+    @keyframes kavanah-breathe {
+      0%, 100% { transform:translate(-50%,-50%) scale(1);    opacity:.22; }
+      50%       { transform:translate(-50%,-50%) scale(1.55); opacity:.45; }
+    }
+    .kavanah-circle {
+      position:absolute; width:38vw; height:38vw; border-radius:50%;
+      top:50%; left:50%; transform:translate(-50%,-50%);
+      background:radial-gradient(circle, rgba(210,120,150,.22) 0%, rgba(185,90,120,.10) 45%, transparent 72%);
+      animation:kavanah-breathe 5s ease-in-out infinite; pointer-events:none;
+    }
+    .kavanah-circle-2 {
+      width:26vw; height:26vw;
+      background:radial-gradient(circle, rgba(210,120,150,.28) 0%, rgba(185,90,120,.12) 40%, transparent 68%);
+      animation-delay:-.8s;
+    }
+    .kavanah-title { font-family:'Cormorant Garamond',serif; font-size:3.8vw; font-weight:600; color:var(--cream); letter-spacing:.04em; text-align:center; position:relative; z-index:1; margin-bottom:1.4vw; }
+    .kavanah-sub   { font-family:'Jost',sans-serif; font-size:.88vw; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(210,120,150,.92); text-align:center; position:relative; z-index:1; direction:rtl; }
+
+    /* ── SOPENING2 ── */
+    #sopening2 { justify-content:center; align-items:center; padding:8%; }
+    #sopening2::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 55% 50% at 50% 46%, rgba(210,158,68,.26) 0%, rgba(175,120,42,.12) 36%, rgba(120,76,18,.05) 62%, transparent 80%),
+        radial-gradient(ellipse 78% 60% at 50% 50%, rgba(150,95,22,.07), transparent 85%);
+    }
+    .sop2-wrap    { max-width:72%; margin:0 auto; display:flex; flex-direction:column; gap:2.4vw; text-align:center; direction:rtl; position:relative; z-index:1; }
+    .sop2-heading { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-weight:500; font-style:italic; color:rgba(245,240,232,.78); margin-bottom:-.6vw; }
+    .sop2-main    { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; color:var(--cream); line-height:1.65; }
+    .sop2-bridge  { font-family:'Cormorant Garamond',serif; font-size:1.65vw; font-weight:300; color:rgba(245,240,232,.65); line-height:1.7; }
+    .sop2-punch   { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:400; color:rgba(210,158,68,.92); line-height:1.65; }
+
+    /* ── SATOMINTRO ── */
+    #satomintro { justify-content:center; align-items:center; }
+    .sai-wrap  { position:relative; z-index:1; text-align:center; direction:rtl; display:flex; flex-direction:column; align-items:center; gap:1.2vw; max-width:68%; }
+    .sai-line1 { font-family:'Cormorant Garamond',serif; font-size:3vw; font-weight:300; color:var(--cream); line-height:1.3; }
+    .sai-line2 { font-family:'Cormorant Garamond',serif; font-size:1.8vw; font-weight:300; color:rgba(245,240,232,.52); line-height:1.5; }
+    .sai-atom  { position:relative; color:rgba(72,210,196,.96);
+                 text-shadow: 0 0 16px rgba(72,210,196,.8), 0 0 40px rgba(72,210,196,.5), 0 0 90px rgba(72,210,196,.25); }
+    .sai-atom::before { content:''; position:absolute; inset:-70% -60%; border-radius:50%;
+                        background:radial-gradient(ellipse 80% 65% at 50% 55%, rgba(72,210,196,.18) 0%, transparent 70%);
+                        pointer-events:none; z-index:-1; }
+
+    /* ── SATOM-BRIDGE ── */
+    #satombridge { justify-content:center; align-items:center; }
+    #satombridge::before { content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(ellipse 60% 50% at 50% 50%, rgba(210,158,68,.12) 0%, transparent 70%); }
+    .sab-wrap  { position:relative; z-index:1; text-align:center; direction:rtl; display:flex; flex-direction:column; align-items:center; gap:1.4vw; max-width:72%; }
+    .sab-line  { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:300; color:var(--cream); line-height:1.6; }
+    .sab-em    { color:rgba(210,158,68,.92); font-style:italic; }
+
+    /* ── SATOM3 ── */
+    #satom3 { justify-content:flex-start; align-items:stretch; padding:0; }
+    #satom3::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 50% at 50% 48%, rgba(210,158,68,.18) 0%, rgba(175,120,42,.08) 42%, transparent 72%);
+    }
+    .sa3-inner      { position:relative; z-index:1; display:flex; flex-direction:column; gap:.8vw; padding:1.5% 8% 2%; flex:1; direction:rtl; }
+    .sa3-rows       { display:flex; flex-direction:column; gap:.55vw; }
+    .sa3-row        { display:flex; align-items:center; gap:2vw; padding:.85vw 1.4vw; border-radius:6px; background:rgba(245,240,232,.02); border:1px solid rgba(245,240,232,.05); }
+    .sa3-row-label  { font-family:'Cormorant Garamond',serif; font-size:1.05vw; font-weight:500; letter-spacing:.1em; color:rgba(245,240,232,.82); width:3.8vw; flex-shrink:0; text-align:center; }
+    .sa3-row-svg    { width:5.5vw; flex-shrink:0; }
+    .sa3-row-text   { font-family:'Cormorant Garamond',serif; font-size:1.2vw; font-weight:300; color:rgba(245,240,232,.62); line-height:1.4; flex:1; }
+    .sa3-you-row    { display:flex; flex-direction:column; gap:.45vw; padding:.9vw 1.6vw; border-radius:6px; background:rgba(210,158,68,.04); border:1px solid rgba(210,158,68,.1); }
+    .sa3-you-lead   { font-size:.62vw; letter-spacing:.22em; text-transform:uppercase; color:rgba(210,158,68,.45); }
+    .sa3-you-main   { font-family:'Cormorant Garamond',serif; font-size:1.7vw; font-weight:300; color:rgba(210,158,68,.92); line-height:1.35; }
+    .sa3-question   { font-family:'Cormorant Garamond',serif; font-size:1.5vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.58); text-align:center; line-height:1.7; }
+    .sa3-hook       { font-size:.65vw; letter-spacing:.25em; text-transform:uppercase; color:rgba(210,158,68,.42); text-align:center; }
+
+    /* ── SFIELDBRIDGE ── */
+    #sfieldbridge { justify-content:center; align-items:center; padding:8%; }
+    #sfieldbridge::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 45% at 50% 50%, rgba(139,184,150,.16) 0%, rgba(100,150,115,.07) 40%, transparent 70%),
+        radial-gradient(ellipse 75% 62% at 50% 50%, rgba(80,120,90,.04), transparent 85%);
+    }
+
+    /* ── SFIELD ── */
+    #sfield::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 60% at 36% 52%, rgba(139,184,150,.14) 0%, rgba(100,150,115,.06) 42%, transparent 70%),
+        radial-gradient(ellipse 80% 65% at 50% 50%, rgba(80,120,90,.04), transparent 85%);
+    }
+    .sfield-body  { display:flex; align-items:center; gap:5%; padding:1.5% 6% 2.5%; flex:1; }
+    .sfield-vis   { flex:0 0 36%; display:flex; align-items:center; justify-content:center; }
+    .sfield-info  { flex:1; display:flex; flex-direction:column; gap:1.1vw; direction:rtl; }
+    .sfield-stats { display:flex; flex-direction:column; gap:.6vw; margin-bottom:.4vw; }
+    .sfield-stat  { display:flex; flex-direction:row; align-items:baseline; gap:1vw; direction:rtl; }
+    .sfield-stat-num { font-family:'Cormorant Garamond',serif; font-size:2.6vw; font-weight:300; color:var(--sage); line-height:1; flex-shrink:0; direction:ltr; }
+    .sfield-stat-lbl { font-size:.74vw; color:rgba(245,240,232,.55); letter-spacing:.06em; line-height:1.4; }
+    .sfield-divider  { width:100%; height:1px; background:rgba(139,184,150,.14); }
+    .sfield-point    { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:300; color:var(--cream-dim); line-height:1.6; }
+    .sfield-point strong { color:var(--cream); font-weight:500; }
+
+    /* ── SFIELDUSE ── */
+    .sfu-body        { flex:1; display:flex; flex-direction:column; justify-content:center; gap:1.4vw; padding:1% 8% 2%; direction:rtl; }
+    .sfu-item        { display:flex; align-items:flex-start; gap:1.4vw; padding:1vw 1.4vw; border-radius:6px; background:rgba(245,240,232,.02); border:1px solid rgba(245,240,232,.05); }
+    .sfu-num         { font-family:'Cormorant Garamond',serif; font-size:1.6vw; font-weight:300; color:rgba(245,240,232,.45); flex-shrink:0; width:1.4vw; text-align:center; padding-top:.1vw; }
+    .sfu-content     { display:flex; flex-direction:column; gap:.3vw; flex:1; text-align:right; direction:rtl; }
+    .sfu-label       { font-size:.7vw; letter-spacing:.2em; text-transform:uppercase; color:rgba(245,240,232,.62); }
+    .sfu-text        { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:300; color:rgba(245,240,232,.52); line-height:1.5; }
+    .sfu-punch       { background:rgba(210,158,68,.04); border-color:rgba(210,158,68,.14); padding:1.3vw 1.4vw; }
+    .sfu-num-heart   { color:rgba(210,158,68,.35); font-size:1.8vw; }
+    .sfu-label-heart { color:rgba(245,240,232,.6); font-size:.78vw; letter-spacing:.16em; }
+    .sfu-heart-main  { font-family:'Cormorant Garamond',serif; font-size:2.6vw; font-weight:400; color:var(--cream); line-height:1.3; margin-top:.3vw; text-align:right; direction:rtl; }
+
+    /* ── SFIELDQ ── */
+    #sfieldq { justify-content:center; align-items:center; }
+    #sfieldq::before { content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(ellipse 52% 42% at 50% 50%, rgba(139,184,150,.38) 0%, rgba(139,184,150,.12) 45%, transparent 72%); }
+    .sfq-wrap  { position:relative; z-index:1; text-align:center; direction:rtl; display:flex; flex-direction:column; align-items:center; gap:1.8vw; }
+    .sfq-line1 { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; color:rgba(245,240,232,.55); line-height:1.5; }
+    .sfq-rule  { width:36px; height:1px; background:rgba(139,184,150,.35); margin:0 auto; }
+    .sfq-line2 { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:300; color:var(--cream); line-height:1.35; margin-top:.6vw; }
+
+    /* ── SFIELDSMEET ── */
+    #sfieldsmeet { justify-content:center; align-items:center; }
+    .sfm-wrap  { position:relative; z-index:1; text-align:center; direction:rtl; display:flex; flex-direction:column; align-items:center; gap:1.6vw; max-width:68%; }
+    .sfm-line  { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:300; color:rgba(245,240,232,.62); line-height:1.55; }
+    .sfm-rule  { width:36px; height:1px; background:rgba(139,184,150,.3); margin:0 auto; }
+    .sfm-pivot { font-size:2.5vw; color:var(--cream); font-weight:300; line-height:1.5; }
+    .sfm-sync  { color:rgba(139,184,150,.98); font-weight:400; font-style:italic;
+                 text-shadow: 0 0 18px rgba(139,184,150,.75), 0 0 45px rgba(139,184,150,.45), 0 0 90px rgba(139,184,150,.22); }
+
+    /* ── SEMOTION ── */
+    #semotion::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 55% at 25% 52%, rgba(212,149,122,.10) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 55% at 75% 52%, rgba(139,184,150,.10) 0%, transparent 65%);
+    }
+    .semo-punch-intro { padding:.7vw 8% .2vw; direction:rtl; }
+    .semo-punch-main  { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:400; color:var(--cream); text-align:center; line-height:1.55; }
+    .semo-body        { display:grid; grid-template-columns:1fr 1fr; gap:0; padding:.8% 5% 0; flex:1; align-items:stretch; direction:rtl; }
+    .semo-col-reveal  { overflow:hidden; opacity:0; display:flex; align-items:stretch; }
+    #semo-2           { transition:opacity .55s ease; }
+    #semo-2.visible   { opacity:1; }
+    #semo-3           { transform:translateX(-28px); transition:opacity .55s ease, transform .6s ease; }
+    #semo-3.visible   { opacity:1; transform:translateX(0); }
+    .semo-col         { flex:1; display:flex; flex-direction:column; gap:.9vw; direction:rtl; padding:1vw 2vw 1.5vw; min-width:0; }
+    .semo-divider     { width:1px; background:rgba(245,240,232,.07); flex-shrink:0; margin:1.5vw 0; }
+    .semo-tag         { display:inline-flex; font-size:.68vw; letter-spacing:.2em; text-transform:uppercase; padding:.28vw .72vw; border-radius:2px; align-self:flex-start; }
+    .semo-tag-stress  { background:rgba(212,149,122,.12); color:rgba(212,149,122,.9); border:1px solid rgba(212,149,122,.22); }
+    .semo-tag-calm    { background:rgba(139,184,150,.12); color:rgba(139,184,150,.9); border:1px solid rgba(139,184,150,.22); }
+    .semo-state       { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:500; line-height:1.2; }
+    .semo-state-stress { color:rgba(212,149,122,.92); }
+    .semo-state-calm   { color:rgba(139,184,150,.92); }
+    .semo-wave-wrap   { width:100%; height:3vw; }
+    .semo-brain       { font-size:.88vw; color:rgba(245,240,232,.52); direction:rtl; }
+    .semo-brain strong { color:rgba(245,240,232,.78); }
+    .semo-field-lbl   { font-size:.82vw; color:rgba(245,240,232,.38); letter-spacing:.06em; }
+    .semo-source-row  { padding:.6vw 6% 1vw; direction:rtl; }
+    .semo-source-lbl  { font-size:.68vw; color:rgba(245,240,232,.22); letter-spacing:.14em; text-transform:uppercase; text-align:center; }
+
+    /* ── SCONNECT ── */
+    #sconnect::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 55% at 50% 48%, rgba(210,158,68,.14) 0%, rgba(175,120,42,.06) 45%, transparent 70%);
+    }
+    .scon-body    { display:flex; flex-direction:column; gap:1.2vw; padding:1.2% 6% 2%; flex:1; direction:rtl; }
+    .scon-intro   { font-family:'Cormorant Garamond',serif; font-size:1.3vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.52); text-align:center; margin-bottom:.2vw; }
+    .scon-grid      { display:flex; flex-direction:column; gap:.45vw; }
+    .scon-headers   { display:grid; grid-template-columns:1fr 1.4vw 1fr 1.4vw 1fr; padding-bottom:.4vw; border-bottom:1px solid rgba(245,240,232,.07); margin-bottom:.1vw; }
+    .scon-head      { font-family:'Cormorant Garamond',serif; font-size:.88vw; font-weight:500; letter-spacing:.18em; text-transform:uppercase; color:rgba(245,240,232,.75); text-align:center; }
+    .scon-row       { display:grid; grid-template-columns:1fr 1.4vw 1fr 1.4vw 1fr; align-items:center; }
+    .scon-arrow-col { display:flex; align-items:center; justify-content:center; font-size:1vw; color:rgba(245,240,232,.18); }
+    .scon-cell      { padding:.55vw .9vw; border-radius:4px; font-family:'Cormorant Garamond',serif; font-size:1.2vw; font-weight:300; text-align:center; line-height:1.45; }
+    .scon-emo-stress { background:rgba(212,149,122,.08); border:1px solid rgba(212,149,122,.18); color:rgba(212,149,122,.92); }
+    .scon-emo-calm   { background:rgba(139,184,150,.08); border:1px solid rgba(139,184,150,.18); color:rgba(139,184,150,.92); }
+    .scon-emo-deep   { background:rgba(210,158,68,.08);  border:1px solid rgba(210,158,68,.2);  color:rgba(210,158,68,.92);  }
+    .scon-freq  { background:rgba(245,240,232,.04); border:1px solid rgba(245,240,232,.1); color:rgba(245,240,232,.72); }
+    .scon-field { background:rgba(245,240,232,.04); border:1px solid rgba(245,240,232,.1); color:rgba(245,240,232,.72); }
+    .scon-sep   { height:1px; background:rgba(245,240,232,.05); margin:.1vw 0; }
+    .scon-closer { font-family:'Cormorant Garamond',serif; font-size:1.4vw; font-weight:400; color:rgba(210,158,68,.82); text-align:center; font-style:italic; margin-top:.3vw; }
+
+    /* ── SCHANGE ── */
+
+    /* ── SDONOW2 ── */
+    #sdonow2 { background:#080706; justify-content:center; align-items:center; }
+    #sdonow2::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background: radial-gradient(ellipse 62% 52% at 50% 50%, rgba(210,158,68,.13) 0%, transparent 72%);
+    }
+    .sdn2-block  { text-align:center; position:relative; z-index:1; direction:rtl; display:flex; flex-direction:column; align-items:center; gap:1.4vw; }
+    .sdn2-lead   { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:300; color:rgba(245,240,232,.6); line-height:1.35; }
+    .sdn2-main   { font-family:'Cormorant Garamond',serif; font-size:3.6vw; font-weight:400; color:var(--cream); line-height:1.2; }
+    .sdn2-rule   { width:36px; height:1px; background:rgba(210,158,68,.45); }
+    .sdn2-sub    { font-family:'Jost',sans-serif; font-size:.9vw; font-weight:400; letter-spacing:.18em; text-transform:uppercase; color:rgba(245,240,232,.38); }
+
+    /* ── STOOL2 ── */
+    #stool2  { justify-content:flex-start; align-items:center; }
+    #stool2b { justify-content:flex-start; align-items:center; }
+    #stool2::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 58% 55% at 50% 50%, rgba(212,149,122,.16) 0%, rgba(175,100,75,.07) 38%, rgba(120,60,40,.03) 62%, transparent 80%),
+        radial-gradient(ellipse 80% 65% at 50% 50%, rgba(150,75,50,.04), transparent 85%);
+    }
+    .st2-wrap      { position:relative; z-index:1; text-align:center; direction:rtl; display:flex; flex-direction:column; align-items:center; gap:2vw; padding:7% 14% 0; width:100%; }
+    .st2-eyebrow   { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:rgba(212,149,122,.88); border:1px solid rgba(212,149,122,.25); padding:.3vw 1.1vw; border-radius:2px; }
+    .st2-title     { font-family:'Cormorant Garamond',serif; font-size:2.4vw; font-weight:300; color:var(--cream); line-height:1.2; }
+    .st2-steps     { display:flex; flex-direction:column; gap:1.4vw; width:100%; max-width:65%; }
+    .st2-step      { display:flex; align-items:flex-start; gap:1.2vw; direction:rtl; text-align:right; }
+    .st2-num       { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:300; color:rgba(212,149,122,.45); line-height:1; flex-shrink:0; width:2vw; text-align:center; margin-top:.1vw; }
+    .st2-content   { display:flex; flex-direction:column; gap:.3vw; flex:1; }
+    .st2-step-main { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-weight:400; color:var(--cream); line-height:1.4; }
+    .st2-step-sub  { font-family:'Cormorant Garamond',serif; font-size:1.1vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.48); line-height:1.5; }
+    .st2-closing   { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:300; font-style:italic; color:rgba(212,149,122,.78); margin-top:.4vw; line-height:1.6; }
+    #stool2b .st2-eyebrow { color:rgba(139,184,150,.92); border-color:rgba(139,184,150,.28); }
+    #stool2b .st2-num     { color:rgba(139,184,150,.45); }
+    #stool2b .st2-closing { color:rgba(139,184,150,.82); }
+
+    /* ── SPRACTICE ── */
+    #spractice { justify-content:center; align-items:center; }
+    @keyframes sprPulse {
+      0%,100% { transform:scale(1);   opacity:.18; }
+      50%      { transform:scale(1.12); opacity:.28; }
+    }
+    .spr-bg-pulse { position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(ellipse 52% 44% at 50% 50%, rgba(212,149,122,.22) 0%, transparent 65%);
+      animation:sprPulse 5s ease-in-out infinite; }
+    .spr-wrap       { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2vw; text-align:center; direction:rtl; max-width:62%; }
+    .spr-eyebrow    { font-size:.68vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(212,149,122,.5); }
+    .spr-title      { font-family:'Cormorant Garamond',serif; font-size:3.8vw; font-weight:300; color:var(--cream); line-height:1; letter-spacing:.04em; }
+    .spr-rule       { width:44px; height:1px; background:rgba(212,149,122,.3); }
+    .spr-step       { display:flex; flex-direction:column; align-items:center; gap:.5vw; }
+    .spr-step-main  { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; color:var(--cream); line-height:1.4; }
+    .spr-step-breath { font-size:.7vw; letter-spacing:.2em; text-transform:uppercase; color:rgba(212,149,122,.45); }
+    .spr-closing    { font-family:'Cormorant Garamond',serif; font-size:1.8vw; font-weight:400; font-style:italic; color:rgba(212,149,122,.88); line-height:1.5;
+                      text-shadow:0 0 22px rgba(212,149,122,.35); }
+
+    /* ── SMYFIELD ── */
+    #smyfield::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 55% at 50% 50%, rgba(210,158,68,.1) 0%, rgba(175,120,42,.04) 48%, transparent 72%);
+    }
+    .smyf-body        { display:flex; flex-direction:column; gap:.95vw; padding:1.2% 6% 2%; flex:1; }
+    .smyf-row         { display:grid; grid-template-columns:1fr auto auto auto 1fr; align-items:center; gap:0 .9vw; padding:.85vw 1.2vw; border-radius:8px; transition:opacity .4s; }
+    .smyf-row-stress  { background:rgba(212,149,122,.06); border:1px solid rgba(212,149,122,.15); }
+    .smyf-row-depl    { background:rgba(245,240,232,.03); border:1px solid rgba(245,240,232,.09); }
+    .smyf-row-open    { background:rgba(139,184,150,.06); border:1px solid rgba(139,184,150,.15); }
+    .smyf-state       { direction:rtl; display:flex; flex-direction:column; gap:.3vw; }
+    .smyf-tag         { display:inline-flex; font-size:.62vw; letter-spacing:.18em; text-transform:uppercase; padding:.22vw .6vw; border-radius:2px; align-self:flex-start; margin-bottom:.1vw; }
+    .smyf-tag-s       { background:rgba(212,149,122,.12); color:rgba(212,149,122,.85); border:1px solid rgba(212,149,122,.2); }
+    .smyf-tag-d       { background:rgba(245,240,232,.06); color:rgba(245,240,232,.5); border:1px solid rgba(245,240,232,.12); }
+    .smyf-tag-o       { background:rgba(139,184,150,.12); color:rgba(139,184,150,.85); border:1px solid rgba(139,184,150,.2); }
+    .smyf-state-text  { font-family:'Cormorant Garamond',serif; font-size:1.05vw; font-weight:400; color:var(--cream); line-height:1.45; }
+    .smyf-state-sub   { font-size:.75vw; font-weight:300; color:rgba(245,240,232,.45); line-height:1.45; }
+    .smyf-arr         { font-size:1vw; color:rgba(245,240,232,.18); text-align:center; padding:0 .2vw; }
+    .smyf-field-vis   { display:flex; align-items:center; justify-content:center; }
+    .smyf-attract     { direction:rtl; display:flex; flex-direction:column; gap:.3vw; }
+    .smyf-attr-lbl    { font-family:'Cormorant Garamond',serif; font-size:.85vw; font-weight:500; font-style:italic; letter-spacing:.06em; color:rgba(245,240,232,.78); margin-bottom:.2vw; text-align:right; }
+    .smyf-attr-item   { font-family:'Cormorant Garamond',serif; font-size:.98vw; font-weight:300; color:rgba(245,240,232,.72); line-height:1.45; display:flex; align-items:flex-start; gap:.4vw; }
+    .smyf-attr-item::before { content:'·'; color:rgba(245,240,232,.25); flex-shrink:0; }
+
+
+    /* ── SREFLECT ── */
+    #sreflect { justify-content:center; align-items:center; padding:8% 18%; }
+    #sreflect::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 48% at 50% 50%, rgba(212,149,122,.12) 0%, rgba(175,100,75,.05) 44%, transparent 72%);
+    }
+    .sref-wrap     { position:relative; z-index:1; direction:rtl; display:flex; flex-direction:column; align-items:flex-start; gap:1.5vw; max-width:68%; margin:0 auto; }
+    .sref-lead     { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:400; color:var(--cream); align-self:flex-start; letter-spacing:.01em; }
+    .sref-block    { display:flex; align-items:flex-start; gap:1.2vw; width:100%; direction:rtl; }
+    .sref-q-num    { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:300; color:rgba(212,149,122,.22); line-height:1; flex-shrink:0; width:2.2vw; text-align:center; padding-top:.1vw; }
+    .sref-q-body   { display:flex; flex-direction:column; gap:.3vw; padding-bottom:1.2vw; border-bottom:1px solid rgba(245,240,232,.05); flex:1; text-align:right; }
+    .sref-block:last-of-type .sref-q-body { border-bottom:none; }
+    .sref-question { font-family:'Cormorant Garamond',serif; font-size:1.75vw; font-weight:300; color:var(--cream); line-height:1.35; }
+    .sref-sub      { font-size:.72vw; letter-spacing:.18em; text-transform:uppercase; color:rgba(212,149,122,.45); margin-top:.15vw; }
+    .sref-rule     { width:40px; height:1px; background:rgba(212,149,122,.3); margin:.2vw 0; }
+    .sref-note     { font-family:'Cormorant Garamond',serif; font-size:1.1vw; font-weight:300; color:rgba(245,240,232,.32); line-height:1.6; text-align:center; }
+
+    /* ── SRESONANCE ── */
+    #sresonance::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 55% at 50% 50%, rgba(139,184,150,.14) 0%, rgba(100,150,115,.06) 42%, transparent 72%),
+        radial-gradient(ellipse 80% 65% at 50% 50%, rgba(80,120,90,.04), transparent 85%);
+    }
+    .sres-body       { display:flex; flex-direction:column; gap:1vw; padding:1.5% 7% 2%; flex:1; direction:rtl; }
+    .sres-ex         { display:flex; gap:1.5vw; align-items:flex-start; padding:1.1vw 1.5vw; border-radius:6px; background:rgba(139,184,150,.05); border:1px solid rgba(139,184,150,.11); }
+    .sres-ex-num     { font-family:'Cormorant Garamond',serif; font-size:2.4vw; font-weight:300; color:rgba(139,184,150,.28); line-height:1; flex-shrink:0; width:2.2vw; text-align:center; margin-top:.1vw; }
+    .sres-ex-content { display:flex; flex-direction:column; gap:.4vw; flex:1; }
+    .sres-ex-title   { font-family:'Cormorant Garamond',serif; font-size:1.3vw; font-weight:500; color:var(--cream); line-height:1.3; }
+    .sres-ex-text    { font-size:.9vw; font-weight:300; color:rgba(245,240,232,.55); line-height:1.65; }
+    .sres-ex-src     { font-size:.65vw; color:rgba(139,184,150,.38); letter-spacing:.14em; text-transform:uppercase; margin-top:.1vw; }
+
+    /* ── SWATERFACT ── */
+    #swaterfact { justify-content:center; align-items:center; }
+    #swaterfact::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(ellipse 60% 52% at 50% 50%, rgba(72,180,210,.22) 0%, transparent 70%);
+    }
+    .swf-wrap      { position:relative; z-index:1; direction:rtl; display:flex; flex-direction:column; align-items:center; gap:1.6vw; max-width:64%; text-align:center; }
+    .swf-eyebrow   { font-size:.72vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(72,180,210,.85); margin-bottom:.4vw; }
+    .swf-fact      { font-family:'Cormorant Garamond',serif; font-size:1.85vw; font-weight:300; color:rgba(245,240,232,.88); line-height:1.6; }
+    .swf-fact strong { color:var(--cream); font-weight:400; font-style:normal; }
+    .swf-rule      { width:36px; height:1px; background:rgba(72,180,210,.55); margin:.3vw 0; }
+    .swf-src       { font-size:.68vw; letter-spacing:.18em; text-transform:uppercase; color:rgba(245,240,232,.38); }
+
+    /* ── SWATERSELF ── */
+    #swaterself { justify-content:center; align-items:center; }
+    #swaterself::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(ellipse 58% 50% at 50% 50%, rgba(72,180,210,.16) 0%, transparent 68%);
+    }
+    .sws-wrap      { position:relative; z-index:1; direction:rtl; display:flex; flex-direction:column; align-items:center; gap:2.8vw; max-width:58%; text-align:center; }
+    .sws-fact      { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:300; color:rgba(245,240,232,.88); line-height:1.65; }
+    .sws-fact strong { color:rgba(72,180,210,.96); font-weight:400; font-style:normal; }
+    .sws-question  { font-family:'Cormorant Garamond',serif; font-size:1.95vw; font-weight:300; font-style:italic; color:var(--cream); line-height:1.65; padding-top:.8vw; border-top:1px solid rgba(245,240,232,.07); }
+    .sws-question em { color:rgba(72,180,210,.96); font-style:normal; font-weight:400; }
+
+    /* ── SCLOSINGLOOP ── */
+    #sclosingloop { justify-content:center; align-items:center; padding:8% 14%; }
+    #sclosingloop::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 52% 48% at 50% 50%, rgba(212,149,122,.16) 0%, rgba(175,100,75,.07) 40%, transparent 70%),
+        radial-gradient(ellipse 75% 62% at 50% 50%, rgba(150,75,50,.04), transparent 85%);
+    }
+    .scl-wrap    { position:relative; z-index:1; text-align:center; direction:rtl; display:flex; flex-direction:column; align-items:center; gap:1.4vw; }
+    .scl-callback{ font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-weight:300; color:rgba(245,240,232,.72); line-height:1.6; }
+    .scl-rule    { width:40px; height:1px; background:rgba(212,149,122,.4); margin-bottom:.2vw; }
+    .scl-reveal  { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-weight:300; color:var(--cream); line-height:1.5; }
+    .scl-science { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-weight:300; color:rgba(245,240,232,.55); line-height:1.7; }
+    .scl-punch   { font-family:'Cormorant Garamond',serif; font-size:2.4vw; font-weight:400; color:var(--cream); line-height:1.35; }
+    .scl-sub     { font-size:.75vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(212,149,122,.6); }
+
+
+    /* ── SBRIDGEINTRO ── */
+    #sbridgeintro { justify-content:center; align-items:center; padding:8%; }
+    #sbridgeintro::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 52% 46% at 50% 50%, rgba(210,158,68,.22) 0%, rgba(175,120,42,.10) 38%, rgba(120,76,18,.04) 62%, transparent 80%),
+        radial-gradient(ellipse 75% 60% at 50% 50%, rgba(150,95,22,.07), transparent 85%);
+    }
+    .sbi-wrap   { position:relative; z-index:1; text-align:center; direction:rtl; display:flex; flex-direction:column; align-items:center; gap:1.6vw; }
+    .sbi-line1  { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:300; color:var(--cream); line-height:1.55; }
+    .sbi-line2  { font-family:'Cormorant Garamond',serif; font-size:1.7vw; font-weight:300; color:rgba(245,240,232,.58); line-height:1.55; }
+    .sbi-rule   { width:40px; height:1px; background:rgba(210,158,68,.4); }
+    .sbi-cta    { font-size:.78vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(210,158,68,.65); }
+    .sbi-glow   { position:relative; color:rgba(139,184,150,.98);
+                  text-shadow: 0 0 18px rgba(139,184,150,.7), 0 0 40px rgba(139,184,150,.45), 0 0 80px rgba(139,184,150,.25); }
+    .sbi-glow::before { content:''; position:absolute; inset:-60% -80%; border-radius:50%;
+                        background:radial-gradient(ellipse 80% 70% at 50% 50%, rgba(139,184,150,.22) 0%, transparent 70%);
+                        pointer-events:none; z-index:-1; }
+
+    /* ── WATERMARK ── */
+    .watermark { position:fixed; bottom:1.6vw; right:2vw; z-index:999; display:flex; align-items:center; gap:.55vw; opacity:.58; pointer-events:none; direction:rtl; }
+    .watermark svg { width:2.4vw; height:auto; flex-shrink:0; }
+    .watermark-name { font-family:'Cormorant Garamond',serif; font-size:.75vw; font-weight:600; letter-spacing:.22em; color:#d29e44; text-transform:uppercase; white-space:nowrap; }
+
+    /* ══ UNIFIED SLIDE BACKGROUNDS ══ */
+    /* Null all individual ::before glow rules for session 2 slides */
+    #s1::before,#s12::before,#s13::before,
+    #swelcome::before,#srecap::before,#s7recap::before,#sjourney2::before,
+    #skavanah::before,#sopening2::before,
+    #satom::before,#swave::before,#satombridge::before,#satom3::before,#satomintro::before,
+    #sfieldbridge::before,#sfieldq::before,
+    #sfield::before,#sfielduse::before,#sresonance::before,#sconnect::before,#sfieldsmeet::before,
+    #semotion::before,#smyfield::before,#sreflect::before,
+    #sclosingloop::before,#sdonow2::before,
+    #stool2::before,#stool2b::before,#spractice::before,
+    #sbeta::before { background:none !important; }
+
+    /* Gold glow · warm, reflective, philosophical */
+    #s1,#s12,#s13,
+    #swelcome,#srecap,#s7recap,#sjourney2,#skavanah,#sopening2,
+    #sbeta {
+      background: radial-gradient(ellipse 65% 55% at 50% 52%, rgba(210,158,68,.15) 0%, transparent 70%), #080706;
+    }
+    /* Gold glow · science/atoms section */
+    #satom,#swave,#satombridge,#satom3,#sfieldbridge,#satomintro {
+      background: radial-gradient(ellipse 60% 50% at 50% 48%, rgba(210,158,68,.14) 0%, transparent 68%), #080706;
+    }
+    /* Sage glow · field/HeartMath/resonance */
+    #sfield,#sfieldq,#sfielduse,#sresonance,#sconnect,#sfieldsmeet {
+      background: radial-gradient(ellipse 65% 55% at 50% 50%, rgba(139,184,150,.14) 0%, transparent 70%), #080706;
+    }
+    /* Blush glow · emotion/personal/reflection */
+    #semotion,#smyfield,#sreflect {
+      background: radial-gradient(ellipse 65% 55% at 50% 50%, rgba(212,149,122,.14) 0%, transparent 70%), #080706;
+    }
+    /* Blush glow · meditation practice */
+    #spractice {
+      background: radial-gradient(ellipse 58% 50% at 50% 50%, rgba(212,149,122,.16) 0%, transparent 68%), #080706;
+    }
+    /* Gold glow · closing/tools */
+    #sclosingloop,#sdonow2 {
+      background: radial-gradient(ellipse 60% 52% at 50% 50%, rgba(210,158,68,.13) 0%, transparent 68%), #080706;
+    }
+    #stool2 {
+      background: radial-gradient(ellipse 55% 48% at 50% 44%, rgba(212,149,122,.28) 0%, transparent 65%), #080706;
+    }
+    #stool2b {
+      background: radial-gradient(ellipse 55% 48% at 50% 44%, rgba(139,184,150,.24) 0%, transparent 65%), #080706;
+    }
+  </style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <!-- ══ S1, TITLE ══ -->
+  <div class="slide active" id="s1">
+    <div class="s1-top">
+      <div class="s1-session-num">מפגש שני &nbsp;·&nbsp; Session 02</div>
+      <div class="s1-session-he">השדה שמסביבי</div>
+      <div class="s1-rule-top"></div>
+    </div>
+    <div class="s1-block">
+      <div class="s1-main">The <em>Inner</em> Shift</div>
+      <div class="s1-tagline">המסע לשינוי מבפנים</div>
+    </div>
+  </div>
+
+  <!-- ══ S-WELCOME, INTRO ══ -->
+  <div class="slide" id="swelcome">
+    <div class="swelcome-wrap">
+      <div class="swelcome-eye">The Inner Shift &nbsp;·&nbsp; Session 2 of 5</div>
+      <div class="swelcome-welcome">כיף להיפגש שוב</div>
+      <div class="swelcome-rule"></div>
+    </div>
+    <div class="swelcome-sig">Noa Eiland</div>
+  </div>
+
+  <!-- ══ SRECAP, SESSION 1 RECAP ══ -->
+  <div class="slide" id="srecap">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Session 1 · Recap</div>
+          <div class="sh2-title">What We Covered</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מה למדנו בפגישה הראשונה</div>
+          <div class="sh2-he-sub">חזרה קצרה לפני שממשיכים</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="summary-body">
+      <div class="sum-item"><span class="sum-mark">✦</span>הכל רוטט · כולל אנחנו. הגוף הוא מערכת שקולטת ומשדרת גלים כל הזמן.</div>
+      <div class="sum-item"><span class="sum-mark">✦</span>תדר המוח קובע מה אפשר לקלוט ולשנות. בבטא סגור. באלפא ותטא · הדלת פתוחה.</div>
+      <div class="sum-item"><span class="sum-mark">✦</span>95% מהתגובות שלנו אוטומטיות · מגיעות ישירות מהתת-מודע.</div>
+      <div class="sum-item"><span class="sum-mark">✦</span>התת-מודע נבנה לפני גיל 6-7, כשהקורטקס הפרה-פרונטלי עדיין לא היה מפותח.</div>
+      <div class="sum-item"><span class="sum-mark">✦</span>האמונות המגבילות נוצרו בנו כילדות · ועדיין מנהלות אותנו.</div>
+      <div class="sum-item"><span class="sum-mark">✦</span>אפשר לזהות אותן. ואז אפשר לבחור אחרת.</div>
+    </div>
+  </div>
+
+  <!-- ══ S7RECAP, BRAIN WAVES RECAP FROM SESSION 1 ══ -->
+  <div class="slide" id="s7recap">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Electroencephalography · EEG</div>
+          <div class="sh2-title">Brain Wave States</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מצבי המח תדרים</div>
+          <div class="sh2-he-sub">מפת הגישה לתת-מודע</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="s7c-body">
+      <div class="s7c-card" id="s7c-1">
+        <div class="s7c-left">
+          <div class="s7c-name" style="color:rgba(90,185,210,.75)">דלתא</div>
+          <div class="s7c-hz">0.5–4 Hz</div>
+          <svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C37,5 75,29 112,17 C150,5 188,29 225,17 C262,5 300,29 300,17" stroke="rgba(90,185,210,.4)" stroke-width="1.8" fill="none"/></svg>
+        </div>
+        <div class="s7c-right">
+          <div class="s7c-example">בדלתא המוח כמעט ולא מעבד מידע חיצוני. זו השינה העמוקה ביותר המוח פנימי לחלוטין, עסוק בתיקון פיזי והתחדשות.</div>
+          <div class="s7c-desc">מערכת חיסון עובדת. גירויים חיצוניים כמעט ולא נרשמים אין גישה לתת מודע. <span style="opacity:.6;font-style:italic;">Hobson &amp; Stickgold, 1995</span></div>
+        </div>
+      </div>
+      <div class="s7c-card s7c-theta" id="s7c-2">
+        <div class="s7c-left">
+          <div class="s7c-name" style="color:rgba(212,149,122,.92)">תטא</div>
+          <div class="s7c-hz" style="color:rgba(212,149,122,.6)">4–8 Hz</div>
+          <svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C18,4 37,30 56,17 C75,4 94,30 112,17 C131,4 150,30 169,17 C188,4 206,30 225,17 C244,4 262,30 281,17 C300,4 300,17 300,17" stroke="rgba(212,149,122,.85)" stroke-width="2.2" fill="none"/></svg>
+        </div>
+        <div class="s7c-right">
+          <div class="s7c-example">הרגע שבין ערות לשינה הגוף כבר שוכב אבל המוח עדיין רואה תמונות. גם הילד מול הטלוויזיה ששקוע לגמרי ולא שומע אתכם קוראים לו.</div>
+          <div class="s7c-desc"><span class="s7c-tag s7c-tag-theta">↓ התת מודע הכי נגיש</span> מדיטציה עמוקה, היפנוזה, חלימה צלולה</div>
+        </div>
+      </div>
+      <div class="s7c-card s7c-alpha" id="s7c-3">
+        <div class="s7c-left">
+          <div class="s7c-name" style="color:rgba(139,184,150,.9)">אלפא</div>
+          <div class="s7c-hz">8–12 Hz</div>
+          <svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C9,7 19,27 28,17 C37,7 47,27 56,17 C66,7 75,27 84,17 C94,7 103,27 112,17 C122,7 131,27 140,17 C150,7 160,27 169,17 C178,7 188,27 197,17 C206,7 216,27 225,17 C234,7 244,27 253,17 C262,7 272,27 281,17 C291,7 300,27 300,17" stroke="rgba(139,184,150,.78)" stroke-width="1.8" fill="none"/></svg>
+        </div>
+        <div class="s7c-right">
+          <div class="s7c-example">הרגע שאחרי שיוצאים מהמקלחת. הטיול בטבע שבו הראש מתפנה. הנהיגה על כביש מוכר ערניים, אבל שקטים מבפנים.</div>
+          <div class="s7c-desc"><span class="s7c-tag s7c-tag-gate">↓ השער</span> ערנות נינוחה, נוכחות, "זרימה"</div>
+        </div>
+      </div>
+      <div class="s7c-card s7c-beta" id="s7c-4">
+        <div class="s7c-left">
+          <div class="s7c-name" style="color:rgba(192,85,85,.85)">בטא</div>
+          <div class="s7c-hz">12–38 Hz</div>
+          <svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 Q4,9 8,17 Q12,25 16,17 Q20,9 24,17 Q28,25 32,17 Q36,9 40,17 Q44,25 48,17 Q52,9 56,17 Q60,25 64,17 Q68,9 72,17 Q76,25 80,17 Q84,9 88,17 Q92,25 96,17 Q100,9 104,17 Q108,25 112,17 Q116,9 120,17 Q124,25 128,17 Q132,9 136,17 Q140,25 144,17 Q148,9 152,17 Q156,25 160,17 Q164,9 168,17 Q172,25 176,17 Q180,9 184,17 Q188,25 192,17 Q196,9 200,17 Q204,25 208,17 Q212,9 216,17 Q220,25 224,17 Q228,9 232,17 Q236,25 240,17 Q244,9 248,17 Q252,25 256,17 Q260,9 264,17 Q268,25 272,17 Q276,9 280,17 Q284,25 288,17 Q292,9 296,17 Q300,25 300,17" stroke="rgba(192,85,85,.6)" stroke-width="1.4" fill="none"/></svg>
+        </div>
+        <div class="s7c-right">
+          <div class="s7c-example">רוב שעות הערות שלנו. ישיבה, מייל, החלטות בריא ונחוץ. אבל כשיש לחץ ודאגה ומחשבות חוזרות עולים לבטא גבוה. המוח עסוק בדבר אחד: לשרוד.</div>
+          <div class="s7c-desc"><span class="s7c-tag s7c-tag-warn">⚠ בבטא גבוה המוח במצב הישרדות. לא ניתן לתכנת מחדש.</span></div>
+        </div>
+      </div>
+      <div class="s7c-card" id="s7c-5">
+        <div class="s7c-left">
+          <div class="s7c-name" style="color:rgba(120,210,235,.85)">גמא</div>
+          <div class="s7c-hz" style="color:rgba(120,210,235,.55)">38–100 Hz</div>
+          <svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 Q2,11 4,17 Q6,23 8,17 Q10,11 12,17 Q14,23 16,17 Q18,11 20,17 Q22,23 24,17 Q26,11 28,17 Q30,23 32,17 Q34,11 36,17 Q38,23 40,17 Q42,11 44,17 Q46,23 48,17 Q50,11 52,17 Q54,23 56,17 Q58,11 60,17 Q62,23 64,17 Q66,11 68,17 Q70,23 72,17 Q74,11 76,17 Q78,23 80,17 Q82,11 84,17 Q86,23 88,17 Q90,11 92,17 Q94,23 96,17 Q98,11 100,17 Q102,23 104,17 Q106,11 108,17 Q110,23 112,17 Q114,11 116,17 Q118,23 120,17 Q122,11 124,17 Q126,23 128,17 Q130,11 132,17 Q134,23 136,17 Q138,11 140,17 Q142,23 144,17 Q146,11 148,17 Q150,23 152,17 Q154,11 156,17 Q158,23 160,17 Q162,11 164,17 Q166,23 168,17 Q170,11 172,17 Q174,23 176,17 Q178,11 180,17 Q182,23 184,17 Q186,11 188,17 Q190,23 192,17 Q194,11 196,17 Q198,23 200,17 Q202,11 204,17 Q206,23 208,17 Q210,11 212,17 Q214,23 216,17 Q218,11 220,17 Q222,23 224,17 Q226,11 228,17 Q230,23 232,17 Q234,11 236,17 Q238,23 240,17 Q242,11 244,17 Q246,23 248,17 Q250,11 252,17 Q254,23 256,17 Q258,11 260,17 Q262,23 264,17 Q266,11 268,17 Q270,23 272,17 Q274,11 276,17 Q278,23 280,17 Q282,11 284,17 Q286,23 288,17 Q290,11 292,17 Q294,23 296,17 Q298,11 300,17" stroke="rgba(90,210,235,.5)" stroke-width="1.1" fill="none"/></svg>
+        </div>
+        <div class="s7c-right">
+          <div class="s7c-example">גמא הוא תדר של תובנה הרגע שהכל מתחבר. המוח שם פעיל מאוד והדלת לתת מודע סגורה.</div>
+          <div class="s7c-desc">לא נכנסים אליו ישירות. מגיע כתוצאה של עבודה עמוקה, לאחר שעברנו דרך אלפא ותטא.</div>
+        </div>
+      </div>
+      <div class="s7c-punch" id="s7c-punch">אלפא היא השער המוח מתחיל להירגע ולרדת פנימה.<br>תטא היא היעד שם התת מודע נגיש לשינוי.<br>בבטא גבוה המוח במצב הישרדות. לא ניתן לשנות תבניות ישנות.</div>
+    </div>
+  </div>
+
+  <!-- ══ S-WAVE, REMINDER ══ -->
+  <div class="slide" id="swave">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Session 1 Recap · Wave Physics</div>
+          <div class="sh2-title">Frequencies · A Reminder</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">תדרים · תזכורת מהסשן הראשון</div>
+          <div class="sh2-he-sub">מה שלמדנו · ואיך זה מתחבר לשדה</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="swave-intro">
+      <div class="snew-line" id="swave-1">
+        <div class="swave-intro-main">גל זה התנועה. תדר זה האופן שבו אנחנו מודדים אותה. והרץ זו יחידת המידה.</div>
+      </div>
+    </div>
+    <div class="snew-line swave-body-wrap" id="swave-2">
+    <div class="swave-body">
+      <div class="swave-right">
+        <div class="swave-ritem">
+          <div class="swave-ricon">↔</div>
+          <div class="swave-rtxt">
+            <strong>אורך גל</strong>
+            <span>המרחק מפסגה לפסגה. ככל שהגל ארוך יותר, הוא רוטט לאט יותר.</span>
+          </div>
+        </div>
+        <div class="swave-ritem">
+          <div class="swave-ricon">Hz</div>
+          <div class="swave-rtxt">
+            <strong>תדר (הרץ)</strong>
+            <span>כמה פסגות עוברות בשנייה. זה המספר שמתאר את הגל. מדידה: Hz.</span>
+          </div>
+        </div>
+        <div class="swave-ritem">
+          <div class="swave-ricon">⇄</div>
+          <div class="swave-rtxt">
+            <strong>הקשר ביניהם</strong>
+            <span>תדר גבוה = גל קצר. תדר נמוך = גל ארוך. הם תמיד מנוגדים זה לזה.</span>
+          </div>
+        </div>
+        <div class="swave-law">
+          תדר נמוך = גל ארוך &nbsp;·&nbsp; תדר גבוה = גל קצר<br>
+          <span style="font-size:.78vw;font-family:'Jost',sans-serif;font-weight:300;color:rgba(210,158,68,.55);">זה חוק הפיזיקה הכי בסיסי, תמיד נכון</span>
+        </div>
+      </div>
+      <div class="swave-left">
+        <div class="swave-vis">
+          <div class="swave-lbl">תדר נמוך, גל ארוך, רוטט לאט</div>
+          <div class="swave-svg-wrap">
+            <svg viewBox="0 0 400 55" style="width:100%;height:3vw;" fill="none">
+              <path d="M0,27 C50,5 100,49 150,27 C200,5 250,49 300,27 C350,5 400,49 400,27" stroke="rgba(196,160,107,.75)" stroke-width="2.5" fill="none"/>
+              <line x1="15" y1="10" x2="15" y2="44" stroke="rgba(196,160,107,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+              <line x1="165" y1="10" x2="165" y2="44" stroke="rgba(196,160,107,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+              <text x="90" y="52" font-size="9" fill="rgba(245,240,232,.52)" font-family="Jost,sans-serif" text-anchor="middle">← אורך גל ←</text>
+            </svg>
+          </div>
+        </div>
+        <div class="swave-vis" style="margin-bottom:0">
+          <div class="swave-lbl">תדר גבוה, גל קצר, רוטט מהר</div>
+          <div class="swave-svg-wrap">
+            <svg viewBox="0 0 400 55" style="width:100%;height:3vw;" fill="none">
+              <path d="M0,27 C14,9 28,45 42,27 C56,9 70,45 84,27 C98,9 112,45 126,27 C140,9 154,45 168,27 C182,9 196,45 210,27 C224,9 238,45 252,27 C266,9 280,45 294,27 C308,9 322,45 336,27 C350,9 364,45 378,27 C392,9 400,45 400,27" stroke="rgba(212,149,122,.85)" stroke-width="2.5" fill="none"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="src">Source: Classical Wave Physics · Electromagnetic Theory</div>
+  </div>
+
+  <!-- ══ SJOURNEY2, WHERE WE ARE ══ -->
+  <div class="slide" id="sjourney2">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">The Journey · Session Map</div>
+          <div class="sh2-title">Where We Are</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">איפה אנחנו במסע</div>
+          <div class="sh2-he-sub">פגישה ראשונה מאחורינו · הנה הפגישה השנייה</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="journey-body">
+      <div class="journey-step j-done">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">1</div>
+        <div class="jstep-session">מפגש ראשון · הושלם</div>
+        <div class="jstep-title">מערכת ההפעלה</div>
+        <div class="jstep-desc">זיהוי: הסיפור שמנהל אותי</div>
+        <div class="jstep-check">✓ נעשה</div>
+      </div>
+      <div class="journey-step j-active">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">2</div>
+        <div class="jstep-session">מפגש שני · היום</div>
+        <div class="jstep-title">השדה שמסביבי</div>
+        <div class="jstep-desc">הבנה: המחשבות שלי לא נשארות בראש</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">3</div>
+        <div class="jstep-session">מפגש שלישי</div>
+        <div class="jstep-title">הלופ</div>
+        <div class="jstep-desc">חיבור: איך האמונה מייצרת שוב ושוב את אותה תוצאה</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">4</div>
+        <div class="jstep-session">מפגש רביעי</div>
+        <div class="jstep-title">שבירת הלופ</div>
+        <div class="jstep-desc">שינוי: לייצר אמונה חדשה ולגור בה</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">5</div>
+        <div class="jstep-session">מפגש חמישי</div>
+        <div class="jstep-title">הגרסה החדשה שלי</div>
+        <div class="jstep-desc">אינטגרציה: מי אני כשאני לא מוגבלת</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SKAVANAH, GROUNDING MEDITATION ══ -->
+  <div class="slide" id="skavanah">
+    <div class="kavanah-circle"></div>
+    <div class="kavanah-circle kavanah-circle-2"></div>
+    <div class="kavanah-title">רגע של התכווננות</div>
+    <div class="kavanah-sub">עצמי עיניים &nbsp;·&nbsp; שימי את היום בצד &nbsp;·&nbsp; הגיעי</div>
+  </div>
+
+  <!-- ══ SOPENING2, מכירות את זה ש ══ -->
+  <div class="slide" id="sopening2">
+    <div class="sop2-wrap">
+      <div class="sop2-heading">מכירות את זה ש...</div>
+      <div class="snew-line" id="sop2-1">
+        <div class="sop2-main">ידעתן משהו עמוק לפני שזה קרה.<br>שידעתן לפני שידעתן.<br>ואז שזה קרה · אמרתן: <span style="color:rgba(210,158,68,.92);">ידעתי.</span></div>
+      </div>
+      <div class="snew-line" id="sop2-2">
+        <div class="sop2-bridge">מה אם הגוף שלך קלט מידע שהמוח עוד לא עבד?</div>
+      </div>
+      <div class="snew-line" id="sop2-3">
+        <div class="sop2-punch">הגוף שהרגיש לפני שידע · לא עשה את זה במקרה.<br>יש לו מבנה שמאפשר את זה.<br><span style="font-size:.8em;color:rgba(210,158,68,.65);letter-spacing:.18em;text-transform:uppercase;">בואי נכיר אותו</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SATOMINTRO, BRIDGE TO SCIENCE ══ -->
+  <div class="slide" id="satomintro">
+    <div class="sai-wrap">
+      <div class="sai-line1">מתחילות מה<span class="sai-atom">אטום</span></div>
+      <div class="sai-line2">כי הוא היחידה הבסיסית ביותר שממנה הכל בנוי ·</div>
+    </div>
+  </div>
+
+  <!-- ══ SATOM, THE ATOM ══ -->
+  <div class="slide" id="satom">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Quantum Physics · Atoms</div>
+          <div class="sh2-title">The Atom is Mostly Motion</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">האטום · ברובו תנועה ואנרגיה</div>
+          <div class="sh2-he-sub">הגרעין נושא את המסה. כל השאר · תנועה מתמדת.</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="satom-body">
+      <!-- SVG Atom Illustration -->
+      <div class="satom-vis">
+        <svg class="satom-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Base ellipse path for animateMotion (centered at 200,150) -->
+            <path id="satom-op" d="M 360,150 A 160,52 0 1,0 40,150 A 160,52 0 1,0 360,150"/>
+            <!-- Nucleus glow gradient -->
+            <radialGradient id="satom-ng" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(245,210,120,0.9)"/>
+              <stop offset="60%" stop-color="rgba(210,158,68,0.5)"/>
+              <stop offset="100%" stop-color="rgba(210,158,68,0)"/>
+            </radialGradient>
+            <!-- Orbit glow filter -->
+            <filter id="satom-glow">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+            <filter id="satom-eglow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+            </filter>
+          </defs>
+
+          <!-- Orbit 1 · horizontal -->
+          <g transform="rotate(0 200 150)">
+            <ellipse cx="200" cy="150" rx="160" ry="52" fill="none" stroke="rgba(210,158,68,0.18)" stroke-width="0.8"/>
+            <circle r="4.5" fill="rgba(70,165,195,0.92)" filter="url(#satom-eglow)">
+              <animateMotion dur="3.4s" repeatCount="indefinite"><mpath href="#satom-op"/></animateMotion>
+            </circle>
+          </g>
+
+          <!-- Orbit 2 · tilted 65° -->
+          <g transform="rotate(65 200 150)">
+            <ellipse cx="200" cy="150" rx="160" ry="52" fill="none" stroke="rgba(210,158,68,0.18)" stroke-width="0.8"/>
+            <circle r="4.5" fill="rgba(70,165,195,0.85)" filter="url(#satom-eglow)">
+              <animateMotion dur="4.8s" repeatCount="indefinite" begin="-1.8s"><mpath href="#satom-op"/></animateMotion>
+            </circle>
+          </g>
+
+          <!-- Orbit 3 · tilted 130° -->
+          <g transform="rotate(130 200 150)">
+            <ellipse cx="200" cy="150" rx="160" ry="52" fill="none" stroke="rgba(210,158,68,0.18)" stroke-width="0.8"/>
+            <circle r="4.5" fill="rgba(245,220,150,0.82)" filter="url(#satom-eglow)">
+              <animateMotion dur="2.9s" repeatCount="indefinite" begin="-0.6s"><mpath href="#satom-op"/></animateMotion>
+            </circle>
+          </g>
+
+          <!-- Nucleus glow halo -->
+          <circle cx="200" cy="150" r="28" fill="url(#satom-ng)" opacity="0.35"/>
+          <circle cx="200" cy="150" r="16" fill="url(#satom-ng)" opacity="0.5"/>
+          <!-- Nucleus core -->
+          <circle cx="200" cy="150" r="8" fill="rgba(245,210,100,0.97)"/>
+          <circle cx="200" cy="150" r="13" fill="none" stroke="rgba(210,158,68,0.35)" stroke-width="1"/>
+
+          <!-- Labels -->
+          <text x="213" y="147" font-family="Jost,sans-serif" font-size="9" fill="rgba(245,240,232,0.45)" letter-spacing="1">גרעין</text>
+          <text x="362" y="146" font-family="Jost,sans-serif" font-size="8" fill="rgba(70,165,195,0.55)" letter-spacing="0.5">e⁻</text>
+        </svg>
+      </div>
+
+      <!-- Info Panel -->
+      <div class="satom-info">
+        <div class="satom-pct-wrap">
+          <div class="satom-pct">99.9999%</div>
+          <div class="satom-pct-lbl">מנפח האטום אינו חומר מוצק</div>
+        </div>
+        <div class="satom-points">
+          <div class="satom-point"><strong>הגרעין</strong> · מכיל 99.97% מהמסה של האטום, אבל תופס פחות מ-0.00001% מהנפח שלו.</div>
+          <div class="satom-point"><strong>האלקטרונים</strong> · לא חלקיקים קטנים שמסתובבים בסדר, אלא תנועה מתמדת ובלתי נחה.</div>
+          <div class="satom-point"><strong>מה שמרגיש "מוצק"</strong> · דחייה אלקטרומגנטית בין אטומים. לא מגע בין חומר.</div>
+        </div>
+        <div class="satom-punch">אם הגרעין היה כדור טניס · האטום כולו היה גדול כמו אצטדיון.</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ SATOMBRIDGE, ATOM → WAVE → FREQUENCY ══ -->
+  <div class="slide" id="satombridge">
+    <div class="sab-wrap">
+      <div class="sab-line">האטום ברובו תנועה מתמדת ·<br>תנועה שחוזרת על עצמה יוצרת גל,<br>ולגל, <span class="sab-em">כפי שכבר יודעות</span> · יש תדר.</div>
+    </div>
+  </div>
+
+  <!-- ══ SATOM3, FROM ATOMS TO US ══ -->
+  <div class="slide" id="satom3">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Atomic Physics · States of Matter</div>
+          <div class="sh2-title">Everything Is Made of Atoms</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">הכל בנוי מאטומים</div>
+          <div class="sh2-he-sub">ומה שמבדיל ביניהם · האופן שבו הם זזים</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="sa3-inner">
+      <!-- visible from start: 3 states of matter rows -->
+      <div class="sa3-rows">
+        <!-- מוצק -->
+        <div class="sa3-row">
+          <div class="sa3-row-label">מוצק</div>
+          <svg class="sa3-row-svg" viewBox="0 0 60 40" fill="none">
+            <circle cx="15" cy="10" r="3.5" fill="#f5f0e8" fill-opacity=".65"/>
+            <circle cx="30" cy="10" r="3.5" fill="#f5f0e8" fill-opacity=".65"/>
+            <circle cx="45" cy="10" r="3.5" fill="#f5f0e8" fill-opacity=".65"/>
+            <circle cx="15" cy="20" r="3.5" fill="#f5f0e8" fill-opacity=".65"/>
+            <circle cx="30" cy="20" r="3.5" fill="#f5f0e8" fill-opacity=".65"/>
+            <circle cx="45" cy="20" r="3.5" fill="#f5f0e8" fill-opacity=".65"/>
+            <circle cx="15" cy="30" r="3.5" fill="#f5f0e8" fill-opacity=".65"/>
+            <circle cx="30" cy="30" r="3.5" fill="#f5f0e8" fill-opacity=".65"/>
+            <circle cx="45" cy="30" r="3.5" fill="#f5f0e8" fill-opacity=".65"/>
+          </svg>
+          <div class="sa3-row-text">האטומים רוטטים במקומם · ארוזים צפוף, כמעט לא זזים ממקומם</div>
+        </div>
+        <!-- נוזל -->
+        <div class="sa3-row">
+          <div class="sa3-row-label">נוזל</div>
+          <svg class="sa3-row-svg" viewBox="0 0 60 40" fill="none">
+            <circle cx="12" cy="11" r="3.5" fill="#f5f0e8" fill-opacity=".58"/>
+            <circle cx="28" cy="7"  r="3.5" fill="#f5f0e8" fill-opacity=".58"/>
+            <circle cx="44" cy="13" r="3.5" fill="#f5f0e8" fill-opacity=".58"/>
+            <circle cx="19" cy="23" r="3.5" fill="#f5f0e8" fill-opacity=".58"/>
+            <circle cx="36" cy="21" r="3.5" fill="#f5f0e8" fill-opacity=".58"/>
+            <circle cx="50" cy="29" r="3.5" fill="#f5f0e8" fill-opacity=".58"/>
+            <circle cx="8"  cy="32" r="3.5" fill="#f5f0e8" fill-opacity=".42"/>
+            <circle cx="26" cy="34" r="3.5" fill="#f5f0e8" fill-opacity=".42"/>
+            <circle cx="42" cy="36" r="3.5" fill="#f5f0e8" fill-opacity=".35"/>
+          </svg>
+          <div class="sa3-row-text">האטומים זורמים זה על זה · קרובים, אך בתנועה חופשית יחסית</div>
+        </div>
+        <!-- גז -->
+        <div class="sa3-row">
+          <div class="sa3-row-label">גז</div>
+          <svg class="sa3-row-svg" viewBox="0 0 60 40" fill="none">
+            <circle cx="8"  cy="6"  r="3" fill="#f5f0e8" fill-opacity=".5"/>
+            <circle cx="52" cy="9"  r="3" fill="#f5f0e8" fill-opacity=".5"/>
+            <circle cx="24" cy="19" r="3" fill="#f5f0e8" fill-opacity=".5"/>
+            <circle cx="46" cy="33" r="3" fill="#f5f0e8" fill-opacity=".5"/>
+            <circle cx="10" cy="34" r="3" fill="#f5f0e8" fill-opacity=".5"/>
+            <circle cx="38" cy="7"  r="3" fill="#f5f0e8" fill-opacity=".5"/>
+          </svg>
+          <div class="sa3-row-text">האטומים עפים חופשי בחלל · מרוחקים זה מזה, ללא סדר קבוע</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ S-VIBRATE, EVERYTHING VIBRATES ══ -->
+  <!-- ══ SFIELDBRIDGE, BRIDGE TO THE FIELD ══ -->
+  <div class="slide" id="sfieldbridge">
+    <div class="sbi-wrap">
+      <div class="sbi-line1">הכל בנוי מאטומים</div>
+      <div class="sbi-line2">גם הגוף שלך</div>
+      <div class="sbi-rule"></div>
+      <div class="sbi-line2">אטומים בטבעם רוטטים כל הזמן</div>
+      <div class="sbi-line2">הרטט יוצר גלים</div>
+      <div class="sbi-line1">הגלים מצטברים לדבר אחד: <span class="sbi-glow">שדה</span></div>
+    </div>
+  </div>
+
+  <!-- ══ SFIELDUSE, MAGNETIC FIELDS IN USE ══ -->
+  <div class="slide" id="sfielduse">
+    <div class="snew-line" id="sfu-0">
+      <div class="sh2">
+        <div class="sh2-inner">
+          <div class="sh2-right">
+            <div class="sh2-he">שדות מגנטיים בחיים שלנו</div>
+            <div class="sh2-he-sub">הנה כמה שימושים ומדידות של שדות מגנטיים</div>
+          </div>
+          <div class="sh2-left">
+            <div class="sh2-eye">Physics · Medicine · Technology</div>
+            <div class="sh2-title">Magnetic Fields</div>
+          </div>
+        </div>
+        <div class="sh2-bar"></div>
+      </div>
+    </div>
+    <div class="sfu-body">
+      <div class="snew-line" id="sfu-1">
+        <div class="sfu-item">
+          <div class="sfu-num">1</div>
+          <div class="sfu-content">
+            <div class="sfu-label">MRI · בעולם הרפואה</div>
+            <div class="sfu-text">יוצר שדה מגנטי חזק שמצלם את הרקמות בגוף מבפנים · ללא ניתוח</div>
+          </div>
+        </div>
+        <div class="sfu-item">
+          <div class="sfu-num">2</div>
+          <div class="sfu-content">
+            <div class="sfu-label">מטען אלחוטי · בעולם הטכנולוגיה</div>
+            <div class="sfu-text">מעביר חשמל לטלפון דרך שדה מגנטי · בלי חוט ובלי מגע</div>
+          </div>
+        </div>
+      </div>
+      <div class="sfu-item sfu-punch snew-line" id="sfu-2">
+        <div class="sfu-num sfu-num-heart">3</div>
+        <div class="sfu-content">
+          <div class="sfu-heart-main">גם סביב הגוף שלנו יש שדה מגנטי</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SFIELD, THE HEART'S FIELD ══ -->
+  <div class="slide" id="sfield">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">HeartMath Institute · Bioelectromagnetism</div>
+          <div class="sh2-title">The Body's Electromagnetic Field</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">השדה האלקטרומגנטי של הגוף</div>
+          <div class="sh2-he-sub">הלב מייצר את השדה החזק ביותר בגוף · ואפשר למדוד אותו מחוץ לך</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="sfield-body">
+      <!-- SVG: person with field rings -->
+      <div class="sfield-vis">
+        <svg viewBox="0 0 280 340" style="width:100%;max-height:26vw;" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="sfld-hg" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(139,184,150,0.9)"/>
+              <stop offset="100%" stop-color="rgba(139,184,150,0)"/>
+            </radialGradient>
+          </defs>
+          <!-- Field rings · outer to inner -->
+          <ellipse cx="140" cy="175" rx="132" ry="158" fill="none" stroke="rgba(139,184,150,.04)" stroke-width="1.2"/>
+          <ellipse cx="140" cy="175" rx="110" ry="132" fill="none" stroke="rgba(139,184,150,.07)" stroke-width="1.2"/>
+          <ellipse cx="140" cy="175" rx="88"  ry="106" fill="none" stroke="rgba(139,184,150,.11)" stroke-width="1.3"/>
+          <ellipse cx="140" cy="175" rx="66"  ry="80"  fill="none" stroke="rgba(139,184,150,.17)" stroke-width="1.5"/>
+          <ellipse cx="140" cy="175" rx="46"  ry="58"  fill="none" stroke="rgba(139,184,150,.25)" stroke-width="1.5"/>
+          <!-- Body silhouette · head -->
+          <ellipse cx="140" cy="72" rx="24" ry="27" fill="rgba(139,184,150,.12)" stroke="rgba(139,184,150,.28)" stroke-width="1"/>
+          <!-- Neck + shoulders + torso -->
+          <path d="M 128,96 L 126,108 Q 104,118 96,140 L 92,260 Q 92,272 140,272 Q 188,272 188,260 L 184,140 Q 176,118 154,108 L 152,96 Z"
+                fill="rgba(139,184,150,.09)" stroke="rgba(139,184,150,.25)" stroke-width="1" stroke-linejoin="round"/>
+          <!-- Heart glow -->
+          <circle cx="140" cy="168" r="22" fill="url(#sfld-hg)" opacity=".35">
+            <animate attributeName="opacity" values=".28;.55;.28" dur="3.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="140" cy="168" r="5.5" fill="rgba(139,184,150,.9)"/>
+          <!-- Measurement bracket -->
+          <line x1="8"   y1="175" x2="52"  y2="175" stroke="rgba(139,184,150,.22)" stroke-width=".8" stroke-dasharray="3,3"/>
+          <line x1="8"   y1="100" x2="8"   y2="250" stroke="rgba(139,184,150,.18)" stroke-width=".8"/>
+          <line x1="5"   y1="100" x2="11"  y2="100" stroke="rgba(139,184,150,.25)" stroke-width=".8"/>
+          <line x1="5"   y1="250" x2="11"  y2="250" stroke="rgba(139,184,150,.25)" stroke-width=".8"/>
+          <text x="14" y="179" font-family="Jost,sans-serif" font-size="7.5" fill="rgba(139,184,150,.45)" letter-spacing=".5">1–3 m</text>
+        </svg>
+      </div>
+      <!-- Info panel -->
+      <div class="sfield-info">
+        <div class="sfield-stats">
+          <div class="sfield-stat">
+            <div class="sfield-stat-num">100×</div>
+            <div class="sfield-stat-lbl">חזק יותר מגנטית מהשדה של המוח</div>
+          </div>
+          <div class="sfield-stat">
+            <div class="sfield-stat-num">1–3 m</div>
+            <div class="sfield-stat-lbl">השדה נמדד מחוץ לגוף</div>
+          </div>
+        </div>
+        <div class="sfield-divider"></div>
+        <div class="sfield-point"><strong>הגוף כולו משדר</strong> · גלי חום, גלי מוח, ביופוטונים. כולם יוצאים ממך לחלל, כל הזמן.</div>
+        <div class="sfield-point"><strong>הלב מייצר שדה אלקטרומגנטי</strong> · לא כמטאפורה, אלא כעובדה פיזיקלית הניתנת למדידה.</div>
+        <div class="sfield-point"><strong>הצורה של השדה משתנה</strong> · לפי מה שאת מרגישה. זה מה שHeartMath מדד.</div>
+        <div class="sfield-stat-lbl" style="margin-top:.2vw;">Source: McCraty R. et al. (2015) · HeartMath Institute</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SFIELDQ, FIELD PATTERN QUESTION ══ -->
+  <div class="slide" id="sfieldq">
+    <div class="sfq-wrap">
+      <div class="sfq-line1">אז למדנו שיש לך שדה שאת משדרת.</div>
+      <div class="snew-line" id="sfq-1">
+        <div class="sfq-rule"></div>
+        <div class="sfq-line2">אבל מה קובע את הדפוס שלו?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SEMOTION, EMOTIONS AS FREQUENCIES ══ -->
+  <div class="slide" id="semotion">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">HeartMath · HRV Research</div>
+          <div class="sh2-title">Emotions Reshape the Field</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">רגשות משנים את צורת השדה</div>
+          <div class="sh2-he-sub">מה שאת מרגישה · נמדד מחוץ לגוף שלך</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <!-- Step 1: punch sentence -->
+    <div class="snew-line semo-punch-intro" id="semo-1">
+      <div class="semo-punch-main">רגש הוא לא רק תחושה פנימית · הוא תדר שיוצא ממך החוצה.</div>
+    </div>
+    <div class="semo-body">
+      <!-- Step 2: calm column (קוהרנטי) · appears first -->
+      <div class="semo-col-reveal" id="semo-2">
+        <div class="semo-col">
+          <div class="semo-tag semo-tag-calm">רגיעה · נוכחות · הכרת תודה</div>
+          <div class="semo-state semo-state-calm">דפוס HRV קוהרנטי</div>
+          <div class="semo-wave-wrap">
+            <svg viewBox="0 0 320 55" style="width:100%;height:100%;" fill="none">
+              <path d="M0,28 C20,5 40,51 60,28 C80,5 100,51 120,28 C140,5 160,51 180,28 C200,5 220,51 240,28 C260,5 280,51 300,28 C310,16 315,22 320,28"
+                    stroke="rgba(139,184,150,.78)" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="semo-brain"><strong>תדר מוחי:</strong> אלפא / תטא · מערכת פתוחה</div>
+          <div class="semo-field-lbl">השדה · פתוח, קולט, זמין</div>
+        </div>
+      </div>
+      <!-- Step 3: stress column (כאוטי) · divider appears with it -->
+      <div class="semo-col-reveal" id="semo-3">
+        <div class="semo-divider"></div>
+        <div class="semo-col">
+          <div class="semo-tag semo-tag-stress">לחץ · פחד · חרדה</div>
+          <div class="semo-state semo-state-stress">דפוס HRV כאוטי</div>
+          <div class="semo-wave-wrap">
+            <svg viewBox="0 0 320 55" style="width:100%;height:100%;" fill="none">
+              <path d="M0,28 L12,18 L18,38 L26,12 L35,42 L43,22 L50,35 L58,14 L66,40 L75,20 L82,36 L90,10 L98,44 L107,24 L114,34 L122,15 L130,40 L138,22 L146,37 L155,13 L163,43 L171,21 L179,35 L188,12 L196,42 L204,26 L212,36 L220,16 L228,41 L237,23 L245,34 L253,11 L261,44 L269,25 L277,37 L285,14 L293,40 L301,22 L309,33 L317,19 L320,28"
+                    stroke="rgba(212,149,122,.72)" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="semo-brain"><strong>תדר מוחי:</strong> בטא גבוה · מערכת בכוננות</div>
+          <div class="semo-field-lbl">השדה · צפוף, סגור, מגנן</div>
+        </div>
+      </div>
+    </div>
+    <div class="semo-source-row">
+      <div class="semo-source-lbl">Source: HeartMath Institute · The Science of the Heart</div>
+    </div>
+  </div>
+
+  <!-- ══ SCONNECT, SESSION 1 + 2 BRIDGE ══ -->
+  <div class="slide" id="sconnect">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Session 1 + Session 2 · Connection</div>
+          <div class="sh2-title">The Full Chain</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">החיבור המלא</div>
+          <div class="sh2-he-sub">מה שלמדנו בסשן 1 מקבל עכשיו שכבה שנייה</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="scon-body">
+      <div class="scon-intro snew-line" id="scon-0">תדר המוח לא רק קובע מה שאת חושבת · הוא קובע מה שאת פולטת.</div>
+      <div class="scon-grid">
+        <div class="scon-headers snew-line" id="scon-heads">
+          <div class="scon-head">רגש</div>
+          <div></div>
+          <div class="scon-head">תדר מוחי</div>
+          <div></div>
+          <div class="scon-head">השדה שאת פולטת</div>
+        </div>
+        <div class="scon-row snew-line" id="scon-1">
+          <div class="scon-cell scon-emo-stress">פחד · לחץ · חרדה</div>
+          <div class="scon-arrow-col">→</div>
+          <div class="scon-cell scon-freq">בטא גבוה</div>
+          <div class="scon-arrow-col">→</div>
+          <div class="scon-cell scon-field">שדה צפוף, סגור, מגנן</div>
+        </div>
+        <div class="scon-sep snew-line" id="scon-sep1"></div>
+        <div class="scon-row snew-line" id="scon-2">
+          <div class="scon-cell scon-emo-calm">רגיעה · נוכחות · סקרנות</div>
+          <div class="scon-arrow-col">→</div>
+          <div class="scon-cell scon-freq">אלפא</div>
+          <div class="scon-arrow-col">→</div>
+          <div class="scon-cell scon-field">שדה פתוח, קולט, זמין</div>
+        </div>
+        <div class="scon-sep snew-line" id="scon-sep2"></div>
+        <div class="scon-row snew-line" id="scon-3">
+          <div class="scon-cell scon-emo-deep">כוונה · אהבה · הכרת תודה</div>
+          <div class="scon-arrow-col">→</div>
+          <div class="scon-cell scon-freq">תטא · קוהרנטיות</div>
+          <div class="scon-arrow-col">→</div>
+          <div class="scon-cell scon-field">השדה הכי חזק שאת פולטת</div>
+        </div>
+      </div>
+      <div class="scon-closer snew-line" id="scon-4">סשן 1: למדנו מה תדרי המוח &nbsp;·&nbsp; סשן 2: מבינות למה זה חשוב לעולם שמסביבך</div>
+    </div>
+  </div>
+
+  <!-- ══ SFIELDSMEET, BRIDGE TO RESONANCE ══ -->
+  <div class="slide" id="sfieldsmeet">
+    <div class="sfm-wrap">
+      <div class="sfm-line snew-line" id="sfm-1">לכל אחת יש שדה משלה.</div>
+      <div class="sfm-line snew-line" id="sfm-2">ראינו שהשדה שלך מושפע ממה שאת מרגישה.</div>
+      <div class="sfm-rule snew-line" id="sfm-3"></div>
+      <div class="sfm-line sfm-pivot snew-line" id="sfm-4">אבל שדות לא נשארים בנפרד ·<br>הם נפגשים. <span class="sfm-sync">ומסתנכרנים.</span></div>
+    </div>
+  </div>
+
+  <!-- ══ SRESONANCE, ENTRAINMENT ══ -->
+  <div class="slide" id="sresonance">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Physics · HeartMath · Neuroscience</div>
+          <div class="sh2-title">Fields Synchronize</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">שדות מסתנכרנים</div>
+          <div class="sh2-he-sub">כשגל חזק ופחות חזק נפגשים · הפחות חזק נמשך לכיוון החזק. זו פיזיקה.</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="sres-body">
+      <div class="snew-line" id="sres-1">
+        <div class="sres-ex">
+          <div class="sres-ex-num">1</div>
+          <div class="sres-ex-content">
+            <div class="sres-ex-title">אם ותינוק</div>
+            <div class="sres-ex-text">כשאם שלווה מחזיקה תינוק בוכה · קצב הלב של התינוק מסתנכרן עם שלה תוך דקות. לא דרך מילים, לא דרך מגע בלבד · דרך השדה האלקטרומגנטי שהלב של האם פולט. נמדד ונאמת בעשרות ניסויים.</div>
+            <div class="sres-ex-src">HeartMath Institute · Rollin McCraty · The Science of the Heart</div>
+          </div>
+        </div>
+      </div>
+      <div class="snew-line" id="sres-2">
+        <div class="sres-ex">
+          <div class="sres-ex-num">2</div>
+          <div class="sres-ex-content">
+            <div class="sres-ex-title">סנכרון מוחי בין שני אנשים שמדברים</div>
+            <div class="sres-ex-text">שני אנשים בסורק. אחד מספר, השני מקשיב. המוחות מסתנכרנים — לא רק באזורי השפה, גם באזורי הרגש, הדמיון, הזיכרון. ומה שהפתיע: המאזין לא חיזה מה יגידו — הוא כבר היה שם. אותו מצב רגשי, לפני שהמילים הגיעו. המידע עבר לפני השפה.</div>
+            <div class="sres-ex-src">Uri Hasson · Princeton Neuroscience · 2010 · PNAS</div>
+          </div>
+        </div>
+      </div>
+      <div class="snew-line" id="sres-3">
+        <div class="sres-ex">
+          <div class="sres-ex-num">3</div>
+          <div class="sres-ex-content">
+            <div class="sres-ex-title">מטרונומים על אותה מדף</div>
+            <div class="sres-ex-text">כריסטיאן האיינס, 1665 · הבחין ששני שעוני מטוטלת שתלה על אותה קיר מסתנכרנים תוך שעה, בלי שאף אחד נגע בהם. הוא קרא לזה "הסכמה מוזרה". היום קוראים לזה רזוננס · וזו הבסיס הפיזיקלי לכל סנכרון בין אוסילטורים, כולל בני אדם.</div>
+            <div class="sres-ex-src">Christiaan Huygens · 1665 · Entrainment / Coupled Oscillators</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SMYFIELD, PERSONAL FIELD SCENARIOS ══ -->
+  <div class="slide" id="smyfield">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Your Field · In Real Life</div>
+          <div class="sh2-title">What You Carry, You Transmit</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מה שאת נושאת · את משדרת</div>
+          <div class="sh2-he-sub">ואת משדרת · זה מה שמסתנכרן אליך</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="smyf-body">
+
+      <!-- Scenario 1: Stress -->
+      <div class="snew-line" id="smyf-1">
+        <div class="smyf-row smyf-row-stress">
+          <div class="smyf-state">
+            <div class="smyf-tag smyf-tag-s">שדה של לחץ</div>
+            <div class="smyf-state-text">"אני לא מספיקה.<br>דברים לא מסתדרים לי."</div>
+            <div class="smyf-state-sub">הגוף בכוננות · שולח: אין מקום לטעות</div>
+          </div>
+          <div class="smyf-arr">→</div>
+          <div class="smyf-field-vis">
+            <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+              <ellipse cx="26" cy="26" rx="23" ry="23" stroke="rgba(212,149,122,.12)" stroke-width="1"/>
+              <ellipse cx="26" cy="26" rx="17" ry="17" stroke="rgba(212,149,122,.2)" stroke-width="1.2"/>
+              <ellipse cx="26" cy="26" rx="11" ry="11" stroke="rgba(212,149,122,.32)" stroke-width="1.5"/>
+              <ellipse cx="26" cy="26" rx="6"  ry="6"  stroke="rgba(212,149,122,.5)"  stroke-width="1.5"/>
+              <circle  cx="26" cy="26" r="2.5" fill="rgba(212,149,122,.8)"/>
+            </svg>
+          </div>
+          <div class="smyf-arr">→</div>
+          <div class="smyf-attract">
+            <div class="smyf-attr-lbl">מסתנכרנת עם</div>
+            <div class="smyf-attr-item">מישהי שזורקת הערה קשה בדיוק ביום הלחוץ</div>
+            <div class="smyf-attr-item">כל דבר קטן שמרגיש ענק · תור, מחשב, הודעה</div>
+            <div class="smyf-attr-item">שיחה שהתחילה בשלום · ומגיעה לוויכוח</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scenario 2: Depletion -->
+      <div class="snew-line" id="smyf-2">
+        <div class="smyf-row smyf-row-depl">
+          <div class="smyf-state">
+            <div class="smyf-tag smyf-tag-d">שדה של ריקון</div>
+            <div class="smyf-state-text">"אני נותנת הכל<br>ולא מקבלת הכרה."</div>
+            <div class="smyf-state-sub">שדה שנחלש · שולח: אני בלתי נראית</div>
+          </div>
+          <div class="smyf-arr">→</div>
+          <div class="smyf-field-vis">
+            <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+              <ellipse cx="26" cy="26" rx="23" ry="23" stroke="rgba(245,240,232,.08)" stroke-width="1" stroke-dasharray="4 3"/>
+              <ellipse cx="26" cy="26" rx="16" ry="16" stroke="rgba(245,240,232,.12)" stroke-width="1" stroke-dasharray="3 3"/>
+              <ellipse cx="26" cy="26" rx="9"  ry="9"  stroke="rgba(245,240,232,.18)" stroke-width="1.2" stroke-dasharray="2 3"/>
+              <circle  cx="26" cy="26" r="2.5" fill="rgba(245,240,232,.28)"/>
+            </svg>
+          </div>
+          <div class="smyf-arr">→</div>
+          <div class="smyf-attract">
+            <div class="smyf-attr-lbl">מסתנכרנת עם</div>
+            <div class="smyf-attr-item">אנשים שמתקשרים רק כשהם צריכים משהו</div>
+            <div class="smyf-attr-item">פרויקט שהיה שלך · ומישהי אחרת קיבלה את הקרדיט</div>
+            <div class="smyf-attr-item">תחושה שאת נותנת · וה"תודה" לא מגיעה</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scenario 3: Presence -->
+      <div class="snew-line" id="smyf-3">
+        <div class="smyf-row smyf-row-open">
+          <div class="smyf-state">
+            <div class="smyf-tag smyf-tag-o">שדה של נוכחות</div>
+            <div class="smyf-state-text">"אני שלווה,<br>בתוך עצמי."</div>
+            <div class="smyf-state-sub">שדה פתוח וחזק · שולח: אני כאן</div>
+          </div>
+          <div class="smyf-arr">→</div>
+          <div class="smyf-field-vis">
+            <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+              <ellipse cx="26" cy="26" rx="23" ry="23" stroke="rgba(139,184,150,.15)" stroke-width="1"/>
+              <ellipse cx="26" cy="26" rx="16" ry="16" stroke="rgba(139,184,150,.25)" stroke-width="1.3"/>
+              <ellipse cx="26" cy="26" rx="10" ry="10" stroke="rgba(139,184,150,.4)"  stroke-width="1.5"/>
+              <ellipse cx="26" cy="26" rx="5"  ry="5"  stroke="rgba(139,184,150,.6)"  stroke-width="1.5"/>
+              <circle  cx="26" cy="26" r="2.5" fill="rgba(139,184,150,.9)"/>
+            </svg>
+          </div>
+          <div class="smyf-arr">→</div>
+          <div class="smyf-attract">
+            <div class="smyf-attr-lbl">מסתנכרנת עם</div>
+            <div class="smyf-attr-item">מישהי שאומרת "בדיוק חשבתי עליך" · ומציעה משהו שצריכת</div>
+            <div class="smyf-attr-item">שיחה שמתחילה ב"אגב" · ומגיעה למקום עמוק</div>
+            <div class="smyf-attr-item">הזדמנות שמגיעה בלי שחיפשת אותה</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SWATERFACT, MAGNETIC FIELDS & WATER ══ -->
+  <div class="slide" id="swaterfact">
+    <div class="swf-wrap">
+      <div class="snew-line" id="swf-0">
+        <div class="swf-eyebrow">Magnetic Fields · Water Structure</div>
+      </div>
+      <div class="snew-line" id="swf-1">
+        <div class="swf-fact">שדה מגנטי <strong>משנה את המבנה המולקולרי של מים</strong></div>
+        <div class="swf-fact">קשרי המימן בין המולקולות משתנים · התכונות הפיזיות משתנות</div>
+      </div>
+      <div class="snew-line" id="swf-2">
+        <div class="swf-rule"></div>
+        <div class="swf-fact">שדה משפיע על מים <strong>ברמה שניתן למדוד</strong></div>
+        <div class="swf-src">Wang, Wei &amp; Li · Results in Physics · Elsevier · 2018</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SWATERSELF, THE BODY IS WATER ══ -->
+  <div class="slide" id="swaterself">
+    <div class="sws-wrap">
+      <div class="snew-line" id="sws-0">
+        <div class="sws-fact">
+          שדה משפיע על מים.<br>
+          הגוף שלך עשוי <strong>60% מים</strong>.
+        </div>
+      </div>
+      <div class="snew-line" id="sws-1">
+        <div class="sws-question">
+          <em>מה השדה שאת נושאת עושה לגוף שלך?</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SCLOSINGLOOP, CLOSING THE CIRCLE ══ -->
+  <div class="slide" id="sclosingloop">
+    <div class="scl-wrap">
+      <!-- visible from start: callback to opening -->
+      <div class="scl-callback">זוכרות שדיברנו על משהו שידעתן לפני שידעתן?<br><span style="font-size:.72em; color:rgba(245,240,232,.42); letter-spacing:.01em;">ידעתן לפני שידעתן · ואז כשזה קרה אמרתן: ידעתי.</span></div>
+
+      <!-- Step 1: the body felt it -->
+      <div class="snew-line" id="scl-1">
+        <div class="scl-rule"></div>
+        <div class="scl-reveal">הרגשת בגוף עוד לפני שהמוח ידע.</div>
+      </div>
+
+      <!-- Step 2: the science -->
+      <div class="snew-line" id="scl-2">
+        <div class="scl-science">הגוף שלך הרגיש את השינוי בשדה האלקטרומגנטי<br>עוד לפני שהמוח עיבד אותו.</div>
+      </div>
+
+      <!-- Step 3: the landing -->
+      <div class="snew-line" id="scl-3">
+        <div class="scl-punch">זה לא אינטואיציה מסתורית.<br>זו פיזיקה.</div>
+        <div class="scl-sub" style="margin-top:.4vw;">עכשיו את יודעת איך זה עובד</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SDONOW2, SO WHAT DO WE DO ══ -->
+  <div class="slide" id="sdonow2">
+    <div class="sdn2-block">
+      <div class="sdn2-lead">עכשיו שאת יודעת שאת משדרת שדה ·</div>
+      <div class="sdn2-main">האם את יכולה גם לבחור מה לשדר?</div>
+      <div class="sdn2-rule"></div>
+      <div class="sdn2-sub">כן &nbsp;·&nbsp; ויש לזה כלי</div>
+    </div>
+  </div>
+
+  <!-- ══ STOOL2, THE TOOL ══ -->
+  <div class="slide" id="stool2">
+    <div class="st2-wrap">
+      <div class="st2-eyebrow">כלי 1</div>
+      <div class="st2-title">רגע עם הלב</div>
+      <div class="st2-steps">
+        <div class="st2-step">
+          <div class="st2-num">1</div>
+          <div class="st2-content">
+            <div class="st2-step-main">הניחי יד על הלב. עצמי עיניים.</div>
+            <div class="st2-step-sub">שלוש נשימות איטיות · שאיפה דרך האף, נשיפה ארוכה דרך הפה.</div>
+          </div>
+        </div>
+        <div class="st2-step">
+          <div class="st2-num">2</div>
+          <div class="st2-content">
+            <div class="st2-step-main">הביאי משהו אחד שאת אסירת תודה עליו · קטן, אמיתי, ספציפי.</div>
+            <div class="st2-step-sub">לא רעיון. זיכרון. תחושה. מישהי. רגע.</div>
+          </div>
+        </div>
+        <div class="st2-step">
+          <div class="st2-num">3</div>
+          <div class="st2-content">
+            <div class="st2-step-main">תרגישי איך זה מתפשט בחזה · ותישארי שם.</div>
+            <div class="st2-step-sub">לא לנתח. לא לחשוב. רק לחוש.</div>
+          </div>
+        </div>
+      </div>
+      <div class="st2-closing">זה הרגש שאת עכשיו משדרת.<br>זה השדה שאת מביאה לחדר.</div>
+    </div>
+  </div>
+
+  <!-- ══ STOOL2B, TOOL 2 ══ -->
+  <div class="slide" id="stool2b">
+    <div class="st2-wrap">
+      <div class="st2-eyebrow">כלי 2</div>
+      <div class="st2-title">ריסט לפני הכניסה</div>
+      <div class="st2-steps">
+        <div class="st2-step">
+          <div class="st2-num">1</div>
+          <div class="st2-content">
+            <div class="st2-step-main">עצרי לפני שנכנסת · לפגישה, לשיחה, לבית.</div>
+            <div class="st2-step-sub">60 שניות. לא יותר.</div>
+          </div>
+        </div>
+        <div class="st2-step">
+          <div class="st2-num">2</div>
+          <div class="st2-content">
+            <div class="st2-step-main">יד על הלב. רגש אחד אמיתי · כל דבר שמרגיש חי ואמיתי עכשיו.</div>
+            <div class="st2-step-sub">זיכרון. מישהי. רגע. משהו קטן שמצית חום.</div>
+          </div>
+        </div>
+        <div class="st2-step">
+          <div class="st2-num">3</div>
+          <div class="st2-content">
+            <div class="st2-step-main">שאלי: איזה שדה אני רוצה להביא לחדר הזה?</div>
+            <div class="st2-step-sub">לא להיות. לבחור. יש הבדל.</div>
+          </div>
+        </div>
+      </div>
+      <div class="st2-closing">את לא נכנסת לחדר.<br>את מביאה שדה לחדר.</div>
+    </div>
+  </div>
+
+  <!-- ══ SPRACTICE, FIELD SHIFT MEDITATION ══ -->
+  <div class="slide" id="spractice">
+    <div class="spr-bg-pulse"></div>
+    <div class="spr-wrap">
+      <div class="spr-eyebrow">תרגול · כלי 1 בפעולה</div>
+      <div class="spr-title">שינוי שדה</div>
+      <div class="spr-rule"></div>
+
+      <div class="spr-step snew-line" id="spr-1">
+        <div class="spr-step-main">הניחי יד על הלב.</div>
+        <div class="spr-step-breath">שלוש נשימות עמוקות · שאיפה דרך האף · נשיפה ארוכה</div>
+      </div>
+
+      <div class="spr-step snew-line" id="spr-2">
+        <div class="spr-step-main">הביאי רגע אחד שמחמם אותך.</div>
+        <div class="spr-step-breath">זיכרון קטן · מישהי · תחושה אמיתית</div>
+      </div>
+
+      <div class="spr-step snew-line" id="spr-3">
+        <div class="spr-step-main">הרגישי איך זה מתפשט בחזה.</div>
+        <div class="spr-step-breath">אל תנתחי · רק תהיי שם</div>
+      </div>
+
+      <div class="spr-closing snew-line" id="spr-4">
+        זה השדה שאת עכשיו משדרת.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ S12, HOMEWORK ══ -->
+  <div class="slide" id="s12">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 12% 2%;">
+      <div class="s12-eye" style="text-align:center;margin-bottom:.4vw;">This Week's Practice</div>
+      <div class="s12-title" style="text-align:center;margin-bottom:.25vw;">התרגול השבועי</div>
+      <div class="s12-sub" style="text-align:center;margin-bottom:1.8vw;">Between Session 2 and Session 3</div>
+      <div class="s12-box" style="width:100%;">
+        <div class="s12-inst" style="text-align:right;">דומה מושך דומה · בואי נבדוק את זה מקרוב.</div>
+        <div class="s12-q">
+          <div class="s12-qn">1.</div>
+          <div class="s12-qt">מה משכת אליך לאחרונה שלא רצית?<div class="s12-hint">אנשים · מצבים · תבניות שחוזרות</div></div>
+        </div>
+        <div class="s12-q">
+          <div class="s12-qn">2.</div>
+          <div class="s12-qt">באיזה שדה היית כשזה הגיע?<div class="s12-hint">לחץ · ריקון · ציפייה · משהו אחר?</div></div>
+        </div>
+        <div class="s12-q">
+          <div class="s12-qn">3.</div>
+          <div class="s12-qt">ומה היית רוצה לפגוש?<div class="s12-hint">מה השדה שתרצי לשדר מחר?</div></div>
+        </div>
+      </div>
+      <div class="s12-note" style="text-align:center;margin-top:.8vw;">
+        זו לא ביקורת עצמית. זו מפת הדרכים.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ S13, CLOSING ══ -->
+  <div class="slide" id="s13">
+
+    <!-- surrealist embrace illustration -->
+    <svg class="s13-embrace" viewBox="0 0 900 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="s13rg1" cx="50%" cy="60%" r="55%">
+          <stop offset="0%" stop-color="rgba(198,90,120,0.22)"/>
+          <stop offset="100%" stop-color="rgba(198,90,120,0)"/>
+        </radialGradient>
+        <filter id="s13blur"><feGaussianBlur stdDeviation="18"/></filter>
+        <filter id="s13blur2"><feGaussianBlur stdDeviation="8"/></filter>
+      </defs>
+
+      <!-- soft halo behind everything -->
+      <ellipse cx="450" cy="300" rx="340" ry="210" fill="url(#s13rg1)" filter="url(#s13blur)"/>
+
+      <!-- left arm · flowing inward from left -->
+      <path d="M -30,420 C 60,380 120,310 180,270 C 240,230 290,230 320,255 C 350,278 340,315 310,330 C 280,345 240,330 220,305"
+            fill="none" stroke="rgba(210,110,140,0.28)" stroke-width="28" stroke-linecap="round" filter="url(#s13blur2)"/>
+      <path d="M -30,420 C 60,380 120,310 180,270 C 240,230 290,230 320,255 C 350,278 340,315 310,330 C 280,345 240,330 220,305"
+            fill="none" stroke="rgba(230,140,165,0.14)" stroke-width="55" stroke-linecap="round" filter="url(#s13blur)"/>
+
+      <!-- right arm · mirrored -->
+      <path d="M 930,420 C 840,380 780,310 720,270 C 660,230 610,230 580,255 C 550,278 560,315 590,330 C 620,345 660,330 680,305"
+            fill="none" stroke="rgba(210,110,140,0.28)" stroke-width="28" stroke-linecap="round" filter="url(#s13blur2)"/>
+      <path d="M 930,420 C 840,380 780,310 720,270 C 660,230 610,230 580,255 C 550,278 560,315 590,330 C 620,345 660,330 680,305"
+            fill="none" stroke="rgba(230,140,165,0.14)" stroke-width="55" stroke-linecap="round" filter="url(#s13blur)"/>
+
+      <!-- abstract floating petal forms · surrealist touch -->
+      <ellipse cx="200" cy="180" rx="55" ry="22" fill="rgba(198,90,120,0.07)" transform="rotate(-35 200 180)" filter="url(#s13blur2)"/>
+      <ellipse cx="700" cy="165" rx="48" ry="18" fill="rgba(198,90,120,0.07)" transform="rotate(30 700 165)" filter="url(#s13blur2)"/>
+      <ellipse cx="450" cy="420" rx="80" ry="20" fill="rgba(230,140,165,0.08)" filter="url(#s13blur)"/>
+
+      <!-- tiny floating orbs -->
+      <circle cx="310" cy="155" r="4" fill="rgba(230,150,170,0.55)"/>
+      <circle cx="590" cy="140" r="3" fill="rgba(230,150,170,0.45)"/>
+      <circle cx="165" cy="310" r="2.5" fill="rgba(230,150,170,0.4)"/>
+      <circle cx="740" cy="295" r="3.5" fill="rgba(230,150,170,0.4)"/>
+      <circle cx="450" cy="108" r="2" fill="rgba(245,180,200,0.5)"/>
+    </svg>
+
+    <!-- soft rose particles -->
+    <div class="s13-pt" style="width:.4vw;height:.4vw;background:rgba(220,110,140,.75);left:24%;bottom:20%;animation-duration:7s;animation-delay:0s;"></div>
+    <div class="s13-pt" style="width:.28vw;height:.28vw;background:rgba(240,160,180,.8);left:40%;bottom:13%;animation-duration:8.5s;animation-delay:1.6s;"></div>
+    <div class="s13-pt" style="width:.5vw;height:.5vw;background:rgba(210,100,130,.6);left:62%;bottom:22%;animation-duration:6s;animation-delay:2.3s;"></div>
+    <div class="s13-pt" style="width:.22vw;height:.22vw;background:rgba(245,175,195,.85);left:74%;bottom:16%;animation-duration:9s;animation-delay:.9s;"></div>
+    <div class="s13-pt" style="width:.35vw;height:.35vw;background:rgba(230,140,160,.6);left:50%;bottom:9%;animation-duration:7.5s;animation-delay:3.8s;"></div>
+    <div class="s13-pt" style="width:.3vw;height:.3vw;background:rgba(220,110,140,.7);left:33%;bottom:28%;animation-duration:6.8s;animation-delay:5s;"></div>
+
+    <div class="s13-block">
+      <div class="s13-toda">תודה</div>
+      <div class="s13-lines">
+        <div class="s13-line">על ההקשבה</div>
+        <div class="s13-line">על הזמן</div>
+        <div class="s13-line">על הפתיחות ללמוד משהו חדש</div>
+      </div>
+      <div class="s13-rule"></div>
+      <div class="s13-next">נפגש בשבוע הבא</div>
+      <div class="s13-brand">The Inner Shift &nbsp;·&nbsp; Session 1 of 5</div>
+    </div>
+  </div>
+
+</div><!-- /stage -->
+
+<div class="nav">
+  <button onclick="prev()">← Back</button>
+  <div class="dots" id="dots"></div>
+  <span class="ctr" id="ctr">1 / 13</span>
+  <button onclick="next()">Next →</button>
+</div>
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  const N = slides.length;
+
+  const dotsEl = document.getElementById('dots');
+  for (let i = 0; i < N; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' on' : '');
+    d.onclick = () => go(i);
+    dotsEl.appendChild(d);
+  }
+
+  // Progressive reveal for #svibrate
+  let svibStep = 0;
+  const SVIB_TOTAL = 5;
+  const SVIB_ALL   = 6;
+
+  function updateSvib(step) {
+    for (let i = 1; i <= SVIB_TOTAL; i++) {
+      const el = document.getElementById('svib-' + i);
+      if (!el) continue;
+      el.classList.remove('step-active', 'step-past', 'step-shown');
+      if (step === SVIB_ALL)     el.classList.add('step-shown');
+      else if (i < step)         el.classList.add('step-past');
+      else if (i === step)       el.classList.add('step-active');
+    }
+    const punch = document.getElementById('svib-punch');
+    if (punch) punch.classList.toggle('visible', step >= SVIB_ALL);
+  }
+
+  function resetSvib() { svibStep = 0; updateSvib(0); }
+
+  // Progressive reveal for #sspectrum
+  let sspecStep = 0;
+  const SSPEC_TOTAL = 2;
+
+  function revealSspec(step) {
+    ['sspec-ov-l','sspec-ov-r','sspec-vglow'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('visible', step >= 1);
+    });
+    // dim non-visible labels on step 1
+    [1,2,3,5,6,7].forEach(i => {
+      const el = document.getElementById('sspec-lbl-' + i);
+      if (el) el.style.opacity = step >= 1 ? '0.2' : '';
+    });
+    const s1 = document.getElementById('sspec-s1');
+    if (s1) s1.classList.toggle('visible', step >= 1);
+    const s2 = document.getElementById('sspec-s2');
+    if (s2) s2.classList.toggle('visible', step >= 2);
+  }
+
+  function resetSspec() { sspecStep = 0; revealSspec(0); }
+
+  // Progressive reveal for #snew
+  let snewStep = 0;
+  const SNEW_TOTAL = 3;
+
+  function revealSnew(step) {
+    for (let i = 1; i <= SNEW_TOTAL; i++) {
+      const el = document.getElementById('snew-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+    const src = document.getElementById('snew-src');
+    if (src) src.classList.toggle('visible', step >= SNEW_TOTAL);
+  }
+
+  function resetSnew() { snewStep = 0; revealSnew(0); }
+
+  // Progressive reveal for #slimex
+  let slimexStep = 0;
+  const SLIMEX_TOTAL = 5;
+
+  function revealSlimex(step) {
+    for (let i = 1; i <= SLIMEX_TOTAL; i++) {
+      const el = document.getElementById('slimex-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+
+  function resetSlimex() { slimexStep = 0; revealSlimex(0); }
+
+  // Progressive reveal for #stool
+  let stoolStep = 0;
+  const STOOL_TOTAL = 5;
+  const STOOL_ALL = 6;
+
+  function updateStool(step) {
+    for (let i = 1; i <= STOOL_TOTAL; i++) {
+      const el = document.getElementById('stool-' + i);
+      if (!el) continue;
+      el.classList.remove('step-active', 'step-past', 'step-shown');
+      if (step === STOOL_ALL)      el.classList.add('step-shown');
+      else if (i < step)           el.classList.add('step-past');
+      else if (i === step)         el.classList.add('step-active');
+    }
+    const punch = document.getElementById('stool-punch-el');
+    if (punch) punch.classList.toggle('visible', step >= STOOL_TOTAL);
+  }
+
+  function resetStool() { stoolStep = 0; updateStool(0); }
+
+  // Progressive reveal for #sspectruth
+  let struthStep = 0;
+  const STRUTH_TOTAL = 4;
+
+  function revealStruth(step) {
+    for (let i = 1; i <= STRUTH_TOTAL; i++) {
+      const el = document.getElementById('struth-' + i);
+      if (el) el.classList.toggle('step-shown', i <= step);
+    }
+  }
+
+  function resetStruth() { struthStep = 0; revealStruth(0); }
+
+  // Progressive reveal for #sbeta
+  let sbetaStep = 0;
+  const SBETA_TOTAL = 2;
+
+  function revealSbeta(step) {
+    for (let i = 1; i <= SBETA_TOTAL; i++) {
+      const el = document.getElementById('sbeta-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+
+  function resetSbeta() { sbetaStep = 0; revealSbeta(0); }
+
+  // smyfield · 3-step reveal
+  let smyfStep = 0;
+  const SMYF_TOTAL = 3;
+  function revealSmyf(step) {
+    for (let i = 1; i <= SMYF_TOTAL; i++) {
+      const el = document.getElementById('smyf-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+  function resetSmyf() { smyfStep = 0; revealSmyf(0); }
+
+  // sconnect · 4-step reveal
+  let sconStep = 0;
+  const SCON_TOTAL = 4;
+  function revealScon(step) {
+    ['scon-0','scon-heads'].forEach(id => { const el=document.getElementById(id); if(el) el.classList.toggle('visible', step>=1); });
+    ['scon-1','scon-sep1'].forEach(id => { const el=document.getElementById(id); if(el) el.classList.toggle('visible', step>=2); });
+    ['scon-2','scon-sep2'].forEach(id => { const el=document.getElementById(id); if(el) el.classList.toggle('visible', step>=3); });
+    ['scon-3','scon-4'].forEach(id => { const el=document.getElementById(id); if(el) el.classList.toggle('visible', step>=4); });
+  }
+  function resetScon() { sconStep=0; revealScon(0); }
+
+  // swaterfact · 2-step reveal
+  let swfStep = 0;
+  const SWF_TOTAL = 2;
+  function revealSwf(step) {
+    ['swf-0','swf-1'].forEach(id => { const el=document.getElementById(id); if(el) el.classList.toggle('visible', step>=1); });
+    const el2=document.getElementById('swf-2'); if(el2) el2.classList.toggle('visible', step>=2);
+  }
+  function resetSwf() { swfStep=0; revealSwf(0); }
+
+  // swaterself · 2-step reveal
+  let swsStep = 0;
+  const SWS_TOTAL = 2;
+  function revealSws(step) {
+    const el0=document.getElementById('sws-0'); if(el0) el0.classList.toggle('visible', step>=1);
+    const el1=document.getElementById('sws-1'); if(el1) el1.classList.toggle('visible', step>=2);
+  }
+  function resetSws() { swsStep=0; revealSws(0); }
+
+  // satom3 · static, no reveal
+  let sa3Step = 0;
+  const SA3_TOTAL = 0;
+  function revealSa3(step) {
+    for (let i = 1; i <= SA3_TOTAL; i++) {
+      const el = document.getElementById('sa3-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+  function resetSa3() { sa3Step = 0; revealSa3(0); }
+
+  // swave · 3-step reveal
+  let swaveStep = 0;
+  const SWAVE_TOTAL = 2;
+  function revealSwave(step) {
+    for (let i = 1; i <= SWAVE_TOTAL; i++) {
+      const el = document.getElementById('swave-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+  function resetSwave() { swaveStep = 0; revealSwave(0); }
+
+  // sclosingloop · 3-step reveal
+  let sclStep = 0;
+  const SCL_TOTAL = 3;
+  function revealScl(step) {
+    for (let i = 1; i <= SCL_TOTAL; i++) {
+      const el = document.getElementById('scl-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+  function resetScl() { sclStep = 0; revealScl(0); }
+
+  // sresonance · 3-step reveal
+  let sresStep = 0;
+  const SRES_TOTAL = 3;
+  function revealSres(step) {
+    for (let i = 1; i <= SRES_TOTAL; i++) {
+      const el = document.getElementById('sres-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+  function resetSres() { sresStep = 0; revealSres(0); }
+
+  // s7recap · brain waves 6-step reveal (from session 1)
+  let s7Step = 0;
+  const S7_TOTAL = 6;
+  function revealS7(step) {
+    for (let i = 1; i <= 5; i++) {
+      const el = document.getElementById('s7c-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+    const punch = document.getElementById('s7c-punch');
+    if (punch) punch.classList.toggle('visible', step >= 6);
+    const highlight = step >= 6;
+    [1,4,5].forEach(i => { const el = document.getElementById('s7c-' + i); if (el) el.classList.toggle('s7c-dim', highlight); });
+    const theta = document.getElementById('s7c-2');
+    const alpha = document.getElementById('s7c-3');
+    if (theta) theta.classList.toggle('s7c-highlighted', highlight);
+    if (alpha) alpha.classList.toggle('s7c-highlighted', highlight);
+  }
+  function resetS7() { s7Step = 0; revealS7(0); }
+
+  // sreflect · 3-step reveal
+  let srefStep = 0;
+  const SREF_TOTAL = 3;
+  function revealSref(step) { for (let i=1;i<=SREF_TOTAL;i++) { const el=document.getElementById('sref-'+i); if(el) el.classList.toggle('visible',i<=step); } }
+  function resetSref() { srefStep=0; revealSref(0); }
+
+  // sfielduse · 3-step reveal (header → items 1+2 → heart)
+  let sfuStep = 0;
+  const SFU_TOTAL = 3;
+  function revealSfu(step) { for (let i=0;i<=2;i++) { const el=document.getElementById('sfu-'+i); if(el) el.classList.toggle('visible', i<=step-1); } }
+  function resetSfu() { sfuStep = 0; revealSfu(0); }
+
+  // sfieldq · 1-step reveal
+  let sfqStep = 0;
+  const SFQ_TOTAL = 1;
+  function revealSfq(step) { const el = document.getElementById('sfq-1'); if (el) el.classList.toggle('visible', step >= 1); }
+  function resetSfq() { sfqStep = 0; revealSfq(0); }
+
+  // sfieldsmeet · 4-step reveal
+  let sfmStep = 0;
+  const SFM_TOTAL = 4;
+  function revealSfm(step) { for (let i=1;i<=SFM_TOTAL;i++) { const el=document.getElementById('sfm-'+i); if(el) el.classList.toggle('visible',i<=step); } }
+  function resetSfm() { sfmStep=0; revealSfm(0); }
+
+  // spractice · 4-step reveal (3 meditation steps + closing)
+  let sprStep = 0;
+  const SPR_TOTAL = 4;
+  function revealSpr(step) { for (let i=1;i<=SPR_TOTAL;i++) { const el=document.getElementById('spr-'+i); if(el) el.classList.toggle('visible',i<=step); } }
+  function resetSpr() { sprStep=0; revealSpr(0); }
+
+
+  // semotion · 3-step reveal
+  let semoStep = 0;
+  const SEMO_TOTAL = 3;
+  function revealSemo(step) {
+    const el1 = document.getElementById('semo-1');
+    if (el1) el1.classList.toggle('visible', step >= 1);
+    const el2 = document.getElementById('semo-2');
+    if (el2) el2.classList.toggle('visible', step >= 2);
+    const el3 = document.getElementById('semo-3');
+    if (el3) el3.classList.toggle('visible', step >= 3);
+  }
+  function resetSemo() { semoStep = 0; revealSemo(0); }
+
+  // sopening2 · 3-step reveal
+  let sop2Step = 0;
+  const SOP2_TOTAL = 3;
+  function revealSop2(step) {
+    for (let i = 1; i <= SOP2_TOTAL; i++) {
+      const el = document.getElementById('sop2-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+  function resetSop2() { sop2Step = 0; revealSop2(0); }
+
+  function go(n) {
+    if (n < 0 || n >= N) return;
+    if (slides[cur].id === 'sspectrum')  resetSspec();
+    if (slides[cur].id === 'svibrate') resetSvib();
+    if (slides[cur].id === 'snew')   resetSnew();
+    if (slides[cur].id === 'slimex') resetSlimex();
+    if (slides[cur].id === 'stool')      resetStool();
+    if (slides[cur].id === 'sspectruth') resetStruth();
+    if (slides[cur].id === 'sbeta')      resetSbeta();
+    if (slides[cur].id === 'sopening2') resetSop2();
+    if (slides[cur].id === 'satom3')    resetSa3();
+    if (slides[cur].id === 's7recap')    resetS7();
+    if (slides[cur].id === 'sreflect')   resetSref();
+    if (slides[cur].id === 'sfieldq')      resetSfq();
+    if (slides[cur].id === 'sfielduse')    resetSfu();
+    if (slides[cur].id === 'sfieldsmeet')  resetSfm();
+    if (slides[cur].id === 'spractice')    resetSpr();
+    if (slides[cur].id === 'semotion')     resetSemo();
+    if (slides[cur].id === 'sresonance')   resetSres();
+    if (slides[cur].id === 'sclosingloop') resetScl();
+    if (slides[cur].id === 'swave')        resetSwave();
+    if (slides[cur].id === 'smyfield')  resetSmyf();
+    if (slides[cur].id === 'sconnect')   resetScon();
+    if (slides[cur].id === 'swaterfact') resetSwf();
+    if (slides[cur].id === 'swaterself') resetSws();
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('exit');
+    const old = cur;
+    setTimeout(() => slides[old].classList.remove('exit'), 520);
+    cur = n;
+    slides[cur].classList.add('active');
+    document.getElementById('ctr').textContent = (cur + 1) + ' / ' + N;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('on', i === cur));
+  }
+
+  function next() {
+    if (slides[cur].id === 'sspectrum' && sspecStep < SSPEC_TOTAL) {
+      sspecStep++; revealSspec(sspecStep); return;
+    }
+    if (slides[cur].id === 'svibrate' && svibStep < SVIB_ALL) {
+      svibStep++; updateSvib(svibStep); return;
+    }
+    if (slides[cur].id === 'snew' && snewStep < SNEW_TOTAL) {
+      snewStep++; revealSnew(snewStep); return;
+    }
+    if (slides[cur].id === 'slimex' && slimexStep < SLIMEX_TOTAL) {
+      slimexStep++; revealSlimex(slimexStep); return;
+    }
+    if (slides[cur].id === 'stool' && stoolStep < STOOL_ALL) {
+      stoolStep++; updateStool(stoolStep); return;
+    }
+    if (slides[cur].id === 'sspectruth' && struthStep < STRUTH_TOTAL) {
+      struthStep++; revealStruth(struthStep); return;
+    }
+    if (slides[cur].id === 'sbeta' && sbetaStep < SBETA_TOTAL) {
+      sbetaStep++; revealSbeta(sbetaStep); return;
+    }
+    if (slides[cur].id === 'sopening2' && sop2Step < SOP2_TOTAL) {
+      sop2Step++; revealSop2(sop2Step); return;
+    }
+    if (slides[cur].id === 'satom3' && sa3Step < SA3_TOTAL) {
+      sa3Step++; revealSa3(sa3Step); return;
+    }
+    if (slides[cur].id === 'smyfield' && smyfStep < SMYF_TOTAL) {
+      smyfStep++; revealSmyf(smyfStep); return;
+    }
+    if (slides[cur].id === 's7recap' && s7Step < S7_TOTAL) {
+      s7Step++; revealS7(s7Step); return;
+    }
+    if (slides[cur].id === 'sreflect' && srefStep < SREF_TOTAL) {
+      srefStep++; revealSref(srefStep); return;
+    }
+    if (slides[cur].id === 'sfieldq' && sfqStep < SFQ_TOTAL) {
+      sfqStep++; revealSfq(sfqStep); return;
+    }
+    if (slides[cur].id === 'sfielduse' && sfuStep < SFU_TOTAL) {
+      sfuStep++; revealSfu(sfuStep); return;
+    }
+    if (slides[cur].id === 'sfieldsmeet' && sfmStep < SFM_TOTAL) {
+      sfmStep++; revealSfm(sfmStep); return;
+    }
+    if (slides[cur].id === 'spractice' && sprStep < SPR_TOTAL) {
+      sprStep++; revealSpr(sprStep); return;
+    }
+    if (slides[cur].id === 'semotion' && semoStep < SEMO_TOTAL) {
+      semoStep++; revealSemo(semoStep); return;
+    }
+    if (slides[cur].id === 'sresonance' && sresStep < SRES_TOTAL) {
+      sresStep++; revealSres(sresStep); return;
+    }
+    if (slides[cur].id === 'sconnect' && sconStep < SCON_TOTAL) {
+      sconStep++; revealScon(sconStep); return;
+    }
+    if (slides[cur].id === 'swaterfact' && swfStep < SWF_TOTAL) {
+      swfStep++; revealSwf(swfStep); return;
+    }
+    if (slides[cur].id === 'swaterself' && swsStep < SWS_TOTAL) {
+      swsStep++; revealSws(swsStep); return;
+    }
+    if (slides[cur].id === 'sclosingloop' && sclStep < SCL_TOTAL) {
+      sclStep++; revealScl(sclStep); return;
+    }
+    if (slides[cur].id === 'swave' && swaveStep < SWAVE_TOTAL) {
+      swaveStep++; revealSwave(swaveStep); return;
+    }
+    go(cur + 1);
+  }
+
+  function prev() {
+    if (slides[cur].id === 'sspectrum' && sspecStep > 0) {
+      sspecStep--; revealSspec(sspecStep); return;
+    }
+    if (slides[cur].id === 'svibrate' && svibStep > 0) {
+      svibStep--; updateSvib(svibStep); return;
+    }
+    if (slides[cur].id === 'snew' && snewStep > 0) {
+      snewStep--; revealSnew(snewStep); return;
+    }
+    if (slides[cur].id === 'slimex' && slimexStep > 0) {
+      slimexStep--; revealSlimex(slimexStep); return;
+    }
+    if (slides[cur].id === 'stool' && stoolStep > 0) {
+      stoolStep--; updateStool(stoolStep); return;
+    }
+    if (slides[cur].id === 'sspectruth' && struthStep > 0) {
+      struthStep--; revealStruth(struthStep); return;
+    }
+    if (slides[cur].id === 'sbeta' && sbetaStep > 0) {
+      sbetaStep--; revealSbeta(sbetaStep); return;
+    }
+    if (slides[cur].id === 'sopening2' && sop2Step > 0) {
+      sop2Step--; revealSop2(sop2Step); return;
+    }
+    if (slides[cur].id === 'satom3' && sa3Step > 0) {
+      sa3Step--; revealSa3(sa3Step); return;
+    }
+    if (slides[cur].id === 'smyfield' && smyfStep > 0) {
+      smyfStep--; revealSmyf(smyfStep); return;
+    }
+    if (slides[cur].id === 's7recap' && s7Step > 0) {
+      s7Step--; revealS7(s7Step); return;
+    }
+    if (slides[cur].id === 'sreflect' && srefStep > 0) {
+      srefStep--; revealSref(srefStep); return;
+    }
+    if (slides[cur].id === 'sfieldq' && sfqStep > 0) {
+      sfqStep--; revealSfq(sfqStep); return;
+    }
+    if (slides[cur].id === 'sfielduse' && sfuStep > 0) {
+      sfuStep--; revealSfu(sfuStep); return;
+    }
+    if (slides[cur].id === 'sfieldsmeet' && sfmStep > 0) {
+      sfmStep--; revealSfm(sfmStep); return;
+    }
+    if (slides[cur].id === 'spractice' && sprStep > 0) {
+      sprStep--; revealSpr(sprStep); return;
+    }
+    if (slides[cur].id === 'semotion' && semoStep > 0) {
+      semoStep--; revealSemo(semoStep); return;
+    }
+    if (slides[cur].id === 'sresonance' && sresStep > 0) {
+      sresStep--; revealSres(sresStep); return;
+    }
+    if (slides[cur].id === 'sconnect' && sconStep > 0) {
+      sconStep--; revealScon(sconStep); return;
+    }
+    if (slides[cur].id === 'swaterfact' && swfStep > 0) {
+      swfStep--; revealSwf(swfStep); return;
+    }
+    if (slides[cur].id === 'swaterself' && swsStep > 0) {
+      swsStep--; revealSws(swsStep); return;
+    }
+    if (slides[cur].id === 'sclosingloop' && sclStep > 0) {
+      sclStep--; revealScl(sclStep); return;
+    }
+    if (slides[cur].id === 'swave' && swaveStep > 0) {
+      swaveStep--; revealSwave(swaveStep); return;
+    }
+    go(cur - 1);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End')  go(N - 1);
+  });
+
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend',   e => {
+    const dx = tx - e.changedTouches[0].screenX;
+    if (Math.abs(dx) > 50) dx > 0 ? next() : prev();
+  });
+</script>
+
+<!-- ══ WATERMARK ══ -->
+<div class="watermark">
+  <svg viewBox="0 0 100 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- left petal -->
+    <path d="M50,68 C36,60 30,42 50,24 C70,42 64,60 50,68Z"
+          transform="rotate(-42,50,68)" stroke="#d29e44" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- right petal -->
+    <path d="M50,68 C36,60 30,42 50,24 C70,42 64,60 50,68Z"
+          transform="rotate(42,50,68)" stroke="#d29e44" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- central petal -->
+    <path d="M50,68 C38,52 36,26 50,6 C64,26 62,52 50,68Z"
+          stroke="#d29e44" stroke-width="2.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- water line 1 -->
+    <path d="M12,72 Q50,79 88,72" stroke="#d29e44" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+    <!-- water line 2 -->
+    <path d="M4,76 Q50,84 96,76" stroke="#d29e44" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+  </svg>
+  <span class="watermark-name">נועה איילנד</span>
+</div>
+</body>
+</html>

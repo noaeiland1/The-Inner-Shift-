@@ -1,0 +1,2438 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Inner Shift, Session 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:      #F5F0E8;
+      --cream-dim:  rgba(245,240,232,0.55);
+      --cream-faint:rgba(245,240,232,0.28);
+      --gold:       #C4A06B;
+      --gold-dim:   #A87B4F;
+      --sage:       #8BB896;
+      --sage-dim:   rgba(139,184,150,0.55);
+      --blush:      #D4957A;
+      --blush-dim:  rgba(212,149,122,0.55);
+      --border:     rgba(245,240,232,0.09);
+      --bg-0:       #0D0C0A;
+      --bg-1:       #111110;
+      --bg-2:       #151310;
+      --bg-3:       #1A1814;
+      --bg-4:       #1C1C1A;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    html, body {
+      width:100%; height:100%;
+      overflow:hidden;
+      background:#050504;
+      font-family:'Jost', sans-serif;
+    }
+
+    body { display:flex; align-items:center; justify-content:center; }
+
+    .stage {
+      position:relative;
+      width:min(100vw, 177.78vh);
+      height:min(56.25vw, 100vh);
+      overflow:hidden;
+    }
+
+    /* ── SLIDE BASE ── */
+    .slide {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+      opacity:0;
+      transform:translateX(36px);
+      transition:opacity .5s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
+      pointer-events:none;
+      overflow:hidden;
+      background:var(--bg-3);
+      color:var(--cream);
+    }
+    .slide.active  { opacity:1; transform:translateX(0); pointer-events:all; }
+    .slide.exit    { opacity:0; transform:translateX(-36px); }
+
+    /* unified black base, glow comes from ::before per slide */
+    #s1,#s2,#s3,#s4,#s5,#s6,#s7,#s8,#s9,#s10,#s11,#s12,#s13,
+    #snew,#slimintro,#slimex,#slimid,#slimtask,#stool,
+    #sshare,#ssummary,#squote2,#sjourney,#sjung,
+    #swelcome,#svibrate,#swave,#sspectrum,#slight,#sspectruth,#sbody,#sbodysum,#sbridge,#sbeta,#satom,#swavebridge,
+    #sfreqbridge,#smanage,#swavetadur,#skavanah,#sopening { background:#080706; }
+
+    /* ── SHARED HEADER ── */
+    .sh { padding:3.2% 6% 0; flex-shrink:0; }
+    .sh-eye {
+      font-size:.82vw; letter-spacing:.28em; text-transform:uppercase;
+      color:var(--sage-dim); margin-bottom:.35vw;
+    }
+    .sh-title {
+      font-family:'Cormorant Garamond', serif;
+      font-size:2.8vw; font-weight:500; line-height:1.1;
+      color:var(--cream); margin-bottom:.22vw;
+    }
+    .sh-he {
+      font-family:'Cormorant Garamond', serif;
+      font-size:1.8vw; font-weight:300;
+      color:var(--cream-dim); direction:rtl; margin-bottom:.6vw;
+    }
+    .sh-bar { width:36px; height:1px; background:var(--gold-dim); }
+    .sh-bar-blush { background:var(--blush); }
+
+    /* ── BILINGUAL HEADER (sh2) ── */
+    .sh2         { padding:3.2% 6% 0; flex-shrink:0; }
+    .sh2-inner   { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:.75vw; gap:4%; }
+    .sh2-left    { display:flex; flex-direction:column; flex-shrink:0; }
+    .sh2-eye     { font-size:.75vw; letter-spacing:.3em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.42vw; }
+    .sh2-title   { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; line-height:1; color:var(--cream); white-space:nowrap; }
+    .sh2-right   { display:flex; flex-direction:column; align-items:stretch; direction:rtl; }
+    .sh2-he      { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; font-style:italic; color:rgba(210,158,68,.90); line-height:1.05; text-align:right; }
+    .sh2-he-sub  { font-family:'Cormorant Garamond',serif; font-size:1.15vw; font-weight:400; font-style:italic; color:rgba(245,240,232,.65); margin-top:.35vw; text-align:right; line-height:1.4; }
+    .sh2-bar     { height:1px; background:linear-gradient(90deg, rgba(210,158,68,.15) 0%, rgba(210,158,68,.55) 30%, rgba(210,158,68,.55) 70%, rgba(210,158,68,.15) 100%); }
+
+    /* ── SOURCE BAR ── */
+    .src {
+      font-size:.88vw; color:var(--cream-faint); font-style:italic;
+      padding:.4vw 6% .5vw; border-top:1px solid var(--border);
+      margin-top:auto; flex-shrink:0;
+    }
+
+    /* ── GOLD RULE (recurring motif) ── */
+    .gold-rule { width:55px; height:1px; background:var(--gold-dim); }
+
+    /* ── NAV ── */
+    .nav {
+      position:fixed; bottom:14px; left:50%; transform:translateX(-50%);
+      display:flex; align-items:center; gap:10px; z-index:1000;
+      background:rgba(5,5,4,.7); padding:6px 16px; border-radius:40px;
+      backdrop-filter:blur(16px); border:1px solid var(--border);
+    }
+    .nav button {
+      background:none; border:1px solid rgba(255,255,255,.15);
+      color:rgba(255,255,255,.7); padding:4px 13px; border-radius:20px;
+      cursor:pointer; font-family:'Jost',sans-serif; font-size:11px;
+      letter-spacing:.06em; transition:all .2s;
+    }
+    .nav button:hover { background:rgba(255,255,255,.07); }
+    .ctr { color:rgba(255,255,255,.3); font-size:11px; font-family:'Jost',sans-serif; letter-spacing:.1em; min-width:44px; text-align:center; }
+    .dots { display:flex; gap:5px; align-items:center; }
+    .dot  { width:4px; height:4px; border-radius:50%; background:rgba(255,255,255,.15); transition:all .3s; cursor:pointer; }
+    .dot.on { background:var(--gold); width:14px; border-radius:2px; }
+
+    /* ══════════════════════════════════
+       S1, TITLE
+    ══════════════════════════════════ */
+    #s1 { justify-content:center; align-items:center; padding:6%; background:#080706; }
+    #s1::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 55% 50% at 50% 52%, rgba(210,158,68,.38) 0%, rgba(175,120,42,.20) 32%, rgba(120,76,18,.09) 58%, transparent 78%),
+        radial-gradient(ellipse 80% 65% at 50% 55%, rgba(150,95,22,.12), transparent 85%);
+    }
+    .s1-top { position:relative; z-index:1; text-align:center; margin-bottom:3.2vw; }
+    .s1-session-num { font-size:.78vw; letter-spacing:.42em; text-transform:uppercase; color:rgba(210,158,68,.55); margin-bottom:.9vw; }
+    .s1-session-he { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; color:rgba(245,240,232,.55); direction:rtl; }
+    .s1-session-sub { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:300; color:rgba(245,240,232,.38); direction:rtl; margin-top:.3vw; letter-spacing:.03em; }
+    .s1-rule-top { width:40px; height:1px; background:rgba(210,158,68,.35); margin:1.5vw auto 0; }
+    .s1-block { text-align:center; position:relative; z-index:1; }
+    .s1-main { font-family:'Cormorant Garamond',serif; font-size:8.4vw; font-weight:300; color:#F5F0E8; letter-spacing:-.01em; line-height:1; margin-bottom:.5vw; }
+    .s1-main em { font-style:normal; font-weight:600; color:rgba(210,158,68,.85); }
+    .s1-tagline { font-size:.9vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(245,240,232,.3); margin-top:1.4vw; }
+
+    /* ══════════════════════════════════
+       S-NEW, AGE 0-7 PUNCH
+    ══════════════════════════════════ */
+    #smanage::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 52% at 50% 55%, rgba(70,165,195,.18) 0%, rgba(45,125,155,.09) 40%, rgba(25,80,110,.04) 65%, transparent 82%),
+        radial-gradient(ellipse 80% 65% at 50% 58%, rgba(35,100,130,.06), transparent 88%);
+    }
+    #snew { justify-content:center; align-items:center; padding:8%; }
+    #snew::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 52% 46% at 50% 46%, rgba(210,158,68,.30) 0%, rgba(175,120,42,.15) 34%, rgba(120,76,18,.06) 58%, transparent 78%),
+        radial-gradient(ellipse 75% 58% at 50% 50%, rgba(150,95,22,.09), transparent 84%);
+    }
+    .snew-supra { font-family:'Cormorant Garamond',serif; font-size:1.5vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.38); text-align:center; margin-bottom:.6vw; letter-spacing:.04em; }
+    .snew-title { font-family:'Cormorant Garamond',serif; font-size:4vw; font-weight:300; color:var(--cream); text-align:center; margin-bottom:.4vw; }
+    .snew-rule  { width:50px; height:1px; background:var(--gold-dim); margin:0 auto 2.8vw; }
+    .snew-punch { display:flex; flex-direction:column; gap:1.8vw; max-width:74%; margin:0 auto; }
+    .snew-line  { opacity:0; transform:translateY(10px); transition:opacity .55s ease, transform .55s ease; text-align:center; direction:rtl; }
+    .snew-line.visible { opacity:1; transform:translateY(0); }
+    .snew-main  { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-weight:500; color:var(--cream); line-height:1.3; margin-bottom:.3vw; }
+    .snew-sup   { font-size:1.15vw; font-weight:400; color:rgba(245,240,232,.68); line-height:1.7; }
+    .snew-main-gold { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:500; color:rgba(210,158,68,.92); line-height:1.3; margin-bottom:.3vw; }
+    .snew-sup-gold  { font-size:1.15vw; font-weight:300; color:rgba(210,158,68,.6); font-style:italic; line-height:1.6; }
+    .snew-src   { opacity:0; transform:translateY(6px); transition:opacity .5s ease .25s, transform .5s ease .25s; font-size:.68vw; color:var(--cream-faint); font-style:italic; margin-top:1.8vw; text-align:center; }
+    .snew-src.visible { opacity:1; transform:translateY(0); }
+
+    /* ══════════════════════════════════
+       SLIMINTRO, LIMITING BELIEFS INTRO
+    ══════════════════════════════════ */
+    #slimintro { justify-content:center; align-items:center; padding:8%; }
+    #slimintro::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 50% 44% at 50% 48%, rgba(210,158,68,.28) 0%, rgba(175,120,42,.14) 34%, rgba(120,76,18,.06) 58%, transparent 78%),
+        radial-gradient(ellipse 72% 56% at 50% 52%, rgba(150,95,22,.09), transparent 84%);
+    }
+    .slim-eye   { font-size:.78vw; letter-spacing:.32em; text-transform:uppercase; color:rgba(210,158,68,.55); text-align:center; margin-bottom:1vw; }
+    .slim-title { font-family:'Cormorant Garamond',serif; font-size:3.8vw; font-weight:300; color:var(--cream); text-align:center; margin-bottom:.3vw; }
+    .slim-sub   { font-family:'Cormorant Garamond',serif; font-size:1.8vw; font-weight:300; font-style:italic; color:rgba(210,158,68,.65); text-align:center; margin-bottom:.4vw; }
+    .slim-rule  { width:50px; height:1px; background:var(--gold-dim); margin:0 auto 2.2vw; }
+    .slim-body  { max-width:66%; margin:0 auto; text-align:center; direction:rtl; }
+    .slim-line  { font-family:'Cormorant Garamond',serif; font-size:1.65vw; font-weight:300; color:var(--cream-dim); line-height:1.7; }
+    .slim-line strong { color:var(--cream); font-weight:500; }
+
+    /* ══════════════════════════════════
+       SLIMEX, 5 LIMITING BELIEF EXAMPLES
+    ══════════════════════════════════ */
+    #slimex {}
+    #slimex::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 48% 44% at 26% 45%, rgba(210,158,68,.22) 0%, rgba(175,120,42,.11) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 68% 56% at 28% 48%, rgba(150,95,22,.07), transparent 82%);
+    }
+    .slimex-body  { flex:1; display:flex; flex-direction:column; gap:.5vw; padding:.8% 6% 0; }
+    .belief-card  { display:flex; flex-direction:row-reverse; gap:1.5vw; padding:.7vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(212,149,122,.5); align-items:flex-start; opacity:0; transform:translateY(8px); transition:opacity .45s ease, transform .45s ease; }
+    .belief-card.visible { opacity:1; transform:translateY(0); }
+    .bc-voice-wrap{ flex:0 0 38%; padding-left:1.5vw; border-left:1px solid var(--border); }
+    .bc-vlbl      { font-size:.6vw; text-transform:uppercase; letter-spacing:.14em; color:rgba(212,149,122,.7); margin-bottom:.2vw; }
+    .bc-voice     { font-family:'Cormorant Garamond',serif; font-size:1.3vw; font-weight:500; color:var(--cream); direction:rtl; line-height:1.3; }
+    .bc-root-wrap { flex:1; }
+    .bc-rlbl      { font-size:.6vw; text-transform:uppercase; letter-spacing:.14em; color:rgba(196,160,107,.7); margin-bottom:.2vw; }
+    .bc-root      { font-size:.85vw; color:rgba(245,240,232,.62); font-weight:300; line-height:1.5; direction:rtl; }
+
+    /* ══════════════════════════════════
+       STOOL, AWARENESS PRACTICE
+    ══════════════════════════════════ */
+    #stool {}
+    #stool::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 46% at 50% 45%, rgba(210,158,68,.24) 0%, rgba(175,120,42,.12) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 72% 58% at 50% 48%, rgba(150,95,22,.08), transparent 84%);
+    }
+    .stool-body  { flex:1; display:flex; flex-direction:column; justify-content:center; gap:.65vw; padding:.5% 8% 0; }
+    .stool-step  { display:flex; flex-direction:row-reverse; gap:1.5vw; align-items:flex-start; padding:.7vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(212,149,122,.5); opacity:0; transform:translateY(6px); transition:opacity .4s ease, transform .4s ease, background .35s ease, border-color .35s ease; }
+    .stool-right { flex:0 0 22%; padding-left:1.5vw; border-left:1px solid var(--border); display:flex; flex-direction:row-reverse; align-items:center; gap:.7vw; }
+    .stool-num   { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; color:rgba(210,158,68,.55); line-height:1; flex-shrink:0; transition:color .35s ease, font-size .35s ease; }
+    .stool-verb  { font-family:'Cormorant Garamond',serif; font-size:1.4vw; font-weight:600; color:var(--cream); line-height:1.2; transition:color .35s ease; }
+    .stool-desc  { font-size:1vw; color:rgba(245,240,232,.62); font-weight:300; line-height:1.55; direction:rtl; flex:1; transition:color .35s ease; }
+    /* step-past: visible but dimmed */
+    .stool-step.step-past  { opacity:1; transform:translateY(0); background:rgba(245,240,232,.015); border-color:var(--border); border-right-color:rgba(212,149,122,.18); }
+    .stool-step.step-past .stool-num  { color:rgba(210,158,68,.25); }
+    .stool-step.step-past .stool-verb { color:rgba(245,240,232,.28); }
+    .stool-step.step-past .stool-desc { color:rgba(245,240,232,.25); }
+    /* step-active: gold highlight */
+    .stool-step.step-active { opacity:1; transform:translateY(0); background:rgba(210,158,68,.07); border-right-color:rgba(210,158,68,.75); }
+    .stool-step.step-active .stool-num  { color:rgba(210,158,68,.9); font-size:2.3vw; }
+    .stool-step.step-active .stool-verb { color:rgba(210,158,68,.95); }
+    .stool-step.step-active .stool-desc { color:rgba(245,240,232,.85); }
+    /* step-shown: all normal together */
+    .stool-step.step-shown { opacity:1; transform:translateY(0); }
+    .stool-step.step-shown .stool-num  { color:rgba(210,158,68,.55); font-size:2vw; }
+    .stool-step.step-shown .stool-verb { color:var(--cream); }
+    .stool-step.step-shown .stool-desc { color:rgba(245,240,232,.62); }
+    .stool-punch { margin-top:.5vw; padding:1vw 1.4vw; border-top:1px solid var(--border); font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-style:italic; color:rgba(210,158,68,.75); text-align:center; direction:rtl; line-height:1.5; opacity:0; transition:opacity .5s ease .1s; }
+    .stool-punch.visible { opacity:1; }
+
+    /* ══════════════════════════════════
+       SMEDIT, MEDITATION AS TOOL
+    ══════════════════════════════════ */
+    #smedit { background:#080706; }
+    #smedit::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 75% 55% at 50% 58%, rgba(210,158,68,.13) 0%, rgba(150,95,22,.05) 55%, transparent 78%),
+        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(100,140,180,.06), transparent 80%);
+    }
+    .smedit-body    { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 7% 4%; direction:rtl; gap:2.8vw; }
+    .smedit-flow    { display:flex; align-items:stretch; justify-content:center; gap:0; direction:rtl; opacity:0; transform:translateY(10px); transition:opacity .6s ease, transform .6s ease; }
+    .smedit-flow.visible { opacity:1; transform:translateY(0); }
+    .smedit-node    { flex:0 0 26%; text-align:center; padding:2vw 1.8vw; border-radius:6px; background:rgba(245,240,232,.03); border:1px solid rgba(245,240,232,.07); display:flex; flex-direction:column; justify-content:center; }
+    .smedit-node-title { font-family:'Cormorant Garamond',serif; font-size:1.75vw; font-weight:600; color:var(--cream); line-height:1.1; margin-bottom:.35vw; }
+    .smedit-node-freq  { font-family:'Jost',sans-serif; font-size:.68vw; letter-spacing:.18em; text-transform:uppercase; color:rgba(210,158,68,.72); margin-bottom:.55vw; }
+    .smedit-node-desc  { font-size:.9vw; font-weight:400; color:rgba(245,240,232,.82); line-height:1.65; }
+    .smedit-connector  { display:flex; align-items:center; justify-content:center; flex-shrink:0; width:5%; color:rgba(210,158,68,.85); font-size:1.8vw; font-weight:700; }
+    .smedit-insight { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-style:italic; font-weight:400; color:rgba(210,120,150,.92); text-align:center; line-height:1.75; border-top:1px solid rgba(210,120,150,.15); padding-top:2vw; opacity:0; transform:translateY(8px); transition:opacity .55s ease, transform .55s ease; }
+    .smedit-insight.visible { opacity:1; transform:translateY(0); }
+    .smedit-insight em { font-style:normal; color:rgba(210,158,68,.9); }
+
+    /* ══════════════════════════════════
+       SLIMID, HOW TO IDENTIFY
+    ══════════════════════════════════ */
+    #slimid {}
+    #slimid::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 46% at 50% 45%, rgba(210,158,68,.26) 0%, rgba(175,120,42,.13) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 72% 58% at 50% 48%, rgba(150,95,22,.08), transparent 84%);
+    }
+    .slimid-body { flex:1; display:flex; flex-direction:column; justify-content:center; gap:1.2vw; padding:.5% 8% 0; }
+    .slimid-item { display:flex; gap:1.8vw; align-items:flex-start; padding:1.1vw 1.4vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(212,149,122,.4); direction:rtl; }
+    .slimid-num  { font-family:'Cormorant Garamond',serif; font-size:2.4vw; font-weight:300; color:rgba(210,158,68,.4); line-height:1; flex-shrink:0; }
+    .slimid-txt  { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:400; color:var(--cream); line-height:1.5; }
+    .slimid-txt span { display:block; font-size:.88vw; font-family:'Jost',sans-serif; font-weight:300; color:var(--cream-faint); margin-top:.3vw; font-style:italic; }
+
+    /* ══════════════════════════════════
+       SLIMTASK, EXERCISE
+    ══════════════════════════════════ */
+    #slimtask { padding:0; }
+    .stask-grid      { flex:1; display:flex; gap:1.8vw; padding:1.5% 6% 0; align-items:flex-start; }
+    .stask-col       { flex:1; display:flex; flex-direction:column; gap:.55vw; padding:1.2vw 1.4vw; background:rgba(245,240,232,.05); border:1px solid rgba(245,240,232,.12); border-radius:6px; direction:rtl; }
+    .stask-col-num   { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:300; color:rgba(210,158,68,.65); line-height:1; margin-bottom:.3vw; }
+    .stask-field-lbl { font-size:.78vw; letter-spacing:.12em; text-transform:uppercase; color:rgba(212,149,122,.9); font-weight:400; }
+    .stask-uline     { height:1px; background:rgba(245,240,232,.25); margin-bottom:.2vw; }
+    .stask-bottom-note { padding:.9vw 6% 0; font-size:.78vw; color:rgba(245,240,232,.45); font-style:italic; text-align:center; letter-spacing:.06em; }
+    #slimtask::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 46% 44% at 30% 44%, rgba(210,158,68,.22) 0%, rgba(175,120,42,.11) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 65% 56% at 32% 48%, rgba(150,95,22,.07), transparent 82%);
+    }
+    .stask-wrap   { display:flex; gap:5%; align-items:flex-start; position:relative; z-index:1; }
+    .stask-left   { flex:1; }
+    .stask-eye    { font-size:.78vw; letter-spacing:.22em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.4vw; }
+    .stask-title  { font-family:'Cormorant Garamond',serif; font-size:3vw; font-weight:400; direction:rtl; color:var(--cream); margin-bottom:.3vw; }
+    .stask-inst   { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:300; color:var(--cream-dim); direction:rtl; line-height:1.6; margin-bottom:1.6vw; }
+    .stask-eg-lbl { font-size:.7vw; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:.5vw; }
+    .stask-eg     { padding:1vw 1.4vw; background:rgba(196,160,107,.06); border:1px solid rgba(196,160,107,.2); border-radius:6px; }
+    .stask-eg-v   { font-family:'Cormorant Garamond',serif; font-size:1.4vw; font-weight:500; color:var(--cream); direction:rtl; margin-bottom:.3vw; }
+    .stask-eg-r   { font-size:.82vw; color:var(--cream-faint); font-weight:300; direction:rtl; line-height:1.5; }
+    .stask-eg-r span { color:var(--gold-dim); }
+    .stask-right  { flex:0 0 38%; background:rgba(245,240,232,.03); border:1px solid var(--border); border-radius:7px; padding:1.4vw; }
+    .stask-r-eye  { font-size:.72vw; letter-spacing:.15em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:1vw; }
+    .stask-prompt { margin-bottom:1.2vw; }
+    .stask-qlbl   { font-family:'Cormorant Garamond',serif; font-size:1.15vw; font-weight:500; direction:rtl; color:var(--cream-dim); margin-bottom:.5vw; }
+    .stask-uline  { height:1px; background:rgba(139,184,150,.3); margin-bottom:.4vw; }
+    .stask-note   { font-size:.78vw; color:var(--cream-faint); font-style:italic; direction:rtl; line-height:1.6; margin-top:.8vw; }
+
+    /* ══════════════════════════════════
+       S2, QUOTE
+    ══════════════════════════════════ */
+    #s2 { justify-content:center; align-items:center; padding:8%; }
+    #s2::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 50% 45% at 50% 36%, rgba(210,158,68,.32) 0%, rgba(175,120,42,.16) 34%, rgba(120,76,18,.07) 60%, transparent 78%),
+        radial-gradient(ellipse 72% 55% at 50% 40%, rgba(150,95,22,.10), transparent 82%);
+    }
+    .s2-qmark { font-family:'Cormorant Garamond',serif; font-size:7vw; color:var(--gold-dim); opacity:.3; line-height:.5; display:block; text-align:center; margin-bottom:.8vw; }
+    .s2-qt    { font-family:'Cormorant Garamond',serif; font-size:3vw; font-style:italic; font-weight:300; color:var(--cream); line-height:1.42; text-align:center; margin-bottom:1.8vw; }
+    .s2-rule  { width:55%; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); margin:0 auto 1.4vw; }
+    #sfreqbridge-tadur { opacity:0; transition:opacity .8s ease; position:relative; display:inline-block; }
+    #sfreqbridge-tadur.visible { opacity:1; }
+    #sfreqbridge-tadur::after { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:260%; height:400%; background:radial-gradient(ellipse 55% 55% at 50% 50%, rgba(210,158,68,.28) 0%, rgba(210,158,68,.10) 35%, transparent 70%); opacity:0; transition:opacity 1.1s ease .15s; pointer-events:none; z-index:-1; }
+    #sfreqbridge-tadur.visible::after { opacity:1; }
+
+    #swavetadur::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 58% 52% at 50% 50%, rgba(210,158,68,.26) 0%, rgba(175,120,42,.13) 38%, rgba(120,76,18,.05) 64%, transparent 82%),
+        radial-gradient(ellipse 80% 62% at 50% 50%, rgba(150,95,22,.08), transparent 86%);
+    }
+    #swt-tadur-word { position:relative; display:inline; }
+    #swt-tadur-word::after {
+      content:''; position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      width:300%; height:600%;
+      background:radial-gradient(ellipse 52% 52% at 50% 50%, rgba(210,158,68,.32) 0%, rgba(210,158,68,.13) 36%, transparent 70%);
+      opacity:0; transition:opacity 1.3s ease .25s;
+      pointer-events:none; z-index:-1;
+    }
+    #swt-2.visible #swt-tadur-word::after { opacity:1; }
+    .s2-by    { font-size:.95vw; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); text-align:center; margin-bottom:2.4vw; }
+    .s2-sec   { font-size:1.25vw; font-weight:300; font-style:italic; color:var(--cream-faint); line-height:1.7; text-align:center; max-width:68%; margin:0 auto; }
+
+    /* ══════════════════════════════════
+       S3, QUESTION
+    ══════════════════════════════════ */
+    #s3 { justify-content:center; align-items:center; padding:8%; }
+    #s3::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 52% 48% at 50% 44%, rgba(210,158,68,.30) 0%, rgba(175,120,42,.15) 34%, rgba(120,76,18,.06) 60%, transparent 78%),
+        radial-gradient(ellipse 75% 60% at 50% 48%, rgba(150,95,22,.09), transparent 84%);
+    }
+    .s3-label { font-size:.88vw; letter-spacing:.28em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:2vw; text-align:center; }
+    .s3-qhe   { font-family:'Cormorant Garamond',serif; font-size:3.7vw; font-weight:500; direction:rtl; color:var(--cream); line-height:1.3; margin-bottom:1vw; text-align:center; }
+    .s3-qen   { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-style:italic; font-weight:300; color:var(--cream-dim); margin-bottom:3vw; text-align:center; }
+    .s3-sage-bar { width:40px; height:1px; background:var(--sage-dim); margin:0 auto 2vw; }
+    .s3-inst  { font-size:1.1vw; font-weight:300; color:var(--cream-dim); line-height:1.65; text-align:center; margin-bottom:.7vw; }
+    .s3-note  { font-size:.95vw; color:var(--blush-dim); font-style:italic; letter-spacing:.05em; text-align:center; }
+
+    /* ══════════════════════════════════
+       S4, 95/5
+    ══════════════════════════════════ */
+    #s4 {}
+    #s4::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 48% 44% at 22% 58%, rgba(210,158,68,.28) 0%, rgba(175,120,42,.14) 34%, rgba(120,76,18,.06) 58%, transparent 78%),
+        radial-gradient(ellipse 68% 55% at 25% 62%, rgba(150,95,22,.09), transparent 82%);
+    }
+    .s4-body  { flex:1; display:flex; gap:4%; align-items:center; padding:.5% 6% 0; }
+    .s4-chart { flex:0 0 32%; display:flex; justify-content:center; align-items:center; }
+    .donut {
+      width:19vw; height:19vw; border-radius:50%;
+      background:conic-gradient(rgba(245,240,232,.9) 0% 95%, var(--blush) 95% 100%);
+      position:relative; display:flex; align-items:center; justify-content:center;
+    }
+    .donut::after { content:''; position:absolute; width:58%; height:58%; background:var(--bg-3); border-radius:50%; }
+    .donut-in  { position:absolute; z-index:1; text-align:center; }
+    .donut-in .dn { font-family:'Cormorant Garamond',serif; font-size:2.6vw; font-weight:600; color:var(--cream); display:block; line-height:1; }
+    .donut-in .dl { font-size:.68vw; color:var(--cream-faint); letter-spacing:.08em; text-transform:uppercase; }
+    .s4-legend { flex:1; display:flex; flex-direction:column; gap:.9vw; }
+    .s4-item   { display:flex; gap:1.1vw; align-items:flex-start; }
+    .s4-bar    { width:3px; min-width:3px; border-radius:2px; align-self:stretch; margin-top:.3vw; }
+    .s4-pct    { font-family:'Cormorant Garamond',serif; font-size:3vw; font-weight:600; line-height:1; margin-bottom:.2vw; }
+    .s4-name   { font-size:1vw; font-weight:500; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.3vw; color:var(--cream-dim); }
+    .s4-desc   { font-size:.88vw; color:var(--cream-faint); font-weight:300; line-height:1.55; }
+    .s4-insight { padding:.9vw 1.2vw; background:rgba(245,240,232,.04); border-radius:6px; border-left:2px solid var(--gold-dim); font-size:.88vw; line-height:1.58; color:var(--cream-dim); }
+
+    /* ══════════════════════════════════
+       S5, CHILDHOOD
+    ══════════════════════════════════ */
+    #s5 {}
+    #s5::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 44% 46% at 24% 60%, rgba(210,158,68,.26) 0%, rgba(175,120,42,.13) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 65% 58% at 28% 65%, rgba(150,95,22,.08), transparent 82%);
+    }
+    .s5-body  { flex:1; display:flex; gap:5%; align-items:center; padding:1% 6% 0; }
+    .s5-brain { flex:0 0 40%; display:flex; flex-direction:column; align-items:center; }
+    .brain-badge { background:rgba(212,149,122,.18); border:1px solid rgba(212,149,122,.3); color:var(--blush); padding:.55vw 1.1vw; border-radius:4px; font-size:.85vw; font-weight:500; text-align:center; line-height:1.45; margin-top:1.2vw; }
+    .brain-note  { font-size:.82vw; color:var(--cream-faint); text-align:center; margin-top:.7vw; font-weight:300; line-height:1.5; }
+    .s5-q-col { flex:1; }
+    .s5-hint  { font-size:.88vw; color:var(--cream-faint); margin-bottom:1vw; font-weight:300; }
+    .s5-q     { display:flex; gap:1vw; align-items:flex-start; margin-bottom:1vw; padding:1vw 1.3vw; background:rgba(139,184,150,.06); border-left:2px solid rgba(139,184,150,.4); border-radius:0 6px 6px 0; }
+    .s5-qn    { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:600; color:var(--sage); opacity:.5; line-height:1; min-width:1.6vw; }
+    .s5-qt    { font-family:'Cormorant Garamond',serif; font-size:1.6vw; font-weight:400; color:var(--cream); line-height:1.35; }
+    .s5-stmt  { font-size:.95vw; font-weight:400; padding:1vw 1.3vw; background:rgba(245,240,232,.05); border-radius:6px; line-height:1.65; color:var(--cream-dim); border:1px solid var(--border); }
+    .s5-stmt strong { color:var(--gold); }
+
+    /* ══════════════════════════════════
+       S6, RAS
+    ══════════════════════════════════ */
+    #s6 {}
+    #s6::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 42% 48% at 20% 52%, rgba(210,158,68,.25) 0%, rgba(175,120,42,.12) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 60% 60% at 22% 56%, rgba(150,95,22,.08), transparent 82%);
+    }
+    .s6-body  { flex:1; display:flex; gap:5%; align-items:flex-start; padding:1.2% 6% 0; }
+    .s6-funnel{ flex:0 0 33%; }
+    .rf-top   { padding:.85vw 1vw; border-radius:4px; text-align:center; background:rgba(212,149,122,.08); border:1px solid rgba(212,149,122,.22); }
+    .rf-mid   { background:rgba(245,240,232,.06); border:1px solid var(--border); padding:.85vw 1vw; border-radius:4px; text-align:center; }
+    .rf-bot   { padding:.85vw 1vw; border-radius:4px; text-align:center; background:rgba(139,184,150,.08); border:1px solid rgba(139,184,150,.22); }
+    .rf-num   { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-weight:600; }
+    .rf-top .rf-num { color:var(--blush); }
+    .rf-bot .rf-num { color:var(--sage); }
+    .rf-mid .rf-num { color:var(--gold); }
+    .rf-lbl   { font-size:.76vw; color:var(--cream-faint); }
+    .rf-mid-title { font-size:.78vw; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:.25vw; }
+    .rf-mid-desc  { font-size:.75vw; color:var(--cream-faint); line-height:1.4; }
+    .rf-arrow { text-align:center; font-size:1.6vw; color:var(--cream-faint); line-height:1.15; margin:.2vw 0; }
+    .rf-cite  { font-size:.68vw; color:var(--cream-faint); font-style:italic; text-align:center; margin-top:.7vw; }
+    .s6-ex    { flex:1; }
+    .s6-hint  { font-size:.85vw; color:var(--cream-faint); margin-bottom:.8vw; font-weight:300; }
+    .ex-card  { padding:.85vw 1.1vw; border-radius:5px; border-left:2px solid var(--blush); background:rgba(212,149,122,.05); margin-bottom:.75vw; }
+    .ex-card.good { border-left-color:var(--sage); background:rgba(139,184,150,.05); }
+    .ex-bl    { font-size:.72vw; letter-spacing:.14em; text-transform:uppercase; color:var(--blush-dim); margin-bottom:.2vw; }
+    .ex-card.good .ex-bl { color:var(--sage-dim); }
+    .ex-bel   { font-size:.95vw; font-weight:500; color:var(--cream); margin-bottom:.22vw; }
+    .ex-rl    { font-size:.72vw; letter-spacing:.08em; color:var(--sage-dim); font-style:italic; margin-bottom:.18vw; }
+    .ex-sees  { font-size:.84vw; color:var(--cream-faint); font-weight:300; line-height:1.45; }
+
+    /* ══════════════════════════════════
+       S7, BRAIN WAVES
+    ══════════════════════════════════ */
+    #s7 {}
+    #s7::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 50% at 50% 55%, rgba(70,165,195,.18) 0%, rgba(45,125,155,.09) 40%, rgba(25,80,110,.04) 65%, transparent 82%),
+        radial-gradient(ellipse 80% 65% at 50% 58%, rgba(35,100,130,.06), transparent 88%);
+    }
+    /* ── S7 REVEAL CARDS ── */
+    .s7c-body   { flex:1; display:flex; flex-direction:column; gap:.42vw; padding:1% 6% 0; }
+    .s7c-card   { display:flex; align-items:center; gap:2.2vw; padding:.7vw 1.4vw; border-radius:5px; background:rgba(245,240,232,.02); border:1px solid var(--border); direction:rtl; opacity:0; transform:translateY(7px); transition:opacity .48s ease, transform .48s ease; }
+    .s7c-card.visible  { opacity:1; transform:translateY(0); }
+    .s7c-theta  { background:rgba(212,149,122,.05); border-color:rgba(212,149,122,.22); }
+    .s7c-alpha  { background:rgba(139,184,150,.05); border-color:rgba(139,184,150,.22); }
+    .s7c-beta   { background:rgba(180,50,50,.04); border-color:rgba(160,55,55,.18); }
+    .s7c-left   { display:flex; flex-direction:column; align-items:flex-end; flex:0 0 26%; gap:.22vw; }
+    .s7c-name   { font-family:'Cormorant Garamond',serif; font-size:1.95vw; font-weight:600; line-height:1; }
+    .s7c-hz     { font-size:.78vw; color:var(--cream-faint); font-weight:300; }
+    .s7c-wave   { width:100%; height:1.7vw; }
+    .s7c-right  { flex:1; }
+    .s7c-example{ font-family:'Cormorant Garamond',serif; font-size:1.1vw; font-weight:400; color:var(--cream); line-height:1.5; margin-bottom:.22vw; }
+    .s7c-desc   { font-size:.82vw; color:rgba(245,240,232,.42); font-weight:300; line-height:1.4; }
+    .s7c-tag    { display:inline-block; padding:.12vw .55vw; border-radius:20px; font-size:.7vw; font-weight:500; letter-spacing:.03em; margin-right:.4vw; }
+    .s7c-tag-gate { background:rgba(139,184,150,.15); color:rgba(139,184,150,.92); }
+    .s7c-tag-warn { background:rgba(180,50,50,.12); color:#D05555; }
+    .s7c-tag-theta{ background:rgba(212,149,122,.15); color:rgba(212,149,122,.92); }
+    .s7c-card   { transition:opacity .48s ease, transform .48s ease, background .5s ease, border-color .5s ease, box-shadow .5s ease; }
+    .s7c-card.s7c-dim { opacity:.32; }
+    .s7c-theta.s7c-highlighted { background:rgba(212,149,122,.14); border-color:rgba(212,149,122,.7); box-shadow:0 0 18px rgba(212,149,122,.18); }
+    .s7c-alpha.s7c-highlighted { background:rgba(139,184,150,.14); border-color:rgba(139,184,150,.7); box-shadow:0 0 18px rgba(139,184,150,.18); }
+    .s7c-punch  { opacity:0; transition:opacity .6s ease .1s; font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-style:italic; color:rgba(210,158,68,.85); text-align:center; direction:rtl; padding:.75vw 4% 0; border-top:1px solid rgba(210,158,68,.15); flex-shrink:0; margin-top:.2vw; }
+    .s7c-punch.visible { opacity:1; }
+
+    /* ══════════════════════════════════
+       S8, LOOP
+    ══════════════════════════════════ */
+    #s8 {}
+    #s8::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 46% 48% at 26% 60%, rgba(210,158,68,.26) 0%, rgba(175,120,42,.13) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 65% 60% at 28% 64%, rgba(150,95,22,.08), transparent 82%);
+    }
+    .s8-body { flex:1; display:flex; gap:3%; align-items:center; padding:.8% 5% 0; }
+    .s8-diag { flex:0 0 44%; position:relative; height:29vw; display:flex; align-items:center; justify-content:center; }
+    .loop-ring { position:absolute; width:25vw; height:25vw; border-radius:50%; border:1px dashed rgba(139,184,150,.18); }
+    .lnode {
+      position:absolute; width:10vw; height:10vw; border-radius:50%;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      text-align:center; padding:.8vw;
+    }
+    .ln-top    { top:0; left:50%; transform:translateX(-50%); }
+    .ln-right  { right:0; top:50%; transform:translateY(-50%); }
+    .ln-bottom { bottom:0; left:50%; transform:translateX(-50%); }
+    .ln-left   { left:0; top:50%; transform:translateY(-50%); }
+    .ln-1 { background:rgba(245,240,232,.05); border:1px solid rgba(245,240,232,.14); }
+    .ln-2 { background:rgba(139,184,150,.08); border:1px solid rgba(139,184,150,.25); }
+    .ln-3 { background:rgba(212,149,122,.1);  border:1px solid rgba(212,149,122,.28); }
+    .ln-4 { background:rgba(196,160,107,.07); border:1px solid rgba(196,160,107,.2); }
+    .lnode-he  { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:600; }
+    .lnode-en  { font-size:.62vw; color:var(--cream-faint); letter-spacing:.07em; text-transform:uppercase; }
+    .lnode-dsc { font-size:.58vw; color:var(--cream-faint); margin-top:.22vw; line-height:1.35; }
+    .larrow    { position:absolute; font-size:1.3vw; color:var(--sage-dim); }
+    .la-tr { top:4.5vw; right:1.5vw; transform:rotate(45deg); }
+    .la-br { bottom:4.5vw; right:1.5vw; transform:rotate(135deg); }
+    .la-bl { bottom:4.5vw; left:1.5vw; transform:rotate(225deg); }
+    .la-tl { top:4.5vw; left:1.5vw; transform:rotate(315deg); }
+    .s8-info { flex:1; display:flex; flex-direction:column; gap:1.1vw; }
+    .s8-callout { padding:1.2vw 1.4vw; background:rgba(245,240,232,.04); border:1px solid var(--border); border-radius:6px; }
+    .s8-cq { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-style:italic; font-weight:300; line-height:1.52; margin-bottom:.55vw; color:var(--cream-dim); }
+    .s8-cs { font-size:.7vw; color:var(--gold); letter-spacing:.09em; }
+    .s8-step { display:flex; gap:.9vw; align-items:flex-start; }
+    .s8-arr  { font-family:'Cormorant Garamond',serif; font-size:1.8vw; color:var(--sage-dim); line-height:1; flex-shrink:0; }
+    .s8-txt  { font-size:.88vw; color:var(--cream-dim); line-height:1.58; }
+    .s8-txt strong { color:var(--blush); }
+    .s8-txt .sage  { color:var(--sage); }
+
+    /* ══════════════════════════════════
+       S9, EM FIELD
+    ══════════════════════════════════ */
+    #s9 {}
+    #s9::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 42% 50% at 20% 58%, rgba(210,158,68,.24) 0%, rgba(175,120,42,.12) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 62% 62% at 22% 62%, rgba(150,95,22,.08), transparent 82%);
+    }
+    .s9-body { flex:1; display:flex; gap:5%; align-items:center; padding:.8% 6% 0; }
+    .s9-vis  { flex:0 0 37%; display:flex; justify-content:center; align-items:center; }
+    .field-wrap { position:relative; width:21vw; height:27vw; display:flex; align-items:center; justify-content:center; }
+    .fring { position:absolute; border-radius:50%; border-style:solid; }
+    .fr1 { width:21vw; height:27vw; border:1px solid rgba(139,184,150,.1);  }
+    .fr2 { width:17vw; height:22vw; border:1px solid rgba(139,184,150,.16); }
+    .fr3 { width:13vw; height:17vw; border:1.5px solid rgba(139,184,150,.26); }
+    .fr4 { width:9vw;  height:12vw; border:2px solid rgba(139,184,150,.38); }
+    .fr5 { width:5vw;  height:7.5vw; border:2px solid rgba(212,149,122,.45); background:rgba(212,149,122,.04); }
+    .body-sil { position:absolute; display:flex; flex-direction:column; align-items:center; z-index:2; }
+    .sil-head { width:2vw; height:2vw; border-radius:50%; background:rgba(245,240,232,.18); border:1px solid rgba(245,240,232,.25); }
+    .sil-body { width:2.9vw; height:4.2vw; background:rgba(245,240,232,.1); border:1px solid rgba(245,240,232,.2); border-radius:0 0 4px 4px; margin-top:-2px; }
+    .heart-glow { position:absolute; width:1.6vw; height:1.6vw; border-radius:50%; background:radial-gradient(circle, rgba(212,149,122,.85), transparent 70%); top:37%; z-index:3; }
+    .field-meas { position:absolute; bottom:-.4vw; left:50%; transform:translateX(-50%); font-size:.65vw; color:rgba(139,184,150,.5); white-space:nowrap; letter-spacing:.09em; }
+    .s9-info  { flex:1; display:flex; flex-direction:column; gap:1.2vw; }
+    .s9-stat  { display:flex; gap:1vw; align-items:flex-start; padding:.85vw 1.2vw; border-left:1.5px solid rgba(139,184,150,.4); }
+    .s9-snum  { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:600; color:var(--gold); line-height:1; min-width:5.2vw; }
+    .s9-stxt  { font-size:.86vw; color:var(--cream-faint); font-weight:300; line-height:1.58; }
+    .s9-stxt strong { color:var(--cream-dim); font-weight:500; }
+    .s9-stmt  { padding:1vw 1.3vw; border-top:1px solid var(--border); font-family:'Cormorant Garamond',serif; font-size:1.32vw; font-style:italic; font-weight:300; color:var(--cream-faint); line-height:1.58; }
+
+    /* ══════════════════════════════════
+       S10, EXERCISE
+    ══════════════════════════════════ */
+    #s10 {}
+    #s10::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 44% at 76% 52%, rgba(210,158,68,.24) 0%, rgba(175,120,42,.12) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 70% 58% at 74% 56%, rgba(150,95,22,.07), transparent 82%);
+    }
+    .s10-body { flex:1; display:flex; flex-direction:column; padding:1% 6% 0; gap:.75vw; }
+    .ex-grid  { display:grid; grid-template-columns:1fr 1fr; gap:.7vw 1.6vw; }
+    .ex-item  { padding:1vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); position:relative; }
+    .ex-num   { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:300; color:var(--sage); opacity:.2; position:absolute; top:.4vw; right:.8vw; line-height:1; }
+    .ex-q     { font-family:'Cormorant Garamond',serif; font-size:1.2vw; font-weight:500; direction:rtl; color:var(--cream); line-height:1.4; margin-bottom:.45vw; }
+    .ex-blank { height:1.3vw; border-bottom:1px solid rgba(139,184,150,.35); margin-bottom:.4vw; opacity:.7; }
+    .ex-feel  { font-size:.76vw; color:var(--cream-faint); font-style:italic; direction:rtl; }
+    .ex-full  { padding:1vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); position:relative; }
+    .ex-note  { padding:.7vw 1.1vw; background:rgba(245,240,232,.05); border-radius:4px; font-size:.9vw; font-weight:300; text-align:center; letter-spacing:.05em; color:var(--cream-dim); border:1px solid var(--border); }
+
+    /* ══════════════════════════════════
+       S11, MEDITATION
+    ══════════════════════════════════ */
+    #s11 { justify-content:center; align-items:center; }
+    #s11::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 52% 46% at 50% 28%, rgba(210,158,68,.34) 0%, rgba(175,120,42,.17) 34%, rgba(120,76,18,.07) 58%, transparent 78%),
+        radial-gradient(ellipse 75% 58% at 50% 32%, rgba(150,95,22,.10), transparent 84%);
+    }
+    #s11 { justify-content:center; align-items:center; }
+    #s11::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 54% at 50% 50%, rgba(210,120,150,.32) 0%, rgba(185,90,120,.14) 38%, rgba(140,60,90,.05) 64%, transparent 82%),
+        radial-gradient(ellipse 82% 64% at 50% 50%, rgba(160,70,100,.08), transparent 86%);
+    }
+    .orb {
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:38vw; height:38vw; border-radius:50%;
+      background:radial-gradient(circle, rgba(210,120,150,.22) 0%, rgba(185,90,120,.10) 45%, transparent 72%);
+      border:none;
+      animation:orb-pulse 5s ease-in-out infinite;
+    }
+    .orb-2 {
+      width:26vw; height:26vw;
+      background:radial-gradient(circle, rgba(210,120,150,.28) 0%, rgba(185,90,120,.12) 40%, transparent 68%);
+      animation-delay:-.8s;
+    }
+    @keyframes orb-pulse {
+      0%,100% { transform:translate(-50%,-50%) scale(1);    opacity:.22; }
+      50%      { transform:translate(-50%,-50%) scale(1.55); opacity:.45; }
+    }
+    .med-text  { position:relative; z-index:1; text-align:center; }
+    .med-main  { font-family:'Cormorant Garamond',serif; font-size:5.5vw; font-weight:400; color:var(--cream); letter-spacing:.06em; margin-bottom:1.2vw; }
+    .med-sub   { font-family:'Jost',sans-serif; font-size:.88vw; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(210,120,150,.75); }
+
+    /* ══════════════════════════════════
+       S12, HOMEWORK
+    ══════════════════════════════════ */
+    #s12 { justify-content:center; padding:3.5% 7%; }
+    #s12::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 46% 44% at 28% 42%, rgba(210,158,68,.25) 0%, rgba(175,120,42,.13) 34%, rgba(120,76,18,.05) 58%, transparent 78%),
+        radial-gradient(ellipse 65% 56% at 30% 46%, rgba(150,95,22,.08), transparent 82%);
+    }
+    .s12-row  { display:flex; gap:5%; align-items:flex-start; }
+    .s12-left { flex:1; }
+    .s12-eye  { font-size:.82vw; letter-spacing:.25em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.4vw; }
+    .s12-title{ font-family:'Cormorant Garamond',serif; font-size:3vw; font-weight:400; direction:rtl; color:var(--cream); margin-bottom:.35vw; }
+    .s12-sub  { font-size:.95vw; color:var(--cream-faint); font-weight:300; direction:rtl; text-align:right; margin-bottom:1.8vw; }
+    .s12-box  { background:rgba(139,184,150,.06); border:1px solid rgba(139,184,150,.18); border-radius:7px; padding:1.4vw 1.8vw; margin-bottom:1.1vw; }
+    .s12-inst { font-size:.95vw; color:var(--cream-dim); direction:rtl; text-align:right; margin-bottom:1.2vw; line-height:1.6; }
+    .s12-q    { display:flex; gap:.9vw; align-items:flex-start; margin-bottom:.85vw; direction:rtl; }
+    .s12-qn   { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:600; color:var(--blush); min-width:1.3vw; }
+    .s12-qt   { font-family:'Cormorant Garamond',serif; font-size:1.5vw; font-weight:400; color:var(--cream); direction:rtl; line-height:1.4; }
+    .s12-note { font-size:1.05vw; color:var(--cream-faint); font-weight:300; font-style:italic; direction:rtl; text-align:right; line-height:1.7; }
+    .s12-right{ flex:0 0 33%; background:rgba(245,240,232,.04); border:1px solid var(--border); border-radius:7px; padding:1.4vw; }
+    .s12-r-eye{ font-size:.76vw; letter-spacing:.14em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.85vw; }
+    .s12-r-item{ font-size:.88vw; color:var(--cream-dim); line-height:1.85; }
+    .s12-see  { margin-top:1.3vw; padding-top:.9vw; border-top:1px solid var(--border); font-family:'Cormorant Garamond',serif; font-size:1.2vw; font-style:italic; color:var(--cream-faint); }
+
+    /* ══════════════════════════════════
+       S13, CLOSING
+    ══════════════════════════════════ */
+    #s13 { justify-content:center; align-items:center; padding:8%; position:relative; overflow:hidden; }
+    #s13::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 58%, rgba(198, 90, 120, .22) 0%, rgba(180,70,100,.10) 38%, rgba(140,50,80,.04) 62%, transparent 82%),
+        radial-gradient(ellipse 55% 45% at 50% 55%, rgba(230,130,150,.10) 0%, transparent 65%),
+        radial-gradient(ellipse 100% 90% at 50% 62%, rgba(110,30,55,.08), transparent 90%);
+    }
+    @keyframes s13breathe {
+      0%,100% { opacity:.88; text-shadow:0 0 60px rgba(198,90,120,.12); }
+      50%     { opacity:1;   text-shadow:0 0 100px rgba(198,90,120,.28), 0 0 180px rgba(230,130,150,.10); }
+    }
+    @keyframes s13float {
+      0%   { opacity:0; transform:translateY(0) scale(1); }
+      15%  { opacity:1; }
+      85%  { opacity:.5; }
+      100% { opacity:0; transform:translateY(-9vw) scale(.5); }
+    }
+    @keyframes s13hug {
+      0%,100% { transform:scaleX(1) scaleY(1); opacity:.18; }
+      50%     { transform:scaleX(1.03) scaleY(1.04); opacity:.24; }
+    }
+    .s13-block    { text-align:center; position:relative; z-index:2; }
+    .s13-toda     { font-family:'Cormorant Garamond',serif; font-size:9.5vw; font-weight:300; color:var(--cream); letter-spacing:.04em; line-height:1; margin-bottom:1.8vw; direction:rtl; animation:s13breathe 4.5s ease-in-out infinite; }
+    .s13-lines    { display:flex; flex-direction:column; gap:.55vw; margin-bottom:2.2vw; direction:rtl; }
+    .s13-line     { font-family:'Cormorant Garamond',serif; font-size:1.5vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.55); line-height:1.4; }
+    .s13-rule     { width:40px; height:1px; background:rgba(198,90,120,.5); margin:0 auto 1.8vw; }
+    .s13-next     { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:400; color:rgba(230,150,165,.82); direction:rtl; letter-spacing:.02em; margin-bottom:3vw; }
+    .s13-brand    { font-size:.72vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(245,240,232,.18); }
+    .s13-pt       { position:absolute; border-radius:50%; pointer-events:none; z-index:1; animation:s13float linear infinite; }
+    .s13-embrace  { position:absolute; inset:0; pointer-events:none; z-index:1; animation:s13hug 6s ease-in-out infinite; }
+
+    /* ══════════════════════════════════
+       SSHARE, SHARING MOMENT
+    ══════════════════════════════════ */
+    #sshare::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 44% at 50% 50%, rgba(139,184,150,.18) 0%, rgba(100,148,110,.08) 42%, transparent 72%),
+        radial-gradient(ellipse 70% 55% at 50% 50%, rgba(100,148,110,.06), transparent 82%);
+    }
+    /* ══════════════════════════════════
+       SWHATNOW, TOOLS INTRO BRIDGE
+    ══════════════════════════════════ */
+    #swhatnow { background:#080706; justify-content:center; align-items:center; }
+    #swhatnow::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(210,158,68,.11) 0%, transparent 70%);
+    }
+    .swn-block  { text-align:center; position:relative; z-index:1; direction:rtl; }
+    .swn-title  { font-family:'Cormorant Garamond',serif; font-size:5.5vw; font-weight:500; color:var(--cream); line-height:1.1; margin-bottom:1.6vw; }
+    .swn-rule   { width:36px; height:1px; background:rgba(210,158,68,.45); margin:0 auto 1.6vw; }
+    .swn-sub    { font-family:'Jost',sans-serif; font-size:.95vw; font-weight:400; letter-spacing:.12em; color:rgba(245,240,232,.5); }
+
+    .sshare-center { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 12%; }
+    .sshare-eye    { font-size:.82vw; letter-spacing:.28em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:1.6vw; }
+    .sshare-title  { font-family:'Cormorant Garamond',serif; font-size:4.2vw; font-weight:400; color:var(--cream); line-height:1.15; margin-bottom:1.4vw; direction:rtl; }
+    .sshare-bar    { width:40px; height:1px; background:var(--sage); margin:0 auto 2vw; }
+    .sshare-prompt { font-family:'Cormorant Garamond',serif; font-size:1.85vw; font-weight:300; color:var(--cream-dim); direction:rtl; line-height:1.7; margin-bottom:1.8vw; }
+    .sshare-note   { font-size:.82vw; letter-spacing:.22em; text-transform:uppercase; color:rgba(139,184,150,.55); }
+
+    /* ══════════════════════════════════
+       SSUMMARY, SESSION SUMMARY
+    ══════════════════════════════════ */
+    #ssummary::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 48% at 50% 44%, rgba(210,158,68,.22) 0%, rgba(175,120,42,.10) 38%, rgba(120,76,18,.04) 62%, transparent 80%),
+        radial-gradient(ellipse 78% 60% at 50% 48%, rgba(150,95,22,.07), transparent 85%);
+    }
+    .summary-body  { flex:1; display:flex; flex-direction:column; justify-content:center; gap:.45vw; padding:0 9% 1.5%; }
+    .sum-item      { display:flex; align-items:baseline; gap:1.1vw; padding:.45vw 1.1vw; border-radius:4px; border-right:2px solid rgba(210,158,68,.25); direction:rtl; font-family:'Cormorant Garamond',serif; font-size:1.4vw; font-weight:400; color:rgba(245,240,232,.82); line-height:1.45; }
+    .sum-mark      { color:var(--gold); font-size:1vw; flex-shrink:0; }
+
+    /* ══════════════════════════════════
+       SQUOTE2, CLOSING QUOTE
+    ══════════════════════════════════ */
+    #squote2::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 52% 44% at 50% 52%, rgba(210,158,68,.28) 0%, rgba(175,120,42,.13) 36%, rgba(120,76,18,.05) 60%, transparent 78%),
+        radial-gradient(ellipse 72% 56% at 50% 52%, rgba(150,95,22,.08), transparent 83%);
+    }
+    .squote2-center { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 10%; }
+    .squote2-he     { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:400; color:var(--cream); direction:rtl; line-height:1.65; margin-bottom:2.2vw; }
+    .squote2-gold   { color:var(--gold); }
+    .squote2-src    { font-size:.78vw; letter-spacing:.3em; text-transform:uppercase; color:var(--cream-faint); }
+
+    /* ══════════════════════════════════
+       SJOURNEY, 5-SESSION MAP
+    ══════════════════════════════════ */
+    #sjourney::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 55%, rgba(210,158,68,.15) 0%, rgba(150,95,22,.07) 50%, transparent 78%),
+        radial-gradient(ellipse 80% 62% at 50% 55%, rgba(120,76,18,.05), transparent 85%);
+    }
+    .journey-body   { flex:1; display:flex; align-items:center; justify-content:center; gap:1.4vw; padding:0 5% 3%; }
+    .journey-step   { flex:1; display:flex; flex-direction:column; align-items:center; text-align:center; padding:1.6vw 1.2vw; border-radius:6px; border:1px solid var(--border); background:rgba(245,240,232,.02); position:relative; }
+    .journey-step::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:40%; height:1px; background:rgba(210,158,68,.12); }
+    .journey-step.j-active { border-color:rgba(210,158,68,.45); background:rgba(210,158,68,.06); }
+    .journey-step.j-active::before { background:rgba(210,158,68,.55); width:60%; }
+    .jstep-num      { font-family:'Cormorant Garamond',serif; font-size:2.4vw; font-weight:300; color:rgba(210,158,68,.35); line-height:1; margin-bottom:.5vw; }
+    .j-active .jstep-num { color:rgba(210,158,68,.85); font-size:2.8vw; }
+    .jstep-session  { font-size:.65vw; letter-spacing:.2em; text-transform:uppercase; color:var(--cream-faint); margin-bottom:.45vw; }
+    .j-active .jstep-session { color:rgba(210,158,68,.6); }
+    .jstep-title    { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:500; color:rgba(245,240,232,.5); direction:rtl; line-height:1.3; margin-bottom:.5vw; }
+    .j-active .jstep-title { color:var(--cream); font-size:1.35vw; }
+    .jstep-desc     { font-size:.72vw; color:rgba(245,240,232,.28); direction:rtl; line-height:1.5; font-weight:300; }
+    .j-active .jstep-desc { color:rgba(245,240,232,.55); }
+    .jstep-dot      { width:5px; height:5px; border-radius:50%; background:rgba(210,158,68,.2); margin:.7vw auto 0; }
+    .j-active .jstep-dot { background:rgba(210,158,68,.7); width:6px; height:6px; }
+
+    /* ══════════════════════════════════
+       SJUNGBIO, CARL JUNG PROFILE
+    ══════════════════════════════════ */
+    #sjungbio { background:#080706; }
+    #sjungbio::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 60% at 70% 50%, rgba(210,158,68,.18) 0%, rgba(150,95,22,.08) 45%, transparent 72%),
+        radial-gradient(ellipse 80% 70% at 70% 50%, rgba(120,76,18,.06), transparent 85%);
+    }
+    .sjb-layout        { display:flex; flex:1; overflow:hidden; align-items:stretch; }
+    .sjb-photo-col     { width:38%; position:relative; flex-shrink:0; }
+    .sjb-photo-wrap    { position:absolute; inset:0; }
+    .sjb-photo         { width:100%; height:100%; object-fit:cover; object-position:center 15%; filter:grayscale(30%) sepia(12%); }
+    .sjb-photo-overlay { position:absolute; inset:0; background:linear-gradient(to left, transparent 40%, rgba(8,7,6,.9) 100%), linear-gradient(to bottom, rgba(8,7,6,.1) 0%, rgba(8,7,6,.4) 100%); }
+    .sjb-content-col   { flex:1; display:flex; flex-direction:column; justify-content:center; padding:5% 6% 5% 5%; direction:rtl; position:relative; z-index:1; }
+    .sjb-name          { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; color:var(--cream); line-height:1; }
+    .sjb-years         { font-size:.82vw; letter-spacing:.22em; color:rgba(210,158,68,.55); margin:.35vw 0 .6vw; }
+    .sjb-tagline       { font-size:.9vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.45); line-height:1.6; }
+    .sjb-rule          { width:36px; height:1px; background:var(--gold-dim); margin:1.4vw 0; }
+    .sjb-bomb          { display:flex; gap:1.1vw; align-items:flex-start; opacity:0; transform:translateY(8px); transition:opacity .52s ease, transform .52s ease; margin-bottom:1.1vw; }
+    .sjb-bomb.visible  { opacity:1; transform:translateY(0); }
+    .sjb-bomb + .sjb-bomb { transition-delay:.08s; }
+    .sjb-bomb-num      { font-family:'Cormorant Garamond',serif; font-size:1.8vw; font-weight:600; color:rgba(210,158,68,.85); line-height:1.1; flex-shrink:0; }
+    .sjb-bomb-title    { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:600; color:var(--cream); margin-bottom:.22vw; }
+    .sjb-bomb-text     { font-size:.88vw; font-weight:300; color:rgba(245,240,232,.80); line-height:1.7; }
+
+    /* ══════════════════════════════════
+       SKAVANAH, GROUNDING MEDITATION
+    ══════════════════════════════════ */
+    #skavanah { justify-content:center; align-items:center; }
+    #skavanah::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 54% at 50% 50%, rgba(210,120,150,.32) 0%, rgba(185,90,120,.14) 38%, rgba(140,60,90,.05) 64%, transparent 82%),
+        radial-gradient(ellipse 82% 64% at 50% 50%, rgba(160,70,100,.08), transparent 86%);
+    }
+    @keyframes kavanah-breathe {
+      0%, 100% { transform:translate(-50%,-50%) scale(1);   opacity:.22; }
+      50%       { transform:translate(-50%,-50%) scale(1.55); opacity:.45; }
+    }
+    .kavanah-circle {
+      position:absolute; width:38vw; height:38vw; border-radius:50%;
+      top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      background:radial-gradient(circle, rgba(210,120,150,.22) 0%, rgba(185,90,120,.10) 45%, transparent 72%);
+      animation:kavanah-breathe 5s ease-in-out infinite;
+      pointer-events:none;
+    }
+    .kavanah-circle-2 {
+      width:26vw; height:26vw;
+      background:radial-gradient(circle, rgba(210,120,150,.28) 0%, rgba(185,90,120,.12) 40%, transparent 68%);
+      animation-delay:-.8s;
+    }
+    .kavanah-title {
+      font-family:'Cormorant Garamond',serif;
+      font-size:3.8vw; font-weight:600; font-style:normal;
+      color:var(--cream); letter-spacing:.04em;
+      text-align:center; position:relative; z-index:1;
+      margin-bottom:1.4vw;
+    }
+    .kavanah-sub {
+      font-family:'Jost',sans-serif;
+      font-size:.88vw; font-weight:500; letter-spacing:.2em;
+      text-transform:uppercase;
+      color:rgba(210,120,150,.92);
+      text-align:center; position:relative; z-index:1;
+      direction:rtl;
+    }
+
+    /* ══════════════════════════════════
+       SOPENING, PHYSICS OPENING
+    ══════════════════════════════════ */
+    #sopening { justify-content:center; align-items:center; padding:8%; }
+    #sopening::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 55% 50% at 50% 46%, rgba(210,158,68,.26) 0%, rgba(175,120,42,.12) 36%, rgba(120,76,18,.05) 62%, transparent 80%),
+        radial-gradient(ellipse 78% 60% at 50% 50%, rgba(150,95,22,.07), transparent 85%);
+    }
+    .sop-wrap { max-width:72%; margin:0 auto; display:flex; flex-direction:column; gap:2.4vw; text-align:center; direction:rtl; position:relative; z-index:1; }
+    .sop-heading { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-weight:500; font-style:italic; letter-spacing:.06em; color:rgba(245,240,232,.78); text-transform:none; margin-bottom:-.6vw; }
+    .sop-scenarios { font-family:'Cormorant Garamond',serif; font-size:2vw; font-style:italic; font-weight:300; color:var(--cream); line-height:1.65; }
+    .sop-negs { display:flex; flex-direction:column; gap:.55vw; }
+    .sop-neg { font-family:'Jost',sans-serif; font-size:1.2vw; font-weight:400; color:rgba(245,240,232,.85); line-height:1.5; }
+    .sop-neg-final { font-family:'Jost',sans-serif; font-size:1.2vw; font-weight:500; color:rgba(245,240,232,.95); margin-top:.3vw; }
+    .sop-rule { width:40px; height:1px; background:var(--gold-dim); margin:0 auto; }
+    .sop-physics { font-family:'Cormorant Garamond',serif; font-size:4vw; font-weight:600; font-style:italic; color:rgba(210,158,68,.95); line-height:1.1; }
+    .sop-close { font-family:'Cormorant Garamond',serif; font-size:1.6vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.65); margin-top:.4vw; }
+
+    /* ══════════════════════════════════
+       NEW, WELCOME · VIBRATION · WAVE · SPECTRUM · LIGHT · BODY
+    ══════════════════════════════════ */
+
+    /* ── S-WELCOME ── */
+    #swelcome { justify-content:center; align-items:center; padding:8%; }
+    #swelcome::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 50% 46% at 50% 50%, rgba(139,184,150,.22) 0%, rgba(100,148,110,.10) 40%, transparent 72%),
+        radial-gradient(ellipse 70% 55% at 50% 50%, rgba(100,148,110,.06), transparent 82%);
+    }
+    .swelcome-wrap   { position:relative; z-index:1; text-align:center; }
+    .swelcome-eye    { font-size:.78vw; letter-spacing:.38em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:2.4vw; }
+    .swelcome-welcome{ font-family:'Cormorant Garamond',serif; font-size:5.2vw; font-weight:300; color:var(--cream); letter-spacing:.01em; line-height:1.1; margin-bottom:2vw; direction:rtl; }
+    .swelcome-rule   { width:40px; height:1px; background:var(--sage-dim); margin:0 auto 1.8vw; }
+    .swelcome-name   { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:400; color:rgba(210,158,68,.88); letter-spacing:.06em; margin-bottom:.6vw; }
+    .swelcome-role   { font-family:'Cormorant Garamond',serif; font-size:1.15vw; font-weight:300; font-style:italic; color:var(--cream-faint); direction:rtl; }
+    .swelcome-sig    { position:absolute; bottom:3.5%; left:0; right:0; text-align:center; font-size:.68vw; letter-spacing:.22em; text-transform:uppercase; color:rgba(245,240,232,.18); }
+
+    /* ══════════════════════════════════
+       SCOURSE, COURSE OVERVIEW
+    ══════════════════════════════════ */
+    #scourse { background:#080706; }
+    #scourse::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 55% at 50% 45%, rgba(139,184,150,.09) 0%, rgba(80,130,100,.04) 50%, transparent 75%),
+        radial-gradient(ellipse 90% 60% at 50% 50%, rgba(210,158,68,.05), transparent 80%);
+    }
+    .scourse-body    { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 12% 4%; direction:rtl; max-width:900px; margin:0 auto; width:100%; }
+    .scourse-block   { opacity:0; transform:translateY(10px); transition:opacity .6s ease, transform .6s ease; }
+    .scourse-block.visible { opacity:1; transform:translateY(0); }
+    .scourse-source  { font-family:'Jost',sans-serif; font-size:.85vw; font-weight:500; letter-spacing:.22em; text-transform:uppercase; color:var(--sage); margin-bottom:1.2vw; }
+    .scourse-para    { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; color:rgba(245,240,232,.78); line-height:1.85; margin-bottom:.6vw; }
+    .scourse-names   { font-family:'Cormorant Garamond',serif; font-size:1.3vw; font-weight:500; color:rgba(210,158,68,.85); font-style:italic; margin-bottom:2.4vw; }
+    .scourse-rule    { width:40px; height:1px; background:var(--gold-dim); margin:0 0 2.4vw; }
+    .scourse-what    { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; color:rgba(245,240,232,.78); line-height:1.85; margin-bottom:1.6vw; }
+    .scourse-goal    { font-family:'Cormorant Garamond',serif; font-size:1.65vw; font-weight:600; color:var(--cream); line-height:1.5; }
+    .scourse-goal span { color:rgba(210,158,68,.92); font-style:italic; font-weight:400; }
+
+    /* ── SATOM, THE ATOM ── */
+    #satom::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 45% 55% at 50% 52%, rgba(210,158,68,.13) 0%, rgba(140,80,20,.05) 55%, transparent 78%),
+        radial-gradient(ellipse 70% 65% at 50% 52%, rgba(70,165,195,.04), transparent 85%);
+    }
+    .satom-body      { flex:1; display:flex; align-items:center; gap:5%; padding:0 6% 2.5%; }
+    .satom-vis       { flex:0 0 50%; display:flex; align-items:center; justify-content:center; }
+    .satom-svg       { width:100%; height:auto; overflow:visible; }
+    .satom-info      { flex:1; direction:rtl; display:flex; flex-direction:column; justify-content:center; gap:1.4vw; }
+    .satom-pct-wrap  { border-right:3px solid rgba(210,158,68,.5); padding-right:1.2vw; }
+    .satom-pct       { font-family:'Cormorant Garamond',serif; font-size:5.2vw; font-weight:300; color:rgba(210,158,68,.95); line-height:1; }
+    .satom-pct-lbl   { font-size:.78vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(245,240,232,.38); margin-top:.25vw; }
+    .satom-points    { display:flex; flex-direction:column; gap:.65vw; }
+    .satom-point     { font-size:.95vw; color:rgba(245,240,232,.62); line-height:1.6; padding-right:.9vw; border-right:1px solid rgba(210,158,68,.15); }
+    .satom-point strong { color:rgba(245,240,232,.88); font-weight:500; }
+    .satom-punch     { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-style:italic; color:rgba(210,158,68,.82); line-height:1.5; padding-top:.8vw; border-top:1px solid rgba(210,158,68,.15); }
+
+    /* ── SWAVEBRIDGE ── */
+    .swb-panels     { display:flex; height:52%; position:relative; z-index:1; }
+    .swb-panel      { flex:1; display:flex; flex-direction:column; justify-content:center; padding:3% 5.5%; position:relative; overflow:hidden; direction:rtl; text-align:right; }
+    .swb-panel-in   { border-left:1px solid rgba(245,240,232,.06); }
+    .swb-panel-in::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 110% 70% at 130% 50%, rgba(70,165,195,.52) 0%, rgba(70,165,195,.24) 42%, transparent 68%),
+        radial-gradient(ellipse 70% 90% at 115% 80%, rgba(70,165,195,.32) 0%, transparent 62%),
+        radial-gradient(ellipse 55% 55% at 105% 15%, rgba(70,165,195,.26) 0%, transparent 60%);
+    }
+    .swb-panel-out::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 110% 70% at -30% 50%, rgba(210,158,68,.52) 0%, rgba(210,158,68,.24) 42%, transparent 68%),
+        radial-gradient(ellipse 70% 90% at -15% 80%, rgba(210,158,68,.32) 0%, transparent 62%),
+        radial-gradient(ellipse 55% 55% at -5% 15%, rgba(210,158,68,.26) 0%, transparent 60%);
+    }
+    /* wave line illustrations per panel */
+    .swb-waves      { position:absolute; inset:0; pointer-events:none; opacity:.85; }
+    #swb-right      { opacity:0; transform:translateX(22px);  transition:opacity .65s ease, transform .65s ease; }
+    #swb-right.visible { opacity:1; transform:translateX(0); }
+    #swb-left       { opacity:0; transform:translateX(-22px); transition:opacity .65s ease, transform .65s ease; }
+    #swb-left.visible { opacity:1; transform:translateX(0); }
+    .swb-col-eye    { font-size:.75vw; letter-spacing:.22em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.5vw; position:relative; z-index:1; }
+    .swb-col-title  { font-family:'Cormorant Garamond',serif; font-size:1.75vw; font-weight:600; color:var(--cream); margin-bottom:1.1vw; line-height:1.2; position:relative; z-index:1; }
+    .swb-items      { display:flex; flex-direction:column; gap:.55vw; position:relative; z-index:1; }
+    .swb-item       { display:flex; align-items:center; gap:.7vw; font-size:.95vw; color:rgba(245,240,232,.65); line-height:1.5; direction:rtl; }
+    .swb-item-sub   { font-size:.82vw; color:rgba(245,240,232,.35); font-style:italic; margin-top:.3vw; padding-top:.4vw; border-top:1px solid var(--border); }
+    .swb-dot        { width:.5vw; height:.5vw; border-radius:50%; flex-shrink:0; }
+    .swb-dot-teal   { background:rgba(70,165,195,.75); }
+    .swb-dot-gold   { background:rgba(210,158,68,.75); }
+    .swb-punch      { text-align:center; padding:.8vw 10% 0; font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-style:italic; color:rgba(210,158,68,.82); direction:rtl; border-top:1px solid rgba(210,158,68,.12); flex-shrink:0; margin-bottom:.5vw; opacity:0; transition:opacity .6s ease; position:relative; z-index:1; }
+    .swb-punch.visible { opacity:1; }
+    .swb-note       { opacity:0; transition:opacity .6s ease .1s; position:relative; z-index:1; }
+    .swb-note.visible { opacity:1; }
+
+    /* ── S-VIBRATE ── */
+    #svibrate::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 54% 50% at 50% 50%, rgba(210,158,68,.28) 0%, rgba(175,120,42,.14) 36%, rgba(120,76,18,.06) 60%, transparent 78%),
+        radial-gradient(ellipse 76% 62% at 50% 52%, rgba(150,95,22,.09), transparent 84%);
+    }
+    .svib-wrap  { flex:1; display:grid; grid-template-columns:1fr 24%; grid-template-rows:auto 1fr; column-gap:4%; padding:2.5% 6% 2%; }
+    .svib-header{ grid-column:2; grid-row:1/3; align-self:start; display:flex; flex-direction:column; align-items:flex-end; text-align:right; direction:rtl; padding-top:.4vw; }
+    .svib-h-eye { font-size:.72vw; letter-spacing:.28em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.7vw; }
+    .svib-h-title{ font-family:'Cormorant Garamond',serif; font-size:3.8vw; font-weight:300; color:var(--cream); line-height:1; margin-bottom:.5vw; }
+    .svib-h-en  { font-family:'Cormorant Garamond',serif; font-size:1.1vw; font-weight:300; font-style:italic; color:rgba(210,158,68,.65); line-height:1.4; margin-bottom:.9vw; white-space:nowrap; }
+    .svib-h-bar { width:36px; height:1px; background:var(--gold-dim); }
+    .svib-body  { grid-column:1; grid-row:2; display:flex; flex-direction:column; justify-content:flex-start; gap:.55vw; padding-top:6.5vw; }
+    .svib-step  { display:flex; flex-direction:row; gap:1.4vw; align-items:flex-start; padding:.7vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.02); border:1px solid var(--border); border-right:2px solid rgba(210,158,68,.18); direction:rtl; opacity:0; transform:translateY(6px); transition:opacity .4s ease, transform .4s ease, background .35s ease, border-color .35s ease; }
+    .svib-num   { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; color:rgba(210,158,68,.3); line-height:1; flex-shrink:0; transition:color .35s ease, font-size .35s ease; }
+    .svib-content { flex:1; }
+    .svib-text  { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:500; color:var(--cream); line-height:1.35; margin-bottom:.25vw; transition:color .35s ease, font-size .35s ease; }
+    .svib-sub   { font-size:.82vw; color:rgba(245,240,232,.52); font-weight:300; line-height:1.55; transition:color .35s ease; }
+    /* past */
+    .svib-step.step-past  { opacity:1; transform:translateY(0); background:rgba(245,240,232,.01); border-color:var(--border); border-right-color:rgba(210,158,68,.1); }
+    .svib-step.step-past .svib-num  { color:rgba(210,158,68,.18); }
+    .svib-step.step-past .svib-text { color:rgba(245,240,232,.22); font-size:1.35vw; }
+    .svib-step.step-past .svib-sub  { color:rgba(245,240,232,.18); }
+    /* active */
+    .svib-step.step-active { opacity:1; transform:translateY(0); background:rgba(210,158,68,.07); border-right-color:rgba(210,158,68,.75); }
+    .svib-step.step-active .svib-num  { color:rgba(210,158,68,.9); font-size:2.3vw; }
+    .svib-step.step-active .svib-text { color:rgba(210,158,68,.95); font-size:1.45vw; }
+    .svib-step.step-active .svib-sub  { color:rgba(245,240,232,.82); }
+    /* shown: all normal at end */
+    .svib-step.step-shown { opacity:1; transform:translateY(0); }
+    .svib-step.step-shown .svib-num  { color:rgba(210,158,68,.38); font-size:2vw; }
+    .svib-step.step-shown .svib-text { color:var(--cream); font-size:1.35vw; }
+    .svib-step.step-shown .svib-sub  { color:rgba(245,240,232,.52); }
+    .svib-punch { margin-top:.6vw; padding:1.2vw 1.6vw; background:rgba(210,158,68,.10); border:1px solid rgba(210,158,68,.3); border-right:3px solid rgba(210,158,68,.82); border-radius:0 6px 6px 0; direction:rtl; opacity:0; transition:opacity .6s ease .1s; }
+    .svib-punch.visible { opacity:1; }
+    .svib-punch-main { font-family:'Cormorant Garamond',serif; font-size:1.8vw; font-weight:600; color:rgba(210,158,68,.96); line-height:1.45; margin-bottom:.4vw; }
+    .svib-punch-sub  { font-size:.9vw; color:rgba(210,158,68,.65); font-style:italic; letter-spacing:.12em; }
+
+    /* ── S-WAVE ── */
+    #swave::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 50% 46% at 28% 52%, rgba(210,158,68,.24) 0%, rgba(175,120,42,.12) 36%, rgba(120,76,18,.05) 60%, transparent 78%),
+        radial-gradient(ellipse 70% 58% at 30% 56%, rgba(150,95,22,.08), transparent 84%);
+    }
+    .swave-body     { flex:1; display:flex; gap:5%; align-items:center; padding:1.5% 6% 0; }
+    .swave-left     { flex:0 0 52%; }
+    .swave-vis      { margin-bottom:2vw; }
+    .swave-lbl      { font-size:.7vw; letter-spacing:.16em; text-transform:uppercase; color:var(--cream-faint); margin-bottom:.5vw; }
+    .swave-svg-wrap { background:rgba(245,240,232,.02); border:1px solid var(--border); border-radius:6px; padding:.8vw 1vw; }
+    .swave-right    { flex:1; }
+    .swave-ritem    { display:flex; gap:1.1vw; align-items:flex-start; margin-bottom:1.2vw; padding:.9vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); direction:rtl; }
+    .swave-ricon    { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:600; color:var(--gold); min-width:1.5vw; line-height:1; }
+    .swave-rtxt strong { color:var(--cream); font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:500; display:block; margin-bottom:.2vw; }
+    .swave-rtxt span   { font-size:.82vw; color:var(--cream-faint); font-weight:300; line-height:1.5; }
+    .swave-law { margin-top:1vw; padding:1vw 1.4vw; background:rgba(210,158,68,.06); border-right:2px solid var(--gold-dim); border-radius:0 5px 5px 0; direction:rtl; font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-style:italic; color:rgba(210,158,68,.85); line-height:1.5; }
+
+    /* ── S-SPECTRUM ── */
+    #sspectrum::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 65%, rgba(210,158,68,.18) 0%, rgba(175,120,42,.09) 44%, rgba(120,76,18,.04) 65%, transparent 80%),
+        radial-gradient(ellipse 80% 55% at 50% 68%, rgba(150,95,22,.06), transparent 85%);
+    }
+    .sspec-body     { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 6% 2%; gap:1.5vw; }
+    .sspec-bar-wrap { position:relative; }
+    .sspec-bar      { position:relative; height:3vw; border-radius:4px; overflow:hidden; background:rgba(245,240,232,.04); border:1px solid rgba(245,240,232,.1); }
+    .sspec-em-bg    { position:absolute; inset:0; background:repeating-linear-gradient(90deg, rgba(245,240,232,.045) 0, rgba(245,240,232,.045) 1px, transparent 1px, transparent 18px); }
+    .sspec-vis-seg  { position:absolute; top:0; bottom:0; left:41%; width:9%; background:linear-gradient(90deg, #DC2626 0%, #EA580C 18%, #FBBF24 36%, #16A34A 54%, #2563EB 72%, #7C3AED 100%); }
+    .sspec-vis-row  { position:relative; height:2.6vw; }
+    .sspec-vis-pin  { position:absolute; left:41%; width:9%; display:flex; flex-direction:column; align-items:center; padding-top:.2vw; }
+    .sspec-vis-pin-line { width:1px; height:.55vw; background:rgba(245,240,232,.28); flex-shrink:0; }
+    .sspec-vis-pin-txt  { font-size:.62vw; color:rgba(245,240,232,.65); text-align:center; line-height:1.45; white-space:nowrap; margin-top:.15vw; }
+    .sspec-vis-pin-txt span { color:rgba(245,240,232,.38); display:block; font-size:.56vw; margin-top:.1vw; }
+    .sspec-labels   { display:flex; justify-content:space-between; margin-top:.3vw; }
+    .sspec-lbl      { font-size:.8vw; color:rgba(245,240,232,.72); text-align:center; line-height:1.3; }
+    .sspec-arrows   { display:flex; justify-content:space-between; align-items:center; margin-bottom:.5vw; }
+    .sspec-arr-txt  { font-size:.85vw; letter-spacing:.14em; text-transform:uppercase; color:rgba(210,158,68,.82); font-weight:500; }
+    .sspec-insight  { display:grid; grid-template-columns:1fr 1fr; gap:.8vw; }
+    .sspec-card     { padding:.85vw 1.1vw; background:rgba(245,240,232,.03); border:1px solid var(--border); border-radius:5px; direction:rtl; }
+    .sspec-card-lbl { font-size:.65vw; letter-spacing:.12em; text-transform:uppercase; color:var(--gold); margin-bottom:.3vw; }
+    .sspec-card-txt { font-family:'Cormorant Garamond',serif; font-size:1.2vw; color:var(--cream); line-height:1.4; }
+    .sspec-card-sub { font-size:.78vw; color:var(--cream-faint); margin-top:.2vw; font-weight:300; line-height:1.5; }
+
+    /* ── S-SPEC-VIS (slight), wave × body interaction ── */
+    #slight { justify-content:flex-start; align-items:stretch; padding:0; }
+    #slight::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 45% at 50% 65%, rgba(210,158,68,.17) 0%, rgba(175,120,42,.09) 40%, rgba(120,76,18,.04) 65%, transparent 82%),
+        radial-gradient(ellipse 78% 55% at 50% 68%, rgba(150,95,22,.05), transparent 85%);
+    }
+    .sspecvis-mini-bar { padding:0 6% .5vw; }
+    .sspecvis-mini-bar .sspec-bar { height:1.8vw; }
+    .sspecvis-mini-bar .sspec-vis-row { height:1.8vw; }
+    .sspecvis-mini-bar .sspec-labels { margin-top:.2vw; }
+    .sspecvis-ilist   { flex:1; display:flex; flex-direction:column; padding:0 6%; gap:.55vw; justify-content:flex-start; }
+    .sspecvis-irow    { display:flex; align-items:flex-start; gap:1.8vw; padding:.7vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.025); border:1px solid var(--border); border-right:2px solid rgba(210,158,68,.18); direction:rtl; }
+    .sspecvis-itag    { flex-shrink:0; width:9vw; padding-top:.1vw; }
+    .sspecvis-itag-name { font-size:.7vw; letter-spacing:.14em; text-transform:uppercase; color:rgba(210,158,68,.82); }
+    .sspecvis-imain   { flex:1; }
+    .sspecvis-imain-title { font-family:'Cormorant Garamond',serif; font-size:1.22vw; font-weight:500; color:var(--cream); margin-bottom:.18vw; }
+    .sspecvis-imain-text  { font-size:.78vw; color:rgba(245,240,232,.48); font-weight:300; line-height:1.6; }
+    .sspecvis-cpunch      { padding:.9vw 1.4vw; background:rgba(210,158,68,.08); border:1px solid rgba(210,158,68,.25); border-right:3px solid rgba(210,158,68,.75); border-radius:0 5px 5px 0; direction:rtl; margin:0 6% .8%; }
+    .sspecvis-cpunch-main { font-family:'Cormorant Garamond',serif; font-size:1.3vw; color:rgba(210,158,68,.92); line-height:1.45; margin-bottom:.3vw; }
+    .sspecvis-cpunch-sub  { font-size:.78vw; color:rgba(245,240,232,.45); font-weight:300; line-height:1.65; }
+    .sspec-dim-left  { position:absolute; top:0; bottom:0; left:0; width:41%; background:rgba(8,7,6,.8); pointer-events:none; }
+    .sspec-dim-right { position:absolute; top:0; bottom:0; left:50%; right:0; background:rgba(8,7,6,.8); pointer-events:none; }
+    .sspec-vis-glow  { position:absolute; top:-2px; bottom:-2px; left:40.5%; width:10%; box-shadow:0 0 18px 6px rgba(180,130,255,.18), 0 0 8px 2px rgba(255,180,80,.12); pointer-events:none; border-radius:3px; }
+    .sspec-lbl-dim   { opacity:.18; }
+    .sspecvis-lower  { display:flex; align-items:center; justify-content:center; gap:8%; padding:2.5vw 8% 1%; direction:rtl; }
+    .sspecvis-stat   { text-align:center; flex-shrink:0; }
+    .sspecvis-num    { font-family:'Cormorant Garamond',serif; font-size:6vw; font-weight:300; color:var(--cream); line-height:.9; letter-spacing:-.02em; }
+    .sspecvis-lbl    { font-size:.72vw; letter-spacing:.2em; text-transform:uppercase; color:rgba(245,240,232,.4); margin-top:.5vw; }
+    .sspecvis-divider{ width:1px; height:6vw; background:var(--border); flex-shrink:0; }
+    .sspecvis-text   { flex:1; }
+    .sspecvis-main   { font-family:'Cormorant Garamond',serif; font-size:1.7vw; font-weight:300; color:var(--cream); line-height:1.45; margin-bottom:.8vw; }
+    .sspecvis-sub    { font-size:.88vw; color:rgba(245,240,232,.5); font-weight:300; line-height:1.7; }
+
+    /* ── S-SPECTRUM step reveals ── */
+    .sspec-ov        { position:absolute; top:0; bottom:0; background:rgba(8,7,6,.8); pointer-events:none; opacity:0; transition:opacity .55s ease; }
+    .sspec-ov.visible{ opacity:1; }
+    .sspec-ov-left   { left:0; width:41%; }
+    .sspec-ov-right  { left:50%; right:0; }
+    .sspec-vglow     { position:absolute; top:-3px; bottom:-3px; left:40.5%; width:10%; box-shadow:0 0 18px 6px rgba(180,130,255,.18), 0 0 8px 2px rgba(255,180,80,.12); border-radius:3px; pointer-events:none; opacity:0; transition:opacity .55s ease; }
+    .sspec-vglow.visible { opacity:1; }
+    .sspec-step      { opacity:0; transform:translateY(8px); transition:opacity .5s ease, transform .5s ease; }
+    .sspec-step.visible { opacity:1; transform:none; }
+    .sspec-stat-row  { display:flex; align-items:center; justify-content:center; gap:3vw; padding:.8vw 6% 0; direction:rtl; }
+    .sspec-stat-num  { font-family:'Cormorant Garamond',serif; font-size:5.5vw; font-weight:300; color:var(--cream); line-height:1; }
+    .sspec-stat-div  { width:1px; height:4.5vw; background:rgba(245,240,232,.12); }
+    .sspec-stat-text { text-align:right; }
+    .sspec-stat-main { font-size:1.05vw; color:rgba(245,240,232,.65); font-weight:300; line-height:1.65; }
+    .sspec-punch-row { padding:.6vw 6% 0; text-align:center; direction:rtl; }
+    .sspec-punch-txt { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:300; font-style:italic; color:rgba(210,158,68,.92); line-height:1.5; }
+
+    /* ── S-SPEC-TRUTH, 4 cards build-up ── */
+    #sspectruth::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 45% at 50% 65%, rgba(210,158,68,.17) 0%, rgba(175,120,42,.09) 40%, rgba(120,76,18,.04) 65%, transparent 82%),
+        radial-gradient(ellipse 78% 55% at 50% 68%, rgba(150,95,22,.05), transparent 85%);
+    }
+    .struth-wrap       { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 8%; gap:1vw; }
+    .struth-card       { padding:1.1vw 1.6vw; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(210,158,68,.2); border-radius:0 6px 6px 0; direction:rtl; opacity:0; transform:translateY(8px); transition:opacity .45s ease, transform .45s ease; }
+    .struth-card.step-shown { opacity:1; transform:none; }
+    .struth-card-title { font-family:'Cormorant Garamond',serif; font-size:1.6vw; font-weight:500; color:var(--cream); margin-bottom:.3vw; }
+    .struth-card-text  { font-size:.86vw; color:rgba(245,240,232,.52); font-weight:300; line-height:1.7; }
+
+    /* ── S-BODY-SUM ── */
+    #sbodysum::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 60% at 50% 46%, rgba(139,184,150,.22) 0%, rgba(100,148,110,.10) 38%, rgba(212,149,122,.06) 60%, transparent 80%),
+        radial-gradient(ellipse 76% 72% at 50% 50%, rgba(100,148,110,.05), transparent 86%);
+    }
+    .sbsum-wrap     { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2.8vw; padding:2% 8%; position:relative; z-index:1; }
+    .sbsum-vis      { position:relative; width:30vw; height:14vw; display:flex; align-items:center; justify-content:center; }
+    /* outgoing rings */
+    .sbsum-ring1    { position:absolute; width:28vw; height:13.5vw; border-radius:50%; border:1px solid rgba(139,184,150,.07); }
+    .sbsum-ring2    { position:absolute; width:20vw; height:10vw; border-radius:50%; border:1px solid rgba(139,184,150,.13); }
+    .sbsum-ring3    { position:absolute; width:13vw; height:6.5vw; border-radius:50%; border:1.5px solid rgba(139,184,150,.22); }
+    /* body silhouette */
+    .sbsum-sil      { position:absolute; z-index:2; display:flex; flex-direction:column; align-items:center; }
+    .sbsum-head     { width:2vw; height:2vw; border-radius:50%; background:rgba(245,240,232,.18); border:1px solid rgba(245,240,232,.25); }
+    .sbsum-torso    { width:2.8vw; height:4vw; background:rgba(245,240,232,.1); border:1px solid rgba(245,240,232,.18); border-radius:0 0 4px 4px; margin-top:-2px; }
+    .sbsum-glow     { position:absolute; width:3.5vw; height:3.5vw; border-radius:50%; background:radial-gradient(circle, rgba(139,184,150,.6), transparent 70%); z-index:1; }
+    /* incoming waves */
+    .sbsum-waves-in { position:absolute; top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:.5vw; }
+    .sbsum-waves-in.left  { right:54%; align-items:flex-end; }
+    .sbsum-waves-in.right { left:54%; align-items:flex-start; transform:translateY(-50%) scaleX(-1); }
+    /* labels */
+    .sbsum-lbl      { position:absolute; top:50%; font-size:.62vw; letter-spacing:.18em; text-transform:uppercase; }
+    .sbsum-lbl.recv { right:58%; transform:translateY(-50%); color:rgba(210,158,68,.55); text-align:right; }
+    .sbsum-lbl.emit { left:58%; transform:translateY(-50%); color:rgba(139,184,150,.55); }
+    /* punch */
+    .sbsum-punch    { text-align:center; direction:rtl; max-width:72%; }
+    .sbsum-punch-txt { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:300; color:var(--cream); line-height:1.6; }
+
+    /* ── S-BETA, bridge: brain waves → subconscious ── */
+    #sbeta::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 52% at 50% 55%, rgba(70,165,195,.18) 0%, rgba(45,125,155,.09) 40%, rgba(25,80,110,.04) 65%, transparent 82%),
+        radial-gradient(ellipse 80% 65% at 50% 58%, rgba(35,100,130,.06), transparent 88%);
+    }
+    .sbeta-body       { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 9%; gap:1.1vw; direction:rtl; position:relative; z-index:1; }
+    .sbeta-block      { opacity:0; transform:translateY(7px); transition:opacity .5s ease, transform .5s ease; }
+    .sbeta-block.visible { opacity:1; transform:none; }
+    .sbeta-para       { font-size:1vw; color:rgba(245,240,232,.65); font-weight:300; line-height:1.82; }
+    .sbeta-para + .sbeta-para { margin-top:.55vw; }
+    .sbeta-para strong { color:rgba(245,240,232,.9); font-weight:500; }
+    .sbeta-punch-wrap  { padding:1.1vw 1.6vw; background:rgba(210,158,68,.08); border:1px solid rgba(210,158,68,.22); border-right:3px solid rgba(210,158,68,.78); border-radius:0 6px 6px 0; display:flex; align-items:flex-start; gap:2vw; }
+    .sbeta-num         { font-family:'Cormorant Garamond',serif; font-size:5.5vw; font-weight:300; color:rgba(210,158,68,.92); line-height:.9; flex-shrink:0; }
+    .sbeta-punch-text  { flex:1; }
+    .sbeta-punch-main  { font-family:'Cormorant Garamond',serif; font-size:1.5vw; color:rgba(210,158,68,.9); line-height:1.35; margin-bottom:.5vw; font-weight:400; }
+    .sbeta-punch-sub   { font-size:.88vw; color:rgba(245,240,232,.55); font-weight:300; line-height:1.72; }
+
+    /* ── S-BRIDGE ── */
+    #sbridge::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 65% 52% at 50% 55%, rgba(70,165,195,.20) 0%, rgba(45,125,155,.10) 40%, rgba(25,80,110,.05) 65%, transparent 82%),
+        radial-gradient(ellipse 80% 65% at 50% 58%, rgba(35,100,130,.06), transparent 88%);
+    }
+    .sbridge-wrap    { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 15%; text-align:center; direction:rtl; position:relative; z-index:1; }
+    .sbridge-eye     { font-size:.72vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(90,185,210,.55); margin-bottom:2vw; }
+    .sbridge-from    { font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:300; color:rgba(245,240,232,.45); line-height:1.6; margin-bottom:1.4vw; }
+    .sbridge-name    { font-family:'Cormorant Garamond',serif; font-size:5.5vw; font-weight:300; color:rgba(90,198,222,.92); line-height:.95; letter-spacing:-.01em; margin-bottom:1.2vw; }
+    .sbridge-divider { width:56px; height:1px; background:rgba(90,185,210,.3); margin:0 auto 1.5vw; }
+    .sbridge-sub     { font-size:1.05vw; color:rgba(245,240,232,.52); font-weight:300; line-height:1.75; margin-bottom:2vw; }
+    .sbridge-cta     { font-size:.72vw; letter-spacing:.24em; text-transform:uppercase; color:rgba(90,185,210,.65); }
+
+    /* ── S-BODY ── */
+    #sbody::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 48% 46% at 24% 52%, rgba(139,184,150,.20) 0%, rgba(100,148,110,.10) 40%, transparent 72%),
+        radial-gradient(ellipse 68% 58% at 26% 56%, rgba(100,148,110,.06), transparent 82%);
+    }
+    .sbody-content  { flex:1; display:flex; gap:5%; align-items:center; padding:1.5% 6% 0; }
+    .sbody-vis      { flex:0 0 28%; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .sbody-figure   { position:relative; width:12vw; height:19vw; display:flex; align-items:center; justify-content:center; }
+    .sbody-ring1    { position:absolute; width:12vw; height:19vw; border-radius:50%; border:1px solid rgba(139,184,150,.08); }
+    .sbody-ring2    { position:absolute; width:9vw; height:14.5vw; border-radius:50%; border:1px solid rgba(139,184,150,.14); }
+    .sbody-ring3    { position:absolute; width:6.5vw; height:10.5vw; border-radius:50%; border:1.5px solid rgba(139,184,150,.22); }
+    .sbody-sil      { position:absolute; z-index:2; display:flex; flex-direction:column; align-items:center; }
+    .sbody-head     { width:2vw; height:2vw; border-radius:50%; background:rgba(245,240,232,.18); border:1px solid rgba(245,240,232,.25); }
+    .sbody-torso    { width:2.8vw; height:4vw; background:rgba(245,240,232,.1); border:1px solid rgba(245,240,232,.18); border-radius:0 0 4px 4px; margin-top:-2px; }
+    .sbody-hglow    { position:absolute; width:1.4vw; height:1.4vw; border-radius:50%; background:radial-gradient(circle, rgba(212,149,122,.9), transparent 70%); top:36%; z-index:3; }
+    .sbody-lbl      { font-size:.68vw; color:rgba(139,184,150,.5); letter-spacing:.1em; text-transform:uppercase; margin-top:.8vw; }
+    .sbody-list     { flex:1; display:flex; flex-direction:column; gap:.9vw; }
+    .sbody-item     { display:flex; gap:1.5vw; align-items:flex-start; padding:1vw 1.3vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(139,184,150,.4); direction:rtl; }
+    .sbody-icon     { font-size:1.8vw; line-height:1; flex-shrink:0; }
+    .sbody-ititle   { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:500; color:var(--cream); margin-bottom:.2vw; }
+    .sbody-idesc    { font-size:.82vw; color:var(--cream-faint); font-weight:300; line-height:1.55; }
+    .sbody-isrc     { font-size:.65vw; color:rgba(139,184,150,.55); font-style:italic; margin-top:.25vw; }
+    .sbody-punch    { margin-top:.4vw; padding:.9vw 1.3vw; border-top:1px solid var(--border); border-right:2px solid var(--gold-dim); background:rgba(210,158,68,.04); direction:rtl; border-radius:0 5px 5px 0; }
+    .sbody-punch-txt{ font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-style:italic; color:rgba(210,158,68,.8); line-height:1.5; }
+  </style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <!-- ══ S1, TITLE ══ -->
+  <div class="slide active" id="s1">
+    <div class="s1-top">
+      <div class="s1-session-num">מפגש ראשון &nbsp;·&nbsp; Session 01</div>
+      <div class="s1-session-he">להבין את מערכת ההפעלה שלנו</div>
+      <div class="s1-rule-top"></div>
+    </div>
+    <div class="s1-block">
+      <div class="s1-main">The <em>Inner</em> Shift</div>
+      <div class="s1-tagline">המסע לשינוי מבפנים</div>
+    </div>
+  </div>
+
+  <!-- ══ S-WELCOME, INTRO ══ -->
+  <div class="slide" id="swelcome">
+    <div class="swelcome-wrap">
+      <div class="swelcome-eye">The Inner Shift &nbsp;·&nbsp; Session 1 of 5</div>
+      <div class="swelcome-welcome">איזה כיף שאתן פה</div>
+      <div class="swelcome-rule"></div>
+      <div class="swelcome-name">נעים מאד, אני נועה איילנד</div>
+    </div>
+    <div class="swelcome-sig">Noa Eiland</div>
+  </div>
+
+
+  <!-- ══ SCOURSE, COURSE OVERVIEW ══ -->
+  <div class="slide" id="scourse">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">About This Course</div>
+          <div class="sh2-title">The Foundation</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">על הקורס הזה</div>
+          <div class="sh2-he-sub">מה נלמד, ולמה זה חשוב</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="scourse-body">
+
+      <div class="scourse-block" id="scourse-1">
+        <div class="scourse-source">המקורות</div>
+        <div class="scourse-para">שנים למדתי מהטובים ביותר בתחום. הם לימדו אותי שמה שנראה "רוחני" מבוסס מדע עמוק.</div>
+        <div class="scourse-names">ד״ר ג׳ו דיספנזה &nbsp;·&nbsp; ד״ר ג׳וזף מרפי &nbsp;·&nbsp; ועוד</div>
+      </div>
+
+      <div class="scourse-block" id="scourse-2">
+        <div class="scourse-rule"></div>
+        <div class="scourse-source">על מה נדבר</div>
+        <div class="scourse-what">בקורס הזה נבין יחד איך המח שלנו עובד, למה הוא עובד ככה, ומה אפשר לעשות עם זה.<br>נדבר על תדרים, על תת מודע, על גלי מוח.</div>
+        <div class="scourse-goal">המטרה: <span>גרסה מטיבה יותר של עצמך.</span><br>מתוך הבנה, לא מאמץ.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SJOURNEY2, SESSION MAP (INTRO) ══ -->
+  <div class="slide" id="sjourney2">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">The Journey · Session Map</div>
+          <div class="sh2-title">5 Sessions</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">איפה אנחנו ולאן הולכות</div>
+          <div class="sh2-he-sub">5 מפגשים · המסע המלא</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="journey-body">
+      <div class="journey-step j-active">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">1</div>
+        <div class="jstep-session">מפגש ראשון · היום</div>
+        <div class="jstep-title">מערכת ההפעלה</div>
+        <div class="jstep-desc">זיהוי: הסיפור שמנהל אותי</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">2</div>
+        <div class="jstep-session">מפגש שני</div>
+        <div class="jstep-title">השדה שמסביבי</div>
+        <div class="jstep-desc">הבנה: המחשבות שלי לא נשארות בראש</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">3</div>
+        <div class="jstep-session">מפגש שלישי</div>
+        <div class="jstep-title">הלופ</div>
+        <div class="jstep-desc">חיבור: איך האמונה מייצרת שוב ושוב את אותה תוצאה</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">4</div>
+        <div class="jstep-session">מפגש רביעי</div>
+        <div class="jstep-title">שבירת הלופ</div>
+        <div class="jstep-desc">שינוי: לייצר אמונה חדשה ולגור בה</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">5</div>
+        <div class="jstep-session">מפגש חמישי</div>
+        <div class="jstep-title">הגרסה החדשה שלי</div>
+        <div class="jstep-desc">אינטגרציה: מי אני כשאני לא מוגבלת</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SKAVANAH, GROUNDING MEDITATION ══ -->
+  <div class="slide" id="skavanah">
+    <div class="kavanah-circle"></div>
+    <div class="kavanah-circle kavanah-circle-2"></div>
+    <div class="kavanah-title">רגע של התכווננות</div>
+    <div class="kavanah-sub">עצמי עיניים &nbsp;·&nbsp; שימי את היום בצד &nbsp;·&nbsp; הגיעי</div>
+  </div>
+
+  <!-- ══ SOPENING, PHYSICS OPENING ══ -->
+  <div class="slide" id="sopening">
+    <div class="sop-wrap">
+
+      <div class="sop-heading">מכירות את זה ש...</div>
+
+      <div class="snew-line" id="sop-1">
+        <div class="sop-scenarios">
+          הרגע שבו סיימת ויכוח והרגשת שהגבת ממקום שלא בחרת בו.<br>
+          או הרגע שאמרת "הפעם יהיה אחרת" והיה בדיוק אותו הדבר.
+        </div>
+      </div>
+
+      <div class="snew-line" id="sop-2">
+        <div class="sop-negs">
+          <div class="sop-neg">זה לא חוסר רצון.</div>
+          <div class="sop-neg-final">גם לא שאת לא מספיק עובדת על עצמך.</div>
+        </div>
+      </div>
+
+      <div class="snew-line" id="sop-3">
+        <div class="sop-rule"></div>
+        <div class="sop-neg-final" style="margin-top:1.2vw;">יש סיבה. יש מנגנון. ויש דרך.</div>
+        <div class="sop-close" style="margin-top:.6vw;">היום נכיר את שלושתם.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SJUNG, CARL JUNG QUOTE ══ -->
+  <div class="slide" id="sjung" style="justify-content:center;align-items:center;padding:10%;">
+    <span class="s2-qmark">"</span>
+    <div style="text-align:center;position:relative;z-index:1;">
+      <div class="s2-qt">Until you make the unconscious conscious,<br>it will direct your life<br>and you will call it fate.</div>
+      <div class="s2-rule"></div>
+      <div class="s2-by">— Carl Jung</div>
+    </div>
+  </div>
+
+  <!-- ══ SJUNGBIO, CARL JUNG PROFILE ══ -->
+  <div class="slide" id="sjungbio">
+    <div class="sjb-layout">
+
+      <!-- LEFT: photo -->
+      <div class="sjb-photo-col">
+        <div class="sjb-photo-wrap">
+          <img src="Jung.png" class="sjb-photo" alt="Carl Jung">
+          <div class="sjb-photo-overlay"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: content -->
+      <div class="sjb-content-col">
+        <div class="sjb-name">קארל גוסטב יונג</div>
+        <div class="sjb-years">1875 1961</div>
+        <div class="sjb-tagline">פסיכיאטר ופסיכולוג שוויצרי. עמיתו הקרוב של פרויד עד שהלך בדרכו.</div>
+        <div class="sjb-rule"></div>
+
+        <div class="sjb-bomb" id="sjb-1">
+          <div class="sjb-bomb-num">01</div>
+          <div>
+            <div class="sjb-bomb-title">ידע לפני שאפשר היה למדוד</div>
+            <div class="sjb-bomb-text">בלי EEG, בלי סריקות מוח יונג עבד עם אלפי מטופלים לאורך עשרות שנים. ניתח חלומות, דפוסי התנהגות, תגובות רגשיות. שם לב שאנשים שונים לחלוטין מתרבויות שונות, מרקעים שונים מגיעים עם אותם דפוסים, אותם סמלים, אותם פחדים. הכלי שלו היה תצפית עמוקה. לא מכשירים עיניים, אוזניים, ותשומת לב. מה שהוא תיאר אז ה-EEG מאשר היום.</div>
+          </div>
+        </div>
+
+        <div class="sjb-bomb" id="sjb-2">
+          <div class="sjb-bomb-num">02</div>
+          <div>
+            <div class="sjb-bomb-title">הצל</div>
+            <div class="sjb-bomb-text">כל מה שאנחנו מסרבות לראות בעצמנו לא נעלם. הוא הופך ל"צל" שמנהל אותנו מאחורי הקלעים ומשפיע על האפשרויות שאנחנו בוחנות, החלטות, כל תגובות, בחירות. תגובה חזקה שיש לנו כלפי אחר לרוב זו אינדיקציה על משהו שלא מוכנות לראות בעצמנו.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SWAVEBRIDGE, ENERGY WAVES INTRO ══ -->
+  <div class="slide" id="swavebridge">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Physics &amp; Biology</div>
+          <div class="sh2-title">Energy Waves</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">גלים סביבנו ובתוכנו</div>
+          <div class="sh2-he-sub">הגוף שלנו קולט ומשדר</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="swb-panels">
+
+      <!-- Left panel: outgoing/emitting (gold) hidden initially -->
+      <div class="swb-panel swb-panel-out" id="swb-left">
+        <!-- wave illustration background -->
+        <svg class="swb-waves" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,60 C60,48 120,72 180,60 C240,48 300,72 360,60 C400,52 400,52 400,52" stroke="rgba(210,158,68,.38)" stroke-width="1.8" fill="none"/>
+          <path d="M0,100 C50,86 110,114 170,100 C230,86 290,114 350,100 C380,92 400,96 400,96" stroke="rgba(210,158,68,.26)" stroke-width="1.4" fill="none"/>
+          <path d="M0,140 C70,126 130,154 200,140 C270,126 330,154 400,140" stroke="rgba(210,158,68,.18)" stroke-width="1.1" fill="none"/>
+          <path d="M0,180 C55,166 115,194 175,180 C235,166 295,194 355,180 C375,174 400,178 400,178" stroke="rgba(210,158,68,.12)" stroke-width="0.9" fill="none"/>
+          <path d="M0,220 C65,206 125,234 185,220 C245,206 305,234 365,220 C385,214 400,218 400,218" stroke="rgba(210,158,68,.07)" stroke-width="0.7" fill="none"/>
+        </svg>
+        <div class="swb-col-eye">מה שהגוף שלנו פולט</div>
+        <div class="swb-col-title">גלים שאנחנו משדרים</div>
+        <div class="swb-items">
+          <div class="swb-item"><span class="swb-dot swb-dot-gold"></span>גלי מוח תדרים חשמליים</div>
+          <div class="swb-item"><span class="swb-dot swb-dot-gold"></span>גלי לב שדה אלקטרומגנטי</div>
+          <div class="swb-item"><span class="swb-dot swb-dot-gold"></span>חום גוף, קרינה אינפרא-אדומה</div>
+          <div class="swb-item swb-item-sub">הגוף שלנו משדר ללא הרף, גם כשאיננו מודעות לכך.</div>
+        </div>
+      </div>
+
+      <!-- Right panel: incoming/receiving (teal) visible from start -->
+      <div class="swb-panel swb-panel-in" id="swb-right">
+        <!-- wave illustration background -->
+        <svg class="swb-waves" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <path d="M400,60 C340,48 280,72 220,60 C160,48 100,72 40,60 C0,52 0,52 0,52" stroke="rgba(70,165,195,.38)" stroke-width="1.8" fill="none"/>
+          <path d="M400,100 C350,86 290,114 230,100 C170,86 110,114 50,100 C20,92 0,96 0,96" stroke="rgba(70,165,195,.26)" stroke-width="1.4" fill="none"/>
+          <path d="M400,140 C330,126 270,154 200,140 C130,126 70,154 0,140" stroke="rgba(70,165,195,.18)" stroke-width="1.1" fill="none"/>
+          <path d="M400,180 C345,166 285,194 225,180 C165,166 105,194 45,180 C25,174 0,178 0,178" stroke="rgba(70,165,195,.12)" stroke-width="0.9" fill="none"/>
+          <path d="M400,220 C335,206 275,234 215,220 C155,206 95,234 35,220 C15,214 0,218 0,218" stroke="rgba(70,165,195,.07)" stroke-width="0.7" fill="none"/>
+        </svg>
+        <div class="swb-col-eye">מה שמגיע אלינו מבחוץ</div>
+        <div class="swb-col-title">גלים שעוברים דרכנו / סביבנו</div>
+        <div class="swb-items">
+          <div class="swb-item"><span class="swb-dot swb-dot-teal"></span>גלי חום, אור, קרינה</div>
+          <div class="swb-item"><span class="swb-dot swb-dot-teal"></span>גלי רדיו וטלוויזיה</div>
+          <div class="swb-item"><span class="swb-dot swb-dot-teal"></span>WiFi ותקשורת סלולרית</div>
+          <div class="swb-item swb-item-sub">כל אלה עוברים דרכנו כל הזמן, גם כשאיננו מרגישות אותם.</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="swb-punch" id="swb-punch-el">אנחנו לא רק קולטות את העולם אנחנו גם משדרות לתוכו.</div>
+    <div class="swb-note" id="swb-note-el" style="text-align:center; direction:rtl; font-family:'Jost',sans-serif; font-size:.78vw; font-weight:300; color:rgba(245,240,232,.35); margin-top:.3vw; margin-bottom:1.5vw; letter-spacing:.02em;">כשנדבר על גלי מוח נמדוד בהרץ. כשנשמע ״תדר גבוה״ בהקשר רוחני זו מטאפורה יפה, לא אותו מדד.</div>
+  </div>
+
+  <!-- ══ SWAVETADUR, WAVE → FREQUENCY BRIDGE ══ -->
+  <div class="slide" id="swavetadur" style="justify-content:center;align-items:center;padding:10%;">
+    <div style="text-align:center;position:relative;z-index:1;direction:rtl;max-width:68%;margin:0 auto;">
+      <div class="snew-line" id="swt-1">
+        <div class="s2-qt" style="font-size:2.2vw;">כל גל חוזר על עצמו בקצב קבוע.</div>
+      </div>
+      <div class="snew-line" id="swt-2">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2.2vw;font-weight:300;font-style:italic;color:var(--cream);line-height:1.6;margin-top:1vw;">הקצב הזה נקרא <span id="swt-tadur-word" style="color:var(--gold);font-weight:600;">תדר</span> ומודדים אותו בהרץ (Hz).</div>
+      </div>
+      <div class="snew-line" id="swt-3">
+        <div class="s2-rule" style="margin-top:1.2vw;"></div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.3vw;font-weight:300;font-style:italic;color:rgba(245,240,232,.55);line-height:1.7;margin-top:.8vw;">גל זה התנועה. תדר זה האופן שבו אנחנו מודדים אותה. והרץ זו יחידת המידה.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ S7, BRAIN WAVES ══ -->
+  <div class="slide" id="s7">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Electroencephalography · EEG</div>
+          <div class="sh2-title">Brain Wave States</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מצבי המח תדרים</div>
+          <div class="sh2-he-sub">מפת הגישה לתת-מודע</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="s7c-body">
+      <div class="s7c-card" id="s7c-1">
+        <div class="s7c-left">
+          <div class="s7c-name" style="color:rgba(90,185,210,.75)">דלתא</div>
+          <div class="s7c-hz">0.5–4 Hz</div>
+          <svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C37,5 75,29 112,17 C150,5 188,29 225,17 C262,5 300,29 300,17" stroke="rgba(90,185,210,.4)" stroke-width="1.8" fill="none"/></svg>
+        </div>
+        <div class="s7c-right">
+          <div class="s7c-example">בדלתא המוח כמעט ולא מעבד מידע חיצוני. זו השינה העמוקה ביותר המוח פנימי לחלוטין, עסוק בתיקון פיזי והתחדשות.</div>
+          <div class="s7c-desc">מערכת חיסון עובדת. גירויים חיצוניים כמעט ולא נרשמים אין גישה לתת מודע. <span style="opacity:.6;font-style:italic;">Hobson &amp; Stickgold, 1995</span></div>
+        </div>
+      </div>
+      <div class="s7c-card s7c-theta" id="s7c-2">
+        <div class="s7c-left">
+          <div class="s7c-name" style="color:rgba(212,149,122,.92)">תטא</div>
+          <div class="s7c-hz" style="color:rgba(212,149,122,.6)">4–8 Hz</div>
+          <svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C18,4 37,30 56,17 C75,4 94,30 112,17 C131,4 150,30 169,17 C188,4 206,30 225,17 C244,4 262,30 281,17 C300,4 300,17 300,17" stroke="rgba(212,149,122,.85)" stroke-width="2.2" fill="none"/></svg>
+        </div>
+        <div class="s7c-right">
+          <div class="s7c-example">הרגע שבין ערות לשינה הגוף כבר שוכב אבל המוח עדיין רואה תמונות. גם הילד מול הטלוויזיה ששקוע לגמרי ולא שומע אתכם קוראים לו.</div>
+          <div class="s7c-desc"><span class="s7c-tag s7c-tag-theta">↓ התת מודע הכי נגיש</span> מדיטציה עמוקה, היפנוזה, חלימה צלולה</div>
+        </div>
+      </div>
+      <div class="s7c-card s7c-alpha" id="s7c-3">
+        <div class="s7c-left">
+          <div class="s7c-name" style="color:rgba(139,184,150,.9)">אלפא</div>
+          <div class="s7c-hz">8–12 Hz</div>
+          <svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C9,7 19,27 28,17 C37,7 47,27 56,17 C66,7 75,27 84,17 C94,7 103,27 112,17 C122,7 131,27 140,17 C150,7 160,27 169,17 C178,7 188,27 197,17 C206,7 216,27 225,17 C234,7 244,27 253,17 C262,7 272,27 281,17 C291,7 300,27 300,17" stroke="rgba(139,184,150,.78)" stroke-width="1.8" fill="none"/></svg>
+        </div>
+        <div class="s7c-right">
+          <div class="s7c-example">הרגע שאחרי שיוצאים מהמקלחת. הטיול בטבע שבו הראש מתפנה. הנהיגה על כביש מוכר ערניים, אבל שקטים מבפנים.</div>
+          <div class="s7c-desc"><span class="s7c-tag s7c-tag-gate">↓ השער</span> ערנות נינוחה, נוכחות, "זרימה"</div>
+        </div>
+      </div>
+      <div class="s7c-card s7c-beta" id="s7c-4">
+        <div class="s7c-left">
+          <div class="s7c-name" style="color:rgba(192,85,85,.85)">בטא</div>
+          <div class="s7c-hz">12–38 Hz</div>
+          <svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 Q4,9 8,17 Q12,25 16,17 Q20,9 24,17 Q28,25 32,17 Q36,9 40,17 Q44,25 48,17 Q52,9 56,17 Q60,25 64,17 Q68,9 72,17 Q76,25 80,17 Q84,9 88,17 Q92,25 96,17 Q100,9 104,17 Q108,25 112,17 Q116,9 120,17 Q124,25 128,17 Q132,9 136,17 Q140,25 144,17 Q148,9 152,17 Q156,25 160,17 Q164,9 168,17 Q172,25 176,17 Q180,9 184,17 Q188,25 192,17 Q196,9 200,17 Q204,25 208,17 Q212,9 216,17 Q220,25 224,17 Q228,9 232,17 Q236,25 240,17 Q244,9 248,17 Q252,25 256,17 Q260,9 264,17 Q268,25 272,17 Q276,9 280,17 Q284,25 288,17 Q292,9 296,17 Q300,25 300,17" stroke="rgba(192,85,85,.6)" stroke-width="1.4" fill="none"/></svg>
+        </div>
+        <div class="s7c-right">
+          <div class="s7c-example">רוב שעות הערות שלנו. ישיבה, מייל, החלטות בריא ונחוץ. אבל כשיש לחץ ודאגה ומחשבות חוזרות עולים לבטא גבוה. המוח עסוק בדבר אחד: לשרוד.</div>
+          <div class="s7c-desc"><span class="s7c-tag s7c-tag-warn">⚠ בבטא גבוה המוח במצב הישרדות. לא ניתן לתכנת מחדש.</span></div>
+        </div>
+      </div>
+      <div class="s7c-card" id="s7c-5">
+        <div class="s7c-left">
+          <div class="s7c-name" style="color:rgba(120,210,235,.85)">גמא</div>
+          <div class="s7c-hz" style="color:rgba(120,210,235,.55)">38–100 Hz</div>
+          <svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 Q2,11 4,17 Q6,23 8,17 Q10,11 12,17 Q14,23 16,17 Q18,11 20,17 Q22,23 24,17 Q26,11 28,17 Q30,23 32,17 Q34,11 36,17 Q38,23 40,17 Q42,11 44,17 Q46,23 48,17 Q50,11 52,17 Q54,23 56,17 Q58,11 60,17 Q62,23 64,17 Q66,11 68,17 Q70,23 72,17 Q74,11 76,17 Q78,23 80,17 Q82,11 84,17 Q86,23 88,17 Q90,11 92,17 Q94,23 96,17 Q98,11 100,17 Q102,23 104,17 Q106,11 108,17 Q110,23 112,17 Q114,11 116,17 Q118,23 120,17 Q122,11 124,17 Q126,23 128,17 Q130,11 132,17 Q134,23 136,17 Q138,11 140,17 Q142,23 144,17 Q146,11 148,17 Q150,23 152,17 Q154,11 156,17 Q158,23 160,17 Q162,11 164,17 Q166,23 168,17 Q170,11 172,17 Q174,23 176,17 Q178,11 180,17 Q182,23 184,17 Q186,11 188,17 Q190,23 192,17 Q194,11 196,17 Q198,23 200,17 Q202,11 204,17 Q206,23 208,17 Q210,11 212,17 Q214,23 216,17 Q218,11 220,17 Q222,23 224,17 Q226,11 228,17 Q230,23 232,17 Q234,11 236,17 Q238,23 240,17 Q242,11 244,17 Q246,23 248,17 Q250,11 252,17 Q254,23 256,17 Q258,11 260,17 Q262,23 264,17 Q266,11 268,17 Q270,23 272,17 Q274,11 276,17 Q278,23 280,17 Q282,11 284,17 Q286,23 288,17 Q290,11 292,17 Q294,23 296,17 Q298,11 300,17" stroke="rgba(90,210,235,.5)" stroke-width="1.1" fill="none"/></svg>
+        </div>
+        <div class="s7c-right">
+          <div class="s7c-example">גמא הוא תדר של תובנה הרגע שהכל מתחבר. המוח שם פעיל מאוד והדלת לתת מודע סגורה.</div>
+          <div class="s7c-desc">לא נכנסים אליו ישירות. מגיע כתוצאה של עבודה עמוקה, לאחר שעברנו דרך אלפא ותטא.</div>
+        </div>
+      </div>
+      <div class="s7c-punch" id="s7c-punch">אלפא היא השער המוח מתחיל להירגע ולרדת פנימה.<br>תטא היא היעד שם התת מודע נגיש לשינוי.<br>בבטא גבוה המוח במצב הישרדות. לא ניתן לשנות תבניות ישנות.</div>
+    </div>
+  </div>
+
+  <!-- ══ S-BETA, 95/5 split ══ -->
+  <div class="slide" id="sbeta">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Conscious vs. Subconscious</div>
+          <div class="sh2-title">The 95 / 5 Split</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מודע מול תת-מודע</div>
+          <div class="sh2-he-sub">רוב מה שמניע אותנו רץ מתחת לסף ההכרה</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div id="sbeta-1" style="opacity:0; transform:translateY(8px); transition:opacity .6s ease, transform .6s ease; flex:0 0 auto; display:flex; flex-direction:column;">
+    <div class="s4-body" style="flex:none;">
+      <div class="s4-chart" style="display:flex; flex-direction:column; align-items:center; gap:.8vw;">
+        <div class="donut">
+          <div class="donut-in">
+            <span class="dn">95<span style="font-size:.42em;font-family:'Jost';font-weight:300">%</span></span>
+            <span class="dl">Subconscious</span>
+          </div>
+        </div>
+        <div style="font-size:.78vw; color:var(--cream-faint); font-style:italic; text-align:center; line-height:1.5;">Source: Dispenza J. (2017) Becoming Supernatural<br>Lipton B. (2005) The Biology of Belief</div>
+      </div>
+      <div class="s4-legend">
+        <div class="s4-item">
+          <div class="s4-bar" style="background:var(--cream-dim)"></div>
+          <div>
+            <div class="s4-pct" style="color:var(--cream)">95<span style="font-size:.42em;font-family:'Jost';font-weight:300">%</span></div>
+            <div class="s4-name">Subconscious Autopilot</div>
+            <div class="s4-desc">התת מודע האוטומטי. מריץ הרגלים, אמונות, ותגובות אוטומטיות רובן נבנו בילדות. פועל מתחת לסף ההכרה.</div>
+          </div>
+        </div>
+        <div class="s4-item">
+          <div class="s4-bar" style="background:var(--blush)"></div>
+          <div>
+            <div class="s4-pct" style="color:var(--blush)">5<span style="font-size:.42em;font-family:'Jost';font-weight:300">%</span></div>
+            <div class="s4-name" style="color:var(--blush)">Conscious Mind</div>
+            <div class="s4-desc">המוח המודע. חושב, מתכנן, מקבל החלטות.</div>
+          </div>
+        </div>
+        <div class="s4-insight">
+          אנחנו חושבים שאנחנו בשליטה. אבל <strong style="color:var(--blush)">5%</strong> מנסים לנהל את החיים בזמן שה-<strong style="color:var(--cream-dim)">95%</strong> הנותרים רצים על תוכנית אחרת, אחת שנבנתה מזמן, מתחת לסף ההכרה.
+        </div>
+      </div>
+    </div>
+    </div>
+    <div id="sbeta-2" style="opacity:0; transform:translateY(10px); transition:opacity .65s ease, transform .65s ease; text-align:center; direction:rtl; padding:1.8vw 8% 1.5vw; flex:1; display:flex; align-items:center; justify-content:center;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:500; font-style:italic; color:rgba(210,158,68,.96); line-height:1.5;">
+        לשנות את ה-95% אי אפשר מבטא גבוה.<br>צריך לרדת. לאלפא. לתטא.
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SNEW, THE SUBCONSCIOUS ══ -->
+  <div class="slide" id="snew">
+    <div style="text-align:center; position:relative; z-index:1;">
+      <div class="snew-title">צלילה לתוך התת מודע</div>
+      <div class="snew-rule"></div>
+      <div class="snew-punch">
+        <div class="snew-line" id="snew-1">
+          <div class="snew-main">תפקידו התת מודע הוא גאון</div>
+          <div class="snew-sup">מטרתו לחסוך למוח אנרגיה ולשרוד. כל דבר שחוזר על עצמו מספיק פעמים הוא לוקח ומריץ על אוטומט. נהיגה. שפה. הרגלים יומיומיים. בלעדיו היינו צריכות לחשוב על כל נשימה.</div>
+        </div>
+        <div class="snew-line" id="snew-2">
+          <div class="snew-main">מה נכנס לשם</div>
+          <div class="snew-sup">ילדים עד גיל 6-7 נמצאים בעיקר בתדר תטא בשעות הערות, ובנוסף, הקורטקס הפרה-פרונטלי עדיין לא מפותח. שתי הסיבות יחד יוצרות מצב שבו מידע נכנס ישירות, בלי סינון.</div>
+        </div>
+        <div class="snew-line" id="snew-3">
+          <div class="snew-main-gold">התת מודע מנהל את חיינו. מאז ועד היום.</div>
+          <div class="snew-sup-gold">התגובות האוטומטיות, ההרגלים, האמונות כולן רצות על אותה תוכנית.</div>
+        </div>
+        <div class="snew-src" id="snew-src">Source: Lipton B. (2005) The Biology of Belief &nbsp;·&nbsp; Dispenza J. (2017) Becoming Supernatural</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ S-BETA, 95/5 split ══ -->
+  <!-- ══ SMANAGE, 95% RECALL + WHAT'S INSIDE ══ -->
+  <div class="slide" id="smanage">
+    <div id="smanage-header" style="opacity:0;transform:translateY(8px);transition:opacity .55s ease,transform .55s ease;">
+      <div class="sh2">
+        <div class="sh2-inner">
+          <div class="sh2-left">
+            <div class="sh2-eye">Conscious vs. Subconscious · Recall</div>
+            <div class="sh2-title">The 95 / 5 Split</div>
+          </div>
+          <div class="sh2-right">
+            <div class="sh2-he">מה יש בפנים?</div>
+            <div class="sh2-he-sub">הרגלים · תגובות · אמונות</div>
+          </div>
+        </div>
+        <div class="sh2-bar"></div>
+      </div>
+    </div>
+    <div id="smanage-body" style="opacity:0;transform:translateY(8px);transition:opacity .55s ease,transform .55s ease;flex:1;display:flex;flex-direction:column;">
+      <div class="s4-body" style="justify-content:center;gap:6%;flex:1;">
+        <div class="s4-chart">
+          <div class="donut">
+            <div class="donut-in">
+              <span class="dn">95<span style="font-size:.42em;font-family:'Jost';font-weight:300">%</span></span>
+              <span class="dl">Subconscious</span>
+            </div>
+          </div>
+        </div>
+        <div style="flex:0 0 38%;display:flex;flex-direction:column;justify-content:center;gap:1.2vw;direction:rtl;">
+          <div id="smanage-zokhrot" style="text-align:right;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.1vw;font-style:italic;color:rgba(245,240,232,.75);line-height:1.65;">זוכרות ש-95% מהזמן התת מודע מנהל אותנו?<br><span style="color:rgba(245,240,232,.5);font-size:1vw;">כולן נכנסו לשם לפני שהיה לנו מסנן.</span></div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:1.55vw;color:var(--cream);line-height:2;">· הרגלים<br>· תגובות אוטומטיות<br>· <span id="smanage-emunot" style="transition:color .4s ease;">אמונות</span></div>
+          </div>
+          <div class="snew-line" id="smanage-2" style="text-align:right;padding:.8vw 1vw;background:rgba(210,158,68,.05);border-radius:6px;border-right:2px solid var(--gold-dim);">
+            <div style="font-size:.95vw;color:rgba(210,158,68,.85);font-family:'Cormorant Garamond',serif;font-style:italic;line-height:1.7;">היום נתמקד באמונות —<br>כי הן אלה שמעצבות איך את רואה את עצמך ומה אפשרי עבורך.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIMINTRO, LIMITING BELIEFS INTRO ══ -->
+  <div class="slide" id="slimintro">
+    <div style="position:relative; z-index:1; text-align:center;">
+      <div class="slim-eye">Subconscious Mind · תת מודע</div>
+      <div class="slim-title">אמונות מגבילות</div>
+      <div class="slim-sub">Limiting Beliefs</div>
+      <div class="slim-rule"></div>
+      <div class="slim-body">
+        <div class="slim-line">בתוך התת-מודע שמנהל <strong>95% מחיינו</strong>, חיות אמונות שנוצרו בילדות.</div>
+        <div class="slim-line" style="margin-top:.9vw;">חלקן מניעות אותנו קדימה.<br><strong>וחלקן עוצרות אותנו, עד היום.</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIMEX, 5 LIMITING BELIEF EXAMPLES ══ -->
+  <div class="slide" id="slimex">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Inner Voices</div>
+          <div class="sh2-title">The Voices Running Your Life</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">הקולות שמנהלים את חייך</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="slimex-body">
+      <div class="belief-card" id="slimex-1">
+        <div class="bc-voice-wrap">
+          <div class="bc-vlbl">הקול הפנימי</div>
+          <div class="bc-voice">"אני לא אצליח"</div>
+        </div>
+        <div class="bc-root-wrap">
+          <div class="bc-rlbl">השורש</div>
+          <div class="bc-root">ניסיתי ולא הצלחתי. לא היה מי שאמר: "את יכולה." נשארה חוויה של לא-מצליחה.</div>
+        </div>
+      </div>
+      <div class="belief-card" id="slimex-2">
+        <div class="bc-voice-wrap">
+          <div class="bc-vlbl">הקול הפנימי</div>
+          <div class="bc-voice">"לעשות כסף זה קשה, חייבים לעבוד קשה"</div>
+        </div>
+        <div class="bc-root-wrap">
+          <div class="bc-rlbl">השורש</div>
+          <div class="bc-root">ראיתי בבית דוגמא של עבודה קשה. נאמר שוב ושוב: "אין מה לעשות, תלמדי קשה ותצליחי."</div>
+        </div>
+      </div>
+      <div class="belief-card" id="slimex-3">
+        <div class="bc-voice-wrap">
+          <div class="bc-vlbl">הקול הפנימי</div>
+          <div class="bc-voice">"הכל תמיד עלי, אני לבד"</div>
+        </div>
+        <div class="bc-root-wrap">
+          <div class="bc-rlbl">השורש</div>
+          <div class="bc-root">לא הרגשתי שיש לי גב. למדתי שאני צריכה להסתדר לבד, כי ככה זה.</div>
+        </div>
+      </div>
+      <div class="belief-card" id="slimex-4">
+        <div class="bc-voice-wrap">
+          <div class="bc-vlbl">הקול הפנימי</div>
+          <div class="bc-voice">"אם אצליח יותר מדי, הכל יסתבך"</div>
+        </div>
+        <div class="bc-root-wrap">
+          <div class="bc-rlbl">השורש</div>
+          <div class="bc-root">הצלחה גדולה = אין זמן למשפחה, לזוגיות, לעצמי. הצלחה תמיד עולה במחיר.</div>
+        </div>
+      </div>
+      <div class="belief-card" id="slimex-5">
+        <div class="bc-voice-wrap">
+          <div class="bc-vlbl">הקול הפנימי</div>
+          <div class="bc-voice">"אני חייבת להרוויח את האהבה"</div>
+        </div>
+        <div class="bc-root-wrap">
+          <div class="bc-rlbl">השורש</div>
+          <div class="bc-root">תשומת לב ואהבה הגיעו כשהייתי "כמו שצריך". למדתי: כדי שיאהבו אותי, אני חייבת לתת, לדאוג, לרצות.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SLIMID, HOW TO IDENTIFY ══ -->
+  <div class="slide" id="slimid">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Self-Awareness</div>
+          <div class="sh2-title">Identify a Limiting Belief</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">איך לזהות אמונה מגבילה</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="slimid-body">
+      <div class="slimid-item">
+        <div class="slimid-num">1</div>
+        <div class="slimid-txt">
+          תחושה שעולה בך שוב ושוב, בלי קשר לסיטואציה החיצונית
+          <span>לא משנה מה קורה סביבך, אותה תחושה מוכרת חוזרת. זה לא "הנסיבות", זה התבנית.</span>
+        </div>
+      </div>
+      <div class="slimid-item">
+        <div class="slimid-num">2</div>
+        <div class="slimid-txt">
+          רגש חזק שמקפיץ אותך, תגובה לא פרופורציונלית למה שקרה
+          <span>כשהתגובה גדולה בהרבה מהסיטואציה, זה סימן שנגעת בזיכרון ישן, לא רק באירוע הנוכחי.</span>
+        </div>
+      </div>
+      <div class="slimid-item">
+        <div class="slimid-num">3</div>
+        <div class="slimid-txt">
+          מחשבה שמרגישה כמו עובדה
+          <span>לא "אני חושב שאני לא מספיק טוב", אלא "אני לא מספיק טוב." כשאין ספק, כשזה מובן מאליו, שם יושבת האמונה.</span>
+        </div>
+      </div>
+    </div>
+    <div style="padding:.5vw 8% .8vw; font-size:.82vw; font-family:'Jost',sans-serif; font-weight:300; font-style:italic; color:rgba(245,240,232,.28); text-align:right; direction:rtl; letter-spacing:.02em;">
+      ההבחנה: 1 היא על תחושה, 2 על תגובה, 3 על מחשבה.
+    </div>
+  </div>
+
+  <!-- ══ SLIMTASK, EXERCISE ══ -->
+  <div class="slide" id="slimtask">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Exercise</div>
+          <div class="sh2-title">Your Turn</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">עכשיו התור שלך</div>
+          <div class="sh2-he-sub">רשמי 3 אמונות מגבילות, ונסי לאתר את השורש של כל אחת</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="stask-grid">
+      <div class="stask-col">
+        <div class="stask-col-num">1</div>
+        <div class="stask-field-lbl">הקול הפנימי:</div>
+        <div class="stask-uline"></div>
+        <div class="stask-uline"></div>
+        <div class="stask-field-lbl" style="margin-top:1vw">השורש:</div>
+        <div class="stask-uline"></div>
+        <div class="stask-uline"></div>
+        <div class="stask-uline"></div>
+      </div>
+      <div class="stask-col">
+        <div class="stask-col-num">2</div>
+        <div class="stask-field-lbl">הקול הפנימי:</div>
+        <div class="stask-uline"></div>
+        <div class="stask-uline"></div>
+        <div class="stask-field-lbl" style="margin-top:1vw">השורש:</div>
+        <div class="stask-uline"></div>
+        <div class="stask-uline"></div>
+        <div class="stask-uline"></div>
+      </div>
+      <div class="stask-col">
+        <div class="stask-col-num">3</div>
+        <div class="stask-field-lbl">הקול הפנימי:</div>
+        <div class="stask-uline"></div>
+        <div class="stask-uline"></div>
+        <div class="stask-field-lbl" style="margin-top:1vw">השורש:</div>
+        <div class="stask-uline"></div>
+        <div class="stask-uline"></div>
+        <div class="stask-uline"></div>
+      </div>
+    </div>
+    <div class="stask-bottom-note">אין תשובות נכונות או שגויות &nbsp;·&nbsp; רק לשים לב &nbsp;·&nbsp; להיות עדה לעצמך</div>
+  </div>
+
+  <!-- ══ SSHARE, SHARING MOMENT ══ -->
+  <div class="slide" id="sshare">
+    <div class="sshare-center">
+      <div class="sshare-eye">שיתוף · Sharing</div>
+      <div class="sshare-title">רגע של שיתוף</div>
+      <div class="sshare-bar"></div>
+      <div class="sshare-prompt">
+        מי רוצה לשתף —<br>
+        לא את הסיפור, רק את האמונה עצמה
+      </div>
+      <div class="sshare-note">את לא לבד בזה</div>
+    </div>
+  </div>
+
+  <!-- ══ SWHATNOW, TOOLS INTRO BRIDGE ══ -->
+  <div class="slide" id="swhatnow">
+    <div class="swn-block">
+      <div class="swn-title">אז מה עושים עם זה?</div>
+      <div class="swn-rule"></div>
+      <div class="swn-sub">שני כלים &nbsp;·&nbsp; שניהם פשוטים &nbsp;·&nbsp; שניהם משנים</div>
+    </div>
+  </div>
+
+  <!-- ══ STOOL, AWARENESS PRACTICE ══ -->
+  <div class="slide" id="stool">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Mindful Awareness</div>
+          <div class="sh2-title">The Practice</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">התרגול שלך - פרקטיקה</div>
+          <div class="sh2-he-sub">כשהאמונה עולה, מה לעשות</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="stool-body">
+      <div class="stool-step" id="stool-1">
+        <div class="stool-right"><div class="stool-num">1</div><div class="stool-verb">לשים לב</div></div>
+        <div class="stool-desc">מתי עולה אותה אמונה מגבילה, באיזו סיטואציה, עם מי, בדרך כלל מתי.</div>
+      </div>
+      <div class="stool-step" id="stool-2">
+        <div class="stool-right"><div class="stool-num">2</div><div class="stool-verb">לעצור</div></div>
+        <div class="stool-desc">רגע של הפסקה מודעת, לא להגיב מיד. לנשום. לצאת מהאוטומט.</div>
+      </div>
+      <div class="stool-step" id="stool-3">
+        <div class="stool-right"><div class="stool-num">3</div><div class="stool-verb">לחוש</div></div>
+        <div class="stool-desc">לשים לב לרגש שעולה בגוף, לא לנתח, רק לחוש. איפה הוא יושב? מה הוא אומר?</div>
+      </div>
+      <div class="stool-step" id="stool-4">
+        <div class="stool-right"><div class="stool-num">4</div><div class="stool-verb">לשאול</div></div>
+        <div class="stool-desc">האם הרגש הזה קשור לסיטואציה הנוכחית, או לזכרון עבר שעדיין מנהל אותי?</div>
+      </div>
+      <div class="stool-step" id="stool-5">
+        <div class="stool-right"><div class="stool-num">5</div><div class="stool-verb">לבחור</div></div>
+        <div class="stool-desc">עכשיו, מתוך מודעות, איך אני רוצה להגיב? לא מתוך הפחד הישן, אלא מתוך מי שאני היום.</div>
+      </div>
+      <div class="stool-punch" id="stool-punch-el">זהו ההבדל בין תגובה אוטומטית לבין בחירה מודעת.</div>
+    </div>
+  </div>
+
+  <!-- ══ SMEDIT, MEDITATION AS TOOL ══ -->
+  <div class="slide" id="smedit">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Alpha · Theta · Access</div>
+          <div class="sh2-title">The Inner Tool</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מדיטציה ככלי</div>
+          <div class="sh2-he-sub">גישה לתת מודע דרך תדרי המח</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="smedit-body">
+
+      <div class="smedit-flow" id="smedit-1">
+        <div class="smedit-node">
+          <div class="smedit-node-title">מדיטציה</div>
+          <div class="smedit-node-freq">הכלי</div>
+          <div class="smedit-node-desc">מורידה את קצב גלי המוח מבטא לאלפא ולתטא. מערנות פעילה לעבר שקט פנימי עמוק</div>
+        </div>
+        <div class="smedit-connector">←</div>
+        <div class="smedit-node">
+          <div class="smedit-node-title">אלפא · תטא</div>
+          <div class="smedit-node-freq">8–12 Hz · 4–8 Hz</div>
+          <div class="smedit-node-desc">התדרים שבהם הדלת לתת מודע פתוחה</div>
+        </div>
+        <div class="smedit-connector">←</div>
+        <div class="smedit-node">
+          <div class="smedit-node-title">תת מודע</div>
+          <div class="smedit-node-freq">שם נוצרו האמונות</div>
+          <div class="smedit-node-desc">המקום שבו יושבות האמונות המגבילות ושם אפשר לשתול אמונות חדשות</div>
+        </div>
+      </div>
+
+      <div class="smedit-insight" id="smedit-2">
+        מדיטציה היא לא רק כלי רוחני היא <em>הכלי המדעי</em> לגשת למקום שבו האמונה נוצרה, ולשנות אותה מהשורש
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ SSUMMARY, SESSION SUMMARY ══ -->
+  <div class="slide" id="ssummary">
+    <div class="sh2">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Session 1 · Summary</div>
+          <div class="sh2-title">What We Learned Today</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מה למדנו היום</div>
+          <div class="sh2-he-sub">תובנות מפגש 1</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="summary-body">
+      <div class="sum-item"><span class="sum-mark">✦</span>הגוף הוא מערכת שקולטת ומשדרת גלים כל הזמן.</div>
+      <div class="sum-item"><span class="sum-mark">✦</span>תדר המוח קובע מה אפשר לקלוט ולשנות. בבטא, המוח סגור ללמידה עמוקה. באלפא ותטא, הדלת פתוחה.</div>
+      <div class="sum-item"><span class="sum-mark">✦</span>95% מהתגובות שלנו אוטומטיות, מגיעות ישירות מהתת מודע</div>
+      <div class="sum-item"><span class="sum-mark">✦</span>התת מודע נבנה לפני גיל 6-7, כשהקורטקס הפרה-פרונטלי עדיין לא היה מפותח</div>
+      <div class="sum-item"><span class="sum-mark">✦</span>האמונות המגבילות לא הגיעו מאיפשהו, הן נוצרו בנו כילדות</div>
+      <div class="sum-item"><span class="sum-mark">✦</span>אפשר לזהות אותן, ואז אפשר לבחור אחרת</div>
+      <div class="sum-item"><span class="sum-mark">✦</span>המודעות היא הצעד הראשון והחשוב ביותר לשינוי</div>
+    </div>
+  </div>
+
+  <!-- ══ S11, MEDITATION ══ -->
+  <div class="slide" id="s11">
+    <div class="orb"></div>
+    <div class="orb orb-2"></div>
+    <div class="med-text">
+      <div class="med-main">Breathe in.</div>
+      <div class="med-sub">Notice &nbsp;·&nbsp; Don't analyze &nbsp;·&nbsp; לשים לב, לא לנתח</div>
+    </div>
+  </div>
+
+  <!-- ══ SJOURNEY, 5-SESSION MAP ══ -->
+  <div class="slide" id="sjourney">
+    <div class="sh">
+      <div class="sh-eye">The Journey · המסע</div>
+      <div class="sh-title">5 Sessions · 5 מפגשים</div>
+      <div class="sh-he">איפה אנחנו ולאן הולכות</div>
+      <div class="sh-bar"></div>
+    </div>
+    <div class="journey-body">
+      <div class="journey-step j-active">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">1</div>
+        <div class="jstep-session">מפגש ראשון · היום</div>
+        <div class="jstep-title">מערכת ההפעלה</div>
+        <div class="jstep-desc">זיהוי: הסיפור שמנהל אותי</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">2</div>
+        <div class="jstep-session">מפגש שני</div>
+        <div class="jstep-title">השדה שמסביבי</div>
+        <div class="jstep-desc">הבנה: המחשבות שלי לא נשארות בראש</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">3</div>
+        <div class="jstep-session">מפגש שלישי</div>
+        <div class="jstep-title">הלופ</div>
+        <div class="jstep-desc">חיבור: איך האמונה מייצרת שוב ושוב את אותה תוצאה</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">4</div>
+        <div class="jstep-session">מפגש רביעי</div>
+        <div class="jstep-title">שבירת הלופ</div>
+        <div class="jstep-desc">שינוי: לייצר אמונה חדשה ולגור בה</div>
+      </div>
+      <div class="journey-step">
+        <div class="jstep-dot"></div>
+        <div class="jstep-num">5</div>
+        <div class="jstep-session">מפגש חמישי</div>
+        <div class="jstep-title">הגרסה החדשה שלי</div>
+        <div class="jstep-desc">אינטגרציה: מי אני כשאני לא מוגבלת</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ S12, HOMEWORK ══ -->
+  <div class="slide" id="s12">
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 12% 2%;">
+      <div class="s12-eye" style="text-align:center;margin-bottom:.4vw;">This Week's Practice</div>
+      <div class="s12-title" style="text-align:center;margin-bottom:.25vw;">התרגול השבועי</div>
+      <div class="s12-sub" style="text-align:center;margin-bottom:1.8vw;">Between Session 1 and Session 2</div>
+      <div class="s12-box" style="width:100%;">
+        <div class="s12-inst" style="text-align:center;">כשעולה האמונה שזיהית היום, עצרי. ורשמי:</div>
+        <div class="s12-q">
+          <div class="s12-qn">1.</div>
+          <div class="s12-qt">מה קרה, באיזו סיטואציה היא הופיעה</div>
+        </div>
+        <div class="s12-q">
+          <div class="s12-qn">2.</div>
+          <div class="s12-qt">מה הגוף הרגיש, איפה ואיך</div>
+        </div>
+        <div class="s12-q">
+          <div class="s12-qn">3.</div>
+          <div class="s12-qt">מה הקול אמר, המשפט המדויק שעלה בראש</div>
+        </div>
+      </div>
+      <div class="s12-note" style="text-align:center;">
+        אל תנתחי · אל תתקני · רק תהיי עדה לעצמך<br><br>
+        <strong style="color:var(--cream-dim)">"Awareness is the beginning of change."</strong>
+        &nbsp;<span style="color:var(--blush)">— Dr. Joe Dispenza</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ S13, CLOSING ══ -->
+  <div class="slide" id="s13">
+
+    <!-- surrealist embrace illustration -->
+    <svg class="s13-embrace" viewBox="0 0 900 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="s13rg1" cx="50%" cy="60%" r="55%">
+          <stop offset="0%" stop-color="rgba(198,90,120,0.22)"/>
+          <stop offset="100%" stop-color="rgba(198,90,120,0)"/>
+        </radialGradient>
+        <filter id="s13blur"><feGaussianBlur stdDeviation="18"/></filter>
+        <filter id="s13blur2"><feGaussianBlur stdDeviation="8"/></filter>
+      </defs>
+
+      <!-- soft halo behind everything -->
+      <ellipse cx="450" cy="300" rx="340" ry="210" fill="url(#s13rg1)" filter="url(#s13blur)"/>
+
+      <!-- left arm flowing inward from left -->
+      <path d="M -30,420 C 60,380 120,310 180,270 C 240,230 290,230 320,255 C 350,278 340,315 310,330 C 280,345 240,330 220,305"
+            fill="none" stroke="rgba(210,110,140,0.28)" stroke-width="28" stroke-linecap="round" filter="url(#s13blur2)"/>
+      <path d="M -30,420 C 60,380 120,310 180,270 C 240,230 290,230 320,255 C 350,278 340,315 310,330 C 280,345 240,330 220,305"
+            fill="none" stroke="rgba(230,140,165,0.14)" stroke-width="55" stroke-linecap="round" filter="url(#s13blur)"/>
+
+      <!-- right arm mirrored -->
+      <path d="M 930,420 C 840,380 780,310 720,270 C 660,230 610,230 580,255 C 550,278 560,315 590,330 C 620,345 660,330 680,305"
+            fill="none" stroke="rgba(210,110,140,0.28)" stroke-width="28" stroke-linecap="round" filter="url(#s13blur2)"/>
+      <path d="M 930,420 C 840,380 780,310 720,270 C 660,230 610,230 580,255 C 550,278 560,315 590,330 C 620,345 660,330 680,305"
+            fill="none" stroke="rgba(230,140,165,0.14)" stroke-width="55" stroke-linecap="round" filter="url(#s13blur)"/>
+
+      <!-- abstract floating petal forms surrealist touch -->
+      <ellipse cx="200" cy="180" rx="55" ry="22" fill="rgba(198,90,120,0.07)" transform="rotate(-35 200 180)" filter="url(#s13blur2)"/>
+      <ellipse cx="700" cy="165" rx="48" ry="18" fill="rgba(198,90,120,0.07)" transform="rotate(30 700 165)" filter="url(#s13blur2)"/>
+      <ellipse cx="450" cy="420" rx="80" ry="20" fill="rgba(230,140,165,0.08)" filter="url(#s13blur)"/>
+
+      <!-- tiny floating orbs -->
+      <circle cx="310" cy="155" r="4" fill="rgba(230,150,170,0.55)"/>
+      <circle cx="590" cy="140" r="3" fill="rgba(230,150,170,0.45)"/>
+      <circle cx="165" cy="310" r="2.5" fill="rgba(230,150,170,0.4)"/>
+      <circle cx="740" cy="295" r="3.5" fill="rgba(230,150,170,0.4)"/>
+      <circle cx="450" cy="108" r="2" fill="rgba(245,180,200,0.5)"/>
+    </svg>
+
+    <!-- soft rose particles -->
+    <div class="s13-pt" style="width:.4vw;height:.4vw;background:rgba(220,110,140,.75);left:24%;bottom:20%;animation-duration:7s;animation-delay:0s;"></div>
+    <div class="s13-pt" style="width:.28vw;height:.28vw;background:rgba(240,160,180,.8);left:40%;bottom:13%;animation-duration:8.5s;animation-delay:1.6s;"></div>
+    <div class="s13-pt" style="width:.5vw;height:.5vw;background:rgba(210,100,130,.6);left:62%;bottom:22%;animation-duration:6s;animation-delay:2.3s;"></div>
+    <div class="s13-pt" style="width:.22vw;height:.22vw;background:rgba(245,175,195,.85);left:74%;bottom:16%;animation-duration:9s;animation-delay:.9s;"></div>
+    <div class="s13-pt" style="width:.35vw;height:.35vw;background:rgba(230,140,160,.6);left:50%;bottom:9%;animation-duration:7.5s;animation-delay:3.8s;"></div>
+    <div class="s13-pt" style="width:.3vw;height:.3vw;background:rgba(220,110,140,.7);left:33%;bottom:28%;animation-duration:6.8s;animation-delay:5s;"></div>
+
+    <div class="s13-block">
+      <div class="s13-toda">תודה</div>
+      <div class="s13-lines">
+        <div class="s13-line">על ההקשבה</div>
+        <div class="s13-line">על הזמן</div>
+        <div class="s13-line">על הפתיחות ללמוד משהו חדש</div>
+      </div>
+      <div class="s13-rule"></div>
+      <div class="s13-next">נפגש בשבוע הבא</div>
+      <div class="s13-brand">The Inner Shift &nbsp;·&nbsp; Session 1 of 5</div>
+    </div>
+  </div>
+
+</div><!-- /stage -->
+
+<div class="nav">
+  <button onclick="prev()">← Back</button>
+  <div class="dots" id="dots"></div>
+  <span class="ctr" id="ctr">1 / 13</span>
+  <button onclick="next()">Next →</button>
+</div>
+
+<script>
+  let cur = 0;
+  const slides = document.querySelectorAll('.slide');
+  const N = slides.length;
+
+  const dotsEl = document.getElementById('dots');
+  for (let i = 0; i < N; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' on' : '');
+    d.onclick = () => go(i);
+    dotsEl.appendChild(d);
+  }
+
+  // Progressive reveal for #s7 (brain wave cards)
+  let s7Step = 0;
+  const S7_TOTAL = 6;
+  function revealS7(step) {
+    for (let i = 1; i <= 5; i++) {
+      const el = document.getElementById('s7c-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+    const punch = document.getElementById('s7c-punch');
+    if (punch) punch.classList.toggle('visible', step >= 6);
+    const highlight = step >= 6;
+    [1,4,5].forEach(i => {
+      const el = document.getElementById('s7c-' + i);
+      if (el) el.classList.toggle('s7c-dim', highlight);
+    });
+    const theta = document.getElementById('s7c-2');
+    const alpha = document.getElementById('s7c-3');
+    if (theta) theta.classList.toggle('s7c-highlighted', highlight);
+    if (alpha) alpha.classList.toggle('s7c-highlighted', highlight);
+  }
+  function resetS7() { s7Step = 0; revealS7(0); }
+
+  // Progressive reveal for #snew
+  // snew (subconscious role + what went in)
+  let snewStep = 0;
+  const SNEW_TOTAL = 3;
+
+  function revealSnew(step) {
+    for (let i = 1; i <= SNEW_TOTAL; i++) {
+      const el = document.getElementById('snew-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+    const src = document.getElementById('snew-src');
+    if (src) src.classList.toggle('visible', step >= SNEW_TOTAL);
+  }
+
+  function resetSnew() { snewStep = 0; revealSnew(0); }
+
+  // smanage (subconscious manages our lives) — 3 steps
+  let smanageStep = 0;
+  const SMANAGE_TOTAL = 3;
+  function revealSmanage(step) {
+    const header = document.getElementById('smanage-header');
+    if (header) { header.style.opacity = step >= 1 ? '1' : '0'; header.style.transform = step >= 1 ? 'translateY(0)' : 'translateY(8px)'; }
+    const body = document.getElementById('smanage-body');
+    if (body) { body.style.opacity = step >= 2 ? '1' : '0'; body.style.transform = step >= 2 ? 'translateY(0)' : 'translateY(8px)'; }
+    const emunot = document.getElementById('smanage-emunot');
+    if (emunot) emunot.style.color = step >= 3 ? 'rgba(210,158,68,.92)' : 'var(--cream)';
+    const el2 = document.getElementById('smanage-2');
+    if (el2) el2.classList.toggle('visible', step >= 3);
+  }
+  function resetSmanage() { smanageStep = 0; revealSmanage(0); }
+
+  // Progressive reveal for #slimex
+  let slimexStep = 0;
+  const SLIMEX_TOTAL = 5;
+
+  function revealSlimex(step) {
+    for (let i = 1; i <= SLIMEX_TOTAL; i++) {
+      const el = document.getElementById('slimex-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+
+  function resetSlimex() { slimexStep = 0; revealSlimex(0); }
+
+  // Progressive reveal for #stool
+  let stoolStep = 0;
+  const STOOL_TOTAL = 5;
+  const STOOL_ALL = 6;
+
+  function updateStool(step) {
+    for (let i = 1; i <= STOOL_TOTAL; i++) {
+      const el = document.getElementById('stool-' + i);
+      if (!el) continue;
+      el.classList.remove('step-active', 'step-past', 'step-shown');
+      if (step === STOOL_ALL)      el.classList.add('step-shown');
+      else if (i < step)           el.classList.add('step-past');
+      else if (i === step)         el.classList.add('step-active');
+    }
+    const punch = document.getElementById('stool-punch-el');
+    if (punch) punch.classList.toggle('visible', step >= STOOL_TOTAL);
+  }
+
+  function resetStool() { stoolStep = 0; updateStool(0); }
+
+  // Progressive reveal for #smedit
+  let smeditStep = 0;
+  const SMEDIT_TOTAL = 2;
+  function revealSmedit(step) {
+    document.getElementById('smedit-1').classList.toggle('visible', step >= 1);
+    document.getElementById('smedit-2').classList.toggle('visible', step >= 2);
+  }
+  function resetSmedit() { smeditStep = 0; revealSmedit(0); }
+
+  // Progressive reveal for #scourse
+  let scourseStep = 0;
+  const SCOURSE_TOTAL = 2;
+  function revealScourse(step) {
+    for (let i = 1; i <= SCOURSE_TOTAL; i++) {
+      const el = document.getElementById('scourse-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+  function resetScourse() { scourseStep = 0; revealScourse(0); }
+
+  // Progressive reveal for #sjungbio
+  let sjbStep = 0;
+  const SJB_TOTAL = 2;
+  function revealSjb(step) {
+    for (let i = 1; i <= SJB_TOTAL; i++) {
+      const el = document.getElementById('sjb-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+  function resetSjb() { sjbStep = 0; revealSjb(0); }
+
+  // Progressive reveal for #sopening
+  let sopStep = 0;
+  const SOP_TOTAL = 3;
+  function revealSop(step) {
+    for (let i = 1; i <= SOP_TOTAL; i++) {
+      const el = document.getElementById('sop-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+  function resetSop() { sopStep = 0; revealSop(0); }
+
+  // Progressive reveal for #swavetadur
+  let swtStep = 0;
+  const SWT_TOTAL = 3;
+  function revealSwt(step) {
+    for (let i = 1; i <= SWT_TOTAL; i++) {
+      const el = document.getElementById('swt-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+  }
+  function resetSwt() { swtStep = 0; revealSwt(0); }
+
+  // Progressive reveal for #swavebridge
+  let swbStep = 0;
+  const SWB_TOTAL = 3;
+  function revealSwb(step) {
+    document.getElementById('swb-right').classList.toggle('visible', step >= 1);
+    document.getElementById('swb-left').classList.toggle('visible',  step >= 2);
+    document.getElementById('swb-punch-el').classList.toggle('visible', step >= 3);
+    document.getElementById('swb-note-el').classList.toggle('visible',  step >= 3);
+  }
+  function resetSwb() { swbStep = 0; revealSwb(0); }
+
+  // Progressive reveal for #sbeta
+  let sbetaStep = 0;
+  const SBETA_TOTAL = 2;
+
+  function revealSbeta(step) {
+    const el1 = document.getElementById('sbeta-1');
+    if (el1) {
+      el1.style.opacity = step >= 1 ? '1' : '0';
+      el1.style.transform = step >= 1 ? 'translateY(0)' : 'translateY(8px)';
+    }
+    const el2 = document.getElementById('sbeta-2');
+    if (el2) {
+      el2.style.opacity = step >= 2 ? '1' : '0';
+      el2.style.transform = step >= 2 ? 'translateY(0)' : 'translateY(10px)';
+    }
+  }
+
+  function resetSbeta() { sbetaStep = 0; revealSbeta(0); }
+
+  function go(n) {
+    if (n < 0 || n >= N) return;
+    if (slides[cur].id === 'scourse')     resetScourse();
+    if (slides[cur].id === 'sjungbio')    resetSjb();
+    if (slides[cur].id === 'sopening')    resetSop();
+    if (slides[cur].id === 'swavetadur')  resetSwt();
+    if (slides[cur].id === 'swavebridge') resetSwb();
+    if (slides[cur].id === 'snew')        resetSnew();
+    if (slides[cur].id === 'smanage')  resetSmanage();
+    if (slides[cur].id === 's7')         resetS7();
+    if (slides[cur].id === 'slimex') resetSlimex();
+    if (slides[cur].id === 'stool')  resetStool();
+    if (slides[cur].id === 'smedit') resetSmedit();
+    if (slides[cur].id === 'sbeta')  resetSbeta();
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('exit');
+    const old = cur;
+    setTimeout(() => slides[old].classList.remove('exit'), 520);
+    cur = n;
+    slides[cur].classList.add('active');
+    document.getElementById('ctr').textContent = (cur + 1) + ' / ' + N;
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('on', i === cur));
+  }
+
+  function next() {
+    if (slides[cur].id === 'scourse' && scourseStep < SCOURSE_TOTAL) {
+      scourseStep++; revealScourse(scourseStep); return;
+    }
+    if (slides[cur].id === 'sjungbio' && sjbStep < SJB_TOTAL) {
+      sjbStep++; revealSjb(sjbStep); return;
+    }
+    if (slides[cur].id === 'sopening' && sopStep < SOP_TOTAL) {
+      sopStep++; revealSop(sopStep); return;
+    }
+    if (slides[cur].id === 'swavetadur' && swtStep < SWT_TOTAL) {
+      swtStep++; revealSwt(swtStep); return;
+    }
+    if (slides[cur].id === 'swavebridge' && swbStep < SWB_TOTAL) {
+      swbStep++; revealSwb(swbStep); return;
+    }
+    if (slides[cur].id === 'snew' && snewStep < SNEW_TOTAL) {
+      snewStep++; revealSnew(snewStep); return;
+    }
+    if (slides[cur].id === 'smanage' && smanageStep < SMANAGE_TOTAL) {
+      smanageStep++; revealSmanage(smanageStep); return;
+    }
+    if (slides[cur].id === 's7' && s7Step < S7_TOTAL) {
+      s7Step++; revealS7(s7Step); return;
+    }
+    if (slides[cur].id === 'slimex' && slimexStep < SLIMEX_TOTAL) {
+      slimexStep++; revealSlimex(slimexStep); return;
+    }
+    if (slides[cur].id === 'stool' && stoolStep < STOOL_ALL) {
+      stoolStep++; updateStool(stoolStep); return;
+    }
+    if (slides[cur].id === 'smedit' && smeditStep < SMEDIT_TOTAL) {
+      smeditStep++; revealSmedit(smeditStep); return;
+    }
+    if (slides[cur].id === 'sbeta' && sbetaStep < SBETA_TOTAL) {
+      sbetaStep++; revealSbeta(sbetaStep); return;
+    }
+    go(cur + 1);
+  }
+
+  function prev() {
+    if (slides[cur].id === 'scourse' && scourseStep > 0) {
+      scourseStep--; revealScourse(scourseStep); return;
+    }
+    if (slides[cur].id === 'sjungbio' && sjbStep > 0) {
+      sjbStep--; revealSjb(sjbStep); return;
+    }
+    if (slides[cur].id === 'sopening' && sopStep > 0) {
+      sopStep--; revealSop(sopStep); return;
+    }
+    if (slides[cur].id === 'swavetadur' && swtStep > 0) {
+      swtStep--; revealSwt(swtStep); return;
+    }
+    if (slides[cur].id === 'swavebridge' && swbStep > 0) {
+      swbStep--; revealSwb(swbStep); return;
+    }
+    if (slides[cur].id === 'snew' && snewStep > 0) {
+      snewStep--; revealSnew(snewStep); return;
+    }
+    if (slides[cur].id === 'smanage' && smanageStep > 0 ) {
+      smanageStep--; revealSmanage(smanageStep); return;
+    }
+    if (slides[cur].id === 's7' && s7Step > 0) {
+      s7Step--; revealS7(s7Step); return;
+    }
+    if (slides[cur].id === 'slimex' && slimexStep > 0) {
+      slimexStep--; revealSlimex(slimexStep); return;
+    }
+    if (slides[cur].id === 'stool' && stoolStep > 0) {
+      stoolStep--; updateStool(stoolStep); return;
+    }
+    if (slides[cur].id === 'smedit' && smeditStep > 0) {
+      smeditStep--; revealSmedit(smeditStep); return;
+    }
+    if (slides[cur].id === 'sbeta' && sbetaStep > 0) {
+      sbetaStep--; revealSbeta(sbetaStep); return;
+    }
+    go(cur - 1);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End')  go(N - 1);
+  });
+
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend',   e => {
+    const dx = tx - e.changedTouches[0].screenX;
+    if (Math.abs(dx) > 50) dx > 0 ? next() : prev();
+  });
+</script>
+</body>
+</html>
