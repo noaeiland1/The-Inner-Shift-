@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Inner Shift · נועה איילנד</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Secular+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --cream:  #F5F0E8;
       --gold:   #C4A06B;
       --gold2:  #A87B4F;
-      --dim:    rgba(245,240,232,0.58);
+      --dim:    rgba(245,240,232,0.82);
       --faint:  rgba(245,240,232,0.28);
       --border: rgba(245,240,232,0.09);
       --bg:     #080706;
@@ -22,7 +22,7 @@
     body {
       background: var(--bg);
       color: var(--cream);
-      font-family: 'Jost', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-weight: 300;
       line-height: 1.7;
       overflow-x: hidden;
@@ -31,9 +31,19 @@
     /* ── SHARED ── */
     .z { position:relative; z-index:1; }
 
+    /* ── GLOW HIGHLIGHT ── */
+    .glow {
+      color: #fff;
+      text-shadow:
+        0 0 18px rgba(210,170,90,0.95),
+        0 0 38px rgba(210,170,90,0.55),
+        0 0 70px rgba(210,170,90,0.25);
+    }
+
     .sec-eye {
-      font-size: 13px;
-      letter-spacing: .28em;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: .22em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 20px;
@@ -47,14 +57,14 @@
     }
 
     .section-divider {
-      width: 1px; height: 70px;
+      width: 1px; height: 32px;
       background: linear-gradient(to bottom, transparent, var(--border), transparent);
       margin: 0 auto;
     }
 
     .btn-primary {
       display: inline-block;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: 13px;
       font-weight: 500;
       letter-spacing: .2em;
@@ -72,7 +82,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: 13px;
       font-weight: 400;
       letter-spacing: .14em;
@@ -103,7 +113,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 100px 28px 80px;
+      padding: 60px 28px 50px;
       overflow: hidden;
       position: relative;
     }
@@ -139,10 +149,10 @@
     }
 
     .hero-heb {
-      font-family: 'Secular One', sans-serif;
-      font-size: clamp(16px, 2.2vw, 24px);
-      font-weight: 300;
-      color: var(--faint);
+      font-family: 'Rubik', sans-serif;
+      font-size: clamp(18px, 2.4vw, 26px);
+      font-weight: 500;
+      color: var(--cream);
       margin-bottom: 52px;
       letter-spacing: .04em;
     }
@@ -153,7 +163,7 @@
     }
 
     .hero-hook-line {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(17px, 2.2vw, 26px);
       font-weight: 300;
       color: var(--dim);
@@ -242,14 +252,14 @@
        NOW + TECH DETAILS
     ══════════════════════════════ */
     .now-section {
-      padding: 110px 28px 90px;
+      padding: 70px 28px 60px;
       max-width: 780px;
       margin: 0 auto;
       text-align: center;
     }
 
     .now-title {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(32px, 5vw, 58px);
       font-weight: 500;
       color: var(--gold);
@@ -258,7 +268,7 @@
     }
 
     .now-body {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(20px, 2.8vw, 30px);
       font-weight: 300;
       color: var(--dim);
@@ -295,7 +305,7 @@
     }
 
     .now-desc {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(20px, 2.6vw, 28px);
       font-weight: 400;
       color: var(--dim);
@@ -318,14 +328,14 @@
     }
 
     .scroll-line {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(18px, 2.4vw, 26px);
       line-height: 1.5;
       direction: rtl;
       margin-bottom: 4px;
     }
 
-    .scroll-line.dim { color: rgba(245,240,232,0.45); }
+    .scroll-line.dim { color: rgba(245,240,232,0.78); }
     .scroll-line.bright { color: var(--cream); }
     .scroll-line.gold { color: var(--gold); font-size: clamp(19px, 2.6vw, 28px); }
 
@@ -333,7 +343,7 @@
        WHAT IS THIS
     ══════════════════════════════ */
     .what-section {
-      padding: 90px 28px;
+      padding: 56px 28px;
       max-width: 820px;
       margin: 0 auto;
     }
@@ -354,7 +364,7 @@
     }
 
     .what-title {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(26px, 3.8vw, 44px);
       font-weight: 400;
       color: var(--cream);
@@ -373,11 +383,66 @@
 
     .what-body p + p { margin-top: 16px; }
 
+    /* ── STARDUST ── */
+    .stardust {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* גלואו זהוב — נשאר כמו שהוא */
+    .stardust::before {
+      content: '';
+      position: absolute;
+      inset: -20%;
+      width: 140%; height: 140%;
+      background:
+        radial-gradient(ellipse 50% 35% at 25% 45%, rgba(196,160,107,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 35% 45% at 80% 55%, rgba(196,160,107,0.18) 0%, transparent 55%);
+      animation: stardrift 9s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes stardrift {
+      0%   { transform: translate(0, 0); }
+      100% { transform: translate(3%, 2.5%); }
+    }
+
+    /* כוכבים — נפרד, גדולים ועפים */
+    .stardust::after {
+      content: '';
+      position: absolute;
+      inset: -15%;
+      width: 130%; height: 130%;
+      background-image:
+        radial-gradient(circle 3.5px at 82% 18%, rgba(255,255,255,0.95) 0%, transparent 100%),
+        radial-gradient(circle 4px   at 70% 12%, rgba(196,160,107,1)    0%, transparent 100%),
+        radial-gradient(circle 3px   at 91% 38%, rgba(255,255,255,0.9)  0%, transparent 100%),
+        radial-gradient(circle 3.5px at 15% 22%, rgba(255,255,255,0.85) 0%, transparent 100%),
+        radial-gradient(circle 3px   at 55% 28%, rgba(196,160,107,0.95) 0%, transparent 100%),
+        radial-gradient(circle 4px   at 78% 72%, rgba(255,255,255,0.9)  0%, transparent 100%),
+        radial-gradient(circle 3px   at 38% 80%, rgba(196,160,107,0.9)  0%, transparent 100%),
+        radial-gradient(circle 3.5px at 28% 55%, rgba(255,255,255,0.8)  0%, transparent 100%),
+        radial-gradient(circle 3px   at 62% 88%, rgba(255,255,255,0.85) 0%, transparent 100%),
+        radial-gradient(circle 3px   at  8% 70%, rgba(196,160,107,0.85) 0%, transparent 100%),
+        radial-gradient(circle 2.5px at 48% 48%, rgba(255,255,255,0.7)  0%, transparent 100%),
+        radial-gradient(circle 3px   at 20% 90%, rgba(255,255,255,0.75) 0%, transparent 100%);
+      filter: blur(0.4px);
+      animation: stardust-float 12s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes stardust-float {
+      0%   { transform: translate(0,    0)    scale(1);    opacity: 0.7; }
+      35%  { transform: translate(-2%, -1.5%) scale(1.03); opacity: 1;   }
+      70%  { transform: translate(2.5%, 1%)  scale(0.97); opacity: 0.85; }
+      100% { transform: translate(-1%,  2.5%) scale(1.04); opacity: 1;   }
+    }
+
     /* ══════════════════════════════
        5 SESSIONS
     ══════════════════════════════ */
     .sessions-section {
-      padding: 100px 28px;
+      padding: 60px 28px;
       max-width: 880px;
       margin: 0 auto;
     }
@@ -388,7 +453,7 @@
     }
 
     .sessions-heading h2 {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(30px, 4.5vw, 50px);
       font-weight: 400;
       color: var(--cream);
@@ -406,6 +471,13 @@
       border-radius: 4px;
       border: 1px solid transparent;
       transition: border-color .3s, background .3s;
+      direction: rtl;
+    }
+
+    .session-item > div:last-child {
+      flex: 1;
+      text-align: right;
+      direction: rtl;
     }
 
     .session-item:hover {
@@ -414,7 +486,7 @@
     }
 
     .session-num {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: 56px;
       font-weight: 400;
       color: var(--gold);
@@ -425,15 +497,16 @@
     }
 
     .session-tag {
-      font-size: 12px;
-      letter-spacing: .22em;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .2em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 7px;
+      margin-bottom: 9px;
     }
 
     .session-name {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(26px, 3.2vw, 36px);
       font-weight: 500;
       color: #fff;
@@ -456,18 +529,18 @@
        FOR YOU IF
     ══════════════════════════════ */
     .foryou-section {
-      padding: 100px 28px;
+      padding: 60px 28px;
       max-width: 780px;
       margin: 0 auto;
     }
 
     .foryou-heading {
-      margin-bottom: 52px;
+      margin-bottom: 36px;
       text-align: center;
     }
 
     .foryou-heading h2 {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(28px, 4vw, 46px);
       font-weight: 400;
       color: var(--cream);
@@ -485,7 +558,7 @@
       flex-direction: row;
       align-items: flex-start;
       gap: 20px;
-      padding: 22px 0;
+      padding: 14px 0;
       border-bottom: 1px solid var(--border);
       direction: rtl;
     }
@@ -494,18 +567,18 @@
 
     .foryou-mark {
       color: var(--gold);
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: 20px;
       flex-shrink: 0;
       margin-top: 2px;
     }
 
     .foryou-text {
-      font-family: 'Secular One', sans-serif;
-      font-size: clamp(18px, 2.4vw, 24px);
+      font-family: 'Rubik', sans-serif;
+      font-size: clamp(16px, 2vw, 20px);
       font-weight: 300;
       color: var(--dim);
-      line-height: 1.55;
+      line-height: 1.7;
       text-align: right;
     }
 
@@ -517,8 +590,8 @@
     }
 
     .foryou-cta p {
-      font-family: 'Secular One', sans-serif;
-      font-size: clamp(20px, 2.5vw, 26px);
+      font-family: 'Rubik', sans-serif;
+      font-size: clamp(16px, 2vw, 20px);
       color: var(--dim);
       direction: rtl;
       margin-bottom: 28px;
@@ -528,7 +601,7 @@
        ABOUT
     ══════════════════════════════ */
     .about-section {
-      padding: 100px 28px;
+      padding: 60px 28px;
       max-width: 960px;
       margin: 0 auto;
       position: relative;
@@ -604,7 +677,7 @@
     .about-text .about-bio { text-align: right; max-width: 100%; }
 
     .about-name {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(28px, 4vw, 44px);
       font-weight: 400;
       color: var(--cream);
@@ -613,9 +686,10 @@
     }
 
     .about-title-line {
-      font-size: 13px;
-      letter-spacing: .16em;
-      color: var(--gold);
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: .06em;
+      color: var(--cream);
       margin-bottom: 20px;
       text-align: center;
     }
@@ -626,7 +700,7 @@
     .about-pills-row { display:flex; flex-wrap:wrap; justify-content:center; gap:7px; }
 
     .about-pill-solid {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: 12px;
       color: var(--gold);
       border: 1px solid rgba(196,160,107,.5);
@@ -634,7 +708,7 @@
       border-radius: 3px;
     }
     .about-pill-outline {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: 12px;
       color: var(--gold);
       border: 1px solid rgba(196,160,107,.5);
@@ -658,7 +732,7 @@
     .about-bio em {
       font-style: italic;
       color: var(--gold);
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: 1.1em;
     }
 
@@ -666,7 +740,7 @@
        TECH DETAILS
     ══════════════════════════════ */
     .details-section {
-      padding: 90px 28px 100px;
+      padding: 56px 28px 60px;
       max-width: 700px;
       margin: 0 auto;
     }
@@ -677,7 +751,7 @@
     }
 
     .details-heading h2 {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(28px, 4vw, 44px);
       font-weight: 400;
       color: var(--cream);
@@ -687,54 +761,58 @@
 
     .detail-row {
       display: flex;
-      flex-direction: row-reverse;
-      justify-content: space-between;
-      align-items: baseline;
+      flex-direction: column-reverse;
+      align-items: flex-start;
       padding: 22px 0;
       border-bottom: 1px solid var(--border);
       direction: rtl;
-      gap: 20px;
+      gap: 4px;
     }
 
     .detail-row:last-child { border-bottom: none; }
 
     .detail-key {
-      font-size: 13px;
-      letter-spacing: .18em;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .2em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: rgba(196,160,107,1);
       flex-shrink: 0;
-      white-space: nowrap;
     }
 
     .detail-val {
-      font-family: 'Secular One', sans-serif;
-      font-size: clamp(18px, 2.2vw, 22px);
+      font-family: 'Rubik', sans-serif;
+      font-size: clamp(18px, 2.2vw, 24px);
       color: var(--cream);
       direction: rtl;
-      text-align: left;
+      text-align: right;
+      font-weight: 400;
     }
 
     .detail-val small {
       display: block;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: 13px;
       font-weight: 300;
-      color: var(--faint);
+      color: var(--dim);
       margin-top: 3px;
     }
 
     .price-big {
-      font-family: 'Secular One', sans-serif;
-      font-size: clamp(36px, 5vw, 52px);
-      font-weight: 300;
-      color: var(--gold);
+      font-family: 'Rubik', sans-serif;
+      font-size: clamp(48px, 7vw, 72px);
+      font-weight: 600;
+      color: #fff;
       line-height: 1;
+      text-shadow:
+        0 0 20px rgba(210,170,90,1),
+        0 0 45px rgba(210,170,90,0.75),
+        0 0 80px rgba(210,170,90,0.4);
     }
 
     .pricing-tier { display:flex; flex-direction:column; gap:4px; }
     .pricing-label {
-      font-family: 'Jost', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: 13px;
       font-weight: 300;
       color: var(--faint);
@@ -747,7 +825,7 @@
        CTA FINAL
     ══════════════════════════════ */
     .cta-section {
-      padding: 90px 28px 120px;
+      padding: 56px 28px 70px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -755,25 +833,32 @@
 
     .cta-section::before {
       content:''; position:absolute; inset:0; pointer-events:none;
-      background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(196,160,107,.09), transparent 72%);
+      background:
+        radial-gradient(ellipse 55% 50% at 50% 45%, rgba(196,160,107,0.28) 0%, transparent 65%),
+        radial-gradient(ellipse 80% 70% at 50% 50%, rgba(196,160,107,0.10) 0%, transparent 75%);
     }
 
     .cta-title {
-      font-family: 'Secular One', sans-serif;
+      font-family: 'Rubik', sans-serif;
       font-size: clamp(30px, 5vw, 56px);
-      font-weight: 400;
-      color: var(--cream);
+      font-weight: 500;
+      color: #fff;
       direction: rtl;
       line-height: 1.35;
       margin-bottom: 14px;
       max-width: 580px;
       margin-left: auto;
+      text-shadow:
+        0 0 25px rgba(210,170,90,1),
+        0 0 55px rgba(210,170,90,0.7),
+        0 0 100px rgba(210,170,90,0.4),
+        0 0 160px rgba(210,170,90,0.2);
       margin-right: auto;
     }
 
     .cta-sub {
       font-size: 13px;
-      color: var(--faint);
+      color: var(--dim);
       direction: rtl;
       margin-bottom: 40px;
       letter-spacing: .08em;
@@ -872,20 +957,18 @@
     <div class="hero-heb z">המסע לשינוי מבפנים</div>
 
     <div class="hero-hook z">
-      <div class="hero-hook-line">בחוץ מלחמה.</div>
-      <div class="hero-hook-line">אזעקות באמצע הלילה, חדשות שאי אפשר להפסיק לקרוא.</div>
-      <div class="hero-hook-line">שעות השינה משובשות, הראש עסוק, הגוף בדריכות מתמדת.</div>
-      <div class="hero-hook-line" style="margin-top:20px;">ובתוך כל זה, את עדיין צריכה לקום בבוקר.</div>
-      <div class="hero-hook-line">להיות בנוכחות בשביל עצמך, בשביל המשפחה והעבודה.</div>
-      <div class="hero-hook-line" style="margin-top:20px;">את מבינה שהשקט יגיע מבפנים.</div>
-      <div class="hero-hook-line punch" style="margin-top:20px;">דווקא עכשיו, יותר מתמיד,<br>את נדרשת להיות העוגן של עצמך,<br>קודם לעצמך,<br>ואז לכל מי שקרוב אלייך.</div>
+      <div class="hero-hook-line">שוב אותה תחושה. אותו לופ. אותן מחשבות.</div>
+      <div class="hero-hook-line">את לא מצליחה לראות מוצא אחר.</div>
+      <div class="hero-hook-line" style="margin-top:20px;">נמאס לך לחכות לרגע הנכון.</div>
+      <div class="hero-hook-line">ואת לא בטוחה מה צריך לקרות בשביל לזהות אותו.</div>
+      <div class="hero-hook-line punch" style="margin-top:20px;">יש הסבר למה את חושבת כפי שאת חושבת.<br>השינוי הוא בר השגה, אבל את צריכה קודם להבין את מערכת ההפעלה שלך.<br>רק אז תוכלי לשנות. <span class="glow">לבחור מחדש.</span></div>
     </div>
 
     <div class="hero-pills z">
       <span class="hero-pill">5 מפגשים אונליין</span>
-      <span class="hero-pill">שעה וחצי כל מפגש</span>
+      <span class="hero-pill">שעה ורבע כל מפגש</span>
       <span class="hero-pill">נשים בלבד</span>
-      <span class="hero-pill">ימי ראשון, 20:30 עד 22:00</span>
+      <span class="hero-pill">ימי ראשון, 20:15 עד 21:30</span>
     </div>
 
     <div class="cta-row z">
@@ -894,7 +977,7 @@
         רוצה לדעת אם זה בשבילך? בואי נדבר ←
       </a>
     </div>
-    <div class="hero-deadline z">המפגש הראשון 22.3</div>
+    <div class="hero-deadline z">המפגש הראשון 3.5</div>
 
     <div class="scroll-hint">
       <span>המשיכי</span>
@@ -916,16 +999,16 @@
       כשהכל מסביב תקוע.<br>זה בדיוק הזמן.
     </div>
     <div class="now-body">
-      <strong>הכוח האמיתי נמצא בפנים.</strong><br>
+      <strong><span class="glow">הכוח האמיתי נמצא בפנים.</span></strong><br>
       זו לא עוד "סדנה". זו דרך חיים שתלווה אותך מכאן והלאה.<br>
       <strong>את לא תסתכלי על המציאות אותו דבר.</strong>
     </div>
 
     <div class="now-pills">
       <div class="now-pill"><span class="now-pill-dot"></span>5 מפגשים אונליין</div>
-      <div class="now-pill"><span class="now-pill-dot"></span>שעה וחצי כל מפגש</div>
+      <div class="now-pill"><span class="now-pill-dot"></span>שעה ורבע כל מפגש</div>
       <div class="now-pill"><span class="now-pill-dot"></span>נשים בלבד</div>
-      <div class="now-pill"><span class="now-pill-dot"></span>ימי ראשון, 20:30 עד 22:00</div>
+      <div class="now-pill"><span class="now-pill-dot"></span>ימי ראשון, 20:15 עד 21:30</div>
     </div>
 
     <div class="now-desc">
@@ -946,7 +1029,7 @@
       <div class="scroll-line dim">בערב, הגלילה האינסופית הזו.</div>
       <div class="scroll-line dim">את יודעת שזה לא נותן לך כלום, אבל לא מצליחה לעצור.</div>
       <div class="scroll-line bright" style="margin-top:16px;">בואי תעשי משהו אחר בשביל עצמך הערב.</div>
-      <div class="scroll-line bright">שעה וחצי בשבוע, במקום הגלילה,</div>
+      <div class="scroll-line bright">שעה ורבע בשבוע, במקום הגלילה,</div>
       <div class="scroll-line bright">תלמדי ידע משנה חיים,</div>
       <div class="scroll-line gold">תקבלי כלים פרקטיים שיתמכו בך באמת.</div>
     </div>
@@ -960,8 +1043,9 @@
       <span class="sec-eye">על מה זה</span>
       <div class="what-title">5 מפגשים שמשנים את הדרך שבה את מנהלת את עצמך</div>
       <div class="what-body">
-        <p>95% מהתגובות שלנו הן אוטומטיות , מגיעות מתוכנה שנבנתה לפני שהיה לנו כלי לבחור אחרת. The Inner Shift הוא מסע שבו לומדות להכיר את אותה תוכנה , ואז לשנות אותה.</p>
-        <p>לא "חשיבה חיובית". לא "תהיי אסירת תודה". עבודה פנימית אמיתית, מבוססת מדע , עם כלים שאפשר לקחת לחיים ביומיום.</p>
+        <p>The Inner Shift הוא לא עוד סדנה על חשיבה חיובית.</p>
+        <p>זה ללמוד איך המח שלך עובד, ולהפסיק להיות שבויה בדפוסים שלא בחרת.</p>
+        <p>כשתביני את מערכת ההפעלה שלך, תוכלי לשנות. לבחור אחרת. להפסיק להיות על אוטומט. להפסיק לחכות.</p>
       </div>
     </div>
   </section>
@@ -972,7 +1056,7 @@
   </div>
 
   <!-- ══ 5 SESSIONS ══ -->
-  <section class="sessions-section z">
+  <section class="sessions-section stardust z">
     <div class="sessions-heading">
       <span class="sec-eye">תוכנית המסע</span>
       <h2>מה קורה בכל מפגש</h2>
@@ -982,9 +1066,9 @@
       <div class="session-item">
         <div class="session-num">1</div>
         <div>
-          <div class="session-tag">מפגש ראשון · 22.3</div>
+          <div class="session-tag">מפגש ראשון · 3.5</div>
           <div class="session-name">מערכת ההפעלה</div>
-          <div class="session-desc">להבין מה מנהל אותנו 95% מהזמן , התת מודע, גלי המוח, והתכנות שנבנה לפני גיל 7. לזהות לראשונה את הסיפור שרץ ברקע בלי שבחרת בו.</div>
+          <div class="session-desc">איך התת מודע עובד, גלי מוח ביטא/אלפא/תטא, למה 95% מהתגובות אוטומטיות.</div>
         </div>
       </div>
       <div class="session-divider"></div>
@@ -993,7 +1077,7 @@
         <div>
           <div class="session-tag">מפגש שני</div>
           <div class="session-name">השדה שמסביבי</div>
-          <div class="session-desc">המחשבות שלנו לא נשארות בראש , הן משדרות החוצה. להבין איך מה שאנחנו משדרות מושך אלינו מציאות דומה, ואיך לשנות את השידור.</div>
+          <div class="session-desc">השדה האלקטרומגנטי של הלב, איך רגש משדר החוצה, מה את מושכת לפי מה שאת משדרת.</div>
         </div>
       </div>
       <div class="session-divider"></div>
@@ -1001,8 +1085,8 @@
         <div class="session-num">3</div>
         <div>
           <div class="session-tag">מפגש שלישי</div>
-          <div class="session-name">הלופ</div>
-          <div class="session-desc">לראות את המנגנון המלא , איך אמונה מגבילה יוצרת רגש שיוצר תדר שמייצר שוב ושוב אותה תוצאה. הרגע שבו הכל מתחבר.</div>
+          <div class="session-name">שלושת המוחות</div>
+          <div class="session-desc">שלושה מוחות ראש/לב/מעיים, חוק הייב, קוהרנטיות לב-מח, RAS, המסנן שקובע מה את רואה.</div>
         </div>
       </div>
       <div class="session-divider"></div>
@@ -1010,8 +1094,8 @@
         <div class="session-num">4</div>
         <div>
           <div class="session-tag">מפגש רביעי</div>
-          <div class="session-name">שבירת הלופ</div>
-          <div class="session-desc">כלים פרקטיים לשינוי , שאלות עומק, מנטרה חדשה, מדיטציה שמגלמת את הרגש החדש בגוף. לא להבין שצריך לשנות , לחוות את השינוי.</div>
+          <div class="session-name">יצירת מציאות</div>
+          <div class="session-desc">בלוטת האצטרובל, עיקרון הקוונטום, פלצבו/נוצבו, כוונה + רגש = מציאות.</div>
         </div>
       </div>
       <div class="session-divider"></div>
@@ -1028,53 +1112,13 @@
 
   <div class="section-divider"></div>
 
-  <!-- ══ FOR YOU IF ══ -->
-  <section class="foryou-section z">
-    <div class="foryou-heading">
-      <span class="sec-eye">זה מתאים לך אם</span>
-      <h2>את מכירה את התחושה הזו</h2>
-    </div>
-
-    <div class="foryou-list">
-      <div class="foryou-item">
-        <div class="foryou-mark">✦</div>
-        <div class="foryou-text">את מרגישה שמשהו תקוע , ולא ברור <strong>למה</strong>, כי על הנייר הכל אמור להיות בסדר.</div>
-      </div>
-      <div class="foryou-item">
-        <div class="foryou-mark">✦</div>
-        <div class="foryou-text">את מנהלת את החיים של כולם ו<strong>שלך נדחה לאחרון</strong>.</div>
-      </div>
-      <div class="foryou-item">
-        <div class="foryou-mark">✦</div>
-        <div class="foryou-text">יש לך קול פנימי שחוזר שוב ושוב , על כסף, על ערך עצמי, על אהבה , ו<strong>את לא בחרת בו</strong>.</div>
-      </div>
-      <div class="foryou-item">
-        <div class="foryou-mark">✦</div>
-        <div class="foryou-text">ניסית "חשיבה חיובית" ו<strong>זה לא עבד</strong> , כי ידעת שחסר שם משהו.</div>
-      </div>
-      <div class="foryou-item">
-        <div class="foryou-mark">✦</div>
-        <div class="foryou-text">את <strong>מוכנה לעבוד על עצמך באמת</strong> , לא בשביל להיות מישהי אחרת, אלא לחזור למי שאת.</div>
-      </div>
-    </div>
-
-    <div class="foryou-cta">
-      <p>לא בטוחה אם זה בשבילך?</p>
-      <a href="https://wa.me/972506494499" class="btn-wa">בואי נדבר ←</a>
-    </div>
-  </section>
-
-  <div class="vis-break">
-    <img src="assets/visual-dawn.webp"
-         style="object-position: 30% 75%;" alt="" aria-hidden="true">
-  </div>
-
   <!-- ══ ABOUT ══ -->
   <section class="about-section">
     <div class="about-header z">
       <span class="sec-eye">מי אני</span>
       <div class="about-name">נועה איילנד</div>
       <div class="about-title-line">מחברת בין דרך הרוח לקרקע.</div>
+      <div class="about-title-line" style="font-size:13px; letter-spacing:.06em; color:var(--dim); margin-top:8px;">Holistic Health Coach · INN New York &nbsp;·&nbsp; מורה מוסמכת ליוגה ולמדיטציה &nbsp;·&nbsp; תזונה אינטגרטיבית · NLP &nbsp;·&nbsp; מהנדסת B.Sc</div>
       <div class="about-rule"></div>
     </div>
 
@@ -1110,7 +1154,8 @@
           לאורך כל שנות הניהול שלי אהבתי לעבוד עם אנשים, בסוף זה הדבר האמיתי.</p>
           <p>מתוך אותה אהבה גיליתי עולמות עמוקים יותר שבי וכך לאורך השנים למדתי יוגה, מדיטציה, תזונה הוליסטית, NLP ואימון הוליסטי. לא כי "צריך" כי זה מה שמחיה אותי.</p>
           <p>מה שאני מביאה לעולם הרוחני זה את ה-HiTech שבי. אני לא מאמינה בקסמים ולא ב"תחשבי טוב יהיה טוב". אני חוקרת. מחפשת להבין את הכימיה, את הביולוגיה, את המדע שמאחורי הדברים. השילוב הזה מאפשר לי לייצר משהו שהוא גם עמוק וגם פרקטי.</p>
-          <p><strong>אני מאמינה בשיטה. בשינוי שמגיע מתוך הבנה, לא מתוך קסם.</strong></p>
+          <p><strong>אני מאמינה בשיטה. <span class="glow">בשינוי שמגיע מתוך הבנה,</span> לא מתוך קסם.</strong></p>
+          <p>אני כאן כדי ללמד אותך איך.</p>
         </div>
       </div>
 
@@ -1118,6 +1163,106 @@
   </section>
 
   <div class="section-divider"></div>
+
+  <!-- ══ עם מה תצאי ══ -->
+  <section class="foryou-section stardust z">
+    <div class="foryou-heading">
+      <span class="sec-eye">עם מה תצאי</span>
+      <h2>מה תיקחי מהתהליך</h2>
+    </div>
+    <div class="foryou-list">
+      <div class="foryou-item">
+        <div class="foryou-mark">·</div>
+        <div class="foryou-text">תביני למה 95% מהתגובות שלך אוטומטיות, ולמה שינוי דרך רצון לבד לא עובד</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">·</div>
+        <div class="foryou-text">תדעי לזהות מתי המח מנהל אותך בלי שבחרת, ולעצור את הלופ</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">·</div>
+        <div class="foryou-text">תכירי את שלושת המוחות שלך: ראש, לב, בטן, ואיך לגרום להם לעבוד יחד</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">·</div>
+        <div class="foryou-text">תביני את הקשר בין רגש, מחשבה ומה שאת מושכת לחיים שלך</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">·</div>
+        <div class="foryou-text">תצאי עם כלים פרקטיים לדעת לעבוד עם עצמך</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ מה זה יתן לך ══ -->
+  <section class="foryou-section stardust z">
+    <div class="foryou-heading">
+      <span class="sec-eye">מה זה יתן לך</span>
+      <h2>השינוי שתרגישי</h2>
+    </div>
+    <div class="foryou-list">
+      <div class="foryou-item">
+        <div class="foryou-mark">·</div>
+        <div class="foryou-text">להבין סוף סוף למה את מגיבה כמו שאת מגיבה, בלי להרגיש אשמה</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">·</div>
+        <div class="foryou-text">להפסיק לנהל מלחמה עם עצמך ולהתחיל לעבוד איתך</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">·</div>
+        <div class="foryou-text">לצאת מהאוטומט, ולהגיב מתוך בחירה</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">·</div>
+        <div class="foryou-text">פריצת דרך במקומות שנשארו תקועים, גם אחרי שניסית הכל</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">·</div>
+        <div class="foryou-text">לחזור לעצמך, לא גרסה טובה יותר, את</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══ FOR YOU IF ══ -->
+  <section class="foryou-section z">
+    <div class="foryou-heading">
+      <span class="sec-eye">זה מתאים לך אם</span>
+      <h2>את מכירה את התחושה הזו</h2>
+    </div>
+
+    <div class="foryou-list">
+      <div class="foryou-item">
+        <div class="foryou-mark">✦</div>
+        <div class="foryou-text">את מרגישה תקועה, ולא ברור למה, כי על הנייר הכל אמור להיות בסדר</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">✦</div>
+        <div class="foryou-text">יש מחשבה שחוזרת שוב ושוב שאת לא בחרת בה</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">✦</div>
+        <div class="foryou-text">ניסית חשיבה חיובית וידעת שמשהו חסר שם</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">✦</div>
+        <div class="foryou-text">את מנהלת את כולם, ושלך נדחה לאחרון</div>
+      </div>
+      <div class="foryou-item">
+        <div class="foryou-mark">✦</div>
+        <div class="foryou-text">את מוכנה להבין, לא רק להרגיש, איך את עובדת</div>
+      </div>
+    </div>
+
+    <div class="foryou-cta">
+      <p>לא בטוחה אם זה בשבילך?</p>
+      <a href="https://wa.me/972506494499" class="btn-wa">בואי נדבר ←</a>
+    </div>
+  </section>
 
   <!-- ══ DETAILS ══ -->
   <section class="details-section z">
@@ -1129,12 +1274,12 @@
     <div class="details-rows">
       <div class="detail-row">
         <div class="detail-key">מועד פתיחה</div>
-        <div class="detail-val">ראשון, 22 במרץ 2026</div>
+        <div class="detail-val">ראשון, 3 במאי 2026</div>
       </div>
       <div class="detail-row">
         <div class="detail-key">ימים ושעות</div>
-        <div class="detail-val">ימי ראשון · 20:30 עד 22:00
-          <small>שעון ישראל · שעה וחצי כל מפגש</small>
+        <div class="detail-val">ימי ראשון · 20:15 עד 21:30
+          <small>שעון ישראל · שעה ורבע כל מפגש</small>
         </div>
       </div>
       <div class="detail-row">
@@ -1147,24 +1292,16 @@
           <small>קבוצה קטנה ואינטימית</small>
         </div>
       </div>
-      <div class="detail-row" style="align-items:flex-start;">
+      <div class="detail-row">
         <div class="detail-key">השתתפות במפגשים</div>
-        <div class="detail-val" style="display:flex; flex-direction:column; gap:14px;">
-          <div class="pricing-tier">
-            <div class="pricing-label">מפגש ראשון , בואי לנסות</div>
-            <div class="price-big">₪50</div>
-          </div>
-          <div class="pricing-sep"></div>
-          <div class="pricing-tier">
-            <div class="pricing-label" style="color: var(--gold);">התחברת? מצוין.</div>
-            <div class="pricing-label">ארבעת המפגשים הנותרים — תשלום אחד</div>
-            <div class="price-big" style="font-size:clamp(26px,3vw,36px);">₪250</div>
-          </div>
+        <div class="detail-val">
+          <div class="price-big">₪400 <span style="font-size:0.38em; font-weight:300; color:var(--gold); letter-spacing:.12em; vertical-align:middle;">בלבד</span></div>
+          <small>5 מפגשים · תשלום אחד</small>
         </div>
       </div>
       <div class="detail-row">
         <div class="detail-key">הרשמה עד</div>
-        <div class="detail-val">19 במרץ 2026</div>
+        <div class="detail-val">30 באפריל 2026</div>
       </div>
     </div>
 
@@ -1193,6 +1330,7 @@
 
   <!-- ══ FOOTER ══ -->
   <footer>
+    <p style="font-size:12px; color:var(--dim); margin-bottom:12px;">כל המידע בקורס מבוסס מחקרים ורפרנסים מדעיים.</p>
     <p>The Inner Shift &nbsp;·&nbsp; נועה איילנד &nbsp;·&nbsp; 2026</p>
   </footer>
 
