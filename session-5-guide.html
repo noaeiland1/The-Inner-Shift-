@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Inner Shift · מפגש 5 · מדריך מנחה</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:     #f5f0e8;
+    --gold:      #d29e44;
+    --gold-dim:  rgba(210,158,68,.4);
+    --blush:     rgba(210,120,150,.85);
+    --sage:      rgba(139,184,150,.85);
+    --teal:      rgba(72,210,196,.75);
+    --ink:       #1a1714;
+    --ink-soft:  #2e2a26;
+    --text:      #3a3530;
+    --text-dim:  #6b6560;
+    --border:    rgba(58,53,48,.12);
+  }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: #faf8f4;
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+    font-weight: 300;
+  }
+
+  /* ── PAGE SHELL ── */
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 80px 60px;
+  }
+
+  /* ── DOCUMENT HEADER ── */
+  .doc-header {
+    text-align: center;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 64px;
+  }
+  .doc-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .doc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .doc-subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    letter-spacing: .08em;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 72px;
+  }
+  .section-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── TOPIC GROUP ── */
+  .topic {
+    margin-bottom: 36px;
+  }
+  .topic-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .topic ul {
+    list-style: none;
+    padding: 0;
+  }
+  .topic ul li {
+    position: relative;
+    padding-right: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .topic ul li::before {
+    content: '·';
+    position: absolute;
+    right: 0;
+    color: var(--gold);
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  .topic ul li strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .topic ul li em {
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+
+  /* ── NOTE BOX ── */
+  .note-box {
+    background: rgba(210,158,68,.06);
+    border: 1px solid rgba(210,158,68,.22);
+    border-right: 3px solid var(--gold);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .note-box strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ── MEDITATION CARD ── */
+  .meditation-card {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 10px;
+    padding: 52px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+  .meditation-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 55% at 50% 30%, rgba(210,120,150,.14) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .meditation-card.closing::before {
+    background: radial-gradient(ellipse 70% 55% at 50% 30%, rgba(139,184,150,.16) 0%, transparent 65%);
+  }
+  .meditation-card.backward::before {
+    background: radial-gradient(ellipse 70% 55% at 50% 30%, rgba(210,158,68,.12) 0%, transparent 65%);
+  }
+  .meditation-meta {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: var(--blush);
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .meditation-card.closing .meditation-meta {
+    color: var(--sage);
+  }
+  .meditation-card.backward .meditation-meta {
+    color: rgba(210,158,68,.7);
+  }
+  .meditation-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--cream);
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(245,240,232,.1);
+    position: relative;
+  }
+  .meditation-body {
+    position: relative;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(245,240,232,.88);
+    line-height: 2;
+  }
+  .meditation-body p {
+    margin-bottom: 20px;
+  }
+  .meditation-body p:last-child {
+    margin-bottom: 0;
+  }
+  .meditation-pause {
+    display: block;
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+    font-style: normal;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgba(210,120,150,.55);
+    margin: 28px 0;
+  }
+  .meditation-card.closing .meditation-pause {
+    color: rgba(139,184,150,.5);
+  }
+  .meditation-card.backward .meditation-pause {
+    color: rgba(210,158,68,.45);
+  }
+  .meditation-beat {
+    color: rgba(245,240,232,.4);
+    font-size: 15px;
+  }
+  .meditation-highlight {
+    color: var(--cream);
+    font-style: normal;
+    font-weight: 400;
+  }
+  .meditation-note {
+    display: inline-block;
+    font-family: 'Jost', sans-serif;
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: .06em;
+    color: rgba(245,240,232,.38);
+    margin-top: 4px;
+  }
+
+  /* ── CLOSING FOOTER ── */
+  .doc-footer {
+    margin-top: 72px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+  .doc-footer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--text-dim);
+  }
+  .doc-footer-mark {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-top: 16px;
+  }
+
+  /* ── SPEECH CARD ── */
+  .speech-card {
+    background: rgba(210,158,68,.045);
+    border: 1px solid rgba(210,158,68,.18);
+    border-right: 3px solid rgba(210,158,68,.55);
+    border-radius: 6px;
+    padding: 24px 24px 24px 20px;
+    margin: -8px 0 36px;
+  }
+  .speech-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .28em;
+    text-transform: uppercase;
+    color: rgba(210,158,68,.65);
+    margin-bottom: 16px;
+  }
+  .speech-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.85;
+  }
+  .speech-body p {
+    margin-bottom: 14px;
+  }
+  .speech-body p:last-child {
+    margin-bottom: 0;
+  }
+  .speech-body em {
+    font-style: italic;
+    color: var(--text-dim);
+  }
+  .speech-body strong {
+    font-weight: 500;
+    color: var(--ink-soft);
+    font-style: normal;
+  }
+  .speech-divider {
+    height: 1px;
+    background: rgba(210,158,68,.15);
+    margin: 16px 0;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; font-size: 14px; }
+    .page { padding: 40px 48px; }
+    .meditation-card { background: #1a1714; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="doc-eyebrow">The Inner Shift · Session 05</div>
+    <div class="doc-title">מדריך מנחה</div>
+    <div class="doc-subtitle">פנינות מהמפגש · מדיטציית פתיחה · מדיטציה אחורנה לסיום</div>
+  </div>
+
+  <!-- SECTION 1: PEARLS -->
+  <div class="section">
+    <div class="section-label">חלק ראשון</div>
+    <div class="section-title">פנינות מהשיחה</div>
+
+    <div class="topic">
+      <div class="topic-title">בלוטת האצטרובל — העובדות המבניות</div>
+      <ul>
+        <li>ממוקמת בדיוק במרכז המוח, בגובה העיניים. <strong>אינה מוגנת על ידי מחסום הדם-מח</strong> — כל חומר מגיע אליה ישירות, ללא סינון. זה הופך אותה לרגישה יותר מכל רקמה אחרת במוח.</li>
+        <li>כל מבנה במוח הוא כפול — שתי אמיגדלות, שתי המיספרות, שני היפוקמפוסים. הבלוטה היא <strong>אחת בלבד, בדיוק במרכז</strong>. כאילו הגוף הניח שם משהו שאי אפשר לפצל.</li>
+        <li>משקלה כ-150 מ"ג בלבד — אבל היא מסנכרנת את השעון הביולוגי של כל תא בגוף. <em>קטנה בגודל, גדולה בהשפעה.</em></li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">הקריסטלים הפיזואלקטריים — האנטנה הביולוגית</div>
+      <ul>
+        <li>בתוך הבלוטה נמצאו קריסטלי סידן בצורות גבישיות ייחודיות (Baconnier et al., 2002). הם מגיבים לשדות אלקטרומגנטיים — בדיוק כמו קריסטל קוורץ בשעון.</li>
+        <li><strong>כיוון קליטה:</strong> שדה EM חיצוני (כוונה, רגש, תדר סביבתי) → הקריסטל רוטט → מייצר אות חשמלי שהמח קורא כמידע.</li>
+        <li><strong>כיוון שידור:</strong> כוונה ורגש חזק מהמח → הקריסטל רוטט → שדה EM מוקרן מהגוף החוצה.</li>
+        <li>אנלוגיה שעובדת: <strong>אנטנת WiFi</strong> — קולטת גלי רדיו וממירה לנתונים, ומשדרת נתונים כגלי רדיו. הבלוטה עושה בדיוק את זה — רק עם שדות ביולוגיים.</li>
+      </ul>
+    </div>
+
+    <div class="speech-card">
+      <div class="speech-label">טקסט לאמירה בעל פה · הסבר הגבישים</div>
+      <div class="speech-body">
+        <p>יש בתוך בלוטת האצטרובל גבישים קטנטנים של סידן.<br>גבישים אמיתיים — כמו אבן, כמו מינרל.</p>
+        <p>ולגבישים יש תכונה מיוחדת שנקראת פיזואלקטריות:<br>
+        כשמפעילים עליהם לחץ פיזי — הם מייצרים חשמל.<br>
+        וכשמפעילים עליהם אנרגיה חשמלית — הם רוטטים.<br>
+        הם ממירים בין שתי שפות: <strong>שדות ← חשמל. חשמל ← שדות.</strong></p>
+        <div class="speech-divider"></div>
+        <p>תחשבו על <strong>מיקרופון</strong>.<br>
+        מיקרופון לא "מחליט" לשמוע.<br>
+        הוא פשוט מורכב מחומר שמגיב לגל קול —<br>
+        גורם לו לרטוט, הרטט הופך לאות חשמלי, והאות הולך לרמקול.</p>
+        <p>הבלוטה עושה משהו דומה.<br>
+        שדה אלקטרומגנטי מגיע אליה — שדה מהסביבה, מרגש חזק, מכוונה — והגביש מגיב.<br>
+        לא בבחירה. פיזית.<br>
+        הוא רוטט, ומהרטט נוצר אות שהמח יכול לקרוא.</p>
+        <div class="speech-divider"></div>
+        <p>ולהפך:<br>
+        כשהמח שלך יוצר כוונה ורגש חזקים —<br>
+        הגביש רוטט מבפנים ומקרין שדה אלקטרומגנטי החוצה.<br>
+        כמו WiFi שמשדר גם מקבל.</p>
+        <p>הבלוטה היא לא בלוטה שרק מייצרת הורמונים.<br>
+        יש בה חומר שממיר בין שפות —<br>
+        <strong>בין מה שבפנים לבין מה שבחוץ.</strong></p>
+        <div class="speech-divider"></div>
+        <p><em>ולכן כשאנחנו מדברות על כוונה — זה לא עניין של חשיבה חיובית.<br>
+        יש פה ממש מנגנון ביולוגי שמתרגם את מה שאת מרגישה בפנים לשדה שהגוף מוקרן החוצה.</em></p>
+      </div>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">DMT אנדוגני — ריק סטראסמן ו"מולקולת הרוח"</div>
+      <ul>
+        <li>ריק סטראסמן הוא פסיכיאטר קליני מאוניברסיטת ניו מקסיקו. ניהל את <strong>המחקר הרשמי הראשון</strong> בארה"ב על חומרים פסיכדליים — בהסכמת ה-FDA וה-DEA — ונתן DMT תוך-ורידי ל-60 מתנדבים לאורך 5 שנים.</li>
+        <li>הממצא שלו: האנזימים הנדרשים לייצור DMT נמצאים ממש <strong>בתוך בלוטת האצטרובל</strong>. הגוף מייצר אותו בעצמו — הוא לא רק חומר חיצוני.</li>
+        <li>ההצעה שלו: הבלוטה מפרישה DMT ברגעי לידה, מוות, ומדיטציה עמוקה מאוד — מה שמסביר חוויות שמרגישות "מחוץ למציאות הרגילה". <em>עדיין השערה, אבל חוויות עקביות חוצות תרבויות.</em></li>
+        <li>הספר: <em>DMT: The Spirit Molecule</em> (2001) — תיעוד המחקר, עדויות המשתתפים, והתיאוריה.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">כולם ידעו — שלוש תרבויות, אותה נקודה</div>
+      <ul>
+        <li><strong>מצרים העתיקה (~3000 לפנה"ס):</strong> עין הורוס — סמל של ידע אלוהי וראייה מעבר לנראה. ב-1997 חוקרים גילו שמבנה עין הורוס זהה לחתך הסגיטלי של המוח ברמת הבלוטה.</li>
+        <li><strong>הינדואיזם:</strong> אג'נה צ'אקרה — "העין השלישית", מרכז התפיסה הפנימית. ממוקמת בין הגבות — בגובה הבלוטה.</li>
+        <li><strong>ותיקן ויוון:</strong> פסל אצטרובל ברונזה ענק עומד בכניסה לוותיקן. דקארט (1649) כתב: <em>"הנשמה מופעלת רק בבלוטה זו."</em></li>
+        <li>תרבויות שלא דיברו זו עם זו הצביעו על אותו מקום — לפני שהמדע ידע מה הוא.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">ההסתיידות — מה חוסם את הבלוטה</div>
+      <ul>
+        <li><strong>פלואוריד:</strong> מחקר של Jennifer Luke (2001) מצא ריכוזי פלואוריד גבוהים פי 9 מהסף הבטוח בבלוטה. הוא מצטבר בה יותר מכל רקמה אחרת בגוף. תוצאה: גיבוש קריסטלים של זרחן סידן — ההסתיידות.</li>
+        <li><strong>אור כחול:</strong> מסכים, טלפונים, LED — מדכאים ייצור מלטונין ב-50% עד 90%. ללא מלטונין, הבלוטה מאטה את פעילותה.</li>
+        <li><strong>כרוניק סטרס:</strong> קורטיזול גבוה לאורך זמן מדכא ישירות את הפרשת הבלוטה ופוגע במחזורי השינה.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">השעון הביולוגי — מלטונין וקורטיזול</div>
+      <ul>
+        <li>שני הורמונים שפועלים כמו מאזניים: כשאחד עולה — השני יורד. <strong>קורטיזול</strong> = ערנות, לחץ, פעולה. <strong>מלטונין</strong> = שיקום, תיקון, שינה עמוקה.</li>
+        <li>מלטונין אינו "הורמון שינה" בלבד — הוא מסנכרן את כל המחזורים ההורמונליים, מערכת החיסון, תיקון DNA, והזדקנות תאים. <em>כשנחסם לילה אחר לילה — הגוף מפסיק להתחדש.</em></li>
+        <li>בוקר בריא: קורטיזול עולה בהדרגה → ערנות טבעית. ערב בריא: מלטונין עולה בחושך → שינה עמוקה ותיקון. <strong>שני הורמונים, שתי פרקטיקות.</strong></li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">שני חלונות ביום — הזמנים שהגוף תכנן</div>
+      <ul>
+        <li><strong>חלון הבוקר (30–45 דקות אחרי יקיצה):</strong> גלי המוח עדיין איטיים (אלפא-תטא), האמיגדלה חצי ישנה, קורטיזול בעלייה טבעית. גישה ישירה לתת-מודע — לפני שהיום "נוגע" בנו.</li>
+        <li><strong>חלון הערב (90 דקות לפני שינה):</strong> מלטונין בעלייה, המח עובר לתדרים איטיים, סוגסטיביליות גבוהה. מה שנשתל בחלון הזה — מעובד כל הלילה בשינה.</li>
+        <li>הפרקטיקה זהה בשני החלונות: <strong>כוונה + הכרת תודה + ויזואליזציה עם רגש</strong>. ההבדל הוא בכיוון: הבוקר מכוון לפנים. הערב שותל ומעבד בחוץ.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">האמיגדלה — מדוע חשוב שתהיה רגועה</div>
+      <div class="note-box">
+        <strong>הסבר לקהל:</strong> זו הפעם הראשונה שמזכירים את האמיגדלה בקורס — כדאי לתת כמה מילים לפני שממשיכים.
+      </div>
+      <ul>
+        <li>האמיגדלה היא מבנה קטן (בצורת שקד) שיושב עמוק במוח הלימבי. <strong>תפקידה: לסרוק כל רגע — "יש סכנה? יש איום?"</strong></li>
+        <li>כשהיא פעילה: קורטיזול עולה, הגוף עובר למצב הגנה, פתיחות ללמידה חדשה נחסמת. היא מחזירה אותנו לדפוסים ישנים כי הם "בטוחים וידועים".</li>
+        <li><strong>בבוקר — היא עדיין חצי ישנה.</strong> לכן אפשר לשתול כוונות חדשות לפני שמנגנון ההגנה "מתעורר" ומתחיל לפלטר.</li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">סוגסטיביליות גבוהה — מה זה אומר</div>
+      <ul>
+        <li>סוגסטיביליות = רמת הפתיחות של המח לקבל "עדכונים" בלי לסנן אותם דרך הביקורת המודעת. <strong>כמו מצב היפנוזה קלה.</strong></li>
+        <li>כשסוגסטיביליות גבוהה: הפילטר הביקורתי (PFC) מנומנם, אמונות ודפוסים נגישים לשינוי, מה שנכנס נקלט ישירות לתת-מודע.</li>
+        <li>זה מתרחש טבעית בשני הקצוות של היום: בבוקר (מעבר מתטא לאלפא) ובערב (חזרה לתטא לפני שינה). <em>זאת בדיוק הסיבה שאנשי שיווק ופוליטיקה יודעים לעבוד עם הטלוויזיה בערב.</em></li>
+      </ul>
+    </div>
+
+    <div class="topic">
+      <div class="topic-title">הכלים — שלוש רמות של פרקטיקה</div>
+      <ul>
+        <li><strong>פלאש מדיטציה (2–5 דקות):</strong> לחיצות קצרות לאורך היום. נשימות, כיול, ריסט קורטיזול. לא עמוקה — אבל מצטברת. ניתנת לביצוע בשירותים, בפגישה, ברכב.</li>
+        <li><strong>מדיטציה קצרה (8–15 דקות):</strong> כניסה לאלפא-תטא. ויזואליזציה עם רגש. כאן הבלוטה מתעוררת, הכוונה מתבהרת. כלי הליבה של שני החלונות.</li>
+        <li><strong>מדיטציה עמוקה (20–45 דקות):</strong> כניסה לתטא מלא. גישה לאמונות מגבילות, עיבוד מחדש, חיווט עצבי חדש. <em>כאן קורים השינויים הגדולים.</em></li>
+        <li><strong>הרגש הוא הדלק:</strong> לא התמונה — התחושה. הגוף מגיב לרגש שנוצר עכשיו, לא לציור בראש. "איך אני רוצה להרגיש?" היא השאלה שמניעה יצירת מציאות.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- SECTION 2: OPENING MEDITATION -->
+  <div class="section">
+    <div class="section-label">חלק שני</div>
+    <div class="section-title">מדיטציית פתיחה · רגע של התכווננות</div>
+
+    <div class="meditation-card">
+      <div class="meditation-meta">כ-2 דקות · לפני תחילת התוכן</div>
+      <div class="meditation-title">להניח · להגיע · להכוון</div>
+      <div class="meditation-body">
+
+        <p>מצאו תנוחה נוחה.<br>
+        גב ישר, כתפיים רפויות.<br>
+        ידיים על הברכיים, כפות ידיים פתוחות.</p>
+
+        <p>עצמו עיניים.</p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p>קחו נשימה עמוקה פנימה <span class="meditation-beat">...</span><br>
+        ובנשיפה — הניחו את היום.</p>
+
+        <p>הניחו את הטלפון.<br>
+        הניחו את מה שהיה קודם.<br>
+        הניחו את מה שמחכה אחרי.</p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p>עוד אחת, פנימה <span class="meditation-beat">...</span><br>
+        ובשחרור — תנו לגוף לשקוע.</p>
+
+        <span class="meditation-pause">· שקט — 10 שניות ·</span>
+
+        <p>הרגישו את הרגליים על הרצפה.<br>
+        את הנשימה שעולה ויורדת מעצמה.<br>
+        אתן כאן.</p>
+
+        <p>בשקט בתוככן — שאלו:<br>
+        <span class="meditation-highlight">מה אני מביאה איתי לכאן היום?</span><br>
+        מה אני מוכנה להניח?<br>
+        מה אני פתוחה לקבל?</p>
+
+        <span class="meditation-pause">· שקט קצר ·</span>
+
+        <p><span class="meditation-highlight">כשתהיו מוכנות — פקחו עיניים.</span></p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: BACKWARD MEDITATION -->
+  <div class="section">
+    <div class="section-label">חלק שלישי</div>
+    <div class="section-title">מדיטציה אחורנה לסיום</div>
+
+    <div class="note-box">
+      <strong>מה זו מדיטציה אחורנה?</strong> טכניקת אינטגרציה שבה עוברים דרך המפגש בסדר הפוך — מהרגע הנוכחי חזרה לתחילה. המח מגבש זיכרון בצורה עמוקה יותר כשהוא "חוזר" על חוויה אחורה. משמשת בפסיכולוגיה קוגניטיבית ובמסורות מדיטציה עתיקות כאחד.
+    </div>
+
+    <div class="meditation-card backward">
+      <div class="meditation-meta">כ-5–7 דקות · אחרי שקף "רגע של שיתוף"</div>
+      <div class="meditation-title">מדיטציה אחורנה לסיום · לחזור — ולראות כמה רחוק הלכנו</div>
+      <div class="meditation-body">
+
+        <p>מצאו תנוחה נוחה.<br>
+        עצמו עיניים.</p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p>קחו נשימה עמוקה פנימה <span class="meditation-beat">...</span><br>
+        ובנשיפה — הניחו.</p>
+
+        <p>עוד אחת <span class="meditation-beat">...</span><br>
+        ועוד אחת.</p>
+
+        <span class="meditation-pause">· שקט — 5 שניות ·</span>
+
+        <p>ועכשיו — נסענו אחורה.<br>
+        לא למהר. רגע אחר רגע.</p>
+
+        <span class="meditation-pause">· חזרה ·</span>
+
+        <p>איפה אתן עכשיו? <span class="meditation-beat">...</span><br>
+        כאן, בסוף המפגש.<br>
+        מה אתן מרגישות בגוף ברגע הזה?</p>
+
+        <span class="meditation-pause">· שקט — 5 שניות ·</span>
+
+        <p>נסענו קצת אחורה — לרגע השיתוף.<br>
+        מה עלה שם? מה שמעתן שהדהד?<br>
+        <span class="meditation-highlight">מה בגוף זז?</span></p>
+
+        <span class="meditation-pause">· שקט — 5 שניות ·</span>
+
+        <p>עוד אחורה — לכלים.<br>
+        פלאש. קצר. עמוק.<br>
+        מה תיקחו? איזו פרקטיקה נגעה?</p>
+
+        <span class="meditation-pause">· שקט ·</span>
+
+        <p>עוד אחורה — לשני החלונות.<br>
+        הבוקר. הערב.<br>
+        <span class="meditation-highlight">איזה חלון שלכן היה סגור עד עכשיו?</span></p>
+
+        <span class="meditation-pause">· שקט — 5 שניות ·</span>
+
+        <p>עוד אחורה — לבלוטה הקטנה.<br>
+        האנטנה שיש לכל אחת מכן.<br>
+        מה אתן שולחות ממנה — ברגע הזה?</p>
+
+        <span class="meditation-pause">· שקט ·</span>
+
+        <p>ועכשיו — חזרנו לתחילה.<br>
+        לרגע שנכנסתן לכאן היום.<br>
+        מה הרגשתן אז? <span class="meditation-beat">...</span></p>
+
+        <p>ומה אתן מרגישות עכשיו?</p>
+
+        <span class="meditation-pause">· שקט — 10 שניות ·</span>
+
+        <p>הגוף קלט יותר ממה שהמח רשם.<br>
+        <span class="meditation-highlight">תנו לו זמן לעכל.</span></p>
+
+        <span class="meditation-pause">· נשימה ·</span>
+
+        <p>קחו נשימה אחת עמוקה <span class="meditation-beat">...</span><br>
+        ולאט לאט — בקצב שלכן —<br>
+        <span class="meditation-highlight">חזרו לחדר.</span></p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div class="doc-footer-text">חמישה מפגשים. סיפור ביולוגי אחד שלם. הכל קשור להכל.</div>
+    <div class="doc-footer-mark">The Inner Shift · Session 05 · Integration</div>
+  </div>
+
+</div>
+</body>
+</html>

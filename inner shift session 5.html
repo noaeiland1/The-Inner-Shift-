@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Inner Shift · Session 5 · אינטגרציה</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:#F5F0E8; --cream-dim:rgba(245,240,232,0.55); --cream-faint:rgba(245,240,232,0.28);
+      --gold:#C4A06B; --gold-dim:#A87B4F; --sage:#8BB896; --sage-dim:rgba(139,184,150,0.55);
+      --blush:#D4957A; --blush-dim:rgba(212,149,122,0.55); --border:rgba(245,240,232,0.09);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html,body { width:100%; height:100%; overflow:hidden; background:#050504; font-family:'Jost',sans-serif; }
+    body { display:flex; align-items:center; justify-content:center; }
+    .stage { position:relative; width:min(100vw,177.78vh); height:min(56.25vw,100vh); overflow:hidden; }
+    .slide { position:absolute; inset:0; display:flex; flex-direction:column; opacity:0; transform:translateX(36px); transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1); pointer-events:none; overflow:hidden; background:#080706; color:var(--cream); }
+    .slide.active { opacity:1; transform:translateX(0); pointer-events:all; }
+    .slide.exit   { opacity:0; transform:translateX(-36px); }
+    .snew-line { opacity:0; transform:translateY(10px); transition:opacity .55s ease,transform .55s ease; }
+    .snew-line.visible { opacity:1; transform:translateY(0); }
+    .slide::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 75% 58% at 28% 36%,rgba(210,158,68,.22) 0%,transparent 68%),radial-gradient(ellipse 62% 52% at 74% 66%,rgba(212,149,122,.14) 0%,transparent 62%),radial-gradient(ellipse 50% 44% at 50% 90%,rgba(139,184,150,.10) 0%,transparent 58%); pointer-events:none; z-index:0; }
+    /* SH2 */
+    .sh2 { padding:3.2% 6% 0; flex-shrink:0; }
+    .sh2-inner { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:.75vw; gap:4%; }
+    .sh2-left { display:flex; flex-direction:column; flex-shrink:0; }
+    .sh2-eye { font-size:.75vw; letter-spacing:.3em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.42vw; }
+    .sh2-title { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; line-height:1; color:var(--cream); white-space:nowrap; }
+    .sh2-right { display:flex; flex-direction:column; align-items:stretch; direction:rtl; }
+    .sh2-he { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; font-style:italic; color:rgba(210,158,68,.90); line-height:1.05; text-align:right; }
+    .sh2-he-sub { font-family:'Cormorant Garamond',serif; font-size:1.15vw; font-weight:400; font-style:italic; color:rgba(245,240,232,.65); margin-top:.35vw; text-align:right; line-height:1.4; }
+    .sh2-bar { height:1px; background:linear-gradient(90deg,rgba(210,158,68,.15) 0%,rgba(210,158,68,.55) 30%,rgba(210,158,68,.55) 70%,rgba(210,158,68,.15) 100%); }
+    /* SPUNCH */
+    .spunch { justify-content:center; align-items:center; }
+    .spunch-wrap { position:relative; z-index:1; text-align:center; direction:rtl; display:flex; flex-direction:column; align-items:center; gap:1.4vw; padding:0 10%; }
+    .spunch-line1 { font-family:'Cormorant Garamond',serif; font-size:3.3vw; font-weight:300; color:rgba(245,240,232,.8); line-height:1.3; }
+    .spunch-line2 { font-family:'Cormorant Garamond',serif; font-size:3.7vw; font-weight:400; line-height:1.3; }
+    .spunch-line2.gold  { color:rgba(210,158,68,.95);  text-shadow:0 0 3vw rgba(210,158,68,.5),0 0 8vw rgba(210,158,68,.2); }
+    .spunch-line2.blush { color:rgba(212,149,122,.95); text-shadow:0 0 3vw rgba(212,149,122,.45),0 0 8vw rgba(212,149,122,.18); }
+
+    /* SRECAP */
+    #srecap { justify-content:flex-start; align-items:stretch; }
+    .sconn-body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 7% 3%; gap:.95vw; direction:rtl; }
+    .sconn-item { display:flex; gap:1.4vw; align-items:flex-start; padding:.75vw 1.2vw; border-radius:5px; border-right:2px solid rgba(210,158,68,.2); }
+    .sconn-session { font-size:.58vw; letter-spacing:.18em; text-transform:uppercase; color:rgba(210,158,68,.6); flex-shrink:0; padding-top:.35vw; white-space:nowrap; min-width:9vw; text-align:right; }
+    .sconn-content { display:flex; flex-direction:column; gap:.25vw; }
+    .sconn-title { font-family:'Cormorant Garamond',serif; font-size:1.22vw; font-weight:500; color:var(--cream); }
+    .sconn-desc  { font-size:.8vw; color:rgba(245,240,232,.62); line-height:1.58; }
+    .sconn-punch { font-family:'Cormorant Garamond',serif; font-size:1.42vw; font-weight:300; color:rgba(212,149,122,.88); text-align:center; padding-top:1vw; border-top:1px solid rgba(212,149,122,.1); line-height:1.6; }
+    /* SJOURNEY */
+    #sjourney { justify-content:flex-start; align-items:stretch; }
+    .sjourney-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2.4vw; width:88%; }
+    .sjourney-label { font-size:.68vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(245,240,232,.3); }
+    .sjourney-track { display:flex; align-items:center; direction:ltr; width:100%; }
+    .sjourney-node  { display:flex; flex-direction:column; align-items:center; gap:.5vw; flex:1; }
+    .sjourney-circle { width:3vw; height:3vw; border-radius:50%; border:1px solid rgba(210,158,68,.3); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:1.1vw; color:rgba(245,240,232,.4); }
+    .sjourney-circle.done { border-color:rgba(210,158,68,.6); background:rgba(210,158,68,.08); color:rgba(210,158,68,.8); }
+    .sjourney-circle.current { border-color:rgba(212,149,122,.8); background:rgba(212,149,122,.12); color:rgba(212,149,122,.95); box-shadow:0 0 1.5vw rgba(212,149,122,.3); font-size:1.3vw; width:3.6vw; height:3.6vw; }
+    .sjourney-name  { font-size:.7vw; color:rgba(245,240,232,.4); text-align:center; font-family:'Cormorant Garamond',serif; }
+    .sjourney-name.done { color:rgba(210,158,68,.7); }
+    .sjourney-name.current { color:rgba(212,149,122,.9); font-size:.8vw; }
+    .sjourney-line  { flex:1; height:1px; background:rgba(210,158,68,.18); align-self:center; margin-bottom:2vw; }
+    .sjourney-theme { font-family:'Cormorant Garamond',serif; font-size:1.5vw; font-weight:300; color:rgba(245,240,232,.72); text-align:center; direction:rtl; line-height:1.7; }
+    .sjourney-theme em { font-style:normal; color:rgba(212,149,122,.88); }
+
+    /* JOURNEY STEPS (session-4 style) */
+    .journey-body  { flex:1; display:flex; align-items:center; justify-content:center; gap:1.4vw; padding:0 5% 3%; }
+    .journey-step  { flex:1; display:flex; flex-direction:column; align-items:center; text-align:center; padding:1.6vw 1.2vw; border-radius:6px; border:1px solid var(--border); background:rgba(245,240,232,.02); position:relative; }
+    .journey-step::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:40%; height:1px; background:rgba(210,158,68,.12); }
+    .journey-step.j-done   { border-color:rgba(139,184,150,.28); background:rgba(139,184,150,.03); }
+    .journey-step.j-done::before  { background:rgba(139,184,150,.28); width:60%; }
+    .journey-step.j-active { border-color:rgba(210,158,68,.45); background:rgba(210,158,68,.06); }
+    .journey-step.j-active::before { background:rgba(210,158,68,.55); width:60%; }
+    .jstep-num     { font-family:'Cormorant Garamond',serif; font-size:2.4vw; font-weight:300; color:rgba(210,158,68,.35); line-height:1; margin-bottom:.5vw; }
+    .j-active .jstep-num   { color:rgba(210,158,68,.85); font-size:2.8vw; }
+    .j-done   .jstep-num   { color:rgba(139,184,150,.5); font-size:2.4vw; }
+    .jstep-session { font-size:.65vw; letter-spacing:.2em; text-transform:uppercase; color:var(--cream-faint); margin-bottom:.45vw; }
+    .j-active .jstep-session { color:rgba(210,158,68,.6); }
+    .j-done   .jstep-session { color:rgba(139,184,150,.55); }
+    .jstep-title   { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:500; color:rgba(245,240,232,.5); direction:rtl; line-height:1.3; margin-bottom:.5vw; }
+    .j-active .jstep-title { color:var(--cream); font-size:1.35vw; }
+    .j-done   .jstep-title { color:rgba(245,240,232,.4); font-size:1.25vw; }
+    .jstep-desc    { font-size:.72vw; color:rgba(245,240,232,.28); direction:rtl; line-height:1.5; font-weight:300; }
+    .j-active .jstep-desc  { color:rgba(245,240,232,.55); }
+    .j-done   .jstep-desc  { color:rgba(245,240,232,.25); }
+    .jstep-dot     { width:5px; height:5px; border-radius:50%; background:rgba(210,158,68,.2); margin:.7vw auto 0; }
+    .j-active .jstep-dot   { background:rgba(210,158,68,.7); width:6px; height:6px; }
+    .j-done   .jstep-dot   { background:rgba(139,184,150,.38); }
+    .jstep-check   { font-size:.62vw; letter-spacing:.14em; text-transform:uppercase; color:rgba(139,184,150,.65); margin-top:.35vw; }
+
+    /* KAVANAH */
+    #stune { justify-content:center; align-items:center; }
+    @keyframes kavanah-breathe {
+      0%, 100% { transform:translate(-50%,-50%) scale(1);    opacity:.22; }
+      50%       { transform:translate(-50%,-50%) scale(1.55); opacity:.45; }
+    }
+    .kavanah-circle {
+      position:absolute; width:55vw; height:55vw; border-radius:50%;
+      top:50%; left:50%; transform:translate(-50%,-50%);
+      background:radial-gradient(circle, rgba(220,110,160,.55) 0%, rgba(195,80,130,.28) 42%, rgba(170,60,110,.10) 65%, transparent 80%);
+      animation:kavanah-breathe 5s ease-in-out infinite; pointer-events:none;
+    }
+    .kavanah-circle-2 {
+      width:34vw; height:34vw;
+      background:radial-gradient(circle, rgba(235,130,175,.65) 0%, rgba(210,90,140,.30) 38%, transparent 68%);
+      animation-delay:-.8s;
+    }
+    .kavanah-title { font-family:'Cormorant Garamond',serif; font-size:3.8vw; font-weight:600; color:var(--cream); letter-spacing:.04em; text-align:center; position:relative; z-index:1; margin-bottom:1.4vw; }
+    .kavanah-sub   { font-family:'Jost',sans-serif; font-size:.88vw; font-weight:500; letter-spacing:.2em; text-transform:uppercase; color:rgba(210,120,150,.92); text-align:center; position:relative; z-index:1; direction:rtl; }
+
+    /* STUNE */
+    #stune { justify-content:center; align-items:center; }
+    .stune-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2vw; direction:rtl; text-align:center; }
+    .stune-pre  { font-size:.7vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(245,240,232,.25); }
+    .stune-main { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:300; color:rgba(245,240,232,.82); line-height:1.5; }
+    .stune-main em { font-style:normal; color:rgba(210,158,68,.9); }
+    .stune-breath { font-size:.88vw; color:rgba(245,240,232,.32); letter-spacing:.18em; }
+    .stune-close { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.45); }
+    /* SPINPRE */
+    #spinpre { justify-content:center; align-items:center; }
+    .spinpre-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:1.8vw; direction:rtl; text-align:center; }
+    .spinpre-lead { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; color:rgba(245,240,232,.58); line-height:1.7; }
+    .spinpre-name { font-family:'Cormorant Garamond',serif; font-size:3.8vw; font-weight:300; color:rgba(210,158,68,.95); text-shadow:0 0 3vw rgba(210,158,68,.45),0 0 8vw rgba(210,158,68,.2); letter-spacing:.04em; }
+    .spinh-pre    { font-family:'Cormorant Garamond',serif; font-size:1.6vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.38); }
+    .spinh-punch  { font-family:'Cormorant Garamond',serif; font-size:4.6vw; font-weight:300; color:var(--cream); line-height:1.2; }
+    .spinh-punch em { font-style:normal; color:rgba(212,149,122,.88); text-shadow:0 0 3vw rgba(212,149,122,.25); }
+    .spinh-note   { font-size:.68vw; letter-spacing:.26em; text-transform:uppercase; color:rgba(245,240,232,.2); }
+    /* SPINEAL */
+    #spineal { justify-content:flex-start; align-items:stretch; }
+    .spin-body  { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 6% 3%; gap:.9vw; direction:rtl; }
+    .spin-item  { display:flex; align-items:baseline; gap:1.2vw; padding:.65vw 1.1vw; border-radius:5px; border-right:2px solid rgba(212,149,122,.2); }
+    .spin-dot   { flex-shrink:0; font-size:.88vw; color:rgba(212,149,122,.7); }
+    .spin-text  { font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:400; color:rgba(245,240,232,.85); line-height:1.58; }
+    .spin-text strong { color:var(--cream); font-weight:600; }
+    .spin-text em { font-style:normal; color:rgba(212,149,122,.88); }
+    .spin-src   { font-size:.62vw; color:rgba(245,240,232,.28); letter-spacing:.06em; margin-top:.12vw; }
+    .spin-punch { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-weight:300; color:rgba(245,240,232,.75); text-align:center; padding-top:.9vw; border-top:1px solid rgba(212,149,122,.12); line-height:1.65; }
+    .spin-punch em { font-style:normal; color:rgba(212,149,122,.9); }
+    /* SPINPOWER */
+    #spinpower { justify-content:flex-start; align-items:stretch; }
+    /* SPINMYSTIC */
+    #spinmystic { justify-content:flex-start; align-items:stretch; }
+    .seye-body  { flex:1; display:flex; align-items:center; justify-content:center; padding:0 6% 3%; gap:2.4vw; direction:rtl; }
+    .seye-col   { flex:1; display:flex; flex-direction:column; gap:.8vw; }
+    .seye-tradition { padding:1vw 1.4vw; border-radius:6px; border:1px solid var(--border); background:rgba(245,240,232,.02); direction:rtl; }
+    .seye-trad-name  { font-size:.62vw; letter-spacing:.2em; text-transform:uppercase; color:rgba(212,149,122,.65); margin-bottom:.3vw; }
+    .seye-trad-title { font-family:'Cormorant Garamond',serif; font-size:1.2vw; font-weight:500; color:var(--cream); margin-bottom:.2vw; }
+    .seye-trad-desc  { font-size:.78vw; color:rgba(245,240,232,.48); line-height:1.55; font-weight:300; }
+    .seye-divider { width:1px; background:rgba(245,240,232,.05); align-self:stretch; flex-shrink:0; }
+    .seye-science { flex:1; display:flex; flex-direction:column; justify-content:center; gap:1vw; }
+    .seye-sci-label { font-size:.62vw; letter-spacing:.2em; text-transform:uppercase; color:rgba(139,184,150,.65); }
+    .seye-sci-text  { font-family:'Cormorant Garamond',serif; font-size:1.28vw; font-weight:400; color:rgba(245,240,232,.82); line-height:1.65; }
+    .seye-sci-text em { font-style:normal; color:rgba(139,184,150,.88); }
+    .seye-punch { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-style:italic; color:rgba(212,149,122,.85); text-align:center; padding-top:.9vw; border-top:1px solid rgba(212,149,122,.1); line-height:1.6; }
+    /* SPINCONNECT */
+    #spinconnect, #spinconnect2, #spinconnect3 { justify-content:flex-start; align-items:stretch; }
+    #spinconnect2 .sconn-body, #spinconnect3 .sconn-body { gap:1.4vw; padding-bottom:2%; }
+    #spinconnect2 .sconn-item, #spinconnect3 .sconn-item { padding:.9vw 1.4vw; }
+    #spinconnect2 .sconn-title, #spinconnect3 .sconn-title { font-size:1.38vw; }
+    #spinconnect2 .sconn-desc, #spinconnect3 .sconn-desc { font-size:.92vw; line-height:1.65; }
+    #spinconnect2 .sconn-session, #spinconnect3 .sconn-session { font-size:.65vw; }
+    /* spinconnect: emphasise all rows, r1 even more */
+    #sconn-r1 .sconn-title { font-size:1.38vw; color:rgba(245,240,232,.98); }
+    #sconn-r1 .sconn-desc { font-size:.92vw; color:rgba(245,240,232,.88); }
+    #sconn-r1 { background:rgba(210,158,68,.05); border-right-color:rgba(210,158,68,.55); }
+    #sconn-r2 .sconn-title, #sconn-r3 .sconn-title { font-size:1.35vw; color:rgba(245,240,232,.98); }
+    #sconn-r2 .sconn-desc, #sconn-r3 .sconn-desc { font-size:.9vw; color:rgba(245,240,232,.86); }
+    #sconn-r2, #sconn-r3 { background:rgba(245,240,232,.03); border-right-color:rgba(210,158,68,.38); }
+    /* session labels: bigger, bolder */
+    .sconn-session { font-family:'Cormorant Garamond',serif; font-size:.82vw!important; letter-spacing:.04em!important; text-transform:none!important; font-weight:700; color:rgba(210,158,68,.92)!important; text-shadow:0 0 1.5vw rgba(210,158,68,.3); }
+    #spinconnect2 .sconn-session, #spinconnect3 .sconn-session { font-size:1.05vw!important; padding:.2vw .5vw; background:rgba(210,158,68,.08); border-radius:3px; }
+    /* SSYSTEM */
+    #ssystem { justify-content:center; align-items:center; }
+    .ssystem-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2vw; direction:rtl; text-align:center; padding:0 10%; }
+    .ssystem-note { font-size:.7vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(245,240,232,.28); }
+    .ssystem-main { font-family:'Cormorant Garamond',serif; font-size:2.85vw; font-weight:300; color:rgba(245,240,232,.88); line-height:1.6; }
+    .ssystem-main em { font-style:normal; color:rgba(210,158,68,.95); text-shadow:0 0 2.5vw rgba(210,158,68,.35); }
+    .ssystem-next { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:300; font-style:italic; color:rgba(212,149,122,.88); text-shadow:0 0 2.5vw rgba(212,149,122,.3); }
+    /* SPINACTIVATE */
+    #spinactivate { justify-content:flex-start; align-items:stretch; }
+    .sact-body  { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 6% 3%; gap:.8vw; direction:rtl; }
+    .sact-item  { display:flex; align-items:flex-start; gap:1.1vw; padding:.65vw 1.1vw; border-right:2px solid rgba(139,184,150,.22); border-radius:5px; }
+    .sact-num   { font-family:'Cormorant Garamond',serif; font-size:1.5vw; font-weight:300; color:rgba(139,184,150,.5); flex-shrink:0; line-height:1; padding-top:.2vw; min-width:1.8vw; text-align:right; }
+    .sact-content { display:flex; flex-direction:column; gap:.2vw; }
+    .sact-title { font-family:'Cormorant Garamond',serif; font-size:1.2vw; font-weight:500; color:rgba(139,184,150,.9); }
+    .sact-desc  { font-size:.8vw; color:rgba(245,240,232,.65); line-height:1.58; }
+    .sact-punch { font-family:'Cormorant Garamond',serif; font-size:1.4vw; color:rgba(245,240,232,.88); text-align:center; padding-top:1vw; border-top:1px solid rgba(139,184,150,.1); line-height:1.65; }
+    .sact-punch em { font-style:normal; color:rgba(139,184,150,.92); }
+    /* SFORMULA */
+    #sformula { justify-content:flex-start; align-items:stretch; }
+    .sform-body { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2.4vw; padding:0 6% 3%; direction:rtl; }
+    .sform-label { font-size:.68vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(245,240,232,.28); }
+    .sform-eq { display:flex; align-items:center; justify-content:center; gap:1.4vw; direction:ltr; }
+    .sform-term { display:flex; flex-direction:column; align-items:center; gap:.3vw; }
+    .sform-term-he { font-family:'Cormorant Garamond',serif; font-size:1.32vw; font-weight:500; color:rgba(245,240,232,.88); text-align:center; line-height:1.35; direction:rtl; }
+    .sform-term-he.gold  { color:rgba(210,158,68,.92); }
+    .sform-term-he.blush { color:rgba(212,149,122,.92); }
+    .sform-term-he.sage  { color:rgba(139,184,150,.92); }
+    .sform-op { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:300; color:rgba(245,240,232,.22); }
+    .sform-equals { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:300; color:rgba(245,240,232,.3); }
+    .sform-result { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:400; color:rgba(212,149,122,.95); text-shadow:0 0 3vw rgba(212,149,122,.35); }
+    .sform-note { font-size:.82vw; color:rgba(245,240,232,.35); text-align:center; line-height:1.7; direction:rtl; }
+    /* ══════════════════════════════════
+       SINTEG · ארגז כלים
+    ══════════════════════════════════ */
+    #sinteg { justify-content:flex-start; align-items:stretch; }
+    .stoolkit-body { flex:1; display:flex; flex-direction:row-reverse; gap:0; padding:1% 3% 1.5%; align-items:stretch; }
+    .stoolkit-col  { flex:1; display:flex; flex-direction:column; gap:.5vw; padding:.6vw 1.4vw; }
+    .stoolkit-col-label { font-size:.62vw; letter-spacing:.22em; text-transform:uppercase; color:rgba(210,158,68,.75); margin-bottom:.4vw; padding-bottom:.4vw; border-bottom:1px solid rgba(210,158,68,.12); text-align:right; direction:rtl; font-weight:500; }
+    .stoolkit-divider { width:1px; background:rgba(245,240,232,.05); align-self:stretch; flex-shrink:0; margin:.5vw 0; }
+    .stoolkit-tool { display:flex; gap:.8vw; align-items:flex-start; padding:.5vw .7vw; border-radius:4px; direction:rtl; border-right:2px solid rgba(210,158,68,.12); }
+    .stoolkit-num  { font-family:'Cormorant Garamond',serif; font-size:1.1vw; font-weight:500; color:rgba(210,158,68,.55); flex-shrink:0; min-width:1.4vw; text-align:center; padding-top:.1vw; }
+    .stoolkit-content { display:flex; flex-direction:column; gap:.15vw; }
+    .stoolkit-title { font-family:'Cormorant Garamond',serif; font-size:1.08vw; font-weight:500; color:rgba(245,240,232,.92); line-height:1.2; }
+    .stoolkit-desc  { font-size:.72vw; color:rgba(245,240,232,.52); line-height:1.55; font-weight:300; }
+    /* SCLOSE */
+    #sclose { justify-content:center; align-items:center; }
+    .sclose-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2.8vw; direction:rtl; text-align:center; padding:0 12%; }
+    .sclose-tag  { font-size:.68vw; letter-spacing:.32em; text-transform:uppercase; color:rgba(212,149,122,.4); }
+    .sclose-main { font-family:'Cormorant Garamond',serif; font-size:2.6vw; font-weight:300; color:rgba(245,240,232,.85); line-height:1.6; }
+    .sclose-main em { font-style:normal; color:rgba(210,158,68,.92); }
+    .sclose-heart { display:flex; flex-direction:column; align-items:center; gap:1.1vw; }
+    @keyframes heart-pulse {
+      0%,100% { transform:scale(1);    filter:drop-shadow(0 0 1.4vw rgba(220,100,110,.52)) drop-shadow(0 0 3vw rgba(200,70,85,.25)); }
+      50%      { transform:scale(1.10); filter:drop-shadow(0 0 2.4vw rgba(230,115,125,.75)) drop-shadow(0 0 5.5vw rgba(210,80,95,.42)); }
+    }
+    .sclose-heart-svg { width:6vw; height:auto; animation:heart-pulse 3.2s ease-in-out infinite; }
+    .sclose-heart-text { font-family:'Cormorant Garamond',serif; font-size:1.95vw; font-weight:400; font-style:italic; color:rgba(245,240,232,.82); letter-spacing:.08em; text-shadow:0 0 2.5vw rgba(212,149,122,.25); }
+    /* ══ DESIGN ENHANCEMENTS ══ */
+
+    /* 2 – SRECAP colored glowing boxes */
+    #srecap .sconn-item { border-radius:8px; border-right-width:3px; }
+    #srecap-r1 { border-right-color:rgba(210,158,68,.9)!important; background:linear-gradient(120deg,rgba(210,158,68,.18) 0%,rgba(210,158,68,.07) 45%,transparent 72%); }
+    #srecap-r2 { border-right-color:rgba(70,192,186,.9)!important; background:linear-gradient(120deg,rgba(70,192,186,.18) 0%,rgba(70,192,186,.07) 45%,transparent 72%); }
+    #srecap-r3 { border-right-color:rgba(212,140,80,.9)!important; background:linear-gradient(120deg,rgba(212,140,80,.18) 0%,rgba(212,140,80,.07) 45%,transparent 72%); }
+    #srecap-r4 { border-right-color:rgba(195,90,90,.9)!important; background:linear-gradient(120deg,rgba(195,90,90,.18) 0%,rgba(195,90,90,.07) 45%,transparent 72%); }
+    #srecap .sconn-session { font-family:'Cormorant Garamond',serif; font-size:1.25vw!important; letter-spacing:.04em!important; text-transform:none!important; font-weight:700; min-width:12vw; }
+    #srecap-r1 .sconn-session { color:rgba(210,158,68,.98)!important; text-shadow:0 0 2vw rgba(210,158,68,.4); }
+    #srecap-r2 .sconn-session { color:rgba(70,192,186,.98)!important; text-shadow:0 0 2vw rgba(70,192,186,.4); }
+    #srecap-r3 .sconn-session { color:rgba(212,140,80,.98)!important; text-shadow:0 0 2vw rgba(212,140,80,.4); }
+    #srecap-r4 .sconn-session { color:rgba(195,90,90,.98)!important; text-shadow:0 0 2vw rgba(195,90,90,.4); }
+    #srecap-r1 .sconn-title { text-shadow:0 0 28px rgba(210,158,68,.35); }
+    #srecap-r2 .sconn-title { text-shadow:0 0 28px rgba(70,192,186,.35); }
+    #srecap-r3 .sconn-title { text-shadow:0 0 28px rgba(212,140,80,.35); }
+    #srecap-r4 .sconn-title { text-shadow:0 0 28px rgba(195,90,90,.35); }
+
+    /* 3 – Brighter session/context labels everywhere */
+    .sconn-session { color:rgba(210,158,68,.88)!important; font-weight:600; font-size:.65vw!important; letter-spacing:.16em!important; }
+
+    /* 4 – Keyword glow in spinpre */
+    .spinpre-fact-text strong { color:rgba(210,158,68,.98); text-shadow:0 0 18px rgba(210,158,68,.45),0 0 6px rgba(210,158,68,.25); }
+
+    /* 5 – Keyword glow in spineal (מלטונין, DMT, קריסטלים) */
+    #spineal .spin-text strong { display:inline-block; color:rgba(245,240,232,1); background:rgba(210,158,68,.1); border-radius:4px; padding:0 .4em; box-shadow:0 0 14px rgba(210,158,68,.2); }
+
+    /* 6 – Heading glow in spinportal (DMT — השער? etc.) */
+    #spinportal .spin-text strong { display:inline-block; color:rgba(210,158,68,.98); text-shadow:0 0 20px rgba(210,158,68,.5),0 0 8px rgba(210,158,68,.3); }
+
+    /* ══ SBIOFLOW opener ══ */
+    #sbioflow { justify-content:center; align-items:center; }
+    .sbioflow-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2.4vw; direction:rtl; text-align:center; padding:0 8%; }
+    .sbioflow-title { font-family:'Cormorant Garamond',serif; font-size:5.8vw; font-weight:300; color:rgba(210,158,68,.95); text-shadow:0 0 5vw rgba(210,158,68,.3),0 0 12vw rgba(210,158,68,.12); letter-spacing:.04em; line-height:1; }
+    .sbioflow-bar { width:7vw; height:1px; background:linear-gradient(90deg,transparent,rgba(210,158,68,.45),transparent); }
+    .sbioflow-items { display:flex; align-items:flex-start; justify-content:center; gap:2.8vw; direction:rtl; }
+    .sbioflow-item { display:flex; flex-direction:column; align-items:center; gap:.35vw; }
+    .sbioflow-item-text { font-family:'Cormorant Garamond',serif; font-size:1.18vw; font-weight:400; color:rgba(245,240,232,.68); line-height:1.4; }
+    .sbioflow-item-sub { font-family:'Cormorant Garamond',serif; font-size:.88vw; color:rgba(210,158,68,.6); font-style:italic; }
+    .sbioflow-sep { font-size:1.8vw; color:rgba(245,240,232,.1); padding-top:.1vw; }
+
+    /* ══ SPMORNING — warm sunray glow ══ */
+    .spmorning-glow {
+      position:absolute; inset:0; pointer-events:none; z-index:0;
+      background:
+        radial-gradient(ellipse 60% 55% at 92% 6%, rgba(255,200,85,.12) 0%, rgba(240,170,55,.05) 38%, transparent 65%),
+        radial-gradient(ellipse 32% 28% at 96% 2%, rgba(255,225,130,.08) 0%, transparent 52%),
+        linear-gradient(218deg, rgba(255,210,95,.055) 0%, transparent 38%),
+        linear-gradient(228deg, rgba(255,200,80,.05) 0%, transparent 36%),
+        linear-gradient(238deg, rgba(255,210,100,.06) 0%, transparent 40%),
+        linear-gradient(248deg, rgba(255,195,75,.045) 0%, transparent 36%),
+        linear-gradient(258deg, rgba(255,205,90,.05) 0%, transparent 38%);
+    }
+
+    /* ══ SPEVENING — midnight blue from top-right, scattered stars ══ */
+    .spevening-deco {
+      position:absolute; inset:0; pointer-events:none; z-index:0;
+      background:
+        radial-gradient(ellipse 80% 72% at 102% -2%, rgba(28,52,175,.55) 0%, rgba(18,38,140,.28) 38%, transparent 68%),
+        radial-gradient(ellipse 48% 42% at 100%  0%, rgba(48,72,210,.38) 0%, transparent 52%),
+        radial-gradient(ellipse 28% 26% at 98%   1%, rgba(68,95,230,.22) 0%, transparent 44%);
+    }
+    /* stars — anchored top-left, offsets cover full slide */
+    .spevening-deco::after {
+      content:''; position:absolute; pointer-events:none;
+      top:0; left:0;
+      width:2px; height:2px; border-radius:50%;
+      background:rgba(242,246,255,.90);
+      box-shadow:
+        /* right zone — near the blue glow */
+        87vw  9vh rgba(242,246,255,.85),
+        80vw  5vh rgba(240,244,255,.78),
+        74vw 14vh rgba(236,242,255,.70),
+        91vw 18vh rgba(240,245,255,.75),
+        76vw 22vh rgba(235,241,255,.65),
+        83vw 30vh rgba(238,243,255,.58),
+        /* center band */
+        62vw  7vh rgba(234,240,255,.68),
+        57vw 20vh rgba(232,238,255,.58),
+        66vw 32vh rgba(230,237,255,.52),
+        48vw  5vh rgba(235,241,255,.62),
+        53vw 38vh rgba(228,235,255,.48),
+        70vw 42vh rgba(230,237,255,.50),
+        /* left zone */
+        38vw 10vh rgba(232,238,255,.55),
+        28vw 18vh rgba(230,236,255,.50),
+        18vw  8vh rgba(234,240,255,.58),
+        32vw 30vh rgba(228,235,255,.44),
+        14vw 24vh rgba(230,237,255,.52),
+        42vw 44vh rgba(226,233,255,.40),
+        22vw 40vh rgba(228,235,255,.42),
+        /* bright accent stars with strong glow */
+        85vw  6vh rgba(250,252,255,.95),
+        85vw  6vh 5px 2px rgba(210,222,255,.35),
+        72vw 10vh rgba(248,251,255,.90),
+        72vw 10vh 5px 2px rgba(210,220,255,.30),
+        60vw  4vh rgba(248,250,255,.88),
+        60vw  4vh 4px 1px rgba(212,222,255,.28),
+        44vw  8vh rgba(246,250,255,.82),
+        44vw  8vh 4px 1px rgba(212,220,255,.24);
+    }
+
+    /* ══ SBADMORNING — split layout ══ */
+    #sbadmorning { flex-direction:row; direction:rtl; }
+    .sbadm-right { position:relative; z-index:1; width:40%; display:flex; flex-direction:column; justify-content:center; align-items:flex-end; padding:8% 2% 8% 5%; text-align:right; }
+    .sbadm-eyebrow { font-family:'Jost',sans-serif; font-size:.62vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(210,158,68,.5); margin-bottom:1.4vw; }
+    .sbadm-title { font-family:'Cormorant Garamond',serif; font-size:3.0vw; font-weight:300; color:rgba(245,240,232,.92); line-height:1.55; direction:rtl; }
+    .sbadm-title em { font-style:italic; color:rgba(210,158,68,.82); }
+    .sbadm-divider { position:relative; z-index:1; width:1px; flex-shrink:0; align-self:stretch; background:linear-gradient(180deg, transparent 5%, rgba(210,158,68,.5) 22%, rgba(210,158,68,.5) 78%, transparent 95%); }
+    .sbadm-left { position:relative; z-index:1; flex:1; overflow:hidden; }
+    .sbadm-word { position:absolute; font-family:'Cormorant Garamond',serif; color:rgba(245,240,232,.42); direction:rtl; white-space:nowrap; }
+    .sbad-overlay { position:absolute; inset:0; z-index:10; background:rgba(5,5,4,.9); display:flex; align-items:center; justify-content:center; }
+    .sbad-punch { font-family:'Cormorant Garamond',serif; font-size:3.8vw; font-weight:300; color:rgba(245,240,232,.88); text-align:center; direction:rtl; line-height:1.55; }
+    .sbad-punch em { font-style:normal; color:rgba(212,149,122,.95); text-shadow:0 0 3vw rgba(212,149,122,.6),0 0 7vw rgba(212,149,122,.28); }
+    /* ══ SBADEVE — calm evening chaos ══ */
+    #sbadeve { justify-content:center; align-items:center; }
+    .sbadeve-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2.2vw; direction:rtl; text-align:center; padding:0 12%; }
+    .sbadeve-q { font-family:'Cormorant Garamond',serif; font-size:2.4vw; font-weight:300; color:rgba(245,240,232,.82); line-height:1.5; }
+    .sbadeve-items { display:flex; flex-wrap:wrap; justify-content:center; gap:.9vw 1.8vw; }
+    .sbadeve-item { font-family:'Cormorant Garamond',serif; font-size:1.15vw; color:rgba(245,240,232,.52); padding:.3vw .75vw; border-radius:3px; border:1px solid rgba(245,240,232,.08); }
+    .sbadeve-punch { font-family:'Cormorant Garamond',serif; font-size:1.72vw; font-weight:400; color:rgba(212,149,122,.92); text-shadow:0 0 2.5vw rgba(212,149,122,.4); line-height:1.7; }
+    .sbadeve-punch span { font-size:.85em; font-style:normal; color:rgba(245,240,232,.55); display:block; margin-top:.4vw; }
+    /* ══ SWINDOWSLOST ══ */
+    #swindowslost { justify-content:center; align-items:center; }
+    .swindow-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2.8vw; direction:rtl; text-align:center; padding:0 10%; }
+    .swindow-main { font-family:'Cormorant Garamond',serif; font-size:2.75vw; font-weight:300; color:rgba(245,240,232,.88); line-height:1.6; }
+    .swindow-main em { font-style:normal; color:rgba(210,158,68,.95); text-shadow:0 0 2.5vw rgba(210,158,68,.38); }
+    .swindow-sub { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.58); line-height:1.75; }
+    /* NAV */
+    .nav { position:fixed; bottom:14px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:10px; z-index:1000; background:rgba(5,5,4,.7); padding:6px 16px; border-radius:40px; backdrop-filter:blur(16px); border:1px solid var(--border); }
+    .nav button { background:none; border:1px solid rgba(255,255,255,.15); color:rgba(255,255,255,.7); padding:4px 13px; border-radius:20px; cursor:pointer; font-family:'Jost',sans-serif; font-size:11px; letter-spacing:.06em; transition:all .2s; }
+    .nav button:hover { background:rgba(255,255,255,.07); }
+    .ctr  { color:rgba(255,255,255,.3); font-size:11px; font-family:'Jost',sans-serif; letter-spacing:.1em; min-width:44px; text-align:center; }
+    .dots { display:flex; gap:5px; align-items:center; }
+    .dot  { width:4px; height:4px; border-radius:50%; background:rgba(255,255,255,.15); transition:all .3s; cursor:pointer; }
+    .dot.on { background:var(--gold); width:14px; border-radius:2px; }
+    /* WATERMARK */
+    .watermark { position:fixed; bottom:1.6vw; right:2vw; z-index:999; display:flex; align-items:center; gap:.55vw; opacity:.58; pointer-events:none; direction:rtl; }
+    .watermark svg { width:2.4vw; height:auto; flex-shrink:0; }
+    .watermark-name { font-family:'Cormorant Garamond',serif; font-size:.75vw; font-weight:600; letter-spacing:.22em; color:#d29e44; text-transform:uppercase; white-space:nowrap; }
+
+    /* ══ SNDEPRE ══ */
+    #sndepre { justify-content:center; align-items:center; }
+    .sndepre-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2vw; direction:rtl; text-align:center; padding:0 8%; }
+    .sndepre-tag  { font-size:.7vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(212,149,122,.45); }
+    .sndepre-q    { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:300; color:rgba(245,240,232,.72); line-height:1.6; }
+    .sndepre-moments { display:flex; gap:3vw; align-items:flex-start; justify-content:center; }
+    .sndepre-moment  { display:flex; flex-direction:column; align-items:center; gap:.4vw; }
+    .sndepre-icon    { font-size:1.5vw; color:rgba(212,149,122,.55); }
+    .sndepre-name    { font-family:'Cormorant Garamond',serif; font-size:1.18vw; font-weight:500; color:rgba(245,240,232,.85); }
+    .sndepre-desc    { font-size:.72vw; color:rgba(245,240,232,.38); line-height:1.5; max-width:10vw; }
+    .sndepre-punch   { font-family:'Cormorant Garamond',serif; font-size:1.52vw; font-weight:300; color:rgba(212,149,122,.88); line-height:1.7; }
+    /* ══ SNDE ══ */
+    #snde { justify-content:flex-start; align-items:stretch; }
+    .snde-body { flex:1; display:flex; gap:1.8vw; padding:1.5% 6% 2%; direction:rtl; }
+    .snde-col  { flex:1.1; display:flex; flex-direction:column; gap:.7vw; justify-content:center; }
+    .snde-item { padding:.65vw 1vw; border-right:2px solid rgba(212,149,122,.2); border-radius:5px; }
+    .snde-label { font-size:.6vw; letter-spacing:.2em; text-transform:uppercase; color:rgba(212,149,122,.55); margin-bottom:.22vw; }
+    .snde-text  { font-family:'Cormorant Garamond',serif; font-size:1.12vw; font-weight:400; color:rgba(245,240,232,.85); line-height:1.62; }
+    .snde-text em { font-style:normal; color:rgba(212,149,122,.9); }
+    .snde-divider { width:1px; background:rgba(245,240,232,.06); align-self:stretch; flex-shrink:0; }
+    .snde-connect { flex:1; display:flex; flex-direction:column; justify-content:center; gap:1.1vw; }
+    .snde-connect-label { font-size:.62vw; letter-spacing:.22em; text-transform:uppercase; color:rgba(139,184,150,.55); }
+    .snde-connect-text { font-family:'Cormorant Garamond',serif; font-size:1.18vw; font-weight:400; color:rgba(245,240,232,.78); line-height:1.75; }
+    .snde-connect-text em { font-style:normal; color:rgba(139,184,150,.9); }
+    .snde-src { font-size:.6vw; color:rgba(245,240,232,.25); letter-spacing:.06em; margin-top:.5vw; }
+    .snde-punch { font-family:'Cormorant Garamond',serif; font-size:1.28vw; font-weight:300; font-style:italic; color:rgba(212,149,122,.85); text-align:center; padding-top:.9vw; border-top:1px solid rgba(212,149,122,.1); line-height:1.65; direction:rtl; }
+
+    /* ══ S1 OPENER (same as session 4) ══ */
+    #sopen5 { justify-content:center; align-items:center; padding:6%; }
+    .s1-top { position:relative; z-index:1; text-align:center; margin-bottom:3.2vw; }
+    .s1-session-num { font-family:'Cormorant Garamond',serif; font-size:1.15vw; letter-spacing:.32em; text-transform:uppercase; color:rgba(210,158,68,.92); margin-bottom:.9vw; font-weight:500; text-shadow:0 0 22px rgba(210,158,68,.35); }
+    .s1-session-he  { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; color:rgba(245,240,232,.55); direction:rtl; }
+    .s1-rule-top    { width:40px; height:1px; background:rgba(210,158,68,.35); margin:1.5vw auto 0; }
+    .s1-block  { text-align:center; position:relative; z-index:1; }
+    .s1-main   { font-family:'Cormorant Garamond',serif; font-size:8.4vw; font-weight:300; color:#F5F0E8; letter-spacing:-.01em; line-height:1; margin-bottom:.5vw; }
+    .s1-main em { font-style:normal; font-weight:600; color:rgba(210,158,68,.85); }
+    .s1-tagline { font-size:.9vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(245,240,232,.3); margin-top:1.4vw; }
+
+    /* ══ RECAP 4-COLUMN ══ */
+    .recap-body { flex:1; display:flex; flex-direction:row-reverse; gap:0; padding:1.2% 4% 1.8%; }
+    .recap-col  { flex:1; display:flex; flex-direction:column; gap:.28vw; padding:0 1.6%; }
+    .recap-col-label { font-size:.68vw; letter-spacing:.2em; text-transform:uppercase; margin-bottom:.5vw; padding-bottom:.4vw; border-bottom:1px solid rgba(245,240,232,.1); text-align:right; direction:rtl; font-weight:500; }
+    .recap-col.s1-col .recap-col-label { color:rgba(210,158,68,.98); }
+    .recap-col.s2-col .recap-col-label { color:rgba(139,184,150,.98); }
+    .recap-col.s3-col .recap-col-label { color:rgba(212,149,122,.98); }
+    .recap-col.s4-col .recap-col-label { color:rgba(196,160,107,.98); }
+    .recap-divider { width:1px; background:rgba(245,240,232,.05); align-self:stretch; flex-shrink:0; margin:1vw 0; }
+    .sum-item  { display:flex; align-items:baseline; gap:.7vw; padding:.28vw .7vw; border-radius:3px; direction:rtl; }
+    .sum-mark  { flex-shrink:0; font-size:.68vw; color:rgba(210,158,68,.7); }
+    .sum-text  { font-size:.78vw; color:rgba(245,240,232,.72); line-height:1.55; font-family:'Cormorant Garamond',serif; font-size:.9vw; }
+
+    /* ══ SLAYERS ══ */
+    #slayers { justify-content:flex-start; align-items:stretch; }
+    .slayers-body { flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 6% 2%; gap:.65vw; direction:rtl; }
+    .slayer      { display:flex; align-items:center; gap:1.4vw; padding:.72vw 1.3vw; border-radius:6px; border-right:3px solid transparent; transition:all .4s; }
+    .slayer.base { border-color:rgba(210,158,68,.7); background:rgba(210,158,68,.05); }
+    .slayer.l2   { border-color:rgba(139,184,150,.5); background:rgba(139,184,150,.03); }
+    .slayer.l3   { border-color:rgba(212,149,122,.5); background:rgba(212,149,122,.03); }
+    .slayer.l4   { border-color:rgba(196,160,107,.5); background:rgba(196,160,107,.03); }
+    .slayer.l5   { border-color:rgba(245,240,232,.3); background:rgba(245,240,232,.02); }
+    .slayer-num  { font-family:'Cormorant Garamond',serif; font-size:1.8vw; font-weight:300; color:rgba(245,240,232,.2); flex-shrink:0; min-width:2.2vw; text-align:right; }
+    .slayer-content { display:flex; flex-direction:column; gap:.18vw; flex:1; }
+    .slayer-title { font-family:'Cormorant Garamond',serif; font-size:1.12vw; font-weight:500; color:rgba(245,240,232,.9); }
+    .slayer.base .slayer-title { color:rgba(210,158,68,.95); }
+    .slayer.l2   .slayer-title { color:rgba(139,184,150,.92); }
+    .slayer.l3   .slayer-title { color:rgba(212,149,122,.92); }
+    .slayer-desc  { font-size:.78vw; color:rgba(245,240,232,.52); line-height:1.55; }
+    .slayer-tag   { font-size:.6vw; letter-spacing:.18em; text-transform:uppercase; color:rgba(245,240,232,.22); flex-shrink:0; min-width:8vw; text-align:left; }
+    .slayers-punch { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:300; color:rgba(245,240,232,.72); text-align:center; padding-top:.8vw; border-top:1px solid rgba(210,158,68,.12); line-height:1.65; direction:rtl; }
+    .slayers-punch em { font-style:normal; color:rgba(210,158,68,.9); }
+
+    /* ══ SPINPRE IMAGE LAYOUT ══ */
+    #spinpre { justify-content:flex-start; align-items:stretch; }
+    .spinpre-layout { flex:1; display:flex; direction:rtl; overflow:hidden; }
+    .spinpre-img-side { width:44%; display:flex; align-items:center; justify-content:center; padding:3% 4%; border-left:1px solid rgba(210,158,68,.07); background:rgba(0,10,30,.15); }
+    .spinpre-img-box { width:88%; border-radius:10px; overflow:hidden; background:rgba(245,243,240,.96); padding:4% 6%; box-shadow:0 0 3vw rgba(0,0,0,.35), 0 0 0 1px rgba(210,158,68,.12); }
+    .spinpre-img-box img { width:100%; height:auto; object-fit:contain; display:block; filter:brightness(.97) contrast(1.02) saturate(.9); }
+    .spinpre-facts-side { flex:1; display:flex; flex-direction:column; justify-content:center; padding:3.5% 5% 3.5% 4%; gap:1vw; }
+    .spinpre-eyebrow { font-family:'Cormorant Garamond',serif; font-size:1.65vw; font-weight:500; color:rgba(210,158,68,.95); text-shadow:0 0 2.5vw rgba(210,158,68,.45),0 0 .8vw rgba(210,158,68,.2); margin-bottom:.8vw; direction:rtl; letter-spacing:.03em; }
+    .spinpre-fact { display:flex; gap:1.1vw; align-items:baseline; padding:.75vw 1.2vw; border-right:2px solid rgba(210,158,68,.22); border-radius:5px; }
+    .spinpre-fact-dot { font-size:.9vw; color:rgba(210,158,68,.75); flex-shrink:0; }
+    .spinpre-fact-text { font-family:'Cormorant Garamond',serif; font-size:1.22vw; font-weight:400; color:rgba(245,240,232,.85); line-height:1.62; }
+    .spinpre-fact-text strong { color:var(--cream); font-weight:600; }
+    .spinpre-fact-text em { font-style:normal; color:rgba(210,158,68,.92); }
+
+    /* ══ SPINMY 3-COL ══ */
+    .spinmy-simple { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1.5% 8% 1%; gap:2vw; }
+    .spinmy-eye-wrap { display:flex; flex-direction:column; align-items:center; gap:.9vw; }
+    .spinmy-eye-svg { width:22vw; height:auto; filter:drop-shadow(0 0 2.5vw rgba(210,158,68,.22)); }
+    .spinmy-eye-photo { width:11vw; height:auto; border-radius:6px; object-fit:contain; filter:brightness(.92) contrast(1.05) saturate(.9); box-shadow:0 0 3vw rgba(210,158,68,.18), 0 0 .5vw rgba(0,0,0,.6); border:1px solid rgba(210,158,68,.15); }
+    .spinmy-eye-label { font-family:'Jost',sans-serif; font-size:.62vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(210,158,68,.62); text-align:center; }
+    .spinmy-cultures { display:flex; flex-direction:column; gap:.9vw; width:100%; }
+    .spinmy-culture-line { font-family:'Cormorant Garamond',serif; font-size:1.02vw; color:rgba(245,240,232,.72); line-height:1.65; direction:rtl; text-align:right; padding:.4vw 2vw; border-top:1px solid rgba(245,240,232,.06); }
+    .spinmy-culture-line:first-child { border-top:none; }
+    .spinmy-cul-name { color:rgba(212,149,122,.92); font-weight:500; }
+    .spinmy-3punch { font-family:'Cormorant Garamond',serif; font-size:1.62vw; font-weight:300; font-style:italic; color:rgba(212,149,122,.92); text-align:center; padding:1vw 10% 0; border-top:1px solid rgba(212,149,122,.2); line-height:1.7; direction:rtl; }
+
+    /* ══ SCIRCADIAN ══ */
+    #scircadian { justify-content:flex-start; align-items:stretch; }
+    .scirc-sub { display:block; margin-top:.55vw; padding-right:2.4vw; font-family:'Cormorant Garamond',serif; font-size:.9vw; font-weight:300; font-style:italic; letter-spacing:.02em; line-height:1.5; }
+    .scirc-sub-morning { color:rgba(255,220,90,.94); text-shadow:0 0 2.5vw rgba(255,208,70,.62), 0 0 7vw rgba(255,195,55,.26); }
+    .scirc-sub-evening { color:rgba(190,210,255,.88); text-shadow:0 0 2.5vw rgba(150,180,255,.56), 0 0 7vw rgba(105,145,255,.22); }
+    /* ══ SBADMORNING — sun rays from top-right ══ */
+    .sbadm-rays { position:absolute; inset:0; pointer-events:none; z-index:0;
+      background:
+        linear-gradient(228deg, rgba(255,225,110,.26) 0%, rgba(255,220,100,.14) 8%, transparent 22%),
+        linear-gradient(214deg, rgba(255,215,85,.20) 0%, rgba(255,210,80,.10) 10%, transparent 24%),
+        linear-gradient(242deg, rgba(255,218,95,.16) 0%, rgba(255,215,85,.07) 12%, transparent 26%),
+        radial-gradient(ellipse 58% 50% at 100% 0%, rgba(255,210,80,.18) 0%, transparent 48%); }
+    /* ══ SBADEVE — split layout overrides ══ */
+    #sbadeve { flex-direction:row; direction:rtl; align-items:stretch; justify-content:flex-start; }
+    #sbadeve .sbadm-eyebrow { color:rgba(140,170,255,.55); }
+    #sbadeve .sbadm-title { color:rgba(210,225,255,.92); }
+    #sbadeve .sbadm-divider { background:linear-gradient(180deg, transparent 5%, rgba(120,155,255,.45) 22%, rgba(120,155,255,.45) 78%, transparent 95%); }
+
+    /* ══ SPMORNING — single ray + 3-col cards ══ */
+    .spmorning-ray {
+      position:absolute; inset:0; pointer-events:none; z-index:0;
+      background:
+        linear-gradient(213deg, transparent 0%, transparent 33%,
+          rgba(255,225,130,.06) 36%, rgba(255,235,148,.28) 39%,
+          rgba(255,240,158,.42) 40.8%, rgba(255,235,148,.28) 42.5%,
+          rgba(255,220,110,.06) 46%, transparent 50%),
+        linear-gradient(221deg, rgba(255,208,85,.05) 0%, transparent 58%);
+    }
+    .spmorning-3col { position:relative; z-index:1; flex:1; display:flex; gap:0; padding:.8% 4% 1%; direction:rtl; align-items:stretch; }
+    .spmorning-card { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2.2vw 2vw 1.8vw; border-radius:10px; border:1px solid rgba(255,210,85,.15); background:rgba(255,200,80,.04); gap:1.2vw; }
+    .spmorning-card-num { font-family:'Cormorant Garamond',serif; font-size:.85vw; font-weight:300; color:rgba(255,210,85,.3); letter-spacing:.28em; }
+    .spmorning-card-title { font-family:'Cormorant Garamond',serif; font-size:2.7vw; font-weight:300; color:rgba(255,220,98,.95); text-shadow:0 0 2vw rgba(255,210,85,.4),0 0 6vw rgba(255,195,72,.18); letter-spacing:.04em; }
+    .spmorning-sep { width:1px; background:rgba(255,210,85,.1); align-self:stretch; flex-shrink:0; margin:.5vw 0; }
+    .spmorning-detail { position:relative; z-index:1; display:flex; gap:0; padding:0 4% 2%; direction:rtl; }
+    .spmorning-detail-col { flex:1; text-align:center; padding:0 1.8vw; }
+    .spmorning-detail-sep { width:1px; background:rgba(255,210,85,.08); align-self:stretch; flex-shrink:0; }
+    .spmorning-detail-text { font-family:'Cormorant Garamond',serif; font-size:.96vw; color:rgba(245,240,232,.7); line-height:1.72; }
+    .spmorning-detail-text em { font-style:normal; color:rgba(255,222,100,.88); }
+
+    /* ══ SPEVENING — 3-col cards (night tones) ══ */
+    .spevening-3col { position:relative; z-index:1; flex:1; display:flex; gap:0; padding:.8% 4% 1%; direction:rtl; align-items:stretch; }
+    .spevening-card { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2.2vw 2vw 1.8vw; border-radius:10px; border:1px solid rgba(130,158,255,.15); background:rgba(75,100,225,.04); gap:1.2vw; }
+    .spevening-card-num { font-family:'Cormorant Garamond',serif; font-size:.85vw; font-weight:300; color:rgba(160,185,255,.3); letter-spacing:.28em; }
+    .spevening-card-title { font-family:'Cormorant Garamond',serif; font-size:2.5vw; font-weight:300; color:rgba(175,200,255,.92); text-shadow:0 0 2vw rgba(140,170,255,.38),0 0 6vw rgba(100,140,255,.16); letter-spacing:.04em; }
+    .spevening-sep { width:1px; background:rgba(140,172,255,.1); align-self:stretch; flex-shrink:0; margin:.5vw 0; }
+    .spevening-detail { position:relative; z-index:1; display:flex; gap:0; padding:0 4% 1.5%; direction:rtl; }
+    .spevening-detail-col { flex:1; text-align:center; padding:0 1.8vw; }
+    .spevening-detail-sep { width:1px; background:rgba(140,172,255,.08); align-self:stretch; flex-shrink:0; }
+    .spevening-detail-text { font-family:'Cormorant Garamond',serif; font-size:.96vw; color:rgba(245,240,232,.65); line-height:1.72; }
+    .spevening-detail-text em { font-style:normal; color:rgba(180,205,255,.88); }
+    .spevening-unique-punch { position:relative; z-index:1; font-family:'Cormorant Garamond',serif; font-size:1.18vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.52); text-align:center; direction:rtl; padding:.9vw 10% 1.5%; line-height:1.65; }
+    .spevening-unique-punch em { font-style:normal; color:rgba(180,205,255,.82); text-shadow:0 0 2vw rgba(140,170,255,.3); }
+
+    /* ══ SMAGICWINDOW — שני חלונות, אותה פרקטיקה ══ */
+    #smagicwindow { justify-content:flex-start; align-items:stretch; }
+    .smagic-body { position:relative; z-index:1; flex:1; display:flex; direction:rtl; align-items:stretch; padding:1.5% 3% 0; gap:0; }
+    /* Practices column — rightmost, always visible */
+    .smagic-col-practices { flex:0 0 28%; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:0; padding:3% 3% 3% 2%; border-left:1px solid rgba(210,158,68,.12); }
+    .smagic-prac-eye { font-family:'Jost',sans-serif; font-size:.64vw; letter-spacing:.28em; text-transform:uppercase; color:rgba(210,158,68,.72); margin-bottom:2vw; text-shadow:0 0 2vw rgba(210,158,68,.3); }
+    .smagic-practice { width:100%; flex:1; display:flex; align-items:center; justify-content:center; }
+    .smagic-practice-name { font-family:'Cormorant Garamond',serif; font-size:1.82vw; font-weight:400; color:rgba(245,240,232,.96); text-align:center; direction:rtl; letter-spacing:.02em; }
+    .smagic-practice-sep { width:44%; height:1px; background:rgba(245,240,232,.1); flex-shrink:0; }
+    /* Window columns */
+    .smagic-col-morning,.smagic-col-evening { position:relative; flex:1; overflow:hidden; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; border-radius:8px; padding:4% 4% 3.5%; gap:.8vw; }
+    .smagic-col-morning { border:1px solid rgba(255,200,70,.14); margin-left:1.5%; }
+    .smagic-col-evening { border:1px solid rgba(120,155,255,.14); margin-right:1.5%; }
+    /* Morning: rays from top */
+    .smagic-col-morning::before { content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        linear-gradient(180deg, rgba(255,222,95,.22) 0%, rgba(255,210,80,.09) 38%, transparent 64%),
+        radial-gradient(ellipse 88% 52% at 50% 0%, rgba(255,215,88,.24) 0%, transparent 52%),
+        linear-gradient(195deg, rgba(255,228,110,.14) 0%, transparent 28%),
+        linear-gradient(165deg, rgba(255,228,110,.10) 0%, transparent 28%); }
+    /* Evening: midnight blue from top + stars */
+    .smagic-col-evening::before { content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 88% 55% at 50% 0%, rgba(45,70,200,.45) 0%, transparent 58%),
+        radial-gradient(ellipse 60% 32% at 50% 0%, rgba(65,95,230,.22) 0%, transparent 38%); }
+    .smagic-col-evening::after { content:''; position:absolute; top:8px; left:8px; width:2px; height:2px; background:rgba(220,228,255,.78); border-radius:50%; pointer-events:none;
+      box-shadow:20px 10px 0 rgba(220,228,255,.52),55px 6px 1px rgba(220,228,255,.62),92px 20px 0 rgba(220,228,255,.4),130px 8px 1px rgba(220,228,255,.55),28px 46px 0 rgba(220,228,255,.44),78px 38px 1px rgba(220,228,255,.58),118px 50px 0 rgba(220,228,255,.36),155px 24px 0 rgba(220,228,255,.42),15px 80px 0 rgba(220,228,255,.38),62px 74px 1px rgba(220,228,255,.52),108px 85px 0 rgba(220,228,255,.34),148px 70px 1px rgba(220,228,255,.45),38px 112px 0 rgba(220,228,255,.36),95px 108px 0 rgba(220,228,255,.44),138px 120px 1px rgba(220,228,255,.3); }
+    .smagic-vdiv { width:1px; flex-shrink:0; align-self:stretch; background:linear-gradient(180deg, transparent 6%, rgba(245,240,232,.12) 26%, rgba(245,240,232,.12) 74%, transparent 94%); }
+    .smagic-col-eye { position:relative; z-index:1; font-family:'Jost',sans-serif; font-size:.58vw; letter-spacing:.26em; text-transform:uppercase; }
+    .smagic-col-morning .smagic-col-eye { color:rgba(210,158,68,.68); }
+    .smagic-col-evening .smagic-col-eye { color:rgba(140,170,255,.68); }
+    .smagic-col-title { position:relative; z-index:1; font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:300; line-height:1.3; }
+    .smagic-col-morning .smagic-col-title { color:rgba(255,220,98,.94); text-shadow:0 0 3vw rgba(255,210,80,.38),0 0 8vw rgba(255,195,65,.15); }
+    .smagic-col-evening .smagic-col-title { color:rgba(185,210,255,.92); text-shadow:0 0 3vw rgba(140,175,255,.32),0 0 8vw rgba(100,145,255,.14); }
+    .smagic-col-divline { position:relative; z-index:1; width:36%; height:1px; flex-shrink:0; }
+    .smagic-col-morning .smagic-col-divline { background:rgba(255,210,80,.22); }
+    .smagic-col-evening .smagic-col-divline { background:rgba(140,170,255,.22); }
+    .smagic-col-unique { position:relative; z-index:1; display:flex; flex-direction:column; gap:.42vw; align-items:center; }
+    .smagic-unique-line { font-family:'Cormorant Garamond',serif; font-size:.82vw; font-weight:300; font-style:italic; line-height:1.5; }
+    .smagic-unique-sub { font-family:'Jost',sans-serif; font-size:.58vw; font-weight:300; font-style:normal; opacity:.55; margin-top:-.2vw; }
+    .smagic-col-morning .smagic-unique-line { color:rgba(255,215,85,.72); }
+    .smagic-col-evening .smagic-unique-line { color:rgba(175,205,255,.68); }
+    .smagic-punch { position:relative; z-index:1; flex-shrink:0; font-family:'Cormorant Garamond',serif; font-size:1.08vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.48); text-align:center; direction:rtl; padding:.9vw 16% 1.8%; line-height:1.6; }
+    .smagic-punch .mor { font-style:normal; color:rgba(255,215,85,.85); text-shadow:0 0 2vw rgba(255,200,70,.35); }
+    .smagic-punch .eve { font-style:normal; color:rgba(175,200,255,.85); text-shadow:0 0 2vw rgba(140,170,255,.35); }
+
+    /* ══ STOOLBOX ══ */
+    #stoolbox { justify-content:center; align-items:center; }
+    .stoolbox-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:1.6vw; direction:rtl; text-align:center; }
+    .stoolbox-tag { font-family:'Jost',sans-serif; font-size:.62vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(210,158,68,.5); }
+    .stoolbox-title { font-family:'Cormorant Garamond',serif; font-size:4.5vw; font-weight:300; color:rgba(245,240,232,.92); }
+    .stoolbox-sub { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; font-style:italic; color:rgba(210,158,68,.75); }
+    .stoolbox-bar { width:5vw; height:1px; background:rgba(210,158,68,.3); }
+    .stoolbox-lines { font-family:'Cormorant Garamond',serif; font-size:1.18vw; font-weight:300; color:rgba(245,240,232,.62); line-height:2.1; direction:rtl; }
+    .stoolbox-lines em { font-style:normal; color:rgba(210,158,68,.82); }
+
+    /* ══ STOOL SHARED — tool slides ══ */
+    .stool-body { position:relative; z-index:1; flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 7% 3%; gap:0; direction:rtl; }
+    .stool-item { display:flex; flex-direction:column; padding:1.0vw 1.4vw 1.0vw .8vw; border-right:2px solid rgba(245,240,232,.07); }
+    .stool-num { font-family:'Jost',sans-serif; font-size:.5vw; letter-spacing:.25em; text-transform:uppercase; color:rgba(210,158,68,.4); margin-bottom:.28vw; }
+    .stool-name { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:400; color:rgba(245,240,232,.88); line-height:1.2; }
+    .stool-sep { height:1px; background:rgba(245,240,232,.06); margin:.5vw 0; flex-shrink:0; }
+    .stool-detail-inner { display:flex; gap:3vw; padding:.55vw 0 .2vw; direction:rtl; }
+    .stool-chunk { display:flex; flex-direction:column; gap:.22vw; flex:1; }
+    .stool-label { font-family:'Jost',sans-serif; font-size:.68vw; letter-spacing:.18em; text-transform:uppercase; color:rgba(210,158,68,.78); margin-bottom:.15vw; }
+    .stool-text { font-family:'Cormorant Garamond',serif; font-size:1.18vw; color:rgba(245,240,232,.88); line-height:1.65; }
+    .stool-text em { font-style:italic; color:rgba(210,158,68,.85); }
+
+    /* ══ STOOLFEELING ══ */
+    #stoolfeeling { justify-content:center; align-items:center; }
+    .stoolfeeling-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:1.4vw; direction:rtl; text-align:center; padding:0 14%; }
+    .stoolfeeling-q { font-family:'Cormorant Garamond',serif; font-size:2.9vw; font-weight:300; color:rgba(245,240,232,.88); line-height:1.45; }
+    .stoolfeeling-answer { font-family:'Cormorant Garamond',serif; font-size:1.8vw; font-weight:300; font-style:italic; color:rgba(210,158,68,.9); text-shadow:0 0 3vw rgba(210,158,68,.3); }
+    .stoolfeeling-words { font-family:'Cormorant Garamond',serif; font-size:1.45vw; font-weight:300; color:rgba(245,240,232,.62); letter-spacing:.1em; }
+    .stoolfeeling-science { font-family:'Cormorant Garamond',serif; font-size:.95vw; font-weight:300; color:rgba(245,240,232,.38); font-style:italic; padding-top:1.2vw; border-top:1px solid rgba(245,240,232,.07); width:100%; text-align:center; }
+    .stoolfeeling-science em { font-style:normal; color:rgba(210,158,68,.65); }
+
+
+    /* ══ SSESSIONMAP ══ */
+    #ssessionmap { justify-content:center; align-items:center; }
+    .smap-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2.2vw; width:86%; direction:rtl; }
+    .smap-headline { font-family:'Cormorant Garamond',serif; font-size:3.1vw; font-weight:300; color:rgba(245,240,232,.92); text-align:center; }
+    .smap-sub { font-family:'Cormorant Garamond',serif; font-size:1.18vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.45); text-align:center; margin-top:-.8vw; }
+    .smap-divbar { width:26%; height:1px; background:linear-gradient(90deg,transparent,rgba(210,158,68,.4),transparent); flex-shrink:0; }
+    .smap-sessions { display:flex; flex-direction:column; gap:1.1vw; width:100%; }
+    .smap-session { display:flex; align-items:center; gap:1.5vw; padding:.6vw 1vw .6vw 0; border-radius:5px; }
+    .smap-sess-badge { font-family:'Jost',sans-serif; font-size:.6vw; letter-spacing:.16em; text-transform:uppercase; padding:.3vw .85vw; border-radius:3px; flex-shrink:0; min-width:7.5vw; text-align:center; font-weight:500; }
+    .smap-s1 { color:rgba(210,158,68,.95); background:rgba(210,158,68,.1); border:1px solid rgba(210,158,68,.28); }
+    .smap-s2 { color:rgba(70,192,186,.95); background:rgba(70,192,186,.08); border:1px solid rgba(70,192,186,.22); }
+    .smap-s3 { color:rgba(212,140,80,.95); background:rgba(212,140,80,.08); border:1px solid rgba(212,140,80,.22); }
+    .smap-s4 { color:rgba(195,90,90,.95); background:rgba(195,90,90,.08); border:1px solid rgba(195,90,90,.22); }
+    .smap-labels { display:flex; flex-wrap:wrap; gap:.45vw; direction:rtl; align-content:center; }
+    .smap-label { font-family:'Cormorant Garamond',serif; font-size:1.02vw; padding:.2vw .6vw; border-radius:3px; font-weight:400; line-height:1.5; }
+    .smap-l1 { color:rgba(210,158,68,.9); background:rgba(210,158,68,.08); border:1px solid rgba(210,158,68,.2); }
+    .smap-l2 { color:rgba(70,192,186,.9); background:rgba(70,192,186,.07); border:1px solid rgba(70,192,186,.17); }
+    .smap-l3 { color:rgba(212,140,80,.9); background:rgba(212,140,80,.07); border:1px solid rgba(212,140,80,.17); }
+    .smap-l4 { color:rgba(195,90,90,.9); background:rgba(195,90,90,.07); border:1px solid rgba(195,90,90,.17); }
+    .smap-punch { font-family:'Cormorant Garamond',serif; font-size:1.28vw; font-weight:300; font-style:italic; color:rgba(212,149,122,.8); text-align:center; }
+
+    /* ══ SCONN TAGS (labels in spinconnect2/3) ══ */
+    .sconn-tags { display:flex; flex-wrap:wrap; gap:.3vw; margin-top:.5vw; direction:rtl; }
+    .sctag { font-family:'Jost',sans-serif; font-size:.56vw; padding:.12vw .42vw; border-radius:2px; letter-spacing:.05em; }
+    .sct1 { color:rgba(210,158,68,.82); background:rgba(210,158,68,.08); border:1px solid rgba(210,158,68,.2); }
+    .sct2 { color:rgba(70,192,186,.82); background:rgba(70,192,186,.07); border:1px solid rgba(70,192,186,.17); }
+    .sct3 { color:rgba(212,140,80,.82); background:rgba(212,140,80,.07); border:1px solid rgba(212,140,80,.17); }
+    .sct4 { color:rgba(195,90,90,.82); background:rgba(195,90,90,.07); border:1px solid rgba(195,90,90,.17); }
+    .sct5 { color:rgba(155,135,215,.82); background:rgba(155,135,215,.07); border:1px solid rgba(155,135,215,.17); }
+
+    /* ══ STOOL CARD OVERRIDE ══ */
+    .stool-body { gap:.85vw !important; }
+    .stool-item { border-right:none !important; border:1px solid rgba(139,184,150,.24) !important; border-radius:7px !important; background:rgba(139,184,150,.04) !important; padding:1.1vw 1.8vw !important; }
+    .stool-sep { display:none !important; }
+    .stool-num { color:rgba(139,184,150,.7) !important; font-size:.54vw !important; }
+
+    /* ══ STOOLFEELING REVAMP ══ */
+    #stoolfeeling { justify-content:center; align-items:center; }
+    .stfeel-center { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:1.7vw; direction:rtl; text-align:center; width:78%; }
+    .stfeel-eyebrow { font-family:'Jost',sans-serif; font-size:.64vw; letter-spacing:.3em; text-transform:uppercase; color:rgba(212,149,122,.55); }
+    .stfeel-divbar { width:22%; height:1px; background:linear-gradient(90deg,transparent,rgba(212,149,122,.35),transparent); flex-shrink:0; }
+    .stfeel-q { font-family:'Cormorant Garamond',serif; font-size:1.85vw; font-weight:300; color:rgba(245,240,232,.72); line-height:1.7; }
+    .stfeel-insight { font-family:'Cormorant Garamond',serif; font-size:1.42vw; font-weight:300; color:rgba(245,240,232,.85); line-height:1.9; }
+    .stfeel-insight em { color:rgba(212,149,122,.95); font-style:normal; }
+    .stfeel-insight strong { color:rgba(245,240,232,.98); font-weight:500; }
+    .stfeel-emph { display:flex; flex-direction:column; align-items:center; gap:.4vw; padding:1.3vw 4vw; border:1px solid rgba(212,149,122,.22); border-radius:7px; background:rgba(212,149,122,.05); width:100%; }
+    .stfeel-emph-line { font-family:'Cormorant Garamond',serif; font-size:1.62vw; font-weight:400; color:rgba(212,149,122,.92); text-align:center; line-height:1.45; }
+    .stfeel-close { font-family:'Cormorant Garamond',serif; font-size:1.05vw; font-weight:300; color:rgba(245,240,232,.5); line-height:1.8; }
+    .stfeel-close em { color:rgba(212,149,122,.75); font-style:italic; }
+
+    /* ══ SMEDITATION ══ */
+    #smeditation { justify-content:center; align-items:center; }
+    .smed-glow { position:absolute; inset:0; background:radial-gradient(ellipse 80% 72% at 50% 50%,rgba(225,120,155,.55) 0%,rgba(200,80,120,.28) 38%,rgba(175,60,100,.10) 60%,transparent 78%); pointer-events:none; z-index:0; }
+    .smed-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2.0vw; direction:rtl; text-align:center; padding:0 15%; }
+    .smed-title { font-family:'Cormorant Garamond',serif; font-size:3.8vw; font-weight:600; color:var(--cream); letter-spacing:.04em; text-align:center; position:relative; z-index:1; margin-bottom:.6vw; }
+    .smed-text { font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:300; color:rgba(245,240,232,.88); line-height:2.1; }
+    .smed-breath { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:300; color:rgba(212,149,122,.72); line-height:1.9; }
+    .smed-breath em { color:rgba(212,149,122,.9); font-style:italic; }
+    .smed-close { font-family:'Cormorant Garamond',serif; font-size:1.85vw; font-weight:300; font-style:italic; color:rgba(212,149,122,.6); }
+
+    /* ══ SSHARE · שיתוף ══ */
+    #sshare { justify-content:center; align-items:center; }
+    #sshare::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 55% 65% at 50% 50%,rgba(212,149,122,.1) 0%,rgba(170,80,100,.05) 55%,transparent 78%); pointer-events:none; z-index:0; }
+    .sshare-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2.2vw; direction:rtl; text-align:center; width:70%; }
+    .sshare-eyebrow { font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; color:var(--cream); letter-spacing:.04em; text-align:center; margin-bottom:.5vw; }
+    .sshare-qs { display:flex; flex-direction:column; gap:2vw; width:100%; }
+    .sshare-q { display:flex; align-items:center; gap:1.2vw; direction:rtl; text-align:right; }
+    .sshare-dot { font-family:'Cormorant Garamond',serif; font-size:1.6vw; color:rgba(212,149,122,.55); flex-shrink:0; }
+    .sshare-text { font-family:'Cormorant Garamond',serif; font-size:1.95vw; font-weight:300; color:rgba(245,240,232,.88); line-height:1.5; }
+  </style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+<!-- ══ SOPEN5 ══ -->
+<div class="slide" id="sopen5">
+  <div class="s1-top">
+    <div class="s1-session-num">מפגש חמישי &nbsp;·&nbsp; Session 05</div>
+    <div class="s1-session-he">אינטגרציה · The Final Session</div>
+    <div class="s1-rule-top"></div>
+  </div>
+  <div class="s1-block">
+    <div class="s1-main">The <em>Inner</em> Shift</div>
+    <div class="s1-tagline">המסע לשינוי מבפנים</div>
+  </div>
+</div>
+
+<!-- ══ SRECAP ══ -->
+<div class="slide" id="srecap">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">Sessions 1–4 · Summary · The Full Arc</div>
+        <div class="sh2-title">What We've Learned</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">מה למדנו עד כה</div>
+        <div class="sh2-he-sub">שכבה על שכבה — כל מפגש בנה על הקודם</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sconn-body">
+    <div class="sconn-item snew-line" id="srecap-r1">
+      <div class="sconn-session">Session 1 · Foundation</div>
+      <div class="sconn-content">
+        <div class="sconn-title">תדרי המח · תת-מודע · אמונות מגבילות</div>
+        <div class="sconn-desc">95% מהתגובות שלנו אוטומטיות. אמונות שנטענו לפני גיל 7 — עדיין מנהלות אותנו. תדרי המח קובעים מה ניתן לשנות — בתטא הדלת פתוחה.</div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line" id="srecap-r2">
+      <div class="sconn-session">Session 2 · Perception</div>
+      <div class="sconn-content">
+        <div class="sconn-title">שדה אלקרומגנטי · RAS · ראייה סלקטיבית</div>
+        <div class="sconn-desc">ה-RAS מסנן את המציאות לפי מה שאת מוגדרת לראות. שתי נשים — אותו עולם, מציאויות שונות. הגוף משדר שדה אלקטרומגנטי שאחרים חשים.</div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line" id="srecap-r3">
+      <div class="sconn-session">Session 3 · Coherence</div>
+      <div class="sconn-content">
+        <div class="sconn-title">שלושת המוחות · קוהרנטיות לב-מח</div>
+        <div class="sconn-desc">ראש, לב ובטן — שלושה מרכזי עיבוד. כשהלב והמח בסנכרון — ה-PFC נפתח, קורטיזול יורד, ואות הכוונה הופך חזק פי כמה.</div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line" id="srecap-r4">
+      <div class="sconn-session">Session 4 · Reality</div>
+      <div class="sconn-content">
+        <div class="sconn-title">מהי מציאות · יצירת מציאות</div>
+        <div class="sconn-desc">הקוונטום הוכיח: המציאות לא קבועה עד שנצפית. כוונה + רגש גבוה = שינוי בתבנית המציאות. פלצבו הוכיח: מחשבה משנה ביולוגיה — ממש.</div>
+      </div>
+    </div>
+    <div class="sconn-punch snew-line" id="srecap-r5">
+      כל שכבה בנויה על הקודמת — <em>היום מחברות הכל.</em>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SJOURNEY ══ -->
+<div class="slide" id="sjourney">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">The Journey · Session Map</div>
+        <div class="sh2-title">Where We Are</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">איפה אנחנו במסע</div>
+        <div class="sh2-he-sub">ארבע פגישות מאחורינו · הנה הפגישה החמישית</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="journey-body">
+    <div class="journey-step j-done">
+      <div class="jstep-dot"></div>
+      <div class="jstep-num">01</div>
+      <div class="jstep-session">מפגש ראשון · הושלם</div>
+      <div class="jstep-title">המח והתת-מודע</div>
+      <div class="jstep-desc">מה מפעיל אותנו?</div>
+      <div class="jstep-check">✓ הושלם</div>
+    </div>
+    <div class="journey-step j-done">
+      <div class="jstep-dot"></div>
+      <div class="jstep-num">02</div>
+      <div class="jstep-session">מפגש שני · הושלם</div>
+      <div class="jstep-title">שלושת המוחות</div>
+      <div class="jstep-desc">ראש · לב · בטן</div>
+      <div class="jstep-check">✓ הושלם</div>
+    </div>
+    <div class="journey-step j-done">
+      <div class="jstep-dot"></div>
+      <div class="jstep-num">03</div>
+      <div class="jstep-session">מפגש שלישי · הושלם</div>
+      <div class="jstep-title">קוהרנטיות לב-מח</div>
+      <div class="jstep-desc">כשהם מסונכרנים</div>
+      <div class="jstep-check">✓ הושלם</div>
+    </div>
+    <div class="journey-step j-done">
+      <div class="jstep-dot"></div>
+      <div class="jstep-num">04</div>
+      <div class="jstep-session">מפגש רביעי · הושלם</div>
+      <div class="jstep-title">יצירת מציאות</div>
+      <div class="jstep-desc">קוונטום · כוונה · רגש</div>
+      <div class="jstep-check">✓ הושלם</div>
+    </div>
+    <div class="journey-step j-active">
+      <div class="jstep-dot"></div>
+      <div class="jstep-num">05</div>
+      <div class="jstep-session">מפגש חמישי · היום</div>
+      <div class="jstep-title">אינטגרציה</div>
+      <div class="jstep-desc">בלוטת האצטרובל · זרימה ביולוגית · אינטגרציה</div>
+      <div class="jstep-check">← כאן אנחנו</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STUNE ══ -->
+<div class="slide" id="stune">
+  <div class="kavanah-circle"></div>
+  <div class="kavanah-circle kavanah-circle-2"></div>
+  <div class="kavanah-title">רגע של התכווננות</div>
+  <div class="kavanah-sub">MOMENT OF ALIGNMENT</div>
+</div>
+
+<!-- ══ SPINPRE ══ -->
+<div class="slide" id="spinpre">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">Anatomy · Neuroscience · Unique Structure</div>
+        <div class="sh2-title">The Pineal Gland</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">בלוטת האצטרובל</div>
+        <div class="sh2-he-sub">הבלוטה הכי קטנה, הכי מוזנחת, הכי מיוחדת</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="spinpre-layout">
+    <div class="spinpre-img-side">
+      <div class="spinpre-img-box">
+        <img src="images/pineal-location.png" alt="בלוטת האצטרובל — מיקום במח">
+      </div>
+    </div>
+    <div class="spinpre-facts-side">
+      <div class="spinpre-eyebrow">עובדות מבניות</div>
+      <div class="spinpre-fact snew-line" id="spinpre-r1">
+        <span class="spinpre-fact-dot">✦</span>
+        <span class="spinpre-fact-text"><strong>מיקום:</strong> במרכז המוח, בגובה העיניים. אינה מוגנת על ידי מחסום הדם-מח — חומרים מגיעים אליה <em>ישירות, ללא סינון.</em> רגישה יותר מכל רקמה אחרת במוח — להורמונים, לכימיה, ואולי גם למה שעוד לא מיפינו.</span>
+      </div>
+      <div class="spinpre-fact snew-line" id="spinpre-r2">
+        <span class="spinpre-fact-dot">✦</span>
+        <span class="spinpre-fact-text"><strong>יחידה ולא מזווגת:</strong> כל מבנה במוח כפול — שתי אמיגדלות, שתי המיספרות, שני היפוקמפוסים. היא <em>אחת בלבד,</em> בדיוק במרכז. כאילו הגוף הניח שם משהו שלא ניתן לפצל.</span>
+      </div>
+      <div class="spinpre-fact snew-line" id="spinpre-r3">
+        <span class="spinpre-fact-dot">✦</span>
+        <span class="spinpre-fact-text"><strong>קטנה בגודל, גדולה בהשפעה:</strong> כ-150 מ"ג — אבל מסנכרנת את השעון הביולוגי של כל תא בגוף. <em>היא קובעת את הקצב.</em></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SPINEAL ══ -->
+<div class="slide" id="spineal">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">Melatonin · DMT · Piezoelectric Crystals · Rhythm</div>
+        <div class="sh2-title">Biological Functions</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">תפקודים ביולוגיים</div>
+        <div class="sh2-he-sub">מה המדע יודע — מה שמוכח ומה שמתגלה</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="spin-body">
+    <div class="spin-item snew-line" id="spin-r1">
+      <span class="spin-dot">✦</span>
+      <span class="spin-text"><strong>מלטונין — הורמון החשכה:</strong> מיוצר רק בחושך, נחסם מיד עם אור. לא רק "הורמון שינה" — מווסת שינה ותיקון, מחזורים הורמונליים, מערכת חיסון והזדקנות תאים. <em>כשנחסם לילה אחר לילה — הגוף מפסיק להתחדש.</em></span>
+    </div>
+    <div class="spin-item snew-line" id="spin-r2">
+      <span class="spin-dot">✦</span>
+      <span class="spin-text"><strong>DMT אנדוגני:</strong> הגוף מייצר את החומר הפסיכואקטיבי החזק ביותר הידוע לנו. נוכח ברגעי לידה, מוות ומדיטציה עמוקה. <em>למה? עוד לא ידוע בוודאות.</em><div class="spin-src">Rick Strassman MD · DMT: The Spirit Molecule · 2001</div></span>
+    </div>
+    <div class="spin-item snew-line" id="spin-r3">
+      <span class="spin-dot">✦</span>
+      <span class="spin-text"><strong>קריסטלים פיזואלקטריים (Baconnier et al., 2002):</strong> קריסטלי סידן בתוך הבלוטה שמגיבים לשדות — כמו אנטנה דו-כיוונית:<br>
+      <em>קולטת:</em> שדה אלקטרומגנטי מהסביבה (כוונה, רגש, תדר) ← הקריסטל רוטט ← מייצר אות חשמלי שהמח קורא.<br>
+      <em>משדרת:</em> כוונה ורגש חזקים מהמח ← הקריסטל רוטט ← מוקרן כשדה EM החוצה.<br>
+      בדיוק כמו WiFi — קולטת ומשדרת בו-זמנית. <em>הבלוטה היא האנטנה הביולוגית שלך.</em></span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SPINPORTAL · השערות מיסטיות ══ -->
+<div class="slide" id="spinportal">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">DMT · Piezoelectric · Alpha / Theta · Unified Field</div>
+        <div class="sh2-title">Mystical Inferences</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">המיסטיקה שמתבססת על הביולוגיה</div>
+        <div class="sh2-he-sub">מהממצא המדעי — לשאלה שהמדע עדיין חוקר</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="spin-body">
+    <div class="spin-item snew-line" id="spinportal-r1">
+      <span class="spin-dot">✦</span>
+      <span class="spin-text"><strong>DMT — השער?</strong> הגוף מייצר את החומר הפסיכואקטיבי החזק ביותר הידוע לנו. סטראסמן ודיספנזה מציעים: ייתכן שברגעי מוות, לידה ומדיטציה עמוקה — הפרשתו היא השער לחוויות שמחוץ למרחב-זמן הרגיל. <em>זה עדיין השערה. אבל חוויות עקביות חוצות תרבויות ומחייבות הסבר.</em></span>
+    </div>
+    <div class="spin-item snew-line" id="spinportal-r2">
+      <span class="spin-dot">✦</span>
+      <span class="spin-text"><strong>קריסטלי סידן — עין פנימית?</strong> הקריסטלים הפיזואלקטריים שהתגלו בה מגיבים לשדות אלקטרומגנטיים ומייצרים אות חשמלי. ג'ו דיספנזה: הבלוטה פועלת כאנטנה ביולוגית — <em>לא רואה עם עיניים, אלא קולטת תדרים שלא נגישים לחושים הרגילים.</em></span>
+    </div>
+    <div class="spin-item snew-line" id="spinportal-r3">
+      <span class="spin-dot">✦</span>
+      <span class="spin-text"><strong>למה דווקא אלפא-תטא (4–12Hz)?</strong> בבטא — המח רועש, קורטיזול גבוה, הבלוטה מדוכאת. באלפא-תטא — נוירונים מסתנכרנים, שדה EM מסודר ורחב. הקריסטלים הפיזואלקטריים מתעוררים, הפרשת DMT עולה. <em>תדר נמוך = קוהרנטיות = בלוטה ערה = קליטת אות.</em> לא מיסטיקה — ביולוגיה.</span>
+    </div>
+    <div class="spin-punch snew-line" id="spinportal-r4">
+      הביולוגיה מצביעה.<br>
+      <em>השאלות גדולות ממנה.</em>
+    </div>
+  </div>
+</div>
+
+  <div class="slide" id="spincalcify">
+    <div class="sh2 snew-line" id="spincalcify-h">
+      <div class="sh2-inner">
+        <div class="sh2-left">
+          <div class="sh2-eye">Pineal Gland</div>
+          <div class="sh2-title">What Damages It</div>
+        </div>
+        <div class="sh2-right">
+          <div class="sh2-he">מה פוגע בה</div>
+          <div class="sh2-he-sub">ההסתיידות שאף אחד לא מדבר עליה</div>
+        </div>
+      </div>
+      <div class="sh2-bar"></div>
+    </div>
+    <div class="spin-body">
+      <div class="spin-item snew-line" id="spincalcify-r1">
+        <div class="spin-dot">◈</div>
+        <div>
+          <div class="spin-text"><strong>פלואוריד</strong> — מחקרים מראים שפלואוריד מצטבר בבלוטת האצטרובל יותר מכל רקמה אחרת בגוף. מחקר של <em>Jennifer Luke (2001)</em> מצא ריכוזי פלואוריד גבוהים פי 9 מהסף הבטוח בבלוטות מחושבות. תוצאה: גיבוש קריסטלים של זרחן סידן — ההסתיידות.</div>
+        </div>
+      </div>
+      <div class="spin-item snew-line" id="spincalcify-r2">
+        <div class="spin-dot">◈</div>
+        <div>
+          <div class="spin-text"><strong>מסכים ואור כחול</strong> — הבלוטה רגישה לאור. חשיפה לאור כחול בלילה — ממסכים, טלפונים, תאורת LED — מדכאת את ייצור המלטונין ב־<em>50% עד 90%</em>. ללא מלטונין, מחזורי השינה מתבלבלים ופעילות הבלוטה יורדת.</div>
+        </div>
+      </div>
+      <div class="spin-item snew-line" id="spincalcify-r3">
+        <div class="spin-dot">◈</div>
+        <div>
+          <div class="spin-text"><strong>חוסר שינה ומתח כרוני</strong> — קורטיזול גבוה (הורמון הסטרס) מעכב את ייצור המלטונין ישירות. שינה מקוטעת = בלוטה שלא מקבלת חלון הפעולה הלילי שלה. לאורך זמן: ירידה בתפקוד ועלייה בהסתיידות.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<!-- ══ SPINMODERN ══ -->
+  <!-- ══ SPINMYSTIC ══ -->
+<div class="slide" id="spinmystic">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">Ancient Wisdom · Symbolism · Three Traditions</div>
+        <div class="sh2-title">They All Knew</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">כולם ידעו</div>
+        <div class="sh2-he-sub">תרבויות שלא דיברו זו עם זו — הצביעו על אותו מקום</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="spinmy-simple">
+    <div class="spinmy-eye-wrap snew-line" id="spinmy-r1">
+      <img src="images/eye-of-horus.jpg" alt="עין הורוס — קמיע מצרי עתיק, מוזיאון קליבלנד" class="spinmy-eye-photo">
+      <div class="spinmy-eye-label">עין הורוס (Wedjat) · מצרים העתיקה · ~3000 לפנה"ס · מוזיאון קליבלנד</div>
+    </div>
+    <div class="spinmy-cultures snew-line" id="spinmy-r2">
+      <div class="spinmy-culture-line"><span class="spinmy-cul-name">מצרים העתיקה</span> — עין הורוס: ידע אלוהי, ראייה מעבר לנראה. ב-1997 נמצא שמבנהּ זהה לחתך הסגיטלי של המוח ברמת הבלוטה.</div>
+      <div class="spinmy-culture-line"><span class="spinmy-cul-name">הינדואיזם</span> — העין השלישית (אג'נה צ'אקרה): מרכז התפיסה הפנימית מעבר לחמשת החושים, בין הגבות — בגובה הבלוטה.</div>
+      <div class="spinmy-culture-line"><span class="spinmy-cul-name">ותיקן</span> — פסל אצטרובל ברונזה ענק בכניסה לוותיקן. דקארט (1649): <em>"הנשמה מופעלת רק בבלוטה זו."</em></div>
+    </div>
+  </div>
+  <div class="spinmy-3punch snew-line" id="spinmy-r3">
+    לפני שהמדע ידע מה זו הבלוטה — <em>הם כבר ידעו שהיא שם.</em>
+  </div>
+</div>
+
+<!-- ══ SBIOFLOW · הזרימה הביולוגית ══ -->
+<div class="slide" id="sbioflow">
+  <div class="sbioflow-wrap">
+    <div class="sbioflow-title">זרימה ביולוגית</div>
+    <div class="sbioflow-bar"></div>
+    <div class="sbioflow-items">
+      <div class="sbioflow-item">
+        <div class="sbioflow-item-text">מקצב של 24 שעות</div>
+      </div>
+      <div class="sbioflow-sep">·</div>
+      <div class="sbioflow-item">
+        <div class="sbioflow-item-text">שני הורמונים, שני מצבים</div>
+        <div class="sbioflow-item-sub">קורטיזול · מלטונין</div>
+      </div>
+      <div class="sbioflow-sep">·</div>
+      <div class="sbioflow-item">
+        <div class="sbioflow-item-text">שני חלונות ביום</div>
+        <div class="sbioflow-item-sub">בוקר · ערב</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SPINCONNECT · ביולוגי ══ -->
+<div class="slide" id="spinconnect">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">Melatonin · Cortisol · Biological Stakes</div>
+        <div class="sh2-title">Melatonin vs. Cortisol</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">מלטונין וקורטיזול</div>
+        <div class="sh2-he-sub">הסיסאו הביולוגי שקובע הכל</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sconn-body">
+    <div class="sconn-item snew-line" id="sconn-r1">
+      <div class="sconn-session">הקשר ההפוך</div>
+      <div class="sconn-content">
+        <div class="sconn-title">כשקורטיזול עולה — מלטונין יורד. כשקורטיזול יורד — מלטונין עולה.</div>
+        <div class="sconn-desc">זה לא מקרי — זו מערכת יחסים הפוכה ישירה. מתח כרוני = קורטיזול גבוה = בלוטת האצטרובל כבויה. הגוף בחר הישרדות על פני שיקום.</div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line" id="sconn-r2">
+      <div class="sconn-session">מה מלטונין עושה בפועל</div>
+      <div class="sconn-content">
+        <div class="sconn-title">הרבה יותר מ"הורמון שינה"</div>
+        <div class="sconn-desc">עוצר הפרשת קורטיזול תחת לחץ · מגן על נוירונים (מאריך חיי תאי עצב ב-25%) · מגביר שנת REM · מסייע בתיקון DNA · נוגד חמצון חזק המאט הזדקנות.</div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line" id="sconn-r3">
+      <div class="sconn-session">המשמעות</div>
+      <div class="sconn-content">
+        <div class="sconn-title">גוף בהישרדות לא יכול להיות גם בשיקום</div>
+        <div class="sconn-desc">כשאנחנו חיות בסטרס כרוני — הבלוטה לא מקבלת את החלון הלילי שלה. שנה אחרי שנה של מלטונין נמוך = גוף שמזדקן מהר יותר, מתחדש פחות.</div>
+      </div>
+    </div>
+    <div class="sconn-punch snew-line" id="sconn-r4">
+      הבלוטה לא יכולה לעבוד כשהגוף בהישרדות.<br>
+      <em>רוגע הוא לא פינוק — הוא תנאי ביולוגי.</em>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCIRCADIAN · זרימה צרקדית ══ -->
+<div class="slide" id="scircadian">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">Circadian Rhythm · Melatonin · Alpha Windows</div>
+        <div class="sh2-title">The Circadian Flow</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">הזרימה הצרקדית</div>
+        <div class="sh2-he-sub">הגוף תכנן שני חלונות ביום — ורובנו לא יודעות</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="spin-body">
+    <div class="spin-item snew-line" id="scircadian-r1">
+      <span class="spin-dot">✦</span>
+      <span class="spin-text"><strong>שעון ביולוגי ומלטונין:</strong> בחושך, האצטרובל מייצרת מלטונין — לא רק "הורמון שינה" אלא <em>האות הביולוגי שמסנכרן כל תא בגוף.</em> מערכת חיסון, תיקון DNA, מחזורים הורמונליים, הזדקנות תאים — הכל מווסת על ידו.</span>
+    </div>
+    <div class="spin-item snew-line" id="scircadian-r2">
+      <span class="spin-dot">✦</span>
+      <span class="spin-text"><strong>אלפא — הגשר:</strong> כשמלטונין עולה, גלי הבטא שוקעים ואלפא (8–12 Hz) עולה. <em>המח רגוע אך ער.</em> בתדר הזה המח הרציונלי מרפה, התת-מודע נגיש. אפשר לשתול תבניות חדשות ישירות לשכבה העמוקה.</span>
+    </div>
+    <div class="spin-item snew-line" id="scircadian-r3">
+      <span class="spin-dot">✦</span>
+      <span class="spin-text"><strong>שני חלונות טבעיים ביום —</strong> בהם המח עובר דרך אלפא/תטא ופתוח לתת-מודע:</span>
+    </div>
+    <div class="spin-item snew-line" id="scircadian-r4">
+      <span class="spin-dot" style="color:rgba(255,200,85,.7)">☀</span>
+      <span class="spin-text"><strong style="color:rgba(255,200,85,.9)">חלון הבוקר —</strong> ~30–45 דקות אחרי יקיצה, לפני שבטא מופעלת. המח עדיין באלפא/תטא, שאריות מלטונין עדיין בדם. <em>הדלת פתוחה.</em>
+        <span class="scirc-sub scirc-sub-morning">מה שתזיני אותו — יצבע את כל היום.</span>
+      </span>
+    </div>
+    <div class="spin-item snew-line" id="scircadian-r5">
+      <span class="spin-dot" style="color:rgba(120,140,220,.7)">☽</span>
+      <span class="spin-text"><strong style="color:rgba(170,190,255,.85)">חלון הערב —</strong> ~90 דקות לפני שינה, כשהאור יורד והבלוטה מגבירה מלטונין. אלפא עולה שוב. <em>החלון השני נפתח.</em>
+        <span class="scirc-sub scirc-sub-evening">התת-מודע יעבד כל הלילה.</span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SBADMORNING · מה אנחנו עושות ══ -->
+<div class="slide" id="sbadmorning">
+  <div class="sbadm-rays" aria-hidden="true"></div>
+  <!-- ימין: כיתוב -->
+  <div class="sbadm-right">
+    <div class="sbadm-eyebrow">רגע לפני שמתחילות</div>
+    <div class="sbadm-title">אז בואי נדבר<br>על מה אנחנו<br>עושות סמוך לקימה</div>
+  </div>
+  <!-- קו מפריד -->
+  <div class="sbadm-divider"></div>
+  <!-- שמאל: ענן מילים — מופיע בלחיצה -->
+  <div class="sbadm-left snew-line" id="sbadmorning-r1">
+    <!-- שורה עליונה -->
+    <span class="sbadm-word" style="top:7%;left:5%;font-size:.82vw;color:rgba(245,240,232,.62)">נוטיפיקיישן</span>
+    <span class="sbadm-word" style="top:6%;left:28%;font-size:1.65vw;color:rgba(139,184,150,.88)">ווטסאפ</span>
+    <span class="sbadm-word" style="top:8%;left:62%;font-size:.95vw;color:rgba(245,240,232,.68)">חדשות</span>
+    <span class="sbadm-word" style="top:6%;left:84%;font-size:.78vw;color:rgba(245,240,232,.52)">פיד</span>
+    <!-- שורה שניה -->
+    <span class="sbadm-word" style="top:22%;left:2%;font-size:2.0vw;color:rgba(210,158,68,.82)">אינסטגרם</span>
+    <span class="sbadm-word" style="top:24%;left:48%;font-size:1.0vw;color:rgba(245,240,232,.65)">מיילים</span>
+    <span class="sbadm-word" style="top:21%;left:68%;font-size:1.45vw;color:rgba(139,184,150,.78)">פייסבוק</span>
+    <!-- שורה אמצע -->
+    <span class="sbadm-word" style="top:37%;left:4%;font-size:1.1vw;color:rgba(245,240,232,.72)">הודעות</span>
+    <span class="sbadm-word" style="top:35%;left:26%;font-size:2.7vw;color:rgba(245,240,232,.88)">גלילה</span>
+    <span class="sbadm-word" style="top:39%;left:64%;font-size:.95vw;color:rgba(212,149,122,.78)">דאגות</span>
+    <span class="sbadm-word" style="top:38%;left:82%;font-size:.85vw;color:rgba(245,240,232,.6)">השוואות</span>
+    <!-- שורה תחתון-אמצע -->
+    <span class="sbadm-word" style="top:52%;left:2%;font-size:.82vw;color:rgba(245,240,232,.58)">ועוד גלילה</span>
+    <span class="sbadm-word" style="top:53%;left:16%;font-size:1.8vw;color:rgba(212,149,122,.88)">כל הבעיות קפצו עלינו</span>
+    <span class="sbadm-word" style="top:54%;left:78%;font-size:.88vw;color:rgba(245,240,232,.62)">לא ישנת מספיק</span>
+    <!-- שורה תחתונה -->
+    <span class="sbadm-word" style="top:67%;left:4%;font-size:1.1vw;color:rgba(210,158,68,.72)">ריצות מחשבות</span>
+    <span class="sbadm-word" style="top:69%;left:38%;font-size:1.5vw;color:rgba(245,240,232,.78)">ואנחנו בלופים</span>
+    <span class="sbadm-word" style="top:67%;left:78%;font-size:.75vw;color:rgba(245,240,232,.52)">ועוד...</span>
+    <!-- שורה תחתית -->
+    <span class="sbadm-word" style="top:82%;left:8%;font-size:.78vw;color:rgba(245,240,232,.5)">עוד גלילה</span>
+    <span class="sbadm-word" style="top:83%;left:36%;font-size:1.05vw;color:rgba(139,184,150,.65)">גלילה ועוד גלילה</span>
+    <span class="sbadm-word" style="top:81%;left:74%;font-size:.72vw;color:rgba(245,240,232,.45)">פיד</span>
+  </div>
+  <div class="sbad-overlay snew-line" id="sbadmorning-r2">
+    <div class="sbad-punch">ישר קופצות לבטא —<br><em>החלון נסגר</em></div>
+  </div>
+</div>
+
+<!-- ══ SBADEVE · ערב ══ -->
+<div class="slide" id="sbadeve">
+  <div class="spevening-deco" aria-hidden="true"></div>
+  <!-- ימין: כיתוב -->
+  <div class="sbadm-right">
+    <div class="sbadm-eyebrow">ומה עם הערב?</div>
+    <div class="sbadm-title">מה אנחנו עושות<br>לפני השינה</div>
+  </div>
+  <!-- קו מפריד -->
+  <div class="sbadm-divider"></div>
+  <!-- שמאל: ענן מילים ערב — לחיצה 1 -->
+  <div class="sbadm-left snew-line" id="sbadeve-r1">
+    <!-- שורה עליונה -->
+    <span class="sbadm-word" style="top:3%;left:2%;font-size:.78vw;color:rgba(200,218,255,.75)">תאורה חזקה</span>
+    <span class="sbadm-word" style="top:3%;left:28%;font-size:1.7vw;color:rgba(210,158,68,.92)">Netflix</span>
+    <span class="sbadm-word" style="top:4%;left:60%;font-size:.88vw;color:rgba(200,218,255,.78)">עבודה על המחשב</span>
+    <!-- שורה שניה -->
+    <span class="sbadm-word" style="top:15%;left:3%;font-size:1.4vw;color:rgba(160,210,180,.88)">ווטסאפ</span>
+    <span class="sbadm-word" style="top:14%;left:38%;font-size:.9vw;color:rgba(200,218,255,.75)">אימיילים</span>
+    <span class="sbadm-word" style="top:15%;left:58%;font-size:1.45vw;color:rgba(175,198,255,.88)">אינסטגרם</span>
+    <span class="sbadm-word" style="top:14%;left:86%;font-size:.72vw;color:rgba(245,240,232,.65)">TikTok</span>
+    <!-- שורה שלישית -->
+    <span class="sbadm-word" style="top:27%;left:4%;font-size:.82vw;color:rgba(245,240,232,.78)">חדשות</span>
+    <span class="sbadm-word" style="top:26%;left:22%;font-size:1.1vw;color:rgba(245,240,232,.82)">טלפון במיטה</span>
+    <span class="sbadm-word" style="top:27%;left:56%;font-size:1.55vw;color:rgba(200,218,255,.88)">עוד פרק</span>
+    <span class="sbadm-word" style="top:28%;left:82%;font-size:.8vw;color:rgba(175,198,255,.72)">YouTube</span>
+    <!-- שורה אמצע -->
+    <span class="sbadm-word" style="top:40%;left:2%;font-size:.88vw;color:rgba(200,218,255,.75)">רילס</span>
+    <span class="sbadm-word" style="top:38%;left:18%;font-size:2.5vw;color:rgba(200,218,255,.92)">גלילה</span>
+    <span class="sbadm-word" style="top:40%;left:55%;font-size:.85vw;color:rgba(245,240,232,.72)">פודקאסט</span>
+    <span class="sbadm-word" style="top:39%;left:72%;font-size:1.0vw;color:rgba(160,210,180,.78)">סדרה</span>
+    <!-- שורה תחתון-אמצע -->
+    <span class="sbadm-word" style="top:54%;left:2%;font-size:.78vw;color:rgba(200,218,255,.68)">ספורת ערב</span>
+    <span class="sbadm-word" style="top:53%;left:20%;font-size:1.75vw;color:rgba(230,140,120,.92)">לא הייתי עייפה עדיין</span>
+    <span class="sbadm-word" style="top:55%;left:78%;font-size:.82vw;color:rgba(245,240,232,.68)">שיחות טלפון</span>
+    <!-- שורה תחתונה -->
+    <span class="sbadm-word" style="top:67%;left:4%;font-size:1.0vw;color:rgba(175,198,255,.78)">עוד חצי שעה</span>
+    <span class="sbadm-word" style="top:67%;left:36%;font-size:.78vw;color:rgba(200,218,255,.65)">מוזיקה</span>
+    <span class="sbadm-word" style="top:68%;left:52%;font-size:1.35vw;color:rgba(245,240,232,.82)">ועוד ועוד</span>
+    <span class="sbadm-word" style="top:67%;left:82%;font-size:.65vw;color:rgba(200,218,255,.58)">Spotify</span>
+    <!-- שורה תחתית -->
+    <span class="sbadm-word" style="top:81%;left:6%;font-size:.72vw;color:rgba(200,218,255,.58)">עוד גלילה</span>
+    <span class="sbadm-word" style="top:82%;left:28%;font-size:.95vw;color:rgba(160,210,180,.68)">פיד ועוד פיד</span>
+    <span class="sbadm-word" style="top:80%;left:62%;font-size:.68vw;color:rgba(245,240,232,.52)">עוד קצת</span>
+    <span class="sbadm-word" style="top:82%;left:80%;font-size:.62vw;color:rgba(200,218,255,.48)">פיד</span>
+  </div>
+  <div class="sbad-overlay snew-line" id="sbadeve-r2">
+    <div class="sbad-punch">אור כחול עוצר את המלטונין —<br><em>החלון נסגר לפני שנפתח</em></div>
+  </div>
+</div>
+
+<!-- ══ SWINDOWSLOST ══ -->
+<div class="slide spunch" id="swindowslost">
+  <div class="swindow-wrap">
+    <div class="swindow-main">
+      שני החלונות מבוזבזים,<br>
+      בלי לדעת שהם <em>בכלל קיימים</em>
+    </div>
+    <div class="swindow-sub snew-line" id="swindowslost-r1">
+      הגוף תכנן לך שני חלונות ביום לגשת לתת-מודע.<br>
+      רובנו מפספסות אותם — כל יום מחדש.
+    </div>
+  </div>
+</div>
+
+<!-- ══ SMAGICWINDOW · שני חלונות, אותה פרקטיקה ══ -->
+<div class="slide" id="smagicwindow">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">Alpha Window · Morning & Evening · Practice</div>
+        <div class="sh2-title">Two Windows. One Practice.</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">שני חלונות. אותה פרקטיקה.</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="smagic-body">
+    <!-- ימין: הפרקטיקות — תמיד גלויות -->
+    <div class="smagic-col-practices">
+      <div class="smagic-prac-eye">הפרקטיקה</div>
+      <div class="smagic-practice">
+        <div class="smagic-practice-name">כוונה</div>
+      </div>
+      <div class="smagic-practice-sep"></div>
+      <div class="smagic-practice">
+        <div class="smagic-practice-name">הכרת תודה</div>
+      </div>
+      <div class="smagic-practice-sep"></div>
+      <div class="smagic-practice">
+        <div class="smagic-practice-name">ויזואליזציה עם רגש</div>
+      </div>
+    </div>
+    <div class="smagic-vdiv"></div>
+    <!-- אמצע: חלון הבוקר — לחיצה 1 -->
+    <div class="smagic-col-morning snew-line" id="smagic-r1">
+      <div class="smagic-col-eye">☀ · חלון הבוקר</div>
+      <div class="smagic-col-title">30–45 דקות<br>אחרי יקיצה</div>
+      <div class="smagic-col-divline"></div>
+      <div class="smagic-col-unique">
+        <div class="smagic-unique-line">גלי מוח עדיין איטיים</div>
+        <div class="smagic-unique-line">האמיגדלה רגועה</div>
+        <div class="smagic-unique-sub">מרכז האיום והדאגה במח — עדיין ישן</div>
+        <div class="smagic-unique-line">גישה ישירה לתת-מודע</div>
+      </div>
+    </div>
+    <div class="smagic-vdiv"></div>
+    <!-- שמאל: חלון הערב — לחיצה 2 -->
+    <div class="smagic-col-evening snew-line" id="smagic-r2">
+      <div class="smagic-col-eye">☽ · חלון הערב</div>
+      <div class="smagic-col-title">90 דקות<br>לפני שינה</div>
+      <div class="smagic-col-divline"></div>
+      <div class="smagic-col-unique">
+        <div class="smagic-unique-line">מלטונין בעלייה</div>
+        <div class="smagic-unique-line">סוגסטיביליות גבוהה</div>
+        <div class="smagic-unique-sub">המח פתוח לקבל תכנות — כמו היפנוזה קלה</div>
+        <div class="smagic-unique-line">עיבוד עמוק כל הלילה</div>
+      </div>
+    </div>
+  </div>
+  <!-- punch line — לחיצה 3 -->
+  <div class="smagic-punch snew-line" id="smagic-r3">
+    <span class="mor">הבוקר</span> מכוון 45 דקות. <span class="eve">הערב</span> — שותל 8 שעות של עיבוד טהור.
+  </div>
+</div>
+
+
+<!-- ══ SSESSIONMAP · מפת הסיפור ══ -->
+<div class="slide" id="ssessionmap">
+  <div class="smap-wrap">
+    <div class="smap-headline">סיפור ביולוגי אחד שלם</div>
+    <div class="smap-sub">הכל קשור להכל. הכל משפיע על הכל.</div>
+    <div class="smap-divbar"></div>
+    <div class="smap-sessions">
+      <div class="smap-session">
+        <div class="smap-sess-badge smap-s1">Session 1</div>
+        <div class="smap-labels">
+          <span class="smap-label smap-l1">תת מודע</span>
+          <span class="smap-label smap-l1">אלפא</span>
+          <span class="smap-label smap-l1">תטא</span>
+          <span class="smap-label smap-l1">בטא</span>
+          <span class="smap-label smap-l1">בטא גבוהה</span>
+          <span class="smap-label smap-l1">אמונות מגבילות</span>
+        </div>
+      </div>
+      <div class="smap-session">
+        <div class="smap-sess-badge smap-s2">Session 2</div>
+        <div class="smap-labels">
+          <span class="smap-label smap-l2">שדה אלקטרומגנטי</span>
+          <span class="smap-label smap-l2">RAS</span>
+          <span class="smap-label smap-l2">המסנן של המח</span>
+        </div>
+      </div>
+      <div class="smap-session">
+        <div class="smap-sess-badge smap-s3">Session 3</div>
+        <div class="smap-labels">
+          <span class="smap-label smap-l3">מח לב</span>
+          <span class="smap-label smap-l3">מח מעיים</span>
+          <span class="smap-label smap-l3">מח</span>
+          <span class="smap-label smap-l3">קוהרנטיות מח-לב</span>
+        </div>
+      </div>
+      <div class="smap-session">
+        <div class="smap-sess-badge smap-s4">Session 4</div>
+        <div class="smap-labels">
+          <span class="smap-label smap-l4">פלצבו</span>
+          <span class="smap-label smap-l4">נוצבו</span>
+          <span class="smap-label smap-l4">מהי מציאות</span>
+          <span class="smap-label smap-l4">אפשרויות קוונטיות</span>
+        </div>
+      </div>
+    </div>
+    <div class="smap-punch snew-line" id="ssessionmap-r1">
+      עכשיו שהכל פרוס — נראה איך הכל פועל ביחד.
+    </div>
+  </div>
+</div>
+
+<!-- ══ SPINBRIDGE ══ -->
+<div class="slide spunch" id="spinbridge">
+  <div class="spunch-wrap">
+    <div class="spunch-line1">יש לך את הכלים. המח. הלב. האנטנה.</div>
+    <div class="spunch-line2 blush">עכשיו נראה איך מחברים הכל.</div>
+  </div>
+</div>
+
+<!-- ══ SPINCONNECT2 · הקשרים א ══ -->
+<div class="slide" id="spinconnect2">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">Sessions 1–5 · Cross-System Connections · Part 1</div>
+        <div class="sh2-title">Everything Connects</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">הקשרים שמחברים הכל</div>
+        <div class="sh2-he-sub">חמישה שיעורים — רשת אחת שפועלת כל הזמן</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sconn-body">
+    <div class="sconn-item snew-line" id="sconn2-r1">
+      <div class="sconn-session">S1 · S3 · S5</div>
+      <div class="sconn-content">
+        <div class="sconn-title">לחץ כרוני לא מקשה על שינוי — הוא סוגר את הדלת הביולוגית</div>
+        <div class="sconn-desc">אמונות נטענו בתטא (S1) → גישה לתטא דורשת קורטיזול נמוך (S5) → קורטיזול יורד רק בקוהרנטיות ורוגע (S3). כדי לשכתב את עצמנו, הגוף חייב להיות ברוגע — זו ביולוגיה, לא עצלות.</div>
+        <div class="sconn-tags">
+          <span class="sctag sct1">אמונות מגבילות</span><span class="sctag sct1">תטא</span>
+          <span class="sctag sct3">קוהרנטיות</span>
+          <span class="sctag sct5">קורטיזול</span><span class="sctag sct5">מלטונין</span>
+        </div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line" id="sconn2-r2">
+      <div class="sconn-session">S2 · S3 · S4</div>
+      <div class="sconn-content">
+        <div class="sconn-title">נשימות ← שדה לב ← RAS ← שדה קוונטי ← מציאות</div>
+        <div class="sconn-desc">נשימות יוצרות קוהרנטיות (S3) ← שדה הלב גדל ומח עוקב (S2) ← RAS מכוון לחפש הזדמנויות (S2) ← שדה קוונטי רגיש לאות (S4). מה שהלב משדר — הסביבה מגיבה. דומה מושך דומה.</div>
+        <div class="sconn-tags">
+          <span class="sctag sct2">שדה אלקטרומגנטי</span><span class="sctag sct2">RAS</span>
+          <span class="sctag sct3">קוהרנטיות מח-לב</span>
+          <span class="sctag sct4">אפשרויות קוונטיות</span>
+        </div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line" id="sconn2-r3">
+      <div class="sconn-session">S1 · S4</div>
+      <div class="sconn-content">
+        <div class="sconn-title">פלצבו הוא לא חריגה מהמדע — הוא בדיוק המדע</div>
+        <div class="sconn-desc">אמונה מלאה יוצרת תטא (S1) ← התת-מודע פתוח ← הגוף מגיב לתבנית הפנימית כאילו היא חיצונית (S4). כשהציפייה מלאה — הביולוגיה זזת. זו לא מיסטיקה.</div>
+        <div class="sconn-tags">
+          <span class="sctag sct1">תת מודע</span><span class="sctag sct1">תטא</span><span class="sctag sct1">אמונות</span>
+          <span class="sctag sct4">פלצבו</span><span class="sctag sct4">מהי מציאות</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SPINCONNECT3 · הקשרים ב ══ -->
+<div class="slide" id="spinconnect3">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">Sessions 1–5 · Cross-System Connections · Part 2</div>
+        <div class="sh2-title">Everything Connects</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">הקשרים שמחברים הכל</div>
+        <div class="sh2-he-sub">המשך — עוד שלושה קשרים שמשנים הכל</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sconn-body">
+    <div class="sconn-item snew-line" id="sconn3-r1">
+      <div class="sconn-session">S4 · S2 · S1</div>
+      <div class="sconn-content">
+        <div class="sconn-title">בכל רגע — כל הפוטנציאלים קיימים. הציפייה היא זו שמגבשת מציאות</div>
+        <div class="sconn-desc">המציאות קורסת לפוטנציאל שאנחנו מצפות לו (S4) ← ה-RAS מסנן לפי הציפייה (S2) ← אמונות מגבילות מצמצמות את טווח הציפייה (S1). הרחבת הציפייה בכוונה — היא הפעולה הקוונטית הכי ישירה שיש.</div>
+        <div class="sconn-tags">
+          <span class="sctag sct4">אפשרויות קוונטיות</span><span class="sctag sct4">מהי מציאות</span>
+          <span class="sctag sct2">RAS</span>
+          <span class="sctag sct1">אמונות מגבילות</span>
+        </div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line" id="sconn3-r2">
+      <div class="sconn-session">S1 · S4 · S5</div>
+      <div class="sconn-content">
+        <div class="sconn-title">בתדר תטא — אמונות + בלוטה + שדה קוונטי — הכל פתוח בו-זמנית</div>
+        <div class="sconn-desc">תטא הוא התדר שבו אמונות נגישות (S1), הבלוטה פעילה (S5), והשדה הקוונטי רגיש לכוונה (S4). מדיטציה עמוקה עם כוונה ורגש — היא הנוסחה הביולוגית-פיזיקלית המדויקת. לא טכניקה — תדר.</div>
+        <div class="sconn-tags">
+          <span class="sctag sct1">תטא</span><span class="sctag sct1">תת מודע</span>
+          <span class="sctag sct4">שדה קוונטי</span>
+          <span class="sctag sct5">בלוטת האצטרובל</span><span class="sctag sct5">מלטונין</span>
+        </div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line" id="sconn3-r3">
+      <div class="sconn-session">S2 · S3 · S4</div>
+      <div class="sconn-content">
+        <div class="sconn-title">כוונה בלי רגש = מחשבה. רגש בלי קוהרנטיות = רעש</div>
+        <div class="sconn-desc">כשכוונה + רגש גבוה + קוהרנטיות פועלים יחד — ה-RAS מכוון, השדה משדר, המציאות מסתנכרנת (S2+S3+S4). לא חשיבה חיובית — פיזיקה.</div>
+        <div class="sconn-tags">
+          <span class="sctag sct2">שדה אלקטרומגנטי</span><span class="sctag sct2">RAS</span>
+          <span class="sctag sct3">קוהרנטיות מח-לב</span>
+          <span class="sctag sct4">אפשרויות קוונטיות</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SSYSTEM · סוגר ══ -->
+<div class="slide" id="ssystem">
+  <div class="ssystem-wrap">
+    <div class="ssystem-note">אבל בואו נזכור —</div>
+    <div class="ssystem-main">
+      אנחנו לא חיות ב-5 שיעורים.<br>
+      אנחנו חיות במערכת אחת שפועלת. <em>תמיד.</em>
+    </div>
+    <div class="ssystem-next snew-line" id="ssystem-r1">הנה כמה תרגולים</div>
+  </div>
+</div>
+
+<!-- ══ STOOLBOX · ארגז הכלים ══ -->
+<div class="slide" id="stoolbox">
+  <div class="stoolbox-wrap">
+    <div class="stoolbox-tag">כלים לחיים · Session 5</div>
+    <div class="stoolbox-title">ארגז הכלים</div>
+    <div class="stoolbox-sub">כלים שתמיד בכיס</div>
+    <div class="stoolbox-bar"></div>
+    <div class="stoolbox-lines snew-line" id="stoolbox-r1">
+      חלקם דורשים זמן. חלקם לא.<br>
+      כולם מחוברים למה שלמדנו.<br>
+      כולם עובדים — <em>אם עובדים איתם.</em>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STOOLFLASH · בשוטף ══ -->
+<div class="slide" id="stoolflash">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">On The Go · No Setup Required</div>
+        <div class="sh2-title">In The Flow</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">בשוטף</div>
+        <div class="sh2-he-sub">בלי לעצור</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="stool-body">
+    <div class="stool-item">
+      <div class="stool-num">01</div>
+      <div class="stool-name">עצירה של 3 שניות</div>
+      <div class="stool-detail snew-line" id="stoolflash-r1">
+        <div class="stool-detail-inner">
+          <div class="stool-chunk"><div class="stool-label">מתי</div><div class="stool-text">לפני כל תגובה אוטומטית — ויכוח, החלטה, תגובה למסר.</div></div>
+          <div class="stool-chunk"><div class="stool-label">מה עושה</div><div class="stool-text">מפסיקה את הלופ לפני שהוא קורה. <em>מחזירה את הבחירה אליך.</em></div></div>
+          <div class="stool-chunk"><div class="stool-label">על מה לשים לב</div><div class="stool-text">האם מה שעולה זו בחירה — או תוכנית ישנה?</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stool-sep"></div>
+    <div class="stool-item">
+      <div class="stool-num">02</div>
+      <div class="stool-name">עיגון גוף</div>
+      <div class="stool-detail snew-line" id="stoolflash-r2">
+        <div class="stool-detail-inner">
+          <div class="stool-chunk"><div class="stool-label">מתי</div><div class="stool-text">כשהראש רץ. כשיש עומס. כשאת מרגישה שאבדת את עצמך.</div></div>
+          <div class="stool-chunk"><div class="stool-label">איך</div><div class="stool-text">יד על הלב ← שלוש נשימות ← <em>שאלי: איפה אני עכשיו?</em></div></div>
+          <div class="stool-chunk"><div class="stool-label">מה עושה</div><div class="stool-text">מחזיר לאלפא תוך 30 שניות. <em>מפעיל פאראסימפתטית.</em></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stool-sep"></div>
+    <div class="stool-item">
+      <div class="stool-num">03</div>
+      <div class="stool-name">רגע תודה על הדרך</div>
+      <div class="stool-detail snew-line" id="stoolflash-r3">
+        <div class="stool-detail-inner">
+          <div class="stool-chunk"><div class="stool-label">מתי</div><div class="stool-text">שטיפת פנים. כוס קפה. שמש על הפנים. כל מה שנוגע.</div></div>
+          <div class="stool-chunk"><div class="stool-label">מה עושה</div><div class="stool-text">מכניסה את הלב לקוהרנטיות בלי שום מאמץ. <em>משנה את מה ה-RAS מחפש.</em></div></div>
+          <div class="stool-chunk"><div class="stool-label">על מה לשים לב</div><div class="stool-text">לא רעיון של תודה — <em>תחושה בגוף.</em> ההבדל קריטי.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STOOLSMALL · בקטנה ══ -->
+<div class="slide" id="stoolsmall">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">5–10 Minutes · High Return</div>
+        <div class="sh2-title">Small Investment</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">בקטנה</div>
+        <div class="sh2-he-sub">5–10 דקות</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="stool-body">
+    <div class="stool-item">
+      <div class="stool-num">01</div>
+      <div class="stool-name">נשימת 4-7-8</div>
+      <div class="stool-detail snew-line" id="stoolsmall-r1">
+        <div class="stool-detail-inner">
+          <div class="stool-chunk"><div class="stool-label">מתי</div><div class="stool-text">לפני שינה. אחרי יום קשה. כשמערכת העצבים בסטרס.</div></div>
+          <div class="stool-chunk"><div class="stool-label">איך</div><div class="stool-text">שאיפה 4 ← עצירה 7 ← נשיפה 8. <em>חזרי 4 פעמים.</em></div></div>
+          <div class="stool-chunk"><div class="stool-label">על מה לשים לב</div><div class="stool-text">הנשיפה הארוכה היא המפתח — <em>היא מה שמפעילה את עצב הוואגוס.</em></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stool-sep"></div>
+    <div class="stool-item">
+      <div class="stool-num">02</div>
+      <div class="stool-name">שאלת הבוקר</div>
+      <div class="stool-detail snew-line" id="stoolsmall-r2">
+        <div class="stool-detail-inner">
+          <div class="stool-chunk"><div class="stool-label">מתי</div><div class="stool-text">לפני שהיום מתחיל. <em>לפני שהטלפון נפתח.</em></div></div>
+          <div class="stool-chunk"><div class="stool-label">השאלה</div><div class="stool-text">"מה פעולה אחת קטנה שהגרסא העתידית שלי הייתה עושה היום?"</div></div>
+          <div class="stool-chunk"><div class="stool-label">על מה לשים לב</div><div class="stool-text">לא לנתח את התשובה — <em>לפעול לפיה.</em></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stool-sep"></div>
+    <div class="stool-item">
+      <div class="stool-num">03</div>
+      <div class="stool-name">סריקת גוף + שחרור</div>
+      <div class="stool-detail snew-line" id="stoolsmall-r3">
+        <div class="stool-detail-inner">
+          <div class="stool-chunk"><div class="stool-label">מתי</div><div class="stool-text">רגעים פנויים. אחרי ישיבה ארוכה. לפני שיחה חשובה.</div></div>
+          <div class="stool-chunk"><div class="stool-label">איך</div><div class="stool-text">עצמי עיניים ← סרקי מכף רגל לראש ← <em>איפה יש מתח?</em> → נשמי לתוכו שלוש פעמים ← נשפי ושחררי.</div></div>
+          <div class="stool-chunk"><div class="stool-label">על מה לשים לב</div><div class="stool-text">הגוף לא מחכה שתתפנה אליו — <em>הוא מצטבר.</em> הסריקה נותנת לו איתות ששמת לב.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STOOLDEEP · משקיעה ══ -->
+<div class="slide" id="stooldeep">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-eye">10+ Minutes · Deep Work</div>
+        <div class="sh2-title">Going Deep</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-he">משקיעה</div>
+        <div class="sh2-he-sub">10 דקות ומעלה</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="stool-body">
+    <div class="stool-item">
+      <div class="stool-num">01</div>
+      <div class="stool-name">מדיטציה לכוונה</div>
+      <div class="stool-detail snew-line" id="stooldeep-r1">
+        <div class="stool-detail-inner">
+          <div class="stool-chunk"><div class="stool-label">מתי</div><div class="stool-text">בוקר. ערב. כשרוצות לעבוד עם משהו ספציפי.</div></div>
+          <div class="stool-chunk"><div class="stool-label">הנוסחה</div><div class="stool-text">תדר נכון + כוונה ברורה + רגש אמיתי בגוף = <em>שדה קוהרנטי.</em></div></div>
+          <div class="stool-chunk"><div class="stool-label">על מה לשים לב</div><div class="stool-text">כוונה בלי רגש = אפירמציה. <em>כוונה עם רגש = שינוי.</em></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stool-sep"></div>
+    <div class="stool-item">
+      <div class="stool-num">02</div>
+      <div class="stool-name">מכתב מהעתיד</div>
+      <div class="stool-detail snew-line" id="stooldeep-r2">
+        <div class="stool-detail-inner">
+          <div class="stool-chunk"><div class="stool-label">מתי</div><div class="stool-text">פעם בשבוע. בנקודות מעבר. כשמרגישות תקועות.</div></div>
+          <div class="stool-chunk"><div class="stool-label">איך</div><div class="stool-text">כתבי מכתב מהגרסא שלך בעוד שנה — לך היום. <em>היא כבר שם.</em></div></div>
+          <div class="stool-chunk"><div class="stool-label">על מה לשים לב</div><div class="stool-text">לא לכתוב מה את רוצה — <em>לכתוב מה היא כבר חיה.</em> ההבדל הוא הכל.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STOOLFEELING · יצירת מציאות חידוד ══ -->
+<div class="slide" id="stoolfeeling">
+  <div class="stfeel-center">
+    <div class="stfeel-eyebrow">Reality Creation · Emotion · The Field</div>
+    <div class="stfeel-divbar"></div>
+    <div class="stfeel-q snew-line" id="stoolfeeling-r1">
+      כשאנחנו יודעות שנדרש שינוי —<br>
+      אבל אין לנו תמונה ברורה של מה.
+    </div>
+    <div class="stfeel-insight snew-line" id="stoolfeeling-r2">
+      אנחנו לא תמיד יודעות מה בדיוק אנחנו רוצות.<br>
+      אבל אנחנו <em>תמיד</em> יודעות <strong>איך אנחנו רוצות להרגיש.</strong><br>
+      אנחנו נעבוד עם זה.
+    </div>
+    <div class="stfeel-emph snew-line" id="stoolfeeling-r3">
+      <div class="stfeel-emph-line">הרגש הוא הדלק</div>
+      <div class="stfeel-emph-line">הוא מהדהד החוצה</div>
+      <div class="stfeel-emph-line">הוא השדה שאת משדרת</div>
+    </div>
+    <div class="stfeel-close snew-line" id="stoolfeeling-r4">
+      הגוף מגיב לרגש — לא לתמונה.<br>
+      <em>החלק הכי משמעותי ביצירת מציאות הוא הרגש שאת יוצרת עכשיו.</em>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ SSHARE · שיתוף ══ -->
+<div class="slide" id="sshare">
+  <div class="sshare-wrap">
+    <div class="sshare-eyebrow">רגע של שיתוף</div>
+    <div class="sshare-qs">
+      <div class="sshare-q">
+        <span class="sshare-dot">·</span>
+        <span class="sshare-text">מה את לוקחת מכל הסיישנים</span>
+      </div>
+      <div class="sshare-q">
+        <span class="sshare-dot">·</span>
+        <span class="sshare-text">מה הכי הדהד בך</span>
+      </div>
+      <div class="sshare-q">
+        <span class="sshare-dot">·</span>
+        <span class="sshare-text">מה הלך איתך לאורך ה-5 שבועות האלו שתקחי הלאה</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SMEDITATION · סיום מדיטטיבי ══ -->
+<div class="slide" id="smeditation">
+  <div class="smed-glow"></div>
+  <div class="smed-wrap">
+    <div class="smed-title">מדיטציה אחורנה לסיום</div>
+    <div class="smed-text snew-line" id="smeditation-r1">
+      עצמי עיניים.
+    </div>
+    <div class="smed-breath snew-line" id="smeditation-r2">
+      <em>מה הרגשת כשנכנסת? מה את מרגישה עכשיו?</em>
+    </div>
+    <div class="smed-close snew-line" id="smeditation-r3">
+      הגוף קלט יותר ממה שהמח רשם.
+    </div>
+  </div>
+</div>
+
+<!-- ══ SCLOSE ══ -->
+<div class="slide" id="sclose">
+  <div class="sclose-wrap">
+    <div class="sclose-tag">Session 5 · The Inner Shift · Complete</div>
+    <div class="sclose-main snew-line" id="sclose-r1">
+      את לא יוצאת מכאן עם ידע בלבד.<br>
+      <em>את יוצאת עם שפה חדשה.</em>
+    </div>
+    <div class="sclose-heart snew-line" id="sclose-r2">
+      <svg class="sclose-heart-svg" viewBox="0 0 100 88" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="hg" cx="50%" cy="40%" r="55%">
+            <stop offset="0%"  stop-color="rgba(240,140,140,1)"/>
+            <stop offset="55%" stop-color="rgba(210,90,105,1)"/>
+            <stop offset="100%" stop-color="rgba(170,55,75,1)"/>
+          </radialGradient>
+          <filter id="hf" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <path filter="url(#hf)" fill="url(#hg)"
+          d="M50,80 C46,76 8,56 8,33 C8,17 20,9 32,13 C39,15 45,21 50,28 C55,21 61,15 68,13 C80,9 92,17 92,33 C92,56 54,76 50,80 Z"/>
+      </svg>
+      <div class="sclose-heart-text">The Inner Shift — last session, it was a pleasure</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /stage -->
+
+<div class="nav">
+  <button onclick="prev()">&#8592; Back</button>
+  <div class="dots" id="dots"></div>
+  <span class="ctr" id="ctr">1 / 14</span>
+  <button onclick="next()">Next &#8594;</button>
+</div>
+
+<script>
+  let cur=0;
+  const slides=document.querySelectorAll('.slide');
+  const N=slides.length;
+  const dotsEl=document.getElementById('dots');
+  for(let i=0;i<N;i++){const d=document.createElement('div');d.className='dot'+(i===0?' on':'');d.onclick=()=>go(i);dotsEl.appendChild(d);}
+
+  let sopen5Step=0; const SOPEN5_TOTAL=0;
+  function revealSopen5(s){}
+  function resetSopen5(){sopen5Step=0;}
+
+  let srecapStep=0; const SRECAP_TOTAL=5;
+  function revealSrecap(s){['srecap-r1','srecap-r2','srecap-r3','srecap-r4','srecap-r5'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSrecap(){srecapStep=0;revealSrecap(0);}
+
+  let sjourneyStep=0; const SJOURNEY_TOTAL=0;
+  function revealSjourney(s){}
+  function resetSjourney(){sjourneyStep=0;}
+
+  let stuneStep=0; const STUNE_TOTAL=0;
+  function revealStune(s){}
+  function resetStune(){stuneStep=0;}
+
+  let spinpreStep=0; const SPINPRE_TOTAL=3;
+  function revealSpinpre(s){['spinpre-r1','spinpre-r2','spinpre-r3'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSpinpre(){spinpreStep=0;revealSpinpre(0);}
+
+  let spinStep=0; const SPIN_TOTAL=3;
+  function revealSpin(s){['spin-r1','spin-r2','spin-r3'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSpin(){spinStep=0;revealSpin(0);}
+
+  let spinportalStep=0; const SPINPORTAL_TOTAL=4;
+  function revealSpinportal(s){['spinportal-r1','spinportal-r2','spinportal-r3','spinportal-r4'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSpinportal(){spinportalStep=0;revealSpinportal(0);}
+
+  let spincalcifyStep=0; const SPINCALCIFY_TOTAL=4;
+  function revealSpincalcify(step){
+    const ids=['spincalcify-h','spincalcify-r1','spincalcify-r2','spincalcify-r3'];
+    if(step<ids.length) document.getElementById(ids[step])?.classList.add('visible');
+  }
+  function resetSpincalcify(){spincalcifyStep=0;['spincalcify-h','spincalcify-r1','spincalcify-r2','spincalcify-r3'].forEach(id=>{const el=document.getElementById(id);if(el)el.classList.remove('visible');});}
+
+  let spinmyStep=0; const SPINMY_TOTAL=3;
+  function revealSpinmy(s){['spinmy-r1','spinmy-r2','spinmy-r3'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSpinmy(){spinmyStep=0;revealSpinmy(0);}
+
+  let sbioflowStep=0; const SBIOFLOW_TOTAL=0;
+  function revealSbioflow(s){}
+  function resetSbioflow(){sbioflowStep=0;}
+
+  let sconnStep=0; const SCONN_TOTAL=4;
+  function revealSconn(s){['sconn-r1','sconn-r2','sconn-r3','sconn-r4'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSconn(){sconnStep=0;revealSconn(0);}
+
+  let sconn2Step=0; const SCONN2_TOTAL=3;
+  function revealSconn2(s){['sconn2-r1','sconn2-r2','sconn2-r3'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSconn2(){sconn2Step=0;revealSconn2(0);}
+
+  let sconn3Step=0; const SCONN3_TOTAL=3;
+  function revealSconn3(s){['sconn3-r1','sconn3-r2','sconn3-r3'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSconn3(){sconn3Step=0;revealSconn3(0);}
+
+  let ssystemStep=0; const SSYSTEM_TOTAL=1;
+  function revealSsystem(s){const el=document.getElementById('ssystem-r1');if(el)el.classList.toggle('visible',s>=1);}
+  function resetSsystem(){ssystemStep=0;revealSsystem(0);}
+
+  let stoolboxStep=0; const STOOLBOX_TOTAL=1;
+  function revealStoolbox(s){const el=document.getElementById('stoolbox-r1');if(el)el.classList.toggle('visible',s>=1);}
+  function resetStoolbox(){stoolboxStep=0;revealStoolbox(0);}
+
+  let stoolflashStep=0; const STOOLFLASH_TOTAL=3;
+  function revealStoolflash(s){['stoolflash-r1','stoolflash-r2','stoolflash-r3'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetStoolflash(){stoolflashStep=0;revealStoolflash(0);}
+
+  let stoolsmallStep=0; const STOOLSMALL_TOTAL=3;
+  function revealStoolsmall(s){['stoolsmall-r1','stoolsmall-r2','stoolsmall-r3'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetStoolsmall(){stoolsmallStep=0;revealStoolsmall(0);}
+
+  let stooldeepStep=0; const STOOLDEEP_TOTAL=2;
+  function revealStooldeep(s){['stooldeep-r1','stooldeep-r2'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetStooldeep(){stooldeepStep=0;revealStooldeep(0);}
+
+  let ssessionmapStep=0; const SSESSIONMAP_TOTAL=1;
+  function revealSsessionmap(s){const el=document.getElementById('ssessionmap-r1');if(el)el.classList.toggle('visible',s>=1);}
+  function resetSsessionmap(){ssessionmapStep=0;revealSsessionmap(0);}
+
+  let sshareStep=0; const SSHARE_TOTAL=0;
+  function revealSshare(s){}
+  function resetSshare(){sshareStep=0;}
+
+  let smeditationStep=0; const SMEDITATION_TOTAL=3;
+  function revealSmeditation(s){['smeditation-r1','smeditation-r2','smeditation-r3'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSmeditation(){smeditationStep=0;revealSmeditation(0);}
+
+  let stoolfeelingStep=0; const STOOLFEELING_TOTAL=4;
+  function revealStoolfeeling(s){['stoolfeeling-r1','stoolfeeling-r2','stoolfeeling-r3','stoolfeeling-r4'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetStoolfeeling(){stoolfeelingStep=0;revealStoolfeeling(0);}
+
+
+  let scircadianStep=0; const SCIRCADIAN_TOTAL=5;
+  function revealScircadian(s){['scircadian-r1','scircadian-r2','scircadian-r3','scircadian-r4','scircadian-r5'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetScircadian(){scircadianStep=0;revealScircadian(0);}
+
+  let sbadmorningStep=0; const SBADMORNING_TOTAL=2;
+  function revealSbadmorning(s){['sbadmorning-r1','sbadmorning-r2'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSbadmorning(){sbadmorningStep=0;revealSbadmorning(0);}
+
+  let sbadeveStep=0; const SBADEVE_TOTAL=2;
+  function revealSbadeve(s){['sbadeve-r1','sbadeve-r2'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSbadeve(){sbadeveStep=0;revealSbadeve(0);}
+
+  let swindowslostStep=0; const SWINDOWSLOST_TOTAL=1;
+  function revealSwindowslost(s){const el=document.getElementById('swindowslost-r1');if(el)el.classList.toggle('visible',s>=1);}
+  function resetSwindowslost(){swindowslostStep=0;revealSwindowslost(0);}
+
+  let smagicStep=0; const SMAGIC_TOTAL=3;
+  function revealSmagic(s){['smagic-r1','smagic-r2','smagic-r3'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSmagic(){smagicStep=0;revealSmagic(0);}
+
+
+
+  let scloseStep=0; const SCLOSE_TOTAL=2;
+  function revealSclose(s){['sclose-r1','sclose-r2'].forEach((id,i)=>{const el=document.getElementById(id);if(el)el.classList.toggle('visible',s>=i+1);});}
+  function resetSclose(){scloseStep=0;revealSclose(0);}
+
+  function go(n){
+    if(n<0||n>=N)return;
+    const id=slides[cur].id;
+    if(id==='sopen5')resetSopen5();
+    if(id==='srecap')resetSrecap();
+    if(id==='sjourney')resetSjourney();
+    if(id==='stune')resetStune();
+    if(id==='spinpre')resetSpinpre();
+    if(id==='spineal')resetSpin();
+    if(id==='spinportal')resetSpinportal();
+    if(id==='spincalcify')resetSpincalcify();
+    if(id==='spinmystic')resetSpinmy();
+    if(id==='sbioflow')resetSbioflow();
+    if(id==='scircadian')resetScircadian();
+    if(id==='sbadmorning')resetSbadmorning();
+    if(id==='sbadeve')resetSbadeve();
+    if(id==='swindowslost')resetSwindowslost();
+    if(id==='smagicwindow')resetSmagic();
+    if(id==='spinconnect')resetSconn();
+    if(id==='spinconnect2')resetSconn2();
+    if(id==='spinconnect3')resetSconn3();
+    if(id==='ssystem')resetSsystem();
+    if(id==='stoolbox')resetStoolbox();
+    if(id==='stoolflash')resetStoolflash();
+    if(id==='stoolsmall')resetStoolsmall();
+    if(id==='stooldeep')resetStooldeep();
+    if(id==='ssessionmap')resetSsessionmap();
+    if(id==='stoolfeeling')resetStoolfeeling();
+    if(id==='sshare')resetSshare();
+    if(id==='smeditation')resetSmeditation();
+    if(id==='sclose')resetSclose();
+    slides[cur].classList.remove('active'); slides[cur].classList.add('exit');
+    const old=cur; setTimeout(()=>slides[old].classList.remove('exit'),520);
+    cur=n; slides[cur].classList.add('active');
+    document.getElementById('ctr').textContent=(cur+1)+' / '+N;
+    document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i===cur));
+  }
+
+  function next(){
+    const id=slides[cur].id;
+    if(id==='sopen5'&&sopen5Step<SOPEN5_TOTAL){sopen5Step++;revealSopen5(sopen5Step);return;}
+    if(id==='srecap'&&srecapStep<SRECAP_TOTAL){srecapStep++;revealSrecap(srecapStep);return;}
+    if(id==='sjourney'&&sjourneyStep<SJOURNEY_TOTAL){sjourneyStep++;revealSjourney(sjourneyStep);return;}
+    if(id==='stune'&&stuneStep<STUNE_TOTAL){stuneStep++;revealStune(stuneStep);return;}
+    if(id==='spinpre'&&spinpreStep<SPINPRE_TOTAL){spinpreStep++;revealSpinpre(spinpreStep);return;}
+    if(id==='spineal'&&spinStep<SPIN_TOTAL){spinStep++;revealSpin(spinStep);return;}
+    if(id==='spinportal'&&spinportalStep<SPINPORTAL_TOTAL){spinportalStep++;revealSpinportal(spinportalStep);return;}
+    if(id==='spincalcify'&&spincalcifyStep<SPINCALCIFY_TOTAL){spincalcifyStep++;revealSpincalcify(spincalcifyStep-1);return;}
+    if(id==='spinmystic'&&spinmyStep<SPINMY_TOTAL){spinmyStep++;revealSpinmy(spinmyStep);return;}
+    if(id==='sbioflow'&&sbioflowStep<SBIOFLOW_TOTAL){sbioflowStep++;revealSbioflow(sbioflowStep);return;}
+    if(id==='scircadian'&&scircadianStep<SCIRCADIAN_TOTAL){scircadianStep++;revealScircadian(scircadianStep);return;}
+    if(id==='sbadmorning'&&sbadmorningStep<SBADMORNING_TOTAL){sbadmorningStep++;revealSbadmorning(sbadmorningStep);return;}
+    if(id==='sbadeve'&&sbadeveStep<SBADEVE_TOTAL){sbadeveStep++;revealSbadeve(sbadeveStep);return;}
+    if(id==='swindowslost'&&swindowslostStep<SWINDOWSLOST_TOTAL){swindowslostStep++;revealSwindowslost(swindowslostStep);return;}
+    if(id==='smagicwindow'&&smagicStep<SMAGIC_TOTAL){smagicStep++;revealSmagic(smagicStep);return;}
+    if(id==='spinconnect'&&sconnStep<SCONN_TOTAL){sconnStep++;revealSconn(sconnStep);return;}
+    if(id==='spinconnect2'&&sconn2Step<SCONN2_TOTAL){sconn2Step++;revealSconn2(sconn2Step);return;}
+    if(id==='spinconnect3'&&sconn3Step<SCONN3_TOTAL){sconn3Step++;revealSconn3(sconn3Step);return;}
+    if(id==='ssystem'&&ssystemStep<SSYSTEM_TOTAL){ssystemStep++;revealSsystem(ssystemStep);return;}
+    if(id==='stoolbox'&&stoolboxStep<STOOLBOX_TOTAL){stoolboxStep++;revealStoolbox(stoolboxStep);return;}
+    if(id==='stoolflash'&&stoolflashStep<STOOLFLASH_TOTAL){stoolflashStep++;revealStoolflash(stoolflashStep);return;}
+    if(id==='stoolsmall'&&stoolsmallStep<STOOLSMALL_TOTAL){stoolsmallStep++;revealStoolsmall(stoolsmallStep);return;}
+    if(id==='stooldeep'&&stooldeepStep<STOOLDEEP_TOTAL){stooldeepStep++;revealStooldeep(stooldeepStep);return;}
+    if(id==='ssessionmap'&&ssessionmapStep<SSESSIONMAP_TOTAL){ssessionmapStep++;revealSsessionmap(ssessionmapStep);return;}
+    if(id==='stoolfeeling'&&stoolfeelingStep<STOOLFEELING_TOTAL){stoolfeelingStep++;revealStoolfeeling(stoolfeelingStep);return;}
+    if(id==='sshare'&&sshareStep<SSHARE_TOTAL){sshareStep++;revealSshare(sshareStep);return;}
+    if(id==='smeditation'&&smeditationStep<SMEDITATION_TOTAL){smeditationStep++;revealSmeditation(smeditationStep);return;}
+    if(id==='sclose'&&scloseStep<SCLOSE_TOTAL){scloseStep++;revealSclose(scloseStep);return;}
+    go(cur+1);
+  }
+
+  function prev(){go(cur-1);}
+
+  slides[0].classList.add('active');
+  document.getElementById('ctr').textContent='1 / '+N;
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')prev();
+    else if(e.key==='ArrowLeft'||e.key==='ArrowUp')next();
+    else if(e.key===' '){e.preventDefault();next();}
+  });
+</script>
+
+<div class="watermark">
+  <svg viewBox="0 0 100 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50,68 C36,60 30,42 50,24 C70,42 64,60 50,68Z" transform="rotate(-42,50,68)" stroke="#d29e44" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M50,68 C36,60 30,42 50,24 C70,42 64,60 50,68Z" transform="rotate(42,50,68)" stroke="#d29e44" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M50,68 C38,52 36,26 50,6 C64,26 62,52 50,68Z" stroke="#d29e44" stroke-width="2.1" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M12,72 Q50,79 88,72" stroke="#d29e44" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+    <path d="M4,76 Q50,84 96,76" stroke="#d29e44" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+  </svg>
+  <span class="watermark-name">נועה איילנד</span>
+</div>
+</body>
+</html>
