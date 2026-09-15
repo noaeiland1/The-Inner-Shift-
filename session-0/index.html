@@ -1,0 +1,1328 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Inner Shift · מפגש ראשון · מערכת העצבים</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F5F0E8;
+  --cream-dim:rgba(245,240,232,.55);
+  --cream-faint:rgba(245,240,232,.28);
+  --gold:#C4A06B;
+  --gold-dim:#A87B4F;
+  --sage:#8BB896;
+  --blush:#D4957A;
+  --border:rgba(245,240,232,.09);
+  --ns:#5BB9B0;
+  --ns-dim:rgba(91,185,176,.55);
+  --ns-faint:rgba(91,185,176,.18);
+  --bg:#050504;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Jost',sans-serif;overflow:hidden}
+.stage{width:min(100vw,177.78vh);height:min(56.25vw,100vh);position:relative;overflow:hidden;background:var(--bg)}
+.slide{position:absolute;inset:0;padding:4.5% 6%;opacity:0;transform:translateX(36px);transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1);pointer-events:none;display:flex;flex-direction:column;direction:rtl}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:all}
+.slide.exit{opacity:0;transform:translateX(-36px)}
+.snew-line{opacity:0;transform:translateY(10px);transition:opacity .55s ease,transform .55s ease}
+.snew-line.visible{opacity:1;transform:translateY(0)}
+
+/* HEADER */
+.sh2{margin-bottom:1.6vw;flex-shrink:0}
+.sh2-inner{display:flex;flex-direction:row;align-items:flex-end;justify-content:space-between;gap:2vw;margin-bottom:.75vw}
+.sh2-left{display:flex;flex-direction:column;gap:.2vw}
+.sh2-eye{font-family:'Jost',sans-serif;font-size:0.72vw;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--ns-dim)}
+.sh2-title{font-family:'Cormorant Garamond',serif;font-size:2.8vw;font-weight:500;color:var(--cream);line-height:1}
+.sh2-right{display:flex;flex-direction:column;gap:.25vw}
+.sh2-he{font-family:'Cormorant Garamond',serif;font-size:1.45vw;font-weight:300;font-style:italic;color:rgba(245,240,232,.58);direction:rtl}
+.sh2-he-sub{font-family:'Jost',sans-serif;font-size:0.75vw;color:rgba(245,240,232,.3);letter-spacing:.12em;direction:rtl}
+.sh2-bar{height:1px;background:linear-gradient(to left,var(--ns),rgba(196,160,107,.4),transparent)}
+
+/* OPEN */
+#sopen{background:radial-gradient(ellipse 70% 55% at 50% 42%,rgba(91,185,176,.38) 0%,transparent 68%),radial-gradient(ellipse 50% 40% at 80% 20%,rgba(196,160,107,.18) 0%,transparent 60%),var(--bg)}
+.s1-top{display:flex;flex-direction:column;align-items:center;gap:.5vw;margin-top:3vw}
+.s1-session-num{font-family:'Jost',sans-serif;font-size:0.94vw;letter-spacing:.28em;text-transform:uppercase;color:var(--ns)}
+.s1-session-he{font-family:'Cormorant Garamond',serif;font-size:1.5vw;font-weight:300;color:var(--cream-dim);font-style:italic}
+.s1-rule{width:12vw;height:1px;background:linear-gradient(to right,transparent,var(--ns),transparent);margin-top:.8vw}
+.s1-block{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2vw;text-align:center}
+.s1-main{font-family:'Cormorant Garamond',serif;font-size:10.5vw;font-weight:300;color:var(--cream);line-height:.95}
+.s1-main em{font-style:italic;color:var(--ns)}
+.s1-tagline{font-family:'Jost',sans-serif;font-size:1.06vw;letter-spacing:.35em;text-transform:uppercase;color:var(--cream-faint)}
+
+/* KAVANAH */
+#stune{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg)}
+.kavanah-circle{position:absolute;width:28vw;height:28vw;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(ellipse,rgba(91,185,176,.42) 0%,transparent 70%);animation:kb 5s ease-in-out infinite}
+.kavanah-circle-2{width:18vw;height:18vw;background:radial-gradient(ellipse,rgba(196,160,107,.28) 0%,transparent 70%);animation-delay:-2.5s}
+@keyframes kb{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.38}50%{transform:translate(-50%,-50%) scale(1.55);opacity:.7}}
+.kavanah-title{position:relative;font-family:'Cormorant Garamond',serif;font-size:5.25vw;font-weight:300;color:var(--cream);text-align:center;z-index:1}
+.kavanah-sub{position:relative;font-family:'Jost',sans-serif;font-size:0.9vw;letter-spacing:.38em;text-transform:uppercase;color:var(--cream-faint);margin-top:.8vw;z-index:1}
+
+/* SCONN list */
+.sconn-body{flex:1;display:flex;flex-direction:column;gap:.9vw;direction:rtl}
+.sconn-item{display:flex;flex-direction:column;gap:.4vw;padding:.85vw 1.1vw;border:1px solid rgba(91,185,176,.22);border-radius:.35vw;direction:rtl;text-align:right}
+.sconn-session{font-family:'Cormorant Garamond',serif;font-size:1.55vw;font-weight:500;color:var(--ns);display:flex;align-items:baseline;gap:.35vw}
+.sconn-num{min-width:2.4vw;flex-shrink:0;text-align:center}
+.sconn-content{flex:1;display:flex;flex-direction:column;gap:.25vw;text-align:right}
+.sconn-title{font-family:'Cormorant Garamond',serif;font-size:1.28vw;font-weight:500;color:var(--cream);direction:rtl;text-align:right}
+.sconn-desc{font-family:'Jost',sans-serif;font-size:0.88vw;font-weight:300;color:var(--cream);line-height:1.65;direction:rtl;text-align:right}
+.sconn-desc em{color:var(--ns);font-style:normal;font-weight:500}
+.sconn-punch{font-family:'Cormorant Garamond',serif;font-size:1.94vw;font-weight:300;font-style:italic;color:var(--cream-dim);text-align:center;margin-top:.5vw;padding-top:.8vw;border-top:1px solid var(--border)}
+.sconn-punch em{color:var(--ns);font-style:normal}
+
+/* PUNCH / SPLASH */
+.spunch{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1.5vw}
+.spunch-eye{font-family:'Jost',sans-serif;font-size:0.88vw;letter-spacing:.28em;text-transform:uppercase;color:var(--ns)}
+.spunch-main{font-family:'Cormorant Garamond',serif;font-size:5.25vw;font-weight:300;color:var(--cream);line-height:1.2;max-width:75%}
+.spunch-main em{font-style:italic;color:var(--ns);text-shadow:0 0 3vw rgba(91,185,176,.4)}
+.spunch-sub{font-family:'Jost',sans-serif;font-size:1vw;font-weight:300;color:var(--cream-dim);line-height:1.7;max-width:55%;direction:rtl}
+
+/* QUERY */
+.squery-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vw}
+.squery-row{display:flex;align-items:center;gap:3vw}
+.squery-box{display:flex;flex-direction:column;align-items:center;gap:.5vw;padding:1.2vw 2vw;border-radius:.5vw;min-width:16vw}
+.squery-box.out{border:1px solid rgba(196,160,107,.35);background:rgba(196,160,107,.06)}
+.squery-box.inn{border:1px solid rgba(91,185,176,.35);background:rgba(91,185,176,.06)}
+.squery-tag{font-family:'Jost',sans-serif;font-size:0.75vw;font-weight:600;letter-spacing:.2em;text-transform:uppercase}
+.squery-tag.out{color:var(--gold)}
+.squery-tag.inn{color:var(--ns)}
+.squery-q{font-family:'Cormorant Garamond',serif;font-size:1.62vw;font-weight:400;color:var(--cream);text-align:center}
+.squery-mid{display:flex;flex-direction:column;align-items:center;gap:.3vw}
+.squery-line{width:4vw;height:1px;background:linear-gradient(to right,var(--gold-dim),var(--ns-dim))}
+.squery-mid-lbl{font-family:'Jost',sans-serif;font-size:0.69vw;font-weight:300;color:var(--cream-faint);letter-spacing:.1em;text-transform:uppercase}
+.squery-result{font-family:'Cormorant Garamond',serif;font-size:3.12vw;font-weight:300;font-style:italic;color:var(--cream-dim);text-align:center}
+.squery-result em{color:var(--ns);font-style:normal}
+
+/* STRESS */
+.sstress-body{flex:1;display:flex;flex-direction:column;gap:1.1vw;direction:rtl;justify-content:center}
+.sstress-item{display:flex;gap:1.5vw;align-items:flex-start;padding:.8vw 1.1vw;border-right:2px solid rgba(212,149,122,.35);background:rgba(212,149,122,.04);border-radius:0 .4vw .4vw 0}
+.sstress-lbl{font-family:'Jost',sans-serif;font-size:0.78vw;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--blush);min-width:8vw;padding-top:.2vw}
+.sstress-txt{font-family:'Jost',sans-serif;font-size:1.07vw;font-weight:300;color:var(--cream-dim);line-height:1.65}
+.sstress-txt strong{color:var(--cream);font-weight:500}
+
+/* STRUCT */
+.sstruct-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.2vw}
+.sstruct-node{padding:.75vw 2vw;border-radius:.4vw;text-align:center;min-width:18vw}
+.sn-root{background:rgba(91,185,176,.12);border:1px solid rgba(91,185,176,.35)}
+.sn-branch{background:rgba(245,240,232,.04);border:1px solid var(--border)}
+.sn-leaf{background:rgba(196,160,107,.08);border:1px solid rgba(196,160,107,.25)}
+.sn-label{font-family:'Cormorant Garamond',serif;font-size:1.75vw;font-weight:500;color:var(--cream)}
+.sn-sub{font-family:'Jost',sans-serif;font-size:0.81vw;font-weight:300;color:var(--cream-dim);margin-top:.2vw}
+.sstruct-row{display:flex;gap:2.5vw;justify-content:center}
+.sstruct-line{width:1px;height:1.4vw;background:var(--border);margin:0 auto}
+
+/* AUTONOMIC TABLE */
+.sauto-table{flex:1;display:flex;flex-direction:column;gap:.7vw;direction:rtl}
+.sauto-row{display:grid;grid-template-columns:1.2fr 2fr 2fr;gap:.8vw;padding:.7vw 1vw;border-radius:.35vw;align-items:center}
+.sauto-row-h{border-bottom:1px solid var(--border);padding-bottom:.5vw}
+.sauto-row-symp{background:rgba(212,149,122,.07);border:1px solid rgba(212,149,122,.18)}
+.sauto-row-para{background:rgba(91,185,176,.07);border:1px solid rgba(91,185,176,.18)}
+.sauto-cell{font-family:'Jost',sans-serif;font-size:0.91vw;font-weight:300;color:var(--cream-dim);line-height:1.55}
+.sauto-cell-h{font-size:0.75vw;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,240,232,.4)}
+.sauto-label{font-family:'Cormorant Garamond',serif;font-size:1.75vw;font-weight:500}
+.sauto-label.s{color:var(--blush)}
+.sauto-label.p{color:var(--ns)}
+
+/* VAGUS */
+.svagus-body{flex:1;display:flex;gap:3vw;direction:rtl;align-items:flex-start}
+.svagus-stat{display:flex;flex-direction:column;align-items:center;gap:.4vw;padding:1.2vw 1.8vw;border:1px solid rgba(91,185,176,.25);border-radius:.5vw;background:rgba(91,185,176,.06);min-width:12vw}
+.svagus-num{font-family:'Cormorant Garamond',serif;font-size:5.62vw;font-weight:300;color:var(--ns);line-height:1}
+.svagus-num-label{font-family:'Jost',sans-serif;font-size:0.78vw;font-weight:400;letter-spacing:.15em;text-transform:uppercase;color:var(--cream-dim);text-align:center}
+.svagus-facts{flex:1;display:flex;flex-direction:column;gap:.75vw}
+.svagus-fact{display:flex;flex-direction:column;gap:.2vw;padding:.7vw 1vw;border:1px solid rgba(91,185,176,.22);border-radius:.35vw;direction:rtl;text-align:right}
+.svagus-fact-title{font-family:'Cormorant Garamond',serif;font-size:1.6vw;font-weight:500;color:var(--ns);text-align:right}
+.svagus-fact-text{font-family:'Jost',sans-serif;font-size:1.05vw;font-weight:300;color:var(--cream);line-height:1.6;text-align:right}
+.svagus-fact-text em{color:var(--ns);font-style:normal;font-weight:500}
+
+/* PVT INTRO */
+.spvtintro{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vw}
+.spvtintro-name{font-family:'Jost',sans-serif;font-size:0.81vw;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:var(--cream-faint)}
+.spvtintro-main{font-family:'Cormorant Garamond',serif;font-size:6.25vw;font-weight:300;color:var(--cream);text-align:center;line-height:1.1}
+.spvtintro-main em{color:var(--ns);font-style:italic}
+.spvtintro-rule{width:14vw;height:1px;background:linear-gradient(to right,transparent,var(--ns-dim),transparent)}
+.spvtintro-sub{font-family:'Jost',sans-serif;font-size:1vw;font-weight:300;color:var(--cream-dim);text-align:center;max-width:48%;line-height:1.65}
+
+/* STATES TABLE */
+.stable-wrap{flex:1;display:flex;flex-direction:column;gap:.6vw;direction:rtl}
+.stable-row{display:grid;gap:.5vw;padding:.75vw 1vw;border-radius:.35vw;align-items:start}
+.stable-4{grid-template-columns:1.6fr 1fr 1.2fr 2.2fr}
+.stable-hdr{border-bottom:1px solid var(--border);padding-bottom:.5vw}
+.stable-v{background:rgba(91,185,176,.08);border:1px solid rgba(91,185,176,.2)}
+.stable-s{background:rgba(212,149,122,.08);border:1px solid rgba(212,149,122,.2)}
+.stable-d{background:rgba(120,120,180,.08);border:1px solid rgba(120,120,180,.2)}
+.sc{font-family:'Jost',sans-serif;font-size:0.9vw;font-weight:300;color:var(--cream-dim);line-height:1.5;direction:rtl}
+.sc-h{font-size:0.75vw;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,240,232,.4)}
+.sc-name{font-family:'Cormorant Garamond',serif;font-size:1.56vw;font-weight:500}
+.sc-name.v{color:var(--ns)}
+.sc-name.s{color:var(--blush)}
+.sc-name.d{color:rgba(160,150,220,1)}
+.sc-sub{font-family:'Jost',sans-serif;font-size:0.72vw;margin-top:.15vw;opacity:.55}
+
+/* BODY SIGNS */
+.sbody-grid{flex:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2vw;direction:rtl}
+.sbody-col{display:flex;flex-direction:column;gap:.55vw;padding:1vw 1.2vw;border-radius:.5vw;border:1px solid var(--border)}
+.sbody-col.vc{border-color:rgba(91,185,176,.3);background:rgba(91,185,176,.05)}
+.sbody-col.sc2{border-color:rgba(212,149,122,.3);background:rgba(212,149,122,.05)}
+.sbody-col.dc{border-color:rgba(120,120,180,.3);background:rgba(120,120,180,.05)}
+.sbody-col-title{font-family:'Cormorant Garamond',serif;font-size:1.75vw;font-weight:500;padding-bottom:.5vw;border-bottom:1px solid var(--border)}
+.sbody-col-title.vc{color:var(--ns)}
+.sbody-col-title.sc2{color:var(--blush)}
+.sbody-col-title.dc{color:rgba(160,150,220,1)}
+.sbody-sign{font-family:'Jost',sans-serif;font-size:0.88vw;font-weight:300;color:var(--cream);line-height:1.5;padding:.35vw .6vw;border:1px solid rgba(91,185,176,.15);border-radius:.25vw;display:flex;align-items:baseline;gap:.4vw;direction:rtl;text-align:right}
+.sbody-sign::before{content:'◆';color:var(--ns);font-size:.58em;flex-shrink:0;opacity:.8}
+.sbody-sign em{color:var(--ns);font-style:normal;font-weight:500}
+
+/* HYBRID */
+.shybrid-body{flex:1;display:flex;gap:2vw;direction:rtl}
+.shybrid-card{flex:1;display:flex;flex-direction:column;gap:.8vw;padding:1.5vw 1.8vw;border-radius:.6vw;border:1px solid var(--border);background:rgba(245,240,232,.02)}
+.shybrid-tag{font-family:'Jost',sans-serif;font-size:0.78vw;font-weight:600;letter-spacing:.2em;text-transform:uppercase}
+.shybrid-tag.sm{color:var(--ns)}
+.shybrid-tag.si{color:var(--gold)}
+.shybrid-title{font-family:'Cormorant Garamond',serif;font-size:2.38vw;font-weight:400;color:var(--cream)}
+.shybrid-eq{font-family:'Jost',sans-serif;font-size:0.85vw;color:var(--cream-faint);font-weight:300}
+.shybrid-examples{display:flex;flex-direction:column;gap:.35vw;padding-top:.5vw;border-top:1px solid var(--border);margin-top:.2vw}
+.shybrid-ex{font-family:'Jost',sans-serif;font-size:0.88vw;font-weight:300;color:var(--cream-dim)}
+.shybrid-ex::before{content:'· ';color:var(--ns-dim)}
+
+/* RESILIENCE */
+.sres-visual{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.8vw}
+.sres-bar-wrap{width:72%;display:flex;flex-direction:column;gap:.7vw}
+.sres-labels{display:flex;justify-content:space-between}
+.sres-lbl{font-family:'Jost',sans-serif;font-size:0.78vw;font-weight:300;color:var(--cream-dim)}
+.sres-bar{width:100%;height:.6vw;border-radius:1vw;background:linear-gradient(to left,rgba(120,120,180,.6),rgba(212,149,122,.6),rgba(91,185,176,.8));position:relative}
+.sres-dot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1.2vw;height:1.2vw;border-radius:50%;background:var(--cream);box-shadow:0 0 1.5vw rgba(91,185,176,.6)}
+.sres-caption{font-family:'Cormorant Garamond',serif;font-size:2.5vw;font-weight:300;font-style:italic;color:var(--cream-dim);text-align:center}
+.sres-caption em{color:var(--ns);font-style:normal}
+
+/* STEPS */
+.ssteps-body{flex:1;display:flex;flex-direction:column;gap:1.2vw;direction:rtl;justify-content:center}
+.sstep-item{display:flex;gap:1.5vw;align-items:flex-start;padding:1vw 1.2vw;border-radius:.5vw;border:1px solid var(--border);background:rgba(245,240,232,.02)}
+.sstep-num{font-family:'Cormorant Garamond',serif;font-size:4.38vw;font-weight:300;line-height:1;min-width:3.5vw;text-align:center}
+.sstep-content{display:flex;flex-direction:column;gap:.3vw;padding-top:.3vw}
+.sstep-title{font-family:'Cormorant Garamond',serif;font-size:2vw;font-weight:500;color:var(--cream)}
+.sstep-desc{font-family:'Jost',sans-serif;font-size:0.9vw;font-weight:300;color:var(--cream-dim);line-height:1.65}
+
+/* WINDOW */
+.swindow-vis{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7vw}
+.swindow-zone{width:68%;padding:.75vw 1.5vw;border-radius:.4vw;text-align:center;display:flex;flex-direction:column;gap:.3vw}
+.swz-hyper{background:rgba(212,149,122,.1);border:1px solid rgba(212,149,122,.32)}
+.swz-safe{background:rgba(91,185,176,.1);border:2px solid rgba(91,185,176,.45);padding:1.2vw 1.5vw}
+.swz-hypo{background:rgba(120,120,180,.1);border:1px solid rgba(120,120,180,.32)}
+.swz-label{font-family:'Cormorant Garamond',serif;font-size:1.62vw;font-weight:400;color:var(--cream)}
+.swz-desc{font-family:'Jost',sans-serif;font-size:0.81vw;font-weight:300;color:var(--cream-dim)}
+
+/* SUMMARY */
+.ssummary-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:.9vw;direction:rtl}
+.ssummary-item{display:flex;flex-direction:column;gap:.35vw;padding:.85vw 1.1vw;border-right:2px solid var(--ns-faint);border-radius:.3vw}
+.ssummary-num{font-family:'Jost',sans-serif;font-size:0.72vw;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--ns)}
+.ssummary-title{font-family:'Cormorant Garamond',serif;font-size:1.56vw;font-weight:500;color:var(--cream)}
+.ssummary-desc{font-family:'Jost',sans-serif;font-size:0.85vw;font-weight:300;color:var(--cream-dim);line-height:1.6}
+
+/* NAV */
+.nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:rgba(5,5,4,.75);border:1px solid rgba(245,240,232,.08);padding:6px 16px;border-radius:40px;backdrop-filter:blur(16px);z-index:100}
+.btn-prev,.btn-next{font-family:'Jost',sans-serif;font-size:11px;font-weight:400;letter-spacing:.08em;color:var(--cream-dim);background:rgba(245,240,232,.06);border:1px solid rgba(245,240,232,.1);border-radius:20px;padding:4px 12px;cursor:pointer;transition:all .2s}
+.btn-prev:hover,.btn-next:hover{background:rgba(91,185,176,.15);color:var(--cream);border-color:rgba(91,185,176,.3)}
+.dots{display:flex;gap:5px;align-items:center}
+.dot{width:4px;height:4px;border-radius:2px;background:rgba(245,240,232,.25);transition:all .3s;cursor:pointer}
+.dot.on{width:14px;background:var(--ns)}
+.ctr{font-family:'Jost',sans-serif;font-size:11px;color:rgba(245,240,232,.35);min-width:44px;text-align:center}
+.watermark{position:fixed;bottom:1.6vw;right:2vw;font-family:'Jost',sans-serif;font-size:0.94vw;font-weight:400;letter-spacing:.22em;text-transform:uppercase;color:rgba(245,240,232,.28);pointer-events:none}
+
+/* QUERY SEQUENTIAL */
+.sqseq{display:flex;align-items:center;gap:1.5vw;direction:rtl}
+.sqstep-num{font-family:'Cormorant Garamond',serif;font-size:3.5vw;font-weight:300;color:var(--ns-dim);min-width:3vw;text-align:center;flex-shrink:0}
+.sqstep-box{flex:1;display:flex;flex-direction:column;gap:.35vw;padding:.8vw 1.5vw;border-radius:.4vw}
+.sqstep-box.out{border:1px solid rgba(196,160,107,.4);background:rgba(196,160,107,.07)}
+.sqstep-box.inn{border:1px solid rgba(91,185,176,.4);background:rgba(91,185,176,.07)}
+.sqstep-box.res{border:1px solid rgba(245,240,232,.18);background:rgba(245,240,232,.04)}
+.sqarrow{font-size:1.5vw;color:rgba(91,185,176,.4);padding-right:4.5vw;direction:rtl}
+
+/* STRUCT TREE */
+.stree-wrap{flex:1;display:flex;flex-direction:column;gap:.5vw;justify-content:center}
+.strow{display:flex;gap:.8vw}
+.strow0{justify-content:center}
+.strow2{margin-left:22%}
+.strow3{margin-left:44%}
+.strow4{margin-left:60%}
+.stln{flex:1;display:flex;flex-direction:column;gap:.15vw;padding:.5vw 1vw;border-radius:.35vw}
+.stln.dim{background:rgba(245,240,232,.03);border:1px solid rgba(245,240,232,.07);opacity:.4}
+.stln.focus{background:rgba(91,185,176,.09);border:1px solid rgba(91,185,176,.28)}
+.strow0 .stln{background:rgba(91,185,176,.2);border:1px solid rgba(91,185,176,.45);flex:0 1 auto;padding:.65vw 3vw}
+.stln.vagus-star{background:rgba(91,185,176,.22);border:2px solid rgba(91,185,176,.6);flex:0 1 auto}
+.stln-l{font-family:'Cormorant Garamond',serif;font-size:1.47vw;font-weight:500;color:var(--cream);direction:rtl;text-align:right}
+.stln-l.t{color:var(--ns)}
+.stln.dim .stln-l{color:var(--cream-faint)}
+.strow0 .stln-l{font-size:2.06vw;text-align:center}
+.stln-s{font-family:'Jost',sans-serif;font-size:0.9vw;font-weight:300;color:var(--cream-dim);direction:rtl;text-align:right}
+.stln.dim .stln-s{color:var(--cream-faint)}
+.stln.vagus-star .stln-l{color:var(--ns);font-size:1.62vw}
+
+/* PORGES */
+.spvtintro{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vw}
+.spvtintro-name{font-family:'Jost',sans-serif;font-size:0.81vw;font-weight:400;letter-spacing:.28em;text-transform:uppercase;color:var(--cream-faint)}
+.spvtintro-main{font-family:'Cormorant Garamond',serif;font-size:6.25vw;font-weight:300;color:var(--cream);text-align:center;line-height:1.1}
+.spvtintro-main em{color:var(--ns);font-style:italic}
+.spvtintro-rule{width:14vw;height:1px;background:linear-gradient(to right,transparent,var(--ns-dim),transparent)}
+.spvtintro-sub{font-family:'Jost',sans-serif;font-size:1vw;font-weight:300;color:var(--cream-dim);text-align:center;max-width:48%;line-height:1.65}
+#sporges{background:radial-gradient(ellipse 65% 50% at 75% 35%,rgba(91,185,176,.28) 0%,transparent 62%),radial-gradient(ellipse 45% 40% at 20% 70%,rgba(196,160,107,.12) 0%,transparent 55%),var(--bg)}
+
+/* SAUTO NEW LAYOUT */
+.sauto-analogy{display:flex;flex-direction:column;align-items:center;gap:.4vw;margin-bottom:.6vw;direction:rtl;text-align:center}
+.sauto-analogy-title{font-family:'Cormorant Garamond',serif;font-size:2.31vw;font-weight:300;color:var(--cream)}
+.sauto-analogy-title em{font-style:normal;color:var(--ns)}
+.sauto-analogy-sub{font-family:'Jost',sans-serif;font-size:1vw;font-weight:300;color:var(--cream-dim)}
+.sauto-cols{flex:1;display:flex;gap:0;direction:rtl}
+.sauto-col{flex:1;display:flex;flex-direction:column;gap:.5vw;padding:1vw 1.5vw}
+.sauto-col.symp{border-left:1px solid rgba(245,240,232,.14)}
+.sauto-col-title{font-family:'Cormorant Garamond',serif;font-size:1.94vw;font-weight:500}
+.sauto-col.symp .sauto-col-title{color:var(--blush)}
+.sauto-col.para .sauto-col-title{color:var(--ns)}
+.sauto-col-sub{font-family:'Jost',sans-serif;font-size:0.98vw;font-weight:300;color:var(--cream-dim);padding-bottom:.5vw;border-bottom:1px solid var(--border)}
+.sauto-ex{display:flex;flex-direction:column;gap:.45vw;margin-top:.2vw}
+.sauto-ex-item{display:flex;align-items:baseline;gap:.7vw;font-family:'Jost',sans-serif;font-size:1.02vw;font-weight:300;color:var(--cream-dim)}
+.sauto-ex-organ{font-family:'Cormorant Garamond',serif;font-size:1.31vw;font-weight:500;color:var(--cream);min-width:5vw;flex-shrink:0}
+.sauto-footer{font-family:'Cormorant Garamond',serif;font-size:1.44vw;font-weight:300;font-style:italic;color:var(--cream-faint);text-align:center;padding-top:.4vw;direction:rtl}
+
+/* SLIDE BGs */
+#swhy{background:radial-gradient(ellipse 65% 50% at 25% 35%,rgba(91,185,176,.32) 0%,transparent 65%),radial-gradient(ellipse 50% 42% at 78% 72%,rgba(196,160,107,.18) 0%,transparent 60%),var(--bg)}
+#squery{background:radial-gradient(ellipse 70% 55% at 50% 50%,rgba(91,185,176,.28) 0%,transparent 65%),radial-gradient(ellipse 45% 40% at 15% 80%,rgba(196,160,107,.14) 0%,transparent 55%),var(--bg)}
+#sstress{background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(212,149,122,.18) 0%,transparent 62%),radial-gradient(ellipse 50% 40% at 20% 60%,rgba(91,185,176,.18) 0%,transparent 55%),var(--bg)}
+#spunch{background:radial-gradient(ellipse 65% 55% at 50% 50%,rgba(91,185,176,.32) 0%,transparent 65%),var(--bg)}
+#sstruct,#sauto{background:radial-gradient(ellipse 60% 45% at 20% 30%,rgba(91,185,176,.26) 0%,transparent 60%),radial-gradient(ellipse 45% 40% at 80% 70%,rgba(91,185,176,.16) 0%,transparent 55%),var(--bg)}
+#svagus-img{background:radial-gradient(ellipse 55% 70% at 50% 50%,rgba(91,185,176,.18) 0%,transparent 65%),var(--bg)}
+#svagus-func{background:radial-gradient(ellipse 65% 55% at 50% 50%,rgba(91,185,176,.24) 0%,transparent 65%),var(--bg)}
+#svagus{background:radial-gradient(ellipse 70% 55% at 50% 50%,rgba(91,185,176,.30) 0%,transparent 65%),var(--bg)}
+#spvt{background:radial-gradient(ellipse 65% 50% at 50% 50%,rgba(91,185,176,.36) 0%,transparent 65%),var(--bg)}
+#sstates,#sbody{background:radial-gradient(ellipse 65% 50% at 78% 28%,rgba(91,185,176,.30) 0%,transparent 62%),radial-gradient(ellipse 50% 40% at 22% 72%,rgba(212,149,122,.14) 0%,transparent 55%),var(--bg)}
+#shybrid,#sresilience{background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(91,185,176,.30) 0%,transparent 65%),var(--bg)}
+#sprinciples{background:radial-gradient(ellipse 65% 55% at 50% 50%,rgba(91,185,176,.34) 0%,transparent 65%),var(--bg)}
+#shierarchy,#scoreg,#sneuro{background:radial-gradient(ellipse 55% 45% at 30% 60%,rgba(91,185,176,.26) 0%,transparent 60%),radial-gradient(ellipse 45% 40% at 75% 25%,rgba(91,185,176,.16) 0%,transparent 50%),var(--bg)}
+#swindow{background:radial-gradient(ellipse 60% 55% at 50% 55%,rgba(91,185,176,.32) 0%,transparent 65%),radial-gradient(ellipse 40% 35% at 20% 20%,rgba(212,149,122,.12) 0%,transparent 55%),radial-gradient(ellipse 40% 35% at 80% 80%,rgba(120,120,180,.12) 0%,transparent 55%),var(--bg)}
+#ssummary{background:radial-gradient(ellipse 70% 55% at 50% 45%,rgba(91,185,176,.28) 0%,transparent 65%),radial-gradient(ellipse 45% 35% at 85% 15%,rgba(196,160,107,.16) 0%,transparent 55%),var(--bg)}
+/* STRUCT BULLET LIST */
+.sblst{flex:1;display:flex;flex-direction:column;gap:.85vw;direction:rtl;justify-content:center}
+.sbl{display:flex;flex-direction:column;gap:.2vw}
+.sbl-row{display:flex;align-items:baseline;gap:.4vw;flex-wrap:wrap}
+.sbl-num{font-family:'Jost',sans-serif;font-size:1vw;font-weight:700;color:var(--ns);min-width:2.4vw;flex-shrink:0}
+.sbl-name{font-family:'Cormorant Garamond',serif;font-weight:500;color:var(--cream);line-height:1.3}
+.sbl-inline{font-family:'Jost',sans-serif;font-size:1vw;font-weight:300;color:var(--cream);line-height:1.4}
+.sbl-vagus{font-family:'Jost',sans-serif;font-size:.9vw;font-weight:300;color:var(--ns-dim);line-height:1.4;padding-right:4.2vw;margin-top:.2vw}
+.sbl-vagus em{color:var(--ns);font-style:normal}
+.sbl-i1{margin-right:0}
+.sbl-i1 .sbl-name{font-size:1.75vw}
+.sbl-i2{margin-right:3vw}
+.sbl-i2 .sbl-name{font-size:1.5vw}
+.sbl-i3{margin-right:6vw}
+.sbl-i3 .sbl-name{font-size:1.35vw}
+
+/* VAGUS IMAGE SLIDE */
+.svagus-img-body{flex:1;display:flex;align-items:center;justify-content:center;gap:4vw;direction:rtl}
+.svagus-img-text{display:flex;flex-direction:column;gap:.9vw;justify-content:center}
+.svagus-img-stop{display:flex;align-items:center;gap:.55vw;direction:rtl}
+.svagus-img-dot{width:.45vw;height:.45vw;border-radius:50%;background:var(--ns);flex-shrink:0}
+.svagus-img-label{font-size:.95vw;font-weight:300;color:var(--cream);line-height:1.4}
+.svagus-img-label strong{color:var(--cream);font-weight:500}
+.svagus-img-line{width:1px;height:1.4vw;background:rgba(91,185,176,.3);margin-right:.2vw}
+.svagus-img-pic{height:74vh;object-fit:contain;opacity:.9;filter:sepia(.25) brightness(.88) contrast(1.05)}
+/* VAGUS FUNCTIONS SLIDE */
+.svfunc-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:1.1vw 2.5vw;direction:rtl;align-content:center}
+.svfunc-item{display:flex;flex-direction:column;gap:.5vw;padding:1.1vw 1.3vw;border:1px solid rgba(91,185,176,.22);border-radius:.35vw;direction:rtl;text-align:right}
+.svfunc-title{font-family:'Cormorant Garamond',serif;font-size:1.8vw;font-weight:500;color:var(--ns);line-height:1.2;text-align:right}
+.svfunc-tags{display:flex;flex-wrap:wrap;gap:.4vw;justify-content:flex-end}
+.svfunc-tag{font-size:.75vw;font-weight:400;color:var(--cream);background:rgba(91,185,176,.1);border:1px solid rgba(91,185,176,.25);border-radius:.2vw;padding:.18vw .55vw}
+.svfunc-desc{font-size:.88vw;font-weight:300;color:var(--cream);line-height:1.6;text-align:right}
+.svfunc-desc em{color:var(--ns);font-style:normal;font-weight:500}
+/* POLYVAGAL THEORY SLIDE */
+.spvt-body{flex:1;display:flex;flex-direction:column;gap:1.4vw;direction:rtl;justify-content:center}
+.spvt-def{font-size:1.08vw;font-weight:300;color:var(--cream);line-height:1.7;max-width:75%;direction:rtl}
+.spvt-states{display:flex;align-items:center;gap:0;direction:rtl;justify-content:center}
+.spvt-state{padding:.75vw 2.2vw;border-radius:.4vw;display:flex;flex-direction:column;gap:.25vw;min-width:22vw}
+.spvt-state.v{background:rgba(91,185,176,.1);border:1.5px solid rgba(91,185,176,.35)}
+.spvt-state.s{background:rgba(212,149,122,.08);border:1.5px solid rgba(212,149,122,.3)}
+.spvt-state.d{background:rgba(120,120,200,.08);border:1.5px solid rgba(120,120,200,.25)}
+.spvt-state-name{font-family:'Cormorant Garamond',serif;font-size:1.6vw;font-weight:500}
+.spvt-state.v .spvt-state-name{color:var(--ns)}
+.spvt-state.s .spvt-state-name{color:rgba(212,149,122,.9)}
+.spvt-state.d .spvt-state-name{color:rgba(160,155,220,.9)}
+.spvt-state-desc{font-size:.92vw;font-weight:300;color:var(--cream);line-height:1.5}
+.spvt-arrow{font-size:1.3vw;color:var(--cream-dim);padding:0 .8vw}
+.spvt-note{font-size:.9vw;font-weight:300;color:var(--cream);line-height:1.6;direction:rtl;max-width:70%}
+/* AUTONOMIC LADDER */
+#sladder{background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(91,185,176,.18) 0%,transparent 65%),var(--bg)}
+.sladder-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.7vw;direction:rtl}
+.sladder-rung{display:flex;flex-direction:column;align-items:center;gap:.3vw;padding:.85vw 4vw;border-radius:.4vw;width:65%;text-align:center;transition:opacity .45s ease,filter .45s ease}
+.sladder-v{background:rgba(91,185,176,.12);border:1.5px solid rgba(91,185,176,.4)}
+.sladder-s{background:rgba(212,149,122,.10);border:1.5px solid rgba(212,149,122,.35)}
+.sladder-d{background:rgba(120,120,200,.10);border:1.5px solid rgba(120,120,200,.3)}
+.sladder-num{font-family:'Cormorant Garamond',serif;font-size:1.1vw;font-weight:300;margin-bottom:.1vw;opacity:.7}
+.sladder-v .sladder-num{color:var(--ns)}
+.sladder-s .sladder-num{color:rgba(212,149,122,.9)}
+.sladder-d .sladder-num{color:rgba(160,155,220,.9)}
+.sladder-name{font-family:'Cormorant Garamond',serif;font-size:2vw;font-weight:500}
+.sladder-v .sladder-name{color:var(--ns)}
+.sladder-s .sladder-name{color:rgba(212,149,122,.9)}
+.sladder-d .sladder-name{color:rgba(160,155,220,.9)}
+.sladder-eq{font-size:.72vw;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:.15vw}
+.sladder-desc{font-size:.92vw;font-weight:300;color:var(--cream)}
+.sladder-arrow{font-size:1.3vw;color:var(--cream-dim);transition:opacity .45s ease}
+.sladder-note{font-size:.88vw;font-weight:300;color:var(--cream);text-align:center;max-width:65%;line-height:1.6;direction:rtl;margin-top:.4vw}
+/* Ladder focus states */
+#sladder[data-focus="v"] #lrung-s,
+#sladder[data-focus="v"] #lrung-d{opacity:.15;filter:saturate(.2)}
+#sladder[data-focus="vs"] #lrung-d{opacity:.15;filter:saturate(.2)}
+/* STATE SLIDES (ventral, sympathetic, dorsal) */
+#sventral{background:radial-gradient(ellipse 65% 55% at 50% 50%,rgba(91,185,176,.22) 0%,transparent 65%),var(--bg)}
+#ssympathetic{background:radial-gradient(ellipse 65% 55% at 50% 55%,rgba(212,149,122,.18) 0%,transparent 65%),var(--bg)}
+#sdorsal{background:radial-gradient(ellipse 65% 55% at 50% 55%,rgba(120,120,200,.16) 0%,transparent 65%),var(--bg)}
+#sbrake{background:radial-gradient(ellipse 65% 55% at 50% 50%,rgba(91,185,176,.20) 0%,transparent 65%),var(--bg)}
+.sstate-body{flex:1;display:flex;flex-direction:column;gap:1.1vw;direction:rtl}
+.sstate-cols{display:flex;gap:2.5vw;flex:1;direction:rtl}
+.sstate-col{flex:1;display:flex;flex-direction:column;gap:.5vw}
+.sstate-col-title{font-size:.72vw;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--ns);margin-bottom:.25vw;padding-bottom:.4vw;border-bottom:1px solid var(--ns-faint)}
+.sstate-item{display:flex;align-items:baseline;gap:.5vw;font-size:1.0vw;font-weight:300;color:var(--cream);padding:.5vw .75vw;border:1px solid rgba(91,185,176,.18);border-radius:.3vw;line-height:1.5;direction:rtl;text-align:right}
+.sstate-item::before{content:'◆';color:var(--ns);font-size:.6em;flex-shrink:0;margin-top:.1em}
+.sstate-item em{color:var(--ns);font-style:normal;font-weight:500}
+.sstate-recognize{padding:.85vw 1.2vw;background:rgba(91,185,176,.06);border:1px solid rgba(91,185,176,.3);border-radius:.35vw;direction:rtl}
+.sstate-rec-title{font-size:.72vw;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ns);margin-bottom:.3vw}
+.sstate-rec-items{font-size:1.0vw;font-weight:300;color:var(--cream);line-height:1.7;text-align:right}
+.sstate-rec-items em{color:var(--ns);font-style:normal;font-weight:500}
+/* VAGAL BRAKE */
+.sbrake-body{flex:1;display:flex;flex-direction:column;gap:.85vw;direction:rtl;justify-content:center}
+.sbrake-intro{font-size:1.05vw;font-weight:300;color:var(--cream);line-height:1.75;direction:rtl;text-align:right;border-right:2px solid var(--ns);padding-right:1.1vw;margin-bottom:.2vw}
+.sbrake-intro em{color:var(--ns);font-style:normal;font-weight:500}
+.sbrake-fact{display:flex;flex-direction:column;gap:.2vw;padding:.75vw 1.1vw;border:1px solid rgba(91,185,176,.22);border-radius:.35vw;direction:rtl;text-align:right}
+.sbrake-fact-title{font-family:'Cormorant Garamond',serif;font-size:1.5vw;font-weight:500;color:var(--ns);text-align:right}
+.sbrake-fact-text{font-size:.9vw;font-weight:300;color:var(--cream);line-height:1.6;text-align:right}
+.sbrake-fact-text em{color:var(--ns);font-style:normal;font-weight:500}
+.stln-l{font-size:1.56vw}
+.sc{font-size:1.05vw}
+.sbody-sign{font-size:1.05vw}
+.shybrid-ex{font-size:1.05vw}
+.ssummary-desc{font-size:1vw}
+.ssummary-num{font-size:0.88vw}
+.ssummary-title{font-size:1.65vw}
+.swz-desc{font-size:1vw}
+.swz-label{font-size:1.72vw}
+.sstep-desc{font-size:1.05vw}
+.sh2-eye{font-size:1vw}
+.sh2-he{font-size:1.36vw}
+.spvtintro-sub{font-size:1.12vw}
+.sstress-lbl{font-size:0.88vw}
+.sqstep-box .squery-tag{font-size:0.85vw}
+.squery-q{font-size:1.47vw}
+</style>
+</head>
+<body>
+<div class="stage">
+
+<!-- 1. OPEN -->
+<div class="slide" id="sopen">
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5vw;text-align:center">
+    <div class="s1-top">
+      <div class="s1-session-num">מפגש ראשון &middot; מערכת העצבים</div>
+      <div class="s1-session-he">מערכת העצבים &middot; The Nervous System</div>
+      <div class="s1-rule"></div>
+    </div>
+    <div class="s1-block">
+      <div class="s1-main">The <em>Inner</em> Shift</div>
+      <div class="s1-tagline">המסע לשינוי מבפנים</div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. KAVANAH -->
+<div class="slide" id="stune">
+  <div class="kavanah-circle"></div>
+  <div class="kavanah-circle kavanah-circle-2"></div>
+  <div class="kavanah-title">רגע של התכווננות</div>
+  <div class="kavanah-sub">MOMENT OF ALIGNMENT</div>
+</div>
+
+<!-- 3. WHY -->
+<div class="slide" id="swhy">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">מערכת העצבים</div>
+        <div class="sh2-he">לפני תרגול, לפני כלים — זה הבסיס</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">The Foundation &middot; Before the Tools</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sconn-body">
+    <div class="sconn-item snew-line">
+      <div class="sconn-session"><span class="sconn-num">①</span><span>לפני הכלים · לפני התרגול</span></div>
+      <div class="sconn-content">
+        <div class="sconn-title">זו ההיכרות הבסיסית</div>
+        <div class="sconn-desc">איך הגוף שלנו קולט ומפרש אינפורמציה. לא עוד כלי — הכרות עם הבסיס.</div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line">
+      <div class="sconn-session"><span class="sconn-num">②</span><span>הכלי לא הבעיה</span></div>
+      <div class="sconn-content">
+        <div class="sconn-title">כלי טוב ככל שיהיה — עם מערכת דרוכה, סביר שלא יעבוד</div>
+        <div class="sconn-desc">לא כי הכלי גרוע. כי המערכת לא פנויה לקבל אותו.</div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line">
+      <div class="sconn-session"><span class="sconn-num">③</span><span>לכן — ההכרה הראשונה היא עם מערכת העצבים</span></div>
+      <div class="sconn-content">
+        <div class="sconn-title">באיזה מצב אני נמצאת</div>
+        <div class="sconn-desc">והאם אני נמצאת במצב קליטה.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 10b. PORGES -->
+<div class="slide" id="sporges">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">ד"ר סטיבן פורגס</div>
+        <div class="sh2-he">האיש שגילה ששני ואגוסים — לא אחד</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">The Scientist &middot; The Breakthrough</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sconn-body">
+    <div class="sconn-item snew-line">
+      <div class="sconn-session">1994 &middot; הגילוי</div>
+      <div class="sconn-content">
+        <div class="sconn-title">שני ענפים לואגוס — לא אחד</div>
+        <div class="sconn-desc">פורגס הבחין שהואגוס מתפצל: ענף ונטרלי (חדש, ייחודי ליונקים) וענף דורסלי (עתיק, זוחלים). זה שינה את כל ההבנה של הפאראסימפתטית.</div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line">
+      <div class="sconn-session">התובנה</div>
+      <div class="sconn-content">
+        <div class="sconn-title">בטחון הוא ביולוגיה — לא בחירה</div>
+        <div class="sconn-desc">מערכת העצבים קובעת אם הסביבה בטוחה לפני שהמוח מחליט. ה"פולי" בפוליווגאלי = שתי דרכי ואגוס עם תפקידים שונים לחלוטין.</div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line">
+      <div class="sconn-session">ההשלכה</div>
+      <div class="sconn-content">
+        <div class="sconn-title">חיבור חברתי הוא מערכת ביולוגית</div>
+        <div class="sconn-desc">כשהגוף בטוח — פנים, קול, אוזניים ועיניים מתווכות חיבור. זה לא אישיות ולא אופי. זו פלטפורמה עצבית.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. QUERY -->
+<div class="slide" id="squery">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">איך מערכת העצבים עובדת</div>
+        <div class="sh2-he">הגוף כל הזמן קולט ומגיב</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Neuroception &middot; נוירוספציה</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sconn-body">
+    <div class="sconn-item snew-line">
+      <div class="sconn-session">מערכת מעקב</div>
+      <div class="sconn-content">
+        <div class="sconn-title">סריקה 4 פעמים בשנייה — האם בטוח לי?</div>
+        <div class="sconn-desc">מידע נכנס מהחושים ומהוואגוס. מהיר — כי נדרשת החלטה מיידית, לפני שהמחשבה הגיעה.</div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line">
+      <div class="sconn-session">התוצאה</div>
+      <div class="sconn-content">
+        <div class="sconn-title">קובעת לאיזה מצב המערכת תיכנס</div>
+        <div class="sconn-desc">ונטרלי-תקשורתי · סימפתטי · דורסלי. המצב משפיע על איך אני קולטת את מה שקורה סביבי.</div>
+      </div>
+    </div>
+    <div class="sconn-item snew-line">
+      <div class="sconn-session">Match · Mismatch</div>
+      <div class="sconn-content">
+        <div class="sconn-title">אותה מציאות — פרשנות שונה</div>
+        <div class="sconn-desc">התאמה: המצב בטוח, הרגשתי בטוחה, ההתנהגות מותאמת.<br>חוסר התאמה: המצב בטוח — הרגשתי לא בטוחה, ולכן ההתנהגות לא תאמה את המציאות.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4b. NEUROCEPTION SCAN STEPS -->
+<div class="slide" id="sneuro">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">הסריקה</div>
+        <div class="sh2-he">שלושה שלבים — לפני שחשבת</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Neuroception &middot; The Scan</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="squery-body" style="align-items:stretch;gap:1vw">
+    <div class="sqseq snew-line">
+      <div class="sqstep-num">①</div>
+      <div class="sqstep-box out">
+        <div class="squery-tag out">סריקה חיצונית &middot; External Scan</div>
+        <div class="squery-q" style="font-size:1.38vw;text-align:right">מה קורה בסביבה? קול, פנים, מרחב — האם זה בטוח?</div>
+      </div>
+    </div>
+    <div class="sqarrow snew-line">↓</div>
+    <div class="sqseq snew-line">
+      <div class="sqstep-num">②</div>
+      <div class="sqstep-box inn">
+        <div class="squery-tag inn">תגובה פנימית &middot; Internal Response</div>
+        <div class="squery-q" style="font-size:1.38vw;text-align:right">מה קורה בגוף? לב, נשימה, בטן — תגובה מיידית</div>
+      </div>
+    </div>
+    <div class="sqarrow snew-line">↓</div>
+    <div class="sqseq snew-line">
+      <div class="sqstep-num">③</div>
+      <div class="sqstep-box res">
+        <div class="squery-tag" style="color:var(--cream-dim);font-family:'Jost',sans-serif;font-size:0.75vw;font-weight:600;letter-spacing:.2em;text-transform:uppercase">מיזוג &middot; Integration</div>
+        <div class="squery-q" style="font-size:1.38vw;text-align:right;color:var(--ns)">כל הגוף מסתדר — לפני שחשבת, לפני שהחלטת</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. STRUCTURE -->
+<div class="slide" id="sstruct">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">מבנה מערכת העצבים</div>
+        <div class="sh2-he">כיצד היא בנויה?</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Anatomy &middot; The Map</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sblst">
+
+    <div class="sbl sbl-i1 snew-line">
+      <div class="sbl-row">
+        <div class="sbl-num">1</div>
+        <div class="sbl-name">מרכזית</div>
+        <div class="sbl-inline">— מוח וחוט שדרה</div>
+      </div>
+    </div>
+
+    <div class="sbl sbl-i1 snew-line">
+      <div class="sbl-row">
+        <div class="sbl-num">2</div>
+        <div class="sbl-name">היקפית</div>
+        <div class="sbl-inline">— כל מה שיוצא מחוט השדרה &middot; מתחלקת לסומטית ואוטונומית</div>
+      </div>
+    </div>
+
+    <div class="sbl sbl-i2 snew-line">
+      <div class="sbl-row">
+        <div class="sbl-num">2.1</div>
+        <div class="sbl-name">סומטית</div>
+        <div class="sbl-inline">— תנועה וחישה &middot; מידע מבחוץ פנימה ומפנים החוצה &middot; מערכת רצונית</div>
+      </div>
+    </div>
+
+    <div class="sbl sbl-i2 snew-line">
+      <div class="sbl-row">
+        <div class="sbl-num">2.2</div>
+        <div class="sbl-name">אוטונומית</div>
+        <div class="sbl-inline">— הלא רצונית שלנו &middot; כל הפעולות שמתרחשות בגוף ללא פקודה מודעת</div>
+      </div>
+    </div>
+
+    <div class="sbl sbl-i3 snew-line">
+      <div class="sbl-row">
+        <div class="sbl-num">2.2.1</div>
+        <div class="sbl-name">סימפתטית</div>
+        <div class="sbl-inline">— בין מנוחה לעוררות &middot; fight or flight &middot; גם חלק מהתפקוד היומיומי שלנו</div>
+      </div>
+    </div>
+
+    <div class="sbl sbl-i3 snew-line">
+      <div class="sbl-row">
+        <div class="sbl-num">2.2.2</div>
+        <div class="sbl-name">פאראסימפתטית</div>
+        <div class="sbl-inline">— עיכול &middot; רגיעה &middot; חלימה &middot; עיבוד קוגנטיבי &middot; לכל איבר פנימי יש תפקוד סימפתטי ופאראסימפתטי</div>
+      </div>
+      <div class="sbl-vagus"><em>★ עצב הואגוס</em> &middot; מגזע המוח &larr; אוזניים &larr; לוע &larr; מיתרי קול &larr; לב &larr; ריאות &larr; סרעפת &larr; עיכול</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 6a. VAGUS IMAGE -->
+<div class="slide" id="svagus-img">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">עצב הואגוס</div>
+        <div class="sh2-he">המסלול דרך הגוף</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">The Vagus Nerve &middot; The Path</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="svagus-img-body">
+    <div class="svagus-img-text snew-line">
+      <div class="svagus-img-stop"><div class="svagus-img-dot"></div><div class="svagus-img-label"><strong>גזע המוח</strong></div></div>
+      <div class="svagus-img-line"></div>
+      <div class="svagus-img-stop"><div class="svagus-img-dot"></div><div class="svagus-img-label">אוזניים</div></div>
+      <div class="svagus-img-line"></div>
+      <div class="svagus-img-stop"><div class="svagus-img-dot"></div><div class="svagus-img-label">לוע &middot; מיתרי קול</div></div>
+      <div class="svagus-img-line"></div>
+      <div class="svagus-img-stop"><div class="svagus-img-dot"></div><div class="svagus-img-label">לב &middot; ריאות</div></div>
+      <div class="svagus-img-line"></div>
+      <div class="svagus-img-stop"><div class="svagus-img-dot"></div><div class="svagus-img-label">סרעפת</div></div>
+      <div class="svagus-img-line"></div>
+      <div class="svagus-img-stop"><div class="svagus-img-dot"></div><div class="svagus-img-label">מערכת עיכול</div></div>
+    </div>
+    <img class="svagus-img-pic snew-line" src="/Users/noaeiland/Desktop/Screenshot%202026-06-16%20at%2021.49.50.png" alt="עצב הואגוס">
+  </div>
+</div>
+
+<!-- 6b. VAGUS PROPERTIES -->
+<div class="slide" id="svagus">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">עצב הואגוס</div>
+        <div class="sh2-he">הגשר בין גוף למוח</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">The Vagus Nerve &middot; The Hidden Hero</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="svagus-body">
+    <div class="svagus-stat snew-line">
+      <div class="svagus-num">80%</div>
+      <div class="svagus-num-label">מסיביו סנסוריים<br>גוף &rarr; מוח</div>
+    </div>
+    <div class="svagus-facts">
+      <div class="svagus-fact snew-line">
+        <div class="svagus-fact-title">שני צדדים · יוצא מגזע המוח</div>
+        <div class="svagus-fact-text">לעצב הואגוס ענף ימין וענף שמאל. שניהם יוצאים מגזע המוח ויורדים בגוף — הוא העצב הכי ארוך בגוף.</div>
+      </div>
+      <div class="svagus-fact snew-line">
+        <div class="svagus-fact-title">אוזניים · לוע · מיתרי הקול</div>
+        <div class="svagus-fact-text">מצטרף לעצבוב השמיעה — מעצבב את הלוע (בליעה מפעילה את הואגוס) — מגיע למיתרי הקול. קול, שמיעה ובליעה מפעילים את הואגוס.</div>
+      </div>
+      <div class="svagus-fact snew-line">
+        <div class="svagus-fact-title">לב · ריאות</div>
+        <div class="svagus-fact-text">יורד במורד הצוואר — מגיע ללב ולריאות. מאט את קצב הלב, מסדיר נשימה ולחץ דם.</div>
+      </div>
+      <div class="svagus-fact snew-line">
+        <div class="svagus-fact-title">סרעפת ↓ מערכת עיכול · איברים פנימיים</div>
+        <div class="svagus-fact-text">עובר דרך הסרעפת ומעצבב את מערכת העיכול כולה ואת האיברים הפנימיים. 80% מסיביו מעבירים מידע מהגוף אל המוח.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6c. VAGUS FUNCTIONS -->
+<div class="slide" id="svagus-func">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">תפקודי עצב הואגוס</div>
+        <div class="sh2-he">מה הוא עושה?</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Vagus Functions &middot; The Reach</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="svfunc-body">
+    <div class="svfunc-item snew-line">
+      <div class="svfunc-title">חיסון</div>
+      <div class="svfunc-tags">
+        <span class="svfunc-tag">החלמה</span>
+        <span class="svfunc-tag">דלקת</span>
+        <span class="svfunc-tag">אצטילכולין</span>
+      </div>
+      <div class="svfunc-desc">תומך במערכת החיסון ומפריש <em>אצטילכולין</em> לבלימת דלקות ולהחלמת איברים</div>
+    </div>
+    <div class="svfunc-item snew-line">
+      <div class="svfunc-title">עיכול</div>
+      <div class="svfunc-tags">
+        <span class="svfunc-tag">פריסטלטיקה</span>
+        <span class="svfunc-tag">מטבוליזם</span>
+      </div>
+      <div class="svfunc-desc">מפעיל את מערכת העיכול ומאזן <em>רמות סוכר בדם</em></div>
+    </div>
+    <div class="svfunc-item snew-line">
+      <div class="svfunc-title">מצב נפשי</div>
+      <div class="svfunc-tags">
+        <span class="svfunc-tag">חרדה</span>
+        <span class="svfunc-tag">דכאון</span>
+        <span class="svfunc-tag">היקשרות</span>
+      </div>
+      <div class="svfunc-desc">משפיע על ויסות <em>חרדה ודכאון</em> ותומך בהיקשרות ריגשית</div>
+    </div>
+    <div class="svfunc-item snew-line">
+      <div class="svfunc-title">לב ריאות</div>
+      <div class="svfunc-tags">
+        <span class="svfunc-tag">HRV</span>
+        <span class="svfunc-tag">לחץ דם</span>
+        <span class="svfunc-tag">קצב נשימה</span>
+      </div>
+      <div class="svfunc-desc">מעלה <em>HRV</em>, מוריד לחץ דם ומסדיר את קצב הנשימה</div>
+    </div>
+  </div>
+</div>
+
+<!-- 8. POLYVAGAL THEORY -->
+<div class="slide" id="spvt">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">התאוריה הפוליווגאלית</div>
+        <div class="sh2-he">מה שפורגס גילה — וכיצד זה שינה הכל</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Polyvagal Theory &middot; Dr. Stephen Porges · 1994</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="spvt-body">
+    <div class="sbrake-fact snew-line">
+      <div class="sbrake-fact-title">מהי התאוריה הפוליווגאלית</div>
+      <div class="sbrake-fact-text">מסבירה את האופן בו <em>מערכת העצבים האוטונומית</em> מגיבה לאירועים ומווסתת את התגובות, באופן שתומך בפעילות היומית אל מול האתגרים</div>
+    </div>
+    <div class="sbrake-fact snew-line">
+      <div class="sbrake-fact-title">היררכיה אבולוציונית</div>
+      <div class="sbrake-fact-text">התגובות האפשריות של מערכת העצבים האוטונומית מסודרות ב<em>היררכיה הפוכה</em> להתפתחות האבולוציונית של מערכת העצבים — ואנו נעים בין המצבים. ישנם <em>3 מצבים</em></div>
+    </div>
+  </div>
+</div>
+
+<!-- 9. THREE STATES LADDER -->
+<div class="slide" id="sladder">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">שלושת המצבים</div>
+        <div class="sh2-he">הסולם האוטונומי — היררכי, לא מודע, הגנתי</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">The Autonomic Ladder &middot; Deb Dana</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sladder-body">
+    <div class="sladder-rung sladder-v snew-line" id="lrung-v" data-step="1">
+      <div class="sladder-num">①</div>
+      <div class="sladder-name">ונטרל ווגאל</div>
+      <div class="sladder-eq">Ventral Vagal &middot; VVC</div>
+      <div class="sladder-desc">חיבור · בטחון · נוכחות · שיקום · גדילה</div>
+    </div>
+    <div class="sladder-arrow snew-line" id="larrow-1" data-step="5">↓</div>
+    <div class="sladder-rung sladder-s snew-line" id="lrung-s" data-step="2">
+      <div class="sladder-num">②</div>
+      <div class="sladder-name">סימפתטי</div>
+      <div class="sladder-eq">Sympathetic &middot; SNS</div>
+      <div class="sladder-desc">מוביליזציה · fight or flight · הגנה דרך אקטיבציה</div>
+    </div>
+    <div class="sladder-arrow snew-line" id="larrow-2" data-step="6">↓</div>
+    <div class="sladder-rung sladder-d snew-line" id="lrung-d" data-step="3">
+      <div class="sladder-num">③</div>
+      <div class="sladder-name">דורסל ווגאל</div>
+      <div class="sladder-eq">Dorsal Vagal &middot; DVC</div>
+      <div class="sladder-desc">שאטדאון · ניתוק · אימוביליזציה · &ldquo;היעלמות&rdquo;</div>
+    </div>
+  </div>
+</div>
+
+<!-- 10. VENTRAL VAGAL -->
+<div class="slide" id="sventral">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">ואגוס ונטרלי</div>
+        <div class="sh2-he">מערכת עצבים פארסימפתטית — מעל הסרעפת</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Ventral Vagal &middot; VVC &middot; Safety</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sstate-body">
+    <div class="sstate-cols">
+      <div class="sstate-col sstate-safe snew-line">
+        <div class="sstate-col-title">בעת בטחון</div>
+        <div class="sstate-item">תחושת בטחון פיזי ורגשי</div>
+        <div class="sstate-item">תקשורת — שידור וקליטת מסרים</div>
+        <div class="sstate-item">קשר עין, הבעות פנים, קול גמיש</div>
+        <div class="sstate-item">הומאוסטזיס, מעצור וגאלי</div>
+        <div class="sstate-item">רגולציה של HRV</div>
+        <div class="sstate-item">מעצבב: ושט, ריאות, תיבת קול, לב</div>
+      </div>
+      <div class="sstate-col sstate-danger snew-line">
+        <div class="sstate-col-title">בעת סכנה</div>
+        <div class="sstate-item">קושי בתקשורת (מילולית, קשר עין, הבעות פנים)</div>
+        <div class="sstate-item">שמיעת רעשים כמסכנים</div>
+        <div class="sstate-item">קצב לב מהיר יותר</div>
+      </div>
+    </div>
+    <div class="sstate-recognize snew-line">
+      <div class="sstate-rec-title">כיצד נזהה מצב ונטרלי?</div>
+      <div class="sstate-rec-items">וויסות · נוכחות · חישת הגוף · חיבור לעצמי ולאחר · יכולת להשקיט הפרעות · יכול למשאב אחרים · חיפוש אפשרויות · תקווה · חמלה · גמישות מנטלית · חוסן</div>
+    </div>
+  </div>
+</div>
+
+<!-- 11. SYMPATHETIC -->
+<div class="slide" id="ssympathetic">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">סימפתטית</div>
+        <div class="sh2-he">מנעד בין ערות לעוררות — הגנה דרך אקטיבציה</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Sympathetic NS &middot; SNS &middot; Mobilization</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sstate-body">
+    <div class="sstate-cols">
+      <div class="sstate-col sstate-safe snew-line">
+        <div class="sstate-col-title">בעת בטחון</div>
+        <div class="sstate-item">תפקידים יומיים: מוביליזציה, ערנות</div>
+        <div class="sstate-item">אנרגיה, יצירתיות, ריגוש בריא</div>
+        <div class="sstate-item">ביצועים, ריכוז, חשיבה</div>
+        <div class="sstate-item">הפרשת הורמונים בהתאם לפעילות</div>
+      </div>
+      <div class="sstate-col sstate-danger snew-line">
+        <div class="sstate-col-title">בעת סכנה</div>
+        <div class="sstate-item">דריכות, fight or flight</div>
+        <div class="sstate-item">הפרשת אדרנלין, קורטיזול</div>
+        <div class="sstate-item">לב מהיר, שרירים מתוחים</div>
+        <div class="sstate-item">פספוס סימני בטחון, קריאה שגויה</div>
+        <div class="sstate-item">תחושת ניתוק מאחרים, ירידה ברוח</div>
+      </div>
+    </div>
+    <div class="sstate-recognize snew-line">
+      <div class="sstate-rec-title">כיצד נזהה מצב סימפתטי?</div>
+      <div class="sstate-rec-items">תחושת חוסר בטחון או אי נוחות · בריחה אקטיבית או לחימה · אגרסיביות, דריכות · רגישות יתר · חיפוש מה לא בטוח · נחפש ונשמע סכנה</div>
+    </div>
+  </div>
+</div>
+
+<!-- 12. DORSAL VAGAL -->
+<div class="slide" id="sdorsal">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">דורסל ווגאל</div>
+        <div class="sh2-he">מערכת עצבים פארסימפתטית — מתחת לסרעפת</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Dorsal Vagal &middot; DVC &middot; Shutdown</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sstate-body">
+    <div class="sstate-cols">
+      <div class="sstate-col sstate-safe snew-line">
+        <div class="sstate-col-title">בעת בטחון</div>
+        <div class="sstate-item">וויסות ועיכול</div>
+        <div class="sstate-item">מנוחה, החלמה</div>
+        <div class="sstate-item">אינטימיות, שינה עמוקה</div>
+        <div class="sstate-item">מעביר מידע מהאיברים הפנימיים דרך האינסולר קורטקס</div>
+        <div class="sstate-item">מאפשר חיבור בין גוף למוח (אינטואיציה, "תחושות בטן")</div>
+      </div>
+      <div class="sstate-col sstate-danger snew-line">
+        <div class="sstate-col-title">בעת סכנה</div>
+        <div class="sstate-item">שאטדאון, אימוביליזציה</div>
+        <div class="sstate-item">קריסה, האטת קצב לב</div>
+        <div class="sstate-item">הפסקת תהליכי עיכול, שימור אנרגיה</div>
+        <div class="sstate-item">ניתוק, דיסוציאציה</div>
+        <div class="sstate-item">שיבוש מסרים פנימיים</div>
+      </div>
+    </div>
+    <div class="sstate-recognize snew-line">
+      <div class="sstate-rec-title">כיצד נזהה מצב דורסלי?</div>
+      <div class="sstate-rec-items">ערפול · נמנום · קהות חושים · חוסר חיבור · תחושת לבדיות · נטישה · חוסר תקווה · ייאוש · קריסה · "נעלם לעצמי ולאחרים"</div>
+    </div>
+  </div>
+</div>
+
+<!-- 13. VAGAL BRAKE -->
+<div class="slide" id="sbrake">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">מעצור וגאלי</div>
+        <div class="sh2-he">הואגוס כדוושת בלם על הלב</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Vagal Brake &middot; Heart Rate Regulation</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sbrake-body">
+    <div class="sbrake-intro snew-line">
+      המעצור הוואגלי הוא <em>המנגנון שמאפשר לנו לנוע בין מצבים</em> מבלי לאבד שליטה — הוא פעיל לא רק באיומים קיצוניים, אלא בכל אינטראקציה חברתית, בכל רגע של לחץ יומיומי, ובכל שינוי קטן בסביבה. רמת הפעילות שלו היא מה שקובעת את <em>הגמישות הפיזיולוגית</em> שלנו — וכל הכלים שנלמד בהמשך מכוונים בדיוק אליו.
+    </div>
+    <div class="sbrake-facts">
+      <div class="sbrake-fact snew-line">
+        <div class="sbrake-fact-title">אחראי על האטת קצב הלב ל‑60–80 פעימות בדקה</div>
+        <div class="sbrake-fact-text">קצב המנוחה הבסיסי — עשוי להשתנות בין אנשים</div>
+      </div>
+      <div class="sbrake-fact snew-line">
+        <div class="sbrake-fact-title">טון וגאלי גבוה = האטת הלב</div>
+        <div class="sbrake-fact-text">הואגוס פועל כמעצור על הלב ומהווה דרך להרגיע אותנו. העלאת הטון הוגאלי מורידה את עוררות הסימפתטית.</div>
+      </div>
+      <div class="sbrake-fact snew-line">
+        <div class="sbrake-fact-title">הורדת הטון הוגאלי = הסרת הבלם</div>
+        <div class="sbrake-fact-text">קוצב הלב אינו מוגבל — כך שמערכת ה‑Fight/Flight יכולה להיות פעילה בזמן סכנה</div>
+      </div>
+      <div class="sbrake-fact snew-line">
+        <div class="sbrake-fact-title">בתגובה לאיום מסכן חיים — ואגוס דורסלי</div>
+        <div class="sbrake-fact-text">לחיצה חזקה מאוד על המעצור, על מנת להאט את קצב הלב בצורה דרמטית — מנגנון ההישרדות הקדום</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 12. BODY SIGNS -->
+<div class="slide" id="sbody">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">איך לזהות את המצב</div>
+        <div class="sh2-he">הגוף תמיד אומר — צריך לדעת לקרוא</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Body Signs &middot; Reading the State</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sbody-grid">
+    <div class="sbody-col vc snew-line">
+      <div class="sbody-col-title vc">ונטרלי ואגאלי</div>
+      <div class="sbody-sign">פנים רגועות, גמישות</div>
+      <div class="sbody-sign">קשר עין טבעי</div>
+      <div class="sbody-sign">קול גמיש, אינטונציה</div>
+      <div class="sbody-sign">נשימה עמוקה ואחידה</div>
+      <div class="sbody-sign">סקרנות, פתיחות</div>
+      <div class="sbody-sign">יכולת להקשיב ולהיות נשמעת</div>
+    </div>
+    <div class="sbody-col sc2 snew-line">
+      <div class="sbody-col-title sc2">סימפתטי</div>
+      <div class="sbody-sign">לב מהיר, דופק מורגש</div>
+      <div class="sbody-sign">שרירי כתפיים ולסת מתוחים</div>
+      <div class="sbody-sign">נשימה שטחית, מהירה</div>
+      <div class="sbody-sign">עצבנות, דחיפות</div>
+      <div class="sbody-sign">מחשבות מרוצות</div>
+      <div class="sbody-sign">קושי להתרכז</div>
+    </div>
+    <div class="sbody-col dc snew-line">
+      <div class="sbody-col-title dc">דורסלי ואגאלי</div>
+      <div class="sbody-sign">גוף כבד, תנועה איטית</div>
+      <div class="sbody-sign">קהות, "לא כאן"</div>
+      <div class="sbody-sign">ניתוק מרגשות</div>
+      <div class="sbody-sign">ערפל מחשבתי</div>
+      <div class="sbody-sign">עייפות עמוקה</div>
+      <div class="sbody-sign">קושי לדבר, להגיב</div>
+    </div>
+  </div>
+</div>
+
+<!-- 13. HYBRID -->
+<div class="slide" id="shybrid">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">מצבים היברידיים</div>
+        <div class="sh2-he">המצבים לא בלעדיים זה לזה</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Blended States &middot; The Full Spectrum</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="shybrid-body">
+    <div class="shybrid-card snew-line">
+      <div class="shybrid-tag sm">ונטרלי + סימפתטי</div>
+      <div class="shybrid-title">ניידות בבטחון</div>
+      <div class="shybrid-eq">Safe Mobilization</div>
+      <div class="shybrid-examples">
+        <div class="shybrid-ex">משחק, ריקוד, ספורט</div>
+        <div class="shybrid-ex">ריגוש בריא, אתגר</div>
+        <div class="shybrid-ex">יצירה עם אנרגיה גבוהה</div>
+        <div class="shybrid-ex">שיחה נלהבת</div>
+      </div>
+    </div>
+    <div class="shybrid-card snew-line">
+      <div class="shybrid-tag si">ונטרלי + דורסלי</div>
+      <div class="shybrid-title">דממה בבטחון</div>
+      <div class="shybrid-eq">Safe Immobilization</div>
+      <div class="shybrid-examples">
+        <div class="shybrid-ex">מדיטציה עמוקה</div>
+        <div class="shybrid-ex">חיבוק, קרבה פיזית</div>
+        <div class="shybrid-ex">שינה עמוקה</div>
+        <div class="shybrid-ex">שקט פנימי</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 14. RESILIENCE -->
+<div class="slide" id="sresilience">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">חוסן = תנועה על המנעד</div>
+        <div class="sh2-he">לא להיות תמיד ונטרלי — להיות גמישה</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Resilience &middot; The Real Goal</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sres-visual">
+    <div class="sres-bar-wrap snew-line">
+      <div class="sres-labels">
+        <div class="sres-lbl" style="color:rgba(160,150,220,.8)">דורסלי</div>
+        <div class="sres-lbl" style="color:rgba(212,149,122,.8)">סימפתטי</div>
+        <div class="sres-lbl" style="color:var(--ns)">ונטרלי</div>
+      </div>
+      <div class="sres-bar"><div class="sres-dot"></div></div>
+    </div>
+    <div class="sres-caption snew-line">בריאות אינה להיות תמיד <em>כאן</em></div>
+    <div class="sres-caption snew-line" style="font-size:1.88vw">בריאות היא היכולת לנוע — ולחזור</div>
+    <div style="font-family:'Jost',sans-serif;font-size:0.94vw;font-weight:300;color:var(--cream-faint);text-align:center;max-width:45%;direction:rtl" class="snew-line">"הגוף לא שגה — הוא עשה הכי טוב שידע באותו הרגע"</div>
+  </div>
+</div>
+
+<!-- 7. AUTONOMIC -->
+
+<!-- 11. THREE STATES -->
+
+<!-- 15. WINDOW OF TOLERANCE -->
+<div class="slide" id="swindow">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">חלון הנוכחות</div>
+        <div class="sh2-he">ונטרלי = בפנים &middot; סימפתטי = מעל &middot; דורסלי = מתחת</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Dan Siegel &middot; 1999 &middot; Window of Tolerance</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="swindow-vis">
+    <div style="font-family:'Jost',sans-serif;font-size:0.94vw;font-weight:300;color:var(--cream-dim);text-align:center;direction:rtl;max-width:60%;padding-bottom:.5vw" class="snew-line">כשאנחנו מחוץ לחלון — לא בוחרות, לא לומדות, לא מתחברות. מגיבות אוטומטית. כשאנחנו בתוכו — הכל פתוח.</div>
+    <div class="swindow-zone swz-hyper snew-line">
+      <div class="swz-label">&uarr; מעל החלון</div>
+      <div class="swz-desc">הצפה &middot; חרדה &middot; פאניקה &middot; תגובתיות יתר &middot; Hyper Arousal</div>
+    </div>
+    <div class="swindow-zone swz-safe snew-line">
+      <div class="swz-label" style="color:var(--ns)">חלון הנוכחות</div>
+      <div class="swz-desc">כאן אפשר לתפקד &middot; ללמוד &middot; להרגיש &middot; לבחור</div>
+    </div>
+    <div class="swindow-zone swz-hypo snew-line">
+      <div class="swz-label">&darr; מתחת לחלון</div>
+      <div class="swz-desc">קהות &middot; ניתוק &middot; ערפל &middot; דיכאון &middot; Hypo Arousal</div>
+    </div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.75vw;font-weight:300;font-style:italic;color:var(--cream-faint);text-align:center;direction:rtl" class="snew-line">כל מגע בקצוות בבטחה — מרחיב את החלון</div>
+  </div>
+</div>
+
+<!-- 20. SUMMARY -->
+<div class="slide" id="ssummary">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">מה לוקחות איתנו</div>
+        <div class="sh2-he">מפגש מערכת העצבים &middot; סיכום</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Session 06 &middot; What We Learned</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="ssummary-body">
+    <div class="ssummary-item snew-line">
+      <div class="ssummary-num">01 &middot; מבנה</div>
+      <div class="ssummary-title">מערכת העצבים</div>
+      <div class="ssummary-desc">מרכזית, היקפית, אוטונומית. הגוף מנהל הכל — לפני שאנחנו מחליטות.</div>
+    </div>
+    <div class="ssummary-item snew-line">
+      <div class="ssummary-num">02 &middot; שחקן</div>
+      <div class="ssummary-title">עצב הואגוס</div>
+      <div class="ssummary-desc">80% סנסורי. הגוף מדווח למוח — הגשר בין פנים לחוץ, בין עצמי לאחר.</div>
+    </div>
+    <div class="ssummary-item snew-line">
+      <div class="ssummary-num">03 &middot; מפה</div>
+      <div class="ssummary-title">שלושה מצבים</div>
+      <div class="ssummary-desc">ונטרלי &middot; סימפתטי &middot; דורסלי. לא בחירה — פלטפורמה ביולוגית.</div>
+    </div>
+    <div class="ssummary-item snew-line">
+      <div class="ssummary-num">04 &middot; פורגס</div>
+      <div class="ssummary-title">התיאוריה הפוליווגאלית</div>
+      <div class="ssummary-desc">שני ענפי ואגוס — לא אחד. בטחון הוא ביולוגיה. חיבור הוא צורך עצבי.</div>
+    </div>
+    <div class="ssummary-item snew-line">
+      <div class="ssummary-num">05 &middot; חוסן</div>
+      <div class="ssummary-title">תנועה על המנעד</div>
+      <div class="ssummary-desc">בריאות = גמישות. לא להישאר — לנוע ולחזור.</div>
+    </div>
+    <div class="ssummary-item snew-line" style="border-right-color:var(--ns-dim);background:rgba(91,185,176,.04)">
+      <div class="ssummary-num">06 &middot; חלון</div>
+      <div class="ssummary-title">חלון הנוכחות</div>
+      <div class="ssummary-desc">כל מגע בקצוות בבטחה — מרחיב את הטווח שבו אפשר לחיות.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 16. CHRONIC STRESS (לעיון עתידי) -->
+<div class="slide" id="sstress">
+  <div class="sh2">
+    <div class="sh2-inner">
+      <div class="sh2-left">
+        <div class="sh2-title">כשהמערכת נשארת דלוקה</div>
+        <div class="sh2-he">סטרס כרוני = מצב פעיל כל הזמן</div>
+      </div>
+      <div class="sh2-right">
+        <div class="sh2-eye">Chronic Stress &middot; The Problem</div>
+      </div>
+    </div>
+    <div class="sh2-bar"></div>
+  </div>
+  <div class="sstress-body">
+    <div class="sstress-item snew-line">
+      <div class="sstress-lbl">משאבים</div>
+      <div class="sstress-txt">אנרגיה שהולכת להגנה — <strong>לא הולכת לריפוי, צמיחה, חסינות, עיכול, שינה.</strong> הגוף עובד בחסר ברציפות.</div>
+    </div>
+    <div class="sstress-item snew-line">
+      <div class="sstress-lbl">פילטר</div>
+      <div class="sstress-txt">המערכת מתחילה לראות סכנה גם כשאין. <strong>קול רגיל נשמע מאיים. שתיקה — כעס. מבט נייטרלי — שיפוט.</strong></div>
+    </div>
+    <div class="sstress-item snew-line">
+      <div class="sstress-lbl">זמינות</div>
+      <div class="sstress-txt">למידה, חיבור, יצירה, בחירה — <strong>נסגרים.</strong> לא כי לא רוצים. כי הגוף לא שם — הוא עסוק בלשרוד.</div>
+    </div>
+    <div class="sstress-item snew-line">
+      <div class="sstress-lbl">קריסה</div>
+      <div class="sstress-txt">כשסימפתטי עובד יותר מדי — הגוף נכבה. <strong>עייפות כרונית. ניתוק. קהות. זה לא עצלות — זה שאטדאון.</strong></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /stage -->
+
+<nav class="nav">
+  <button class="btn-prev">&#8592;</button>
+  <div class="dots" id="dots"></div>
+  <div class="ctr" id="ctr"></div>
+  <button class="btn-next">&#8594;</button>
+</nav>
+<div class="watermark">The Inner Shift</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const dotsEl=document.getElementById('dots');
+const ctrEl=document.getElementById('ctr');
+let cur=0;
+slides.forEach((_,i)=>{
+  const d=document.createElement('div');
+  d.className='dot';
+  d.addEventListener('click',()=>goTo(i));
+  dotsEl.appendChild(d);
+});
+const dots=[...dotsEl.querySelectorAll('.dot')];
+let step=0;
+function goTo(n){
+  if(n<0||n>=slides.length)return;
+  slides[cur].removeAttribute('data-focus');
+  slides[cur].classList.remove('active');
+  slides[cur].classList.add('exit');
+  const prev=cur;
+  setTimeout(()=>slides[prev].classList.remove('exit'),520);
+  dots[cur].classList.remove('on');
+  cur=n;step=0;
+  slides[cur].classList.add('active');
+  dots[cur].classList.add('on');
+  ctrEl.textContent=(cur+1)+' / '+slides.length;
+  const slideEl=slides[cur];
+  const stepped=slideEl.querySelectorAll('[data-step]');
+  if(stepped.length>0){
+    stepped.forEach(el=>el.classList.remove('visible'));
+    const unstepped=[...slideEl.querySelectorAll('.snew-line')].filter(el=>!el.dataset.step);
+    unstepped.forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),120+i*130));
+  }else{
+    const lines=slideEl.querySelectorAll('.snew-line');
+    lines.forEach(el=>el.classList.remove('visible'));
+    lines.forEach((el,i)=>setTimeout(()=>el.classList.add('visible'),120+i*130));
+  }
+}
+function advance(){
+  const slideEl=slides[cur];
+  const stepped=slideEl.querySelectorAll('[data-step]');
+  if(stepped.length>0){
+    const maxStep=Math.max(...[...stepped].map(el=>parseInt(el.dataset.step)));
+    if(step<maxStep){
+      step++;
+      stepped.forEach(el=>{if(parseInt(el.dataset.step)===step)setTimeout(()=>el.classList.add('visible'),80);});
+      if(slideEl.id==='sladder'){
+        if(step===4) slideEl.setAttribute('data-focus','v');
+        else if(step===5) slideEl.setAttribute('data-focus','vs');
+        else if(step===6) slideEl.removeAttribute('data-focus');
+      }
+      return;
+    }
+  }
+  goTo(cur+1);
+}
+document.querySelector('.btn-next').addEventListener('click',advance);
+document.querySelector('.btn-prev').addEventListener('click',()=>goTo(cur-1));
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')advance();
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')goTo(cur-1);
+});
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>40){if(dx<0)advance();else goTo(cur-1);}
+},{passive:true});
+goTo(0);
+</script>
+</body>
+</html>
