@@ -60,7 +60,7 @@
 
     /* unified black base, glow comes from ::before per slide */
     #s1,#s2,#s3,#s4,#s5,#s6,#s7,#s8,#s9,#s10,#s11,#s12,#s13,
-    #snew,#slimintro,#slimex,#slimid,#slimtask,#stool,
+    #snew,#snew2,#scompassion,#slimintro,#slimex,#slimid,#slimtask,#stool,
     #sshare,#ssummary,#squote2,#sjourney,#sjung,
     #swelcome,#svibrate,#swave,#sspectrum,#slight,#sspectruth,#sbody,#sbodysum,#sbridge,#sbeta,#satom,#swavebridge,
     #sfreqbridge,#smanage,#swavetadur,#skavanah,#sopening { background:#080706; }
@@ -153,8 +153,8 @@
         radial-gradient(ellipse 65% 52% at 50% 55%, rgba(70,165,195,.18) 0%, rgba(45,125,155,.09) 40%, rgba(25,80,110,.04) 65%, transparent 82%),
         radial-gradient(ellipse 80% 65% at 50% 58%, rgba(35,100,130,.06), transparent 88%);
     }
-    #snew { justify-content:center; align-items:center; padding:8%; }
-    #snew::before {
+    #snew,#snew2 { flex-direction:column; align-items:stretch; padding:0; }
+    #snew::before, #snew2::before {
       content:''; position:absolute; inset:0;
       background:
         radial-gradient(ellipse 52% 46% at 50% 46%, rgba(210,158,68,.30) 0%, rgba(175,120,42,.15) 34%, rgba(120,76,18,.06) 58%, transparent 78%),
@@ -202,13 +202,16 @@
         radial-gradient(ellipse 68% 56% at 28% 48%, rgba(150,95,22,.07), transparent 82%);
     }
     .slimex-body  { flex:1; display:flex; flex-direction:column; gap:.5vw; padding:.8% 6% 0; }
-    .belief-card  { display:flex; flex-direction:row-reverse; gap:1.5vw; padding:.7vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(212,149,122,.5); align-items:flex-start; opacity:0; transform:translateY(8px); transition:opacity .45s ease, transform .45s ease; }
+    .belief-card  { display:flex; flex-direction:row-reverse; gap:0; padding:.7vw 1.2vw; border-radius:5px; background:rgba(245,240,232,.03); border:1px solid var(--border); border-right:2px solid rgba(212,149,122,.5); align-items:flex-start; opacity:0; transform:translateY(8px); transition:opacity .45s ease, transform .45s ease; }
     .belief-card.visible { opacity:1; transform:translateY(0); }
-    .bc-voice-wrap{ flex:0 0 38%; padding-left:1.5vw; border-left:1px solid var(--border); }
-    .bc-vlbl      { font-size:.6vw; text-transform:uppercase; letter-spacing:.14em; color:rgba(212,149,122,.7); margin-bottom:.2vw; }
-    .bc-voice     { font-family:'Cormorant Garamond',serif; font-size:1.3vw; font-weight:500; color:var(--cream); direction:rtl; line-height:1.3; }
-    .bc-root-wrap { flex:1; }
-    .bc-rlbl      { font-size:.6vw; text-transform:uppercase; letter-spacing:.14em; color:rgba(196,160,107,.7); margin-bottom:.2vw; }
+    .bc-life-wrap { flex:0 0 28%; padding-left:1.5vw; border-left:1px solid var(--border); padding-right:.2vw; }
+    .bc-llbl      { font-size:.74vw; font-weight:500; letter-spacing:.04em; color:rgba(139,184,150,.95); margin-bottom:.3vw; direction:rtl; text-align:right; }
+    .bc-life      { font-size:.85vw; color:rgba(245,240,232,.75); font-weight:300; line-height:1.5; direction:rtl; text-align:right; }
+    .bc-voice-wrap{ flex:0 0 28%; padding-left:1.5vw; border-left:1px solid var(--border); padding-right:.2vw; }
+    .bc-vlbl      { font-size:.74vw; font-weight:500; letter-spacing:.04em; color:rgba(212,149,122,.95); margin-bottom:.3vw; direction:rtl; text-align:right; }
+    .bc-voice     { font-family:'Cormorant Garamond',serif; font-size:1.2vw; font-weight:500; color:var(--cream); direction:rtl; line-height:1.3; text-align:right; }
+    .bc-root-wrap { flex:1; padding-right:.2vw; }
+    .bc-rlbl      { font-size:.74vw; font-weight:500; letter-spacing:.04em; color:rgba(196,160,107,.95); margin-bottom:.3vw; direction:rtl; text-align:right; }
     .bc-root      { font-size:.85vw; color:rgba(245,240,232,.62); font-weight:300; line-height:1.5; direction:rtl; }
 
     /* ══════════════════════════════════
@@ -329,6 +332,16 @@
     .s2-qmark { font-family:'Cormorant Garamond',serif; font-size:7vw; color:var(--gold-dim); opacity:.3; line-height:.5; display:block; text-align:center; margin-bottom:.8vw; }
     .s2-qt    { font-family:'Cormorant Garamond',serif; font-size:3vw; font-style:italic; font-weight:300; color:var(--cream); line-height:1.42; text-align:center; margin-bottom:1.8vw; }
     .s2-rule  { width:55%; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); margin:0 auto 1.4vw; }
+    #sfreqbridge { justify-content:center; align-items:center; }
+    #sfreqbridge::before {
+      content:''; position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 60% 55% at 50% 50%, rgba(210,158,68,.32) 0%, rgba(175,120,42,.16) 36%, rgba(120,76,18,.07) 62%, transparent 82%),
+        radial-gradient(ellipse 85% 68% at 50% 50%, rgba(150,95,22,.10), transparent 88%);
+    }
+    .sfreq-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2.2vw; text-align:center; }
+    .sfreq-word { font-family:'Cormorant Garamond',serif; font-size:7.5vw; font-weight:300; letter-spacing:.18em; color:rgba(245,240,232,.95); text-shadow:0 0 4vw rgba(210,158,68,.55), 0 0 10vw rgba(210,158,68,.22); position:relative; }
+    .sfreq-sub { font-family:'Jost',sans-serif; font-size:.88vw; font-weight:400; letter-spacing:.32em; text-transform:uppercase; color:rgba(245,240,232,.38); }
     #sfreqbridge-tadur { opacity:0; transition:opacity .8s ease; position:relative; display:inline-block; }
     #sfreqbridge-tadur.visible { opacity:1; }
     #sfreqbridge-tadur::after { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:260%; height:400%; background:radial-gradient(ellipse 55% 55% at 50% 50%, rgba(210,158,68,.28) 0%, rgba(210,158,68,.10) 35%, transparent 70%); opacity:0; transition:opacity 1.1s ease .15s; pointer-events:none; z-index:-1; }
@@ -391,13 +404,13 @@
     .donut-in  { position:absolute; z-index:1; text-align:center; }
     .donut-in .dn { font-family:'Cormorant Garamond',serif; font-size:2.6vw; font-weight:600; color:var(--cream); display:block; line-height:1; }
     .donut-in .dl { font-size:.68vw; color:var(--cream-faint); letter-spacing:.08em; text-transform:uppercase; }
-    .s4-legend { flex:1; display:flex; flex-direction:column; gap:.9vw; }
-    .s4-item   { display:flex; gap:1.1vw; align-items:flex-start; }
+    .s4-legend { flex:1; display:flex; flex-direction:column; gap:.9vw; direction:rtl; }
+    .s4-item   { display:flex; gap:1.1vw; align-items:flex-start; direction:rtl; }
     .s4-bar    { width:3px; min-width:3px; border-radius:2px; align-self:stretch; margin-top:.3vw; }
-    .s4-pct    { font-family:'Cormorant Garamond',serif; font-size:3vw; font-weight:600; line-height:1; margin-bottom:.2vw; }
-    .s4-name   { font-size:1vw; font-weight:500; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.3vw; color:var(--cream-dim); }
-    .s4-desc   { font-size:.88vw; color:var(--cream-faint); font-weight:300; line-height:1.55; }
-    .s4-insight { padding:.9vw 1.2vw; background:rgba(245,240,232,.04); border-radius:6px; border-left:2px solid var(--gold-dim); font-size:.88vw; line-height:1.58; color:var(--cream-dim); }
+    .s4-pct    { font-family:'Cormorant Garamond',serif; font-size:3vw; font-weight:600; line-height:1; margin-bottom:.2vw; text-align:right; }
+    .s4-name   { font-size:1vw; font-weight:500; text-transform:uppercase; letter-spacing:.1em; margin-bottom:.3vw; color:var(--cream-dim); text-align:right; }
+    .s4-desc   { font-size:.92vw; color:rgba(245,240,232,.72); font-weight:300; line-height:1.6; text-align:right; }
+    .s4-insight { padding:.9vw 1.2vw; background:rgba(245,240,232,.04); border-radius:6px; border-right:2px solid var(--gold-dim); border-left:none; font-size:.88vw; line-height:1.58; color:var(--cream-dim); text-align:right; direction:rtl; }
 
     /* ══════════════════════════════════
        S5, CHILDHOOD
@@ -693,6 +706,28 @@
         radial-gradient(ellipse 70% 55% at 50% 50%, rgba(100,148,110,.06), transparent 82%);
     }
     /* ══════════════════════════════════
+       SMEDITBRIDGE
+    ══════════════════════════════════ */
+    #smeditbridge { justify-content:center; align-items:center; }
+    #smeditbridge::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 58% 52% at 50% 50%, rgba(46,185,195,.22) 0%, rgba(30,145,165,.10) 40%, transparent 72%),
+        radial-gradient(ellipse 80% 65% at 50% 50%, rgba(20,110,135,.08), transparent 85%);
+    }
+
+    /* ══════════════════════════════════
+       SCOMPASSION, RELEASE MOMENT
+    ══════════════════════════════════ */
+    #scompassion { justify-content:center; align-items:center; }
+    #scompassion::before {
+      content:''; position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 58% 52% at 50% 50%, rgba(46,185,195,.22) 0%, rgba(30,145,165,.10) 40%, transparent 72%),
+        radial-gradient(ellipse 80% 65% at 50% 50%, rgba(20,110,135,.08), transparent 85%);
+    }
+
+    /* ══════════════════════════════════
        SWHATNOW, TOOLS INTRO BRIDGE
     ══════════════════════════════════ */
     #swhatnow { background:#080706; justify-content:center; align-items:center; }
@@ -790,6 +825,10 @@
     .sjb-bomb-num      { font-family:'Cormorant Garamond',serif; font-size:1.8vw; font-weight:600; color:rgba(210,158,68,.85); line-height:1.1; flex-shrink:0; }
     .sjb-bomb-title    { font-family:'Cormorant Garamond',serif; font-size:1.35vw; font-weight:600; color:var(--cream); margin-bottom:.22vw; }
     .sjb-bomb-text     { font-size:.88vw; font-weight:300; color:rgba(245,240,232,.80); line-height:1.7; }
+    .sjb-conclusion    { padding:.9vw 0 0; border-top:1px solid rgba(210,158,68,.12); direction:rtl; margin-top:.5vw; opacity:0; transform:translateY(8px); transition:opacity .52s ease, transform .52s ease; }
+    .sjb-conclusion.visible { opacity:1; transform:translateY(0); }
+    .sjb-conclusion-text { font-family:'Cormorant Garamond',serif; font-size:1.05vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.52); line-height:1.65; }
+    .sjb-conclusion-text em { font-style:normal; color:rgba(210,158,68,.75); }
 
     /* ══════════════════════════════════
        SKAVANAH, GROUNDING MEDITATION
@@ -847,6 +886,7 @@
     .sop-wrap { max-width:72%; margin:0 auto; display:flex; flex-direction:column; gap:2.4vw; text-align:center; direction:rtl; position:relative; z-index:1; }
     .sop-heading { font-family:'Cormorant Garamond',serif; font-size:1.9vw; font-weight:500; font-style:italic; letter-spacing:.06em; color:rgba(245,240,232,.78); text-transform:none; margin-bottom:-.6vw; }
     .sop-scenarios { font-family:'Cormorant Garamond',serif; font-size:2vw; font-style:italic; font-weight:300; color:var(--cream); line-height:1.65; }
+    .sop-scenario-item { font-family:'Cormorant Garamond',serif; font-size:1.6vw; font-style:italic; font-weight:300; color:var(--cream); line-height:1.6; direction:rtl; text-align:right; }
     .sop-negs { display:flex; flex-direction:column; gap:.55vw; }
     .sop-neg { font-family:'Jost',sans-serif; font-size:1.2vw; font-weight:400; color:rgba(245,240,232,.85); line-height:1.5; }
     .sop-neg-final { font-family:'Jost',sans-serif; font-size:1.2vw; font-weight:500; color:rgba(245,240,232,.95); margin-top:.3vw; }
@@ -894,6 +934,17 @@
     .scourse-what    { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; color:rgba(245,240,232,.78); line-height:1.85; margin-bottom:1.6vw; }
     .scourse-goal    { font-family:'Cormorant Garamond',serif; font-size:1.65vw; font-weight:600; color:var(--cream); line-height:1.5; }
     .scourse-goal span { color:rgba(210,158,68,.92); font-style:italic; font-weight:400; }
+    /* SGOAL */
+    #sgoal { justify-content:center; align-items:center; }
+    #sgoal::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 55% at 50% 48%, rgba(210,158,68,.22) 0%, rgba(175,120,42,.10) 40%, transparent 72%), radial-gradient(ellipse 80% 65% at 50% 52%, rgba(150,95,22,.07), transparent 86%); }
+    .sgoal-wrap { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; gap:2vw; width:72%; }
+    .sgoal-tag { font-family:'Cormorant Garamond',serif; font-size:1.3vw; font-style:italic; font-weight:300; color:rgba(210,158,68,.75); letter-spacing:.04em; }
+    .sgoal-headline { font-family:'Cormorant Garamond',serif; font-size:2.1vw; font-weight:500; color:var(--cream); text-align:center; line-height:1.4; direction:rtl; }
+    .sgoal-rule { width:48px; height:1px; background:linear-gradient(90deg,transparent,rgba(210,158,68,.45),transparent); }
+    .sgoal-list { display:flex; flex-direction:column; gap:.75vw; width:100%; direction:rtl; }
+    .sgoal-item { display:flex; align-items:baseline; gap:.9vw; }
+    .sgoal-dot { font-family:'Cormorant Garamond',serif; font-size:1.3vw; color:rgba(210,158,68,.55); flex-shrink:0; }
+    .sgoal-text { font-family:'Cormorant Garamond',serif; font-size:1.55vw; font-weight:300; color:rgba(245,240,232,.88); line-height:1.45; }
 
     /* ── SATOM, THE ATOM ── */
     #satom::before {
@@ -1248,9 +1299,25 @@
         <div class="scourse-rule"></div>
         <div class="scourse-source">על מה נדבר</div>
         <div class="scourse-what">בקורס הזה נבין יחד איך המח שלנו עובד, למה הוא עובד ככה, ומה אפשר לעשות עם זה.<br>נדבר על תדרים, על תת מודע, על גלי מוח.</div>
-        <div class="scourse-goal">המטרה: <span>גרסה מטיבה יותר של עצמך.</span><br>מתוך הבנה, לא מאמץ.</div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ══ SGOAL, COURSE GOAL ══ -->
+  <div class="slide" id="sgoal">
+    <div class="sgoal-wrap">
+      <div class="sgoal-tag">מתוך הבנה, לא מאמץ</div>
+      <div class="sgoal-headline">להבין את מערכת ההפעלה שלך —<br>ולדעת איך לעבוד איתה, בשביל:</div>
+      <div class="sgoal-rule"></div>
+      <div class="sgoal-list">
+        <div class="sgoal-item"><span class="sgoal-dot">·</span><span class="sgoal-text">לפרוץ את הגבולות של עצמך</span></div>
+        <div class="sgoal-item"><span class="sgoal-dot">·</span><span class="sgoal-text">לעצור לופים אינסופיים</span></div>
+        <div class="sgoal-item"><span class="sgoal-dot">·</span><span class="sgoal-text">להחזיר תחושת שליטה אליך</span></div>
+        <div class="sgoal-item"><span class="sgoal-dot">·</span><span class="sgoal-text">לזהות את הדפוס בזמן אמת — לא שעה אחרי</span></div>
+        <div class="sgoal-item"><span class="sgoal-dot">·</span><span class="sgoal-text">להפסיק להילחם בעצמך ולהתחיל לעבוד איתך</span></div>
+        <div class="sgoal-item"><span class="sgoal-dot">·</span><span class="sgoal-text">למצוא את העוגן הפנימי שלך בעולם לא רגוע</span></div>
+      </div>
     </div>
   </div>
 
@@ -1274,36 +1341,36 @@
         <div class="jstep-dot"></div>
         <div class="jstep-num">1</div>
         <div class="jstep-session">מפגש ראשון · היום</div>
-        <div class="jstep-title">מערכת ההפעלה</div>
-        <div class="jstep-desc">זיהוי: הסיפור שמנהל אותי</div>
+        <div class="jstep-title">המח והתת-מודע</div>
+        <div class="jstep-desc">מה מפעיל אותנו?</div>
       </div>
       <div class="journey-step">
         <div class="jstep-dot"></div>
         <div class="jstep-num">2</div>
         <div class="jstep-session">מפגש שני</div>
-        <div class="jstep-title">השדה שמסביבי</div>
-        <div class="jstep-desc">הבנה: המחשבות שלי לא נשארות בראש</div>
+        <div class="jstep-title">שלושת המוחות</div>
+        <div class="jstep-desc">ראש · לב · בטן</div>
       </div>
       <div class="journey-step">
         <div class="jstep-dot"></div>
         <div class="jstep-num">3</div>
         <div class="jstep-session">מפגש שלישי</div>
-        <div class="jstep-title">הלופ</div>
-        <div class="jstep-desc">חיבור: איך האמונה מייצרת שוב ושוב את אותה תוצאה</div>
+        <div class="jstep-title">קוהרנטיות לב-מח</div>
+        <div class="jstep-desc">כשהם מסונכרנים</div>
       </div>
       <div class="journey-step">
         <div class="jstep-dot"></div>
         <div class="jstep-num">4</div>
         <div class="jstep-session">מפגש רביעי</div>
-        <div class="jstep-title">שבירת הלופ</div>
-        <div class="jstep-desc">שינוי: לייצר אמונה חדשה ולגור בה</div>
+        <div class="jstep-title">יצירת מציאות</div>
+        <div class="jstep-desc">קוונטום · כוונה · רגש</div>
       </div>
       <div class="journey-step">
         <div class="jstep-dot"></div>
         <div class="jstep-num">5</div>
         <div class="jstep-session">מפגש חמישי</div>
-        <div class="jstep-title">הגרסה החדשה שלי</div>
-        <div class="jstep-desc">אינטגרציה: מי אני כשאני לא מוגבלת</div>
+        <div class="jstep-title">אינטגרציה</div>
+        <div class="jstep-desc">בלוטת האצטרובל · זרימה ביולוגית · אינטגרציה</div>
       </div>
     </div>
   </div>
@@ -1323,24 +1390,15 @@
       <div class="sop-heading">מכירות את זה ש...</div>
 
       <div class="snew-line" id="sop-1">
-        <div class="sop-scenarios">
-          הרגע שבו סיימת ויכוח והרגשת שהגבת ממקום שלא בחרת בו.<br>
-          או הרגע שאמרת "הפעם יהיה אחרת" והיה בדיוק אותו הדבר.
-        </div>
+        <div class="sop-scenario-item">· הרגע שבו סיימת ויכוח והרגשת שהגבת ממקום שלא בחרת בו.</div>
       </div>
-
       <div class="snew-line" id="sop-2">
-        <div class="sop-negs">
-          <div class="sop-neg">זה לא חוסר רצון.</div>
-          <div class="sop-neg-final">גם לא שאת לא מספיק עובדת על עצמך.</div>
-        </div>
+        <div class="sop-scenario-item">· או הרגע שאמרת "הפעם יהיה אחרת" והיה בדיוק אותו הדבר.</div>
+      </div>
+      <div class="snew-line" id="sop-3">
+        <div class="sop-scenario-item">· או הרגע שמישהי אמרה משהו קטן — ויכוח שלם פרץ — ואת עדיין לא מבינה מה בדיוק הדליק אותך ככה.</div>
       </div>
 
-      <div class="snew-line" id="sop-3">
-        <div class="sop-rule"></div>
-        <div class="sop-neg-final" style="margin-top:1.2vw;">יש סיבה. יש מנגנון. ויש דרך.</div>
-        <div class="sop-close" style="margin-top:.6vw;">היום נכיר את שלושתם.</div>
-      </div>
 
     </div>
   </div>
@@ -1377,7 +1435,7 @@
         <div class="sjb-bomb" id="sjb-1">
           <div class="sjb-bomb-num">01</div>
           <div>
-            <div class="sjb-bomb-title">ידע לפני שאפשר היה למדוד</div>
+            <div class="sjb-bomb-title">יש בנו רכיב מובנה — חוצה תרבויות</div>
             <div class="sjb-bomb-text">בלי EEG, בלי סריקות מוח יונג עבד עם אלפי מטופלים לאורך עשרות שנים. ניתח חלומות, דפוסי התנהגות, תגובות רגשיות. שם לב שאנשים שונים לחלוטין מתרבויות שונות, מרקעים שונים מגיעים עם אותם דפוסים, אותם סמלים, אותם פחדים. הכלי שלו היה תצפית עמוקה. לא מכשירים עיניים, אוזניים, ותשומת לב. מה שהוא תיאר אז ה-EEG מאשר היום.</div>
           </div>
         </div>
@@ -1389,8 +1447,20 @@
             <div class="sjb-bomb-text">כל מה שאנחנו מסרבות לראות בעצמנו לא נעלם. הוא הופך ל"צל" שמנהל אותנו מאחורי הקלעים ומשפיע על האפשרויות שאנחנו בוחנות, החלטות, כל תגובות, בחירות. תגובה חזקה שיש לנו כלפי אחר לרוב זו אינדיקציה על משהו שלא מוכנות לראות בעצמנו.</div>
           </div>
         </div>
+        <div class="sjb-conclusion" id="sjb-3">
+          <div class="sjb-conclusion-text">שוב ושוב — אותם סמלים, אותן דמויות, מאנשים שלא יכלו להכיר זה את זה ולא קראו אותם ספרים. <em>המסקנה: זה לא יכול להיות נלמד. זה חייב להיות מובנה.</em></div>
+        </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ══ SFREQBRIDGE, FREQUENCIES INTRO ══ -->
+  <div class="slide" id="sfreqbridge">
+    <div class="sfreq-wrap">
+      <div class="sfreq-sub">הצד המדעי</div>
+      <div class="sfreq-word"><span id="sfreqbridge-tadur" class="visible">תדרים</span></div>
+      <div id="sfreq-sub2" style="opacity:0; transform:translateY(10px); transition:opacity .6s ease, transform .6s ease; font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.52); letter-spacing:.03em; text-align:center; margin-top:1.8vw; direction:rtl; line-height:1.8;">המוח שלנו פועל בתדרים. הלב שלנו פועל בתדרים. וככה גם העולם סביבנו.</div>
     </div>
   </div>
 
@@ -1596,32 +1666,68 @@
       </div>
     </div>
     </div>
-    <div id="sbeta-2" style="opacity:0; transform:translateY(10px); transition:opacity .65s ease, transform .65s ease; text-align:center; direction:rtl; padding:1.8vw 8% 1.5vw; flex:1; display:flex; align-items:center; justify-content:center;">
-      <div style="font-family:'Cormorant Garamond',serif; font-size:2vw; font-weight:500; font-style:italic; color:rgba(210,158,68,.96); line-height:1.5;">
-        לשנות את ה-95% אי אפשר מבטא גבוה.<br>צריך לרדת. לאלפא. לתטא.
+    <div id="sbeta-2" style="opacity:0; transform:translateY(10px); transition:opacity .6s ease, transform .6s ease; direction:rtl; padding:.8vw 6% 1.2vw; display:flex; flex-direction:column; gap:.7vw;">
+      <div style="font-size:1vw; color:rgba(245,240,232,.65); font-family:'Cormorant Garamond',serif; font-style:italic; line-height:1.75; text-align:right;">המודע מעבד 40 ביטים בשנייה. התת מודע — <strong style="color:rgba(245,240,232,.9); font-style:normal;">11 מיליון</strong>. הוא פועל מתוך תבנית מוכנה.<br>והוא תמיד קודם — הגוף כבר מגיב לפני שהמוח המודע הספיק להבין מה קרה.</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:1.5vw; font-weight:600; color:rgba(210,158,68,.92); text-align:right;">לא כוחות :)</div>
+    </div>
+  </div>
+
+  <!-- ══ SNEW, THE SUBCONSCIOUS — SLIDE 1: ROLE ══ -->
+  <div class="slide" id="snew">
+    <div class="sh" style="direction:rtl; position:relative; z-index:1;">
+      <div style="font-size:.78vw; letter-spacing:.26em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.35vw; text-align:right;">The Subconscious Mind</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; color:var(--cream); text-align:right; margin-bottom:.22vw;">תפקידו של התת מודע</div>
+      <div class="sh-bar" style="margin-right:0; margin-left:auto;"></div>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 6% 3vw; gap:2.2vw; direction:rtl; position:relative; z-index:1;">
+      <div class="snew-line" id="snew-1" style="text-align:right;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:1.7vw; font-weight:600; color:var(--cream); margin-bottom:.4vw;">התת מודע הוא גאון</div>
+        <div style="font-size:1.05vw; color:rgba(245,240,232,.68); line-height:1.75;">מטרתו לחסוך למוח אנרגיה ולשרוד. כל דבר שחוזר על עצמו מספיק פעמים — הוא לוקח ומריץ על אוטומט.</div>
+      </div>
+      <div class="snew-line" id="snew-2" style="text-align:right;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:1.7vw; font-weight:600; color:var(--cream); margin-bottom:.4vw;">דוגמאות מהחיים</div>
+        <div style="font-size:1.05vw; color:rgba(245,240,232,.68); line-height:1.75;">נהיגה. שפה. תגובות רגשיות. הרגלי בוקר. בלעדיו היינו צריכות לחשוב על כל נשימה.</div>
+      </div>
+      <div class="snew-line" id="snew-3" style="text-align:right;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:1.7vw; font-weight:600; color:rgba(210,158,68,.92); margin-bottom:.4vw;">95% מהחיים מנוהלים ממנו — בלי שנשים לב.</div>
+        <div style="font-size:1.05vw; color:rgba(210,158,68,.6); font-style:italic; line-height:1.75;">הוא לא אויב. הוא מנגנון. מדויק ומהיר יותר מהמודע.</div>
       </div>
     </div>
   </div>
 
-  <!-- ══ SNEW, THE SUBCONSCIOUS ══ -->
-  <div class="slide" id="snew">
-    <div style="text-align:center; position:relative; z-index:1;">
-      <div class="snew-title">צלילה לתוך התת מודע</div>
-      <div class="snew-rule"></div>
-      <div class="snew-punch">
-        <div class="snew-line" id="snew-1">
-          <div class="snew-main">תפקידו התת מודע הוא גאון</div>
-          <div class="snew-sup">מטרתו לחסוך למוח אנרגיה ולשרוד. כל דבר שחוזר על עצמו מספיק פעמים הוא לוקח ומריץ על אוטומט. נהיגה. שפה. הרגלים יומיומיים. בלעדיו היינו צריכות לחשוב על כל נשימה.</div>
-        </div>
-        <div class="snew-line" id="snew-2">
-          <div class="snew-main">מה נכנס לשם</div>
-          <div class="snew-sup">ילדים עד גיל 6-7 נמצאים בעיקר בתדר תטא בשעות הערות, ובנוסף, הקורטקס הפרה-פרונטלי עדיין לא מפותח. שתי הסיבות יחד יוצרות מצב שבו מידע נכנס ישירות, בלי סינון.</div>
-        </div>
-        <div class="snew-line" id="snew-3">
-          <div class="snew-main-gold">התת מודע מנהל את חיינו. מאז ועד היום.</div>
-          <div class="snew-sup-gold">התגובות האוטומטיות, ההרגלים, האמונות כולן רצות על אותה תוכנית.</div>
-        </div>
-        <div class="snew-src" id="snew-src">Source: Lipton B. (2005) The Biology of Belief &nbsp;·&nbsp; Dispenza J. (2017) Becoming Supernatural</div>
+  <!-- ══ SNEW2, THE SUBCONSCIOUS — SLIDE 2: FORMATION ══ -->
+  <div class="slide" id="snew2">
+    <div class="sh" style="direction:rtl; position:relative; z-index:1;">
+      <div style="font-size:.78vw; letter-spacing:.26em; text-transform:uppercase; color:var(--sage-dim); margin-bottom:.35vw; text-align:right;">The Subconscious Mind</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:500; color:var(--cream); text-align:right; margin-bottom:.22vw;">איך ומתי נוצר</div>
+      <div class="sh-bar" style="margin-right:0; margin-left:auto;"></div>
+    </div>
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:0 6% 3vw; gap:2.2vw; direction:rtl; position:relative; z-index:1;">
+      <div class="snew-line" id="snew2-1" style="text-align:right;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:1.7vw; font-weight:600; color:var(--cream); margin-bottom:.4vw;">עד גיל 6–7: תדר תטא</div>
+        <div style="font-size:1.05vw; color:rgba(245,240,232,.68); line-height:1.75;">ילדים בשעות ערות נמצאים בעיקר בתדר תטא — אותו תדר שמבוגרים מגיעים אליו בהיפנוזה. מוח ספוג, פתוח לחלוטין, בלי סינון.</div>
+      </div>
+      <div class="snew-line" id="snew2-2" style="text-align:right;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:1.7vw; font-weight:600; color:var(--cream); margin-bottom:.4vw;">הקורטקס הפרה-פרונטלי — עדיין לא מפותח</div>
+        <div style="font-size:1.05vw; color:rgba(245,240,232,.68); line-height:1.75;">האזור שאחראי על שיפוט ביקורתי, הגנה, סינון — עדיין לא מפותח.</div>
+      </div>
+      <div class="snew-line" id="snew2-3" style="text-align:right; padding:.85vw 1.1vw; background:rgba(210,158,68,.06); border-radius:6px; border-right:2px solid rgba(210,158,68,.4);">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:1.25vw; font-weight:400; font-style:italic; color:rgba(210,158,68,.85); line-height:1.65;">שתי הסיבות יחד יוצרות מצע לספיגה ישירה של אינפורמציה — בלי שאלות, בלי סינון, בלי ביקורת.</div>
+      </div>
+      <div class="snew-line" id="snew2-4" style="text-align:right;">
+        <div style="font-family:'Cormorant Garamond',serif; font-size:1.7vw; font-weight:600; color:rgba(210,158,68,.92); margin-bottom:.4vw;">התת מודע מנהל את חיינו. מאז ועד היום.</div>
+        <div style="font-size:1.05vw; color:rgba(210,158,68,.6); font-style:italic; line-height:1.75;">התגובות האוטומטיות, ההרגלים, האמונות — כולן רצות על אותה תוכנית שנכתבה אז.</div>
+      </div>
+    </div>
+    <div class="snew-src" id="snew2-src" style="padding:0 6% .8vw; direction:rtl; text-align:right; border-top:1px solid var(--border); margin-top:auto; font-size:.68vw; color:var(--cream-faint); font-style:italic; position:relative; z-index:1;">Source: Lipton B. (2005) The Biology of Belief &nbsp;·&nbsp; Dispenza J. (2017) Becoming Supernatural</div>
+  </div>
+
+  <!-- ══ SCOMPASSION, RELEASE MOMENT ══ -->
+  <div class="slide spunch" id="scompassion">
+    <div style="position:relative; z-index:1; direction:rtl; text-align:center; max-width:58%;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:1.6vw; font-weight:300; font-style:italic; color:rgba(245,240,232,.65); line-height:1.85; margin-bottom:1.4vw;">כל אותן תגובות, מחשבות חוזרות, לופים אינסופיים —</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:2.5vw; font-weight:400; color:rgba(245,240,232,.9); line-height:1.55;">
+        הן <span style="font-weight:700; color:rgba(70,210,220,.95); text-shadow:0 0 2vw rgba(46,185,195,.5);">תוכנית הפעלה</span> שנכתבה<br>כשהיית <span style="font-weight:700; color:rgba(70,210,220,.95); text-shadow:0 0 2vw rgba(46,185,195,.5);">ילדה</span>.
       </div>
     </div>
   </div>
@@ -1664,6 +1770,9 @@
           <div class="snew-line" id="smanage-2" style="text-align:right;padding:.8vw 1vw;background:rgba(210,158,68,.05);border-radius:6px;border-right:2px solid var(--gold-dim);">
             <div style="font-size:.95vw;color:rgba(210,158,68,.85);font-family:'Cormorant Garamond',serif;font-style:italic;line-height:1.7;">היום נתמקד באמונות —<br>כי הן אלה שמעצבות איך את רואה את עצמך ומה אפשרי עבורך.</div>
           </div>
+          <div class="snew-line" id="smanage-3" style="text-align:right;">
+            <div style="font-size:.82vw;color:rgba(245,240,232,.38);font-family:'Jost',sans-serif;font-weight:300;font-style:italic;line-height:1.7;">״95% ממי שאנחנו עד גיל 35 הוא קבוצה של התנהגויות שגורות, תגובות, הרגלים ואמונות.״<br><span style="letter-spacing:.06em;">— Dispenza</span></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1673,8 +1782,8 @@
   <div class="slide" id="slimintro">
     <div style="position:relative; z-index:1; text-align:center;">
       <div class="slim-eye">Subconscious Mind · תת מודע</div>
-      <div class="slim-title">אמונות מגבילות</div>
-      <div class="slim-sub">Limiting Beliefs</div>
+      <div class="slim-title">אמונות <span style="font-size:.48em; font-weight:300; color:rgba(245,240,232,.42); letter-spacing:.01em;">(שחלקן גם מגבילות)</span></div>
+      <div class="slim-sub">Beliefs</div>
       <div class="slim-rule"></div>
       <div class="slim-body">
         <div class="slim-line">בתוך התת-מודע שמנהל <strong>95% מחיינו</strong>, חיות אמונות שנוצרו בילדות.</div>
@@ -1699,53 +1808,87 @@
     </div>
     <div class="slimex-body">
       <div class="belief-card" id="slimex-1">
+        <div class="bc-life-wrap">
+          <div class="bc-llbl">בחיים עצמם</div>
+          <div class="bc-life">נמנעת מלנסות דברים חדשים. נשארת באזור הנוחות — גם כשכבר יודעת שמשהו צריך להשתנות.</div>
+        </div>
         <div class="bc-voice-wrap">
-          <div class="bc-vlbl">הקול הפנימי</div>
+          <div class="bc-vlbl">מה הקול הפנימי</div>
           <div class="bc-voice">"אני לא אצליח"</div>
         </div>
         <div class="bc-root-wrap">
-          <div class="bc-rlbl">השורש</div>
+          <div class="bc-rlbl">מאיפה זה הגיע</div>
           <div class="bc-root">ניסיתי ולא הצלחתי. לא היה מי שאמר: "את יכולה." נשארה חוויה של לא-מצליחה.</div>
         </div>
       </div>
       <div class="belief-card" id="slimex-2">
+        <div class="bc-life-wrap">
+          <div class="bc-llbl">בחיים עצמם</div>
+          <div class="bc-life">עובדת שעות ארוכות, מרגישה אשמה כשנח לה. מתקשה לגבות את המחיר שהיא שווה.</div>
+        </div>
         <div class="bc-voice-wrap">
-          <div class="bc-vlbl">הקול הפנימי</div>
+          <div class="bc-vlbl">מה הקול הפנימי</div>
           <div class="bc-voice">"לעשות כסף זה קשה, חייבים לעבוד קשה"</div>
         </div>
         <div class="bc-root-wrap">
-          <div class="bc-rlbl">השורש</div>
+          <div class="bc-rlbl">מאיפה זה הגיע</div>
           <div class="bc-root">ראיתי בבית דוגמא של עבודה קשה. נאמר שוב ושוב: "אין מה לעשות, תלמדי קשה ותצליחי."</div>
         </div>
       </div>
       <div class="belief-card" id="slimex-3">
+        <div class="bc-life-wrap">
+          <div class="bc-llbl">בחיים עצמם</div>
+          <div class="bc-life">לוקחת הכל על עצמה, קשה לה לבקש עזרה. מה שאני לא אעשה — לא יקרה.</div>
+        </div>
         <div class="bc-voice-wrap">
-          <div class="bc-vlbl">הקול הפנימי</div>
+          <div class="bc-vlbl">מה הקול הפנימי</div>
           <div class="bc-voice">"הכל תמיד עלי, אני לבד"</div>
         </div>
         <div class="bc-root-wrap">
-          <div class="bc-rlbl">השורש</div>
+          <div class="bc-rlbl">מאיפה זה הגיע</div>
           <div class="bc-root">לא הרגשתי שיש לי גב. למדתי שאני צריכה להסתדר לבד, כי ככה זה.</div>
         </div>
       </div>
       <div class="belief-card" id="slimex-4">
+        <div class="bc-life-wrap">
+          <div class="bc-llbl">בחיים עצמם</div>
+          <div class="bc-life">עוצרת בדיוק לפני פריצת דרך, מוצאת סיבות לא להמשיך.</div>
+        </div>
         <div class="bc-voice-wrap">
-          <div class="bc-vlbl">הקול הפנימי</div>
+          <div class="bc-vlbl">מה הקול הפנימי</div>
           <div class="bc-voice">"אם אצליח יותר מדי, הכל יסתבך"</div>
         </div>
         <div class="bc-root-wrap">
-          <div class="bc-rlbl">השורש</div>
+          <div class="bc-rlbl">מאיפה זה הגיע</div>
           <div class="bc-root">הצלחה גדולה = אין זמן למשפחה, לזוגיות, לעצמי. הצלחה תמיד עולה במחיר.</div>
         </div>
       </div>
       <div class="belief-card" id="slimex-5">
+        <div class="bc-life-wrap">
+          <div class="bc-llbl">בחיים עצמם</div>
+          <div class="bc-life">דפוס מרצה. שמה את צרכי אחרים לפני שלה. אומרת כן כשרוצה להגיד לא. ערכה מרגיש מותנה במה שנותנת.</div>
+        </div>
         <div class="bc-voice-wrap">
-          <div class="bc-vlbl">הקול הפנימי</div>
+          <div class="bc-vlbl">מה הקול הפנימי</div>
           <div class="bc-voice">"אני חייבת להרוויח את האהבה"</div>
         </div>
         <div class="bc-root-wrap">
-          <div class="bc-rlbl">השורש</div>
+          <div class="bc-rlbl">מאיפה זה הגיע</div>
           <div class="bc-root">תשומת לב ואהבה הגיעו כשהייתי "כמו שצריך". למדתי: כדי שיאהבו אותי, אני חייבת לתת, לדאוג, לרצות.</div>
+        </div>
+      </div>
+      <div class="belief-card" id="slimex-6">
+        <div class="bc-life-wrap">
+          <div class="bc-llbl">בחיים עצמם</div>
+          <div class="bc-life">מתנצלת על דברים שאין צורך להתנצל עליהם. "סליחה שאני שואלת", "סליחה שאני מפריעה". הנוכחות שלה בחדר מרגישה לה כמו עול.</div>
+        </div>
+        <div class="bc-voice-wrap">
+          <div class="bc-vlbl">מה הקול הפנימי</div>
+          <div class="bc-voice">"אני מפריעה. סליחה שאני כאן."</div>
+        </div>
+        <div class="bc-root-wrap">
+          <div class="bc-rlbl">מאיפה זה הגיע</div>
+          <div class="bc-root">צרכים בילדות הרגישו כמו הפרעה. למדה שעצם הקיום שלה מכביד — ושעדיף להיות קטנה.</div>
         </div>
       </div>
     </div>
@@ -1843,26 +1986,21 @@
     <div class="stask-bottom-note">אין תשובות נכונות או שגויות &nbsp;·&nbsp; רק לשים לב &nbsp;·&nbsp; להיות עדה לעצמך</div>
   </div>
 
-  <!-- ══ SSHARE, SHARING MOMENT ══ -->
-  <div class="slide" id="sshare">
-    <div class="sshare-center">
-      <div class="sshare-eye">שיתוף · Sharing</div>
-      <div class="sshare-title">רגע של שיתוף</div>
-      <div class="sshare-bar"></div>
-      <div class="sshare-prompt">
-        מי רוצה לשתף —<br>
-        לא את הסיפור, רק את האמונה עצמה
-      </div>
-      <div class="sshare-note">את לא לבד בזה</div>
-    </div>
-  </div>
 
-  <!-- ══ SWHATNOW, TOOLS INTRO BRIDGE ══ -->
+<!-- ══ SWHATNOW, TOOLS INTRO BRIDGE ══ -->
   <div class="slide" id="swhatnow">
     <div class="swn-block">
       <div class="swn-title">אז מה עושים עם זה?</div>
       <div class="swn-rule"></div>
       <div class="swn-sub">שני כלים &nbsp;·&nbsp; שניהם פשוטים &nbsp;·&nbsp; שניהם משנים</div>
+    </div>
+  </div>
+
+  <!-- ══ SMEDITBRIDGE ══ -->
+  <div class="slide spunch" id="smeditbridge">
+    <div style="position:relative; z-index:1; direction:rtl; text-align:center;">
+      <div style="font-family:'Cormorant Garamond',serif; font-size:2.2vw; font-weight:400; color:rgba(245,240,232,.85); line-height:1.6; margin-bottom:.6vw;">לשנות את ה-95% אי אפשר מבטא גבוה.</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:2.8vw; font-weight:600; color:rgba(70,210,220,.95); text-shadow:0 0 2.5vw rgba(46,185,195,.55); line-height:1.4;">צריך לרדת. לאלפא. לתטא.</div>
     </div>
   </div>
 
@@ -1999,36 +2137,36 @@
         <div class="jstep-dot"></div>
         <div class="jstep-num">1</div>
         <div class="jstep-session">מפגש ראשון · היום</div>
-        <div class="jstep-title">מערכת ההפעלה</div>
-        <div class="jstep-desc">זיהוי: הסיפור שמנהל אותי</div>
+        <div class="jstep-title">המח והתת-מודע</div>
+        <div class="jstep-desc">מה מפעיל אותנו?</div>
       </div>
       <div class="journey-step">
         <div class="jstep-dot"></div>
         <div class="jstep-num">2</div>
         <div class="jstep-session">מפגש שני</div>
-        <div class="jstep-title">השדה שמסביבי</div>
-        <div class="jstep-desc">הבנה: המחשבות שלי לא נשארות בראש</div>
+        <div class="jstep-title">שלושת המוחות</div>
+        <div class="jstep-desc">ראש · לב · בטן</div>
       </div>
       <div class="journey-step">
         <div class="jstep-dot"></div>
         <div class="jstep-num">3</div>
         <div class="jstep-session">מפגש שלישי</div>
-        <div class="jstep-title">הלופ</div>
-        <div class="jstep-desc">חיבור: איך האמונה מייצרת שוב ושוב את אותה תוצאה</div>
+        <div class="jstep-title">קוהרנטיות לב-מח</div>
+        <div class="jstep-desc">כשהם מסונכרנים</div>
       </div>
       <div class="journey-step">
         <div class="jstep-dot"></div>
         <div class="jstep-num">4</div>
         <div class="jstep-session">מפגש רביעי</div>
-        <div class="jstep-title">שבירת הלופ</div>
-        <div class="jstep-desc">שינוי: לייצר אמונה חדשה ולגור בה</div>
+        <div class="jstep-title">יצירת מציאות</div>
+        <div class="jstep-desc">קוונטום · כוונה · רגש</div>
       </div>
       <div class="journey-step">
         <div class="jstep-dot"></div>
         <div class="jstep-num">5</div>
         <div class="jstep-session">מפגש חמישי</div>
-        <div class="jstep-title">הגרסה החדשה שלי</div>
-        <div class="jstep-desc">אינטגרציה: מי אני כשאני לא מוגבלת</div>
+        <div class="jstep-title">אינטגרציה</div>
+        <div class="jstep-desc">בלוטת האצטרובל · זרימה ביולוגית · אינטגרציה</div>
       </div>
     </div>
   </div>
@@ -2169,8 +2307,7 @@
   }
   function resetS7() { s7Step = 0; revealS7(0); }
 
-  // Progressive reveal for #snew
-  // snew (subconscious role + what went in)
+  // Progressive reveal for #snew (slide 1: role)
   let snewStep = 0;
   const SNEW_TOTAL = 3;
 
@@ -2179,15 +2316,28 @@
       const el = document.getElementById('snew-' + i);
       if (el) el.classList.toggle('visible', i <= step);
     }
-    const src = document.getElementById('snew-src');
-    if (src) src.classList.toggle('visible', step >= SNEW_TOTAL);
   }
 
   function resetSnew() { snewStep = 0; revealSnew(0); }
 
+  // Progressive reveal for #snew2 (slide 2: formation)
+  let snew2Step = 0;
+  const SNEW2_TOTAL = 4;
+
+  function revealSnew2(step) {
+    for (let i = 1; i <= SNEW2_TOTAL; i++) {
+      const el = document.getElementById('snew2-' + i);
+      if (el) el.classList.toggle('visible', i <= step);
+    }
+    const src = document.getElementById('snew2-src');
+    if (src) src.classList.toggle('visible', step >= SNEW2_TOTAL);
+  }
+
+  function resetSnew2() { snew2Step = 0; revealSnew2(0); }
+
   // smanage (subconscious manages our lives) — 3 steps
   let smanageStep = 0;
-  const SMANAGE_TOTAL = 3;
+  const SMANAGE_TOTAL = 4;
   function revealSmanage(step) {
     const header = document.getElementById('smanage-header');
     if (header) { header.style.opacity = step >= 1 ? '1' : '0'; header.style.transform = step >= 1 ? 'translateY(0)' : 'translateY(8px)'; }
@@ -2197,12 +2347,14 @@
     if (emunot) emunot.style.color = step >= 3 ? 'rgba(210,158,68,.92)' : 'var(--cream)';
     const el2 = document.getElementById('smanage-2');
     if (el2) el2.classList.toggle('visible', step >= 3);
+    const el3 = document.getElementById('smanage-3');
+    if (el3) el3.classList.toggle('visible', step >= 4);
   }
   function resetSmanage() { smanageStep = 0; revealSmanage(0); }
 
   // Progressive reveal for #slimex
   let slimexStep = 0;
-  const SLIMEX_TOTAL = 5;
+  const SLIMEX_TOTAL = 6;
 
   function revealSlimex(step) {
     for (let i = 1; i <= SLIMEX_TOTAL; i++) {
@@ -2255,7 +2407,7 @@
 
   // Progressive reveal for #sjungbio
   let sjbStep = 0;
-  const SJB_TOTAL = 2;
+  const SJB_TOTAL = 3;
   function revealSjb(step) {
     for (let i = 1; i <= SJB_TOTAL; i++) {
       const el = document.getElementById('sjb-' + i);
@@ -2263,6 +2415,15 @@
     }
   }
   function resetSjb() { sjbStep = 0; revealSjb(0); }
+
+  // Progressive reveal for #sfreqbridge
+  let sfreqStep = 0;
+  const SFREQ_TOTAL = 1;
+  function revealSfreq(step) {
+    const el = document.getElementById('sfreq-sub2');
+    if (el) { el.style.opacity = step >= 1 ? '1' : '0'; el.style.transform = step >= 1 ? 'translateY(0)' : 'translateY(10px)'; }
+  }
+  function resetSfreq() { sfreqStep = 0; revealSfreq(0); }
 
   // Progressive reveal for #sopening
   let sopStep = 0;
@@ -2320,10 +2481,12 @@
     if (n < 0 || n >= N) return;
     if (slides[cur].id === 'scourse')     resetScourse();
     if (slides[cur].id === 'sjungbio')    resetSjb();
+    if (slides[cur].id === 'sfreqbridge') resetSfreq();
     if (slides[cur].id === 'sopening')    resetSop();
     if (slides[cur].id === 'swavetadur')  resetSwt();
     if (slides[cur].id === 'swavebridge') resetSwb();
     if (slides[cur].id === 'snew')        resetSnew();
+    if (slides[cur].id === 'snew2')       resetSnew2();
     if (slides[cur].id === 'smanage')  resetSmanage();
     if (slides[cur].id === 's7')         resetS7();
     if (slides[cur].id === 'slimex') resetSlimex();
@@ -2347,6 +2510,9 @@
     if (slides[cur].id === 'sjungbio' && sjbStep < SJB_TOTAL) {
       sjbStep++; revealSjb(sjbStep); return;
     }
+    if (slides[cur].id === 'sfreqbridge' && sfreqStep < SFREQ_TOTAL) {
+      sfreqStep++; revealSfreq(sfreqStep); return;
+    }
     if (slides[cur].id === 'sopening' && sopStep < SOP_TOTAL) {
       sopStep++; revealSop(sopStep); return;
     }
@@ -2358,6 +2524,9 @@
     }
     if (slides[cur].id === 'snew' && snewStep < SNEW_TOTAL) {
       snewStep++; revealSnew(snewStep); return;
+    }
+    if (slides[cur].id === 'snew2' && snew2Step < SNEW2_TOTAL) {
+      snew2Step++; revealSnew2(snew2Step); return;
     }
     if (slides[cur].id === 'smanage' && smanageStep < SMANAGE_TOTAL) {
       smanageStep++; revealSmanage(smanageStep); return;
@@ -2387,6 +2556,9 @@
     if (slides[cur].id === 'sjungbio' && sjbStep > 0) {
       sjbStep--; revealSjb(sjbStep); return;
     }
+    if (slides[cur].id === 'sfreqbridge' && sfreqStep > 0) {
+      sfreqStep--; revealSfreq(sfreqStep); return;
+    }
     if (slides[cur].id === 'sopening' && sopStep > 0) {
       sopStep--; revealSop(sopStep); return;
     }
@@ -2398,6 +2570,9 @@
     }
     if (slides[cur].id === 'snew' && snewStep > 0) {
       snewStep--; revealSnew(snewStep); return;
+    }
+    if (slides[cur].id === 'snew2' && snew2Step > 0) {
+      snew2Step--; revealSnew2(snew2Step); return;
     }
     if (slides[cur].id === 'smanage' && smanageStep > 0 ) {
       smanageStep--; revealSmanage(smanageStep); return;
