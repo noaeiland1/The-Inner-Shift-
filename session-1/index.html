@@ -1,1 +1,529 @@
-<!DOCTYPE html><meta http-equiv="refresh" content="0; url=../The%20inner%20shift/inner%20shift%20session%201%20short%20version.html">
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Inner Shift · מפגש 1 · מערכת ההפעלה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../brand/tokens.css">
+<link rel="stylesheet" href="../brand/course.css">
+<style>
+  /* session 1 · layouts for the original's own content */
+  .s7 .content, .voices .content { padding-top: calc(var(--u) * 72); padding-bottom: calc(var(--u) * 64); }
+  .s7 .drow { grid-template-columns: calc(var(--u) * 260) 1.4fr 1fr; padding: calc(var(--u) * 12) calc(var(--u) * 16); border-radius: calc(var(--u) * 20); transition: background 900ms var(--ease), box-shadow 900ms var(--ease); }
+  .s7 .name { font-family: var(--font-head-he); font-weight: var(--weight-head-he); font-size: calc(var(--u) * var(--size-body)); }
+  .s7 .s7c-wave { display: block; width: 100%; height: calc(var(--u) * 30); margin-top: calc(var(--u) * 6); }
+  .s7 .s7c-tag { font-weight: 600; color: var(--rose); }
+  .s7 .s7punch { text-align: center; color: var(--rose); margin-top: calc(var(--u) * var(--sp-16)); }
+  .voices .vrow { grid-template-columns: 1.15fr .9fr 1.15fr; }
+  .voices .name { font-family: var(--font-head-he); font-weight: var(--weight-head-he); font-size: calc(var(--u) * var(--size-body)); line-height: 1.3; }
+  .waves2 .wpanels { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * var(--sp-48)); align-items: stretch; }
+  .waves2 .wpanel { position: relative; padding: calc(var(--u) * var(--sp-24)) calc(var(--u) * var(--sp-32)); overflow: hidden; }
+  .waves2 .wart { position: absolute; inset: 0; z-index: -1; opacity: 1; }
+  .waves2 .wart svg { width: 100%; height: 100%; }
+  .waves2 .wfoot { margin-top: calc(var(--u) * var(--sp-16)); }
+  .smanage .mbody { display: flex; gap: calc(var(--u) * 96); align-items: center; margin-top: calc(var(--u) * var(--sp-24)); }
+  .smanage .ring { width: calc(var(--u) * 380); height: calc(var(--u) * 380); }
+  .smanage .copy { display: flex; flex-direction: column; gap: calc(var(--u) * var(--sp-16)); }
+  .smanage .mark { background-size: 0% 36%; transition: background-size 1100ms cubic-bezier(.65,0,.35,1); animation: none !important; }
+  .smanage[data-at="2"] .mark, .smanage[data-at="3"] .mark { background-size: 100% 36%; }
+  .s-number.dense .ring { width: calc(var(--u) * 400); height: calc(var(--u) * 400); }
+  .s-number.dense .copy { gap: calc(var(--u) * var(--sp-16)); }
+  .stool .stpunch { opacity: 0; transition: opacity 900ms var(--ease); margin-top: calc(var(--u) * var(--sp-16)); }
+  .stool[data-at="4"] .stpunch, .stool.is-final .stpunch { opacity: 1; }
+  .stool.is-final .step { background: transparent; box-shadow: none; transform: none; border-color: transparent; }
+  .stool.is-final .step .t-h2 { color: var(--dark); }
+  .s-content .head .t-label:empty { display: none; }
+  .about .text { gap: calc(var(--u) * var(--sp-16)); }
+  .about .creds { margin-top: calc(var(--u) * var(--sp-8)); padding-top: calc(var(--u) * var(--sp-16)); border-top: var(--hair); }
+  .about .creds-list { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * var(--sp-8)) calc(var(--u) * var(--sp-32)); margin-top: calc(var(--u) * var(--sp-8)); }
+  .about .creds-list .blk { padding-right: calc(var(--u) * 40); }
+  .about .creds-list .blk.wide { grid-column: 1 / -1; }
+  .about .creds-list .blk::before { width: calc(var(--u) * 24); height: calc(var(--u) * 24); top: calc(var(--u) * 4); }
+  .about .frame.portrait { width: 30%; aspect-ratio: 864 / 1184; }
+  .about .frame.portrait .photo img { object-fit: cover; filter: none; }
+  /* fitting */
+  .s7 .content { padding-top: calc(var(--u) * 56); padding-bottom: calc(var(--u) * 32); }
+  .s7 .head { margin-bottom: calc(var(--u) * var(--sp-16)); padding-bottom: calc(var(--u) * var(--sp-16)); }
+  .s7 .drow { padding: calc(var(--u) * 8) calc(var(--u) * 16); }
+  .s7 .tx { line-height: 1.35; }
+  .sstruct .step { grid-template-columns: calc(var(--u) * 72) calc(var(--u) * 340) 1fr; }
+  .s7 .s7c-wave { height: calc(var(--u) * 24); }
+  .stool .content { padding-top: calc(var(--u) * 64); }
+  .stool .head { margin-bottom: calc(var(--u) * var(--sp-16)); }
+  .stool .step { padding-top: calc(var(--u) * 6); padding-bottom: calc(var(--u) * 6); }
+  .stool .step .dot { width: calc(var(--u) * 56); height: calc(var(--u) * 56); }
+  .smanage .copy { max-width: none; flex: 1; }
+  .smanage .ring { width: calc(var(--u) * 320); height: calc(var(--u) * 320); }
+  .s-number.dense .copy { max-width: calc(var(--u) * 1040); }
+</style>
+</head>
+<body>
+<main class="deck">
+
+  <section class="slide slide--yellow s-open">
+    <div class="petals-top"></div>
+    <div class="content center">
+      <div class="pill a" style="--i:0"><span class="t-small">מפגש ראשון</span><span class="t-label">Session 01</span></div>
+      <div class="t-h2 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-24))">להבין את מערכת ההפעלה שלנו</div>
+      <div class="t-display">The <span class="rose">Inner</span> Shift</div>
+      <div class="rule a-line" style="--i:6"></div>
+      <div class="t-body a" style="--i:7">המסע לשינוי מבפנים</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-label a" style="--i:0">The Inner Shift · Session 1 of 5</div>
+      <div class="t-h1 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-16))">איזה כיף שאתן פה</div>
+      <div class="rule a-line" style="--i:3"></div>
+      <div class="t-body a" style="--i:4">נעים מאד, אני נועה איילנד</div>
+      <div class="t-label a" style="--i:5; margin-top:calc(var(--u)*var(--sp-16))">Noa Eiland</div>
+    </div>
+  </section>
+
+  <section class="slide s-image dense about">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="text">
+        <div class="t-h1 a" style="--i:1">אם עוד לא הכרנו, אני נועה איילנד.</div>
+        <div class="t-body a" style="--i:2">במשך 17 שנה הובלתי, הקמתי, וניהלתי קבוצות בחברות גלובליות.<br>הגעתי לשם מעולם ההנדסה, טיפחתי קריירה מפוארת.<br>הייתי במשרת החלומות שלי, מבחוץ הכל היה נראה מעולה.</div>
+        <div class="t-body-head a" style="--i:3">אבל מבפנים זה הרגיש אחרת.</div>
+        <div class="t-body a" style="--i:4">הרגשתי שאני בתפעול אינסופי של משימות לאורך כל היום, ותוהה מתי יגיע הזמן שלי. בסוף היום הייתי מותשת, וחסרת סבלנות.<br>הרגשתי שאני לא ממצה את עצמי וחייתי בתחושת חוסר סיפוק.<br>לא פעם הייתה לי המחשבה שהיה הרבה יותר קל אם פשוט הייתי מרוצה ממה שיש לי - היה לי ברור שיש לי המון.<br>אבל אני לא חיפשתי עוד, חיפשתי משהו אחר, חיפשתי לקום בתשוקה לעשייה שלי.</div>
+        <div class="t-body-head a" style="--i:5">וזה כבר לא היה שם.<br>אבל לא ידעתי איפה זה כן.</div>
+        <div class="creds a" style="--i:6">
+          <div class="t-body-head rose">לאורך כל הדרך למדתי:</div>
+          <div class="blocks list creds-list">
+            <div class="blk"><div class="t-body">הוראת יוגה ומדיטציה</div></div>
+            <div class="blk"><div class="t-body">התמחות ביוגה נשית</div></div>
+            <div class="blk"><div class="t-body">תזונה מבוססת גישת הרמב״ם</div></div>
+            <div class="blk"><div class="t-body">NLP</div></div>
+            <div class="blk wide"><div class="t-body">Health Coach מטעם <bdi dir="ltr">Institute for Integrative Nutrition (IIN)</bdi>, ניו יורק</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="frame portrait a" style="--i:0"><div class="photo"><img src="../brand/assets/noa-portrait.png" alt="נועה איילנד"></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content dense">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">About This Course</div><div class="t-h1">על הקורס הזה</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">מה נלמד, ולמה זה חשוב</div></div><div class="head-en t-h2en">The Foundation</div></div>
+      <div class="blocks">
+        <div class="blk r"><div class="t-h2">מה שלא רואים מבחוץ</div><div class="t-body">הצלחת בכל מה שהצבת לעצמך. ובכל זאת משהו חסר. סביב גיל 40 קורים שני דברים יחד. העומס של שנים מתחיל לרדת, ובראש מתפנה מקום לשאלה מי אני ומה אני רוצה. ובמקביל האסטרוגן משתנה, ואיתו הדופמין והסרוטונין. מה שנתן סיפוק שנים, פתאום משאיר אותך אדישה.</div><div class="t-small credit">35 שנה החיים של נשים השתפרו בכל מדד חיצוני, והאושר שהן מדווחות עליו ירד · <bdi dir="ltr">Stevenson &amp; Wolfers, 2009</bdi></div></div>
+        <div class="blk r"><div class="t-h2">למה זה קורה</div><div class="t-body">עד גיל 35, 95% ממי שאנחנו הם הרגלים, תגובות ואמונות שהמח כבר יודע בעל פה. זה אומר שרוב החיים שלנו רצים על תוכנית שנכתבה מזמן. אנחנו מרגישות שאנחנו בוחרות, אבל בעיקר חוזרות.</div><div class="t-small credit">ד״ר ג׳ו דיספנזה · 43% מהפעולות היומיומיות הן הרגל · <bdi dir="ltr">Wood, 2002</bdi></div></div>
+        <div class="blk r"><div class="t-h2">מה נעשה כאן</div><div class="t-body">נלמד לעבוד עם המערכת שפועלת גם בלי שנשים לב. זה כוח עצום. נכיר את מערכת העצבים, את התת מודע והאמונות שבו, את הקשר בין המח ללב, תדרים ועוד. הכל בצורה פשוטה ונגישה. ובין מפגש למפגש, תרגול. בלעדיו זו שעת העשרה בשבוע. איתו, השינוי נכנס למערכת.</div><div class="t-small credit">8 שבועות של תרגול שינו את מבנה המח · <bdi dir="ltr">Hölzel</bdi>, הרווארד 2011</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-steps sstruct" data-steps="4">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0">
+        <div><div class="t-label">How It Works</div><div class="t-h1">מבנה הקורס</div></div>
+        <div class="head-en t-h2en">The Structure</div>
+      </div>
+      <div class="steps">
+        <div class="step r"><div class="dot t-num">1</div><div class="t-h2">חומר שבועי</div><div class="t-body">כל שבוע נפתח חומר חדש. כל שבוע נבנה על הקודם, כך שהתמונה מתמלאת לאורך כל הדרך.</div></div>
+        <div class="step r"><div class="dot t-num">2</div><div class="t-h2">מפגש קבוצתי</div><div class="t-body">פעם בשבוע, בין שעה לשעה ורבע. כולל תרגול משותף.</div></div>
+        <div class="step r"><div class="dot t-num">3</div><div class="t-h2">תרגול בבית</div><div class="t-body">בין מפגש למפגש. כאן ההבנה הופכת להרגל חדש.</div></div>
+        <div class="step r"><div class="dot t-num">4</div><div class="t-h2">מפגשים אישיים</div><div class="t-body">שלושה מפגשים אישיים איתי לאורך הקורס.</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-h1">להבין את מערכת ההפעלה שלך ,</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">מתוך הבנה, לא מאמץ</div></div><div class="head-en t-h2en"></div></div>
+      <div class="t-h2 a" style="--i:1">ולדעת איך לעבוד איתה, בשביל:</div>
+      <div class="blocks list">
+        <div class="blk a" style="--i:2"><div class="t-body">לפרוץ את הגבולות של עצמך</div></div>
+        <div class="blk a" style="--i:3"><div class="t-body">לעצור לופים אינסופיים</div></div>
+        <div class="blk a" style="--i:4"><div class="t-body">להחזיר תחושת שליטה אליך</div></div>
+        <div class="blk a" style="--i:5"><div class="t-body">לזהות את הדפוס בזמן אמת, לא שעה אחרי</div></div>
+        <div class="blk a" style="--i:6"><div class="t-body">להפסיק להילחם בעצמך ולהתחיל לעבוד איתך</div></div>
+        <div class="blk a" style="--i:7"><div class="t-body">למצוא את העוגן הפנימי שלך בעולם לא רגוע</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-journey">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">The Journey · Session Map</div><div class="t-h1">איפה אנחנו ולאן הולכות</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">5 מפגשים · המסע המלא</div></div><div class="head-en t-h2en">5 Sessions</div></div>
+      <div class="journey">
+        <svg class="path" viewBox="0 0 1000 400" preserveAspectRatio="none"><path class="path-line" pathLength="1" d="M 900 150 C 830 150, 770 250, 700 250 S 570 150, 500 150 S 370 250, 300 250 S 170 150, 100 150"/></svg>
+        <div class="stop is-now a" style="--i:1; left:90%; top:37.5%"><div class="node t-num">1</div><div class="now t-small">מפגש ראשון · היום</div><div class="t-body-head">המח והתת-מודע</div><div class="t-small">מה מפעיל אותנו?</div></div>
+        <div class="stop a" style="--i:2; left:70%; top:62.5%"><div class="node t-num">2</div><div class="t-small rose">מפגש שני</div><div class="t-body-head">שלושת המוחות</div><div class="t-small">ראש · לב · בטן</div></div>
+        <div class="stop a" style="--i:3; left:50%; top:37.5%"><div class="node t-num">3</div><div class="t-small rose">מפגש שלישי</div><div class="t-body-head">קוהרנטיות לב-מח</div><div class="t-small">כשהם מסונכרנים</div></div>
+        <div class="stop a" style="--i:4; left:30%; top:62.5%"><div class="node t-num">4</div><div class="t-small rose">מפגש רביעי</div><div class="t-body-head">יצירת מציאות</div><div class="t-small">קוונטום · כוונה · רגש</div></div>
+        <div class="stop a" style="--i:5; left:10%; top:37.5%"><div class="node t-num">5</div><div class="t-small rose">מפגש חמישי</div><div class="t-body-head">אינטגרציה</div><div class="t-small">בלוטת האצטרובל · זרימה ביולוגית · אינטגרציה</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section">
+    <div class="breath-blob"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h2 a" style="--i:1">רגע של התכווננות</div>
+      <div class="cue t-h1 a" style="--i:2"><span class="cue-in">שאיפה</span><span class="cue-out">נשיפה</span></div>
+      <div class="t-body a" style="--i:3; margin-top:calc(var(--u)*var(--sp-24))">עצמי עיניים · שימי את היום בצד · הגיעי</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="t-h1 a" style="--i:0">מכירות את זה ש...</div>
+      <div class="blocks">
+        <div class="blk r"><div class="t-body">הרגע שבו סיימת ויכוח והרגשת שהגבת ממקום שלא בחרת בו.</div></div>
+        <div class="blk r"><div class="t-body">או הרגע שאמרת "הפעם יהיה אחרת" והיה בדיוק אותו הדבר.</div></div>
+        <div class="blk r"><div class="t-body">או הרגע שמישהי אמרה משהו קטן, ויכוח שלם פרץ, ואת עדיין לא מבינה מה בדיוק הדליק אותך ככה.</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--burgundy s-quote">
+    <div class="fade-bottom"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="qmark a" style="--i:0">"</div>
+      <div class="t-h1 en words">Until you make the unconscious conscious,<br>it will direct your life<br>and you will call it <span class="mark">fate</span>.</div>
+      <div class="t-label source a" style="--i:14">Carl Jung</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-image dense">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="text">
+        <div class="a" style="--i:1"><div class="t-h1">קארל גוסטב יונג</div><div class="t-label" style="text-align:right; margin-top:calc(var(--u)*var(--sp-8))">1875 1961</div></div>
+        <div class="t-body a" style="--i:2">פסיכיאטר ופסיכולוג שוויצרי. עמיתו הקרוב של פרויד עד שהלך בדרכו.</div>
+        <div class="blk num r"><span class="blk-num">01</span><div class="t-h2">יש בנו רכיב מובנה, חוצה תרבויות</div><div class="t-body">בלי EEG, בלי סריקות מוח יונג עבד עם אלפי מטופלים לאורך עשרות שנים. ניתח חלומות, דפוסי התנהגות, תגובות רגשיות. שם לב שאנשים שונים לחלוטין מתרבויות שונות, מרקעים שונים מגיעים עם אותם דפוסים, אותם סמלים, אותם פחדים. הכלי שלו היה תצפית עמוקה. לא מכשירים עיניים, אוזניים, ותשומת לב. מה שהוא תיאר אז ה-EEG מאשר היום.</div></div>
+        <div class="blk num r"><span class="blk-num">02</span><div class="t-h2">הצל</div><div class="t-body">כל מה שאנחנו מסרבות לראות בעצמנו לא נעלם. הוא הופך ל"צל" שמנהל אותנו מאחורי הקלעים ומשפיע על האפשרויות שאנחנו בוחנות, החלטות, כל תגובות, בחירות. תגובה חזקה שיש לנו כלפי אחר לרוב זו אינדיקציה על משהו שלא מוכנות לראות בעצמנו.</div></div>
+        <div class="r t-body note">שוב ושוב, אותם סמלים, אותן דמויות, מאנשים שלא יכלו להכיר זה את זה ולא קראו אותם ספרים.<br>המסקנה: זה לא יכול להיות נלמד. זה חייב להיות מובנה.</div>
+      </div>
+      <div class="frame a" style="--i:0"><div class="photo"><img src="Jung.png" alt="קארל גוסטב יונג"></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-small rose a" style="--i:0">הצד המדעי</div>
+      <div class="t-display a" style="--i:1; font-family:var(--font-head-he); font-weight:var(--weight-head-he); margin-top:calc(var(--u)*var(--sp-16))">תדרים</div>
+      <div class="t-body r" style="margin-top:calc(var(--u)*var(--sp-32))">המוח שלנו פועל בתדרים. הלב שלנו פועל בתדרים. וככה גם העולם סביבנו.</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content dense waves2">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Physics &amp; Biology</div><div class="t-h1">גלים סביבנו ובתוכנו</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">הגוף שלנו קולט ומשדר</div></div><div class="head-en t-h2en">Energy Waves</div></div>
+      <div class="wpanels"><div class="wpanel r"><div class="orig-art wart"><svg class="swb-waves" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <path d="M400,60 C340,48 280,72 220,60 C160,48 100,72 40,60 C0,52 0,52 0,52" stroke="rgba(70,165,195,.38)" stroke-width="1.8" fill="none"/>
+          <path d="M400,100 C350,86 290,114 230,100 C170,86 110,114 50,100 C20,92 0,96 0,96" stroke="rgba(70,165,195,.26)" stroke-width="1.4" fill="none"/>
+          <path d="M400,140 C330,126 270,154 200,140 C130,126 70,154 0,140" stroke="rgba(70,165,195,.18)" stroke-width="1.1" fill="none"/>
+          <path d="M400,180 C345,166 285,194 225,180 C165,166 105,194 45,180 C25,174 0,178 0,178" stroke="rgba(70,165,195,.12)" stroke-width="0.9" fill="none"/>
+          <path d="M400,220 C335,206 275,234 215,220 C155,206 95,234 35,220 C15,214 0,218 0,218" stroke="rgba(70,165,195,.07)" stroke-width="0.7" fill="none"/>
+        </svg></div><div class="t-small" style="color:rgba(70,165,195,.95); font-weight:600">מה שמגיע אלינו מבחוץ</div><div class="t-h2">גלים שעוברים דרכנו / סביבנו</div><div class="blocks list"><div class="blk"><div class="t-body">גלי חום, אור, קרינה</div></div><div class="blk"><div class="t-body">גלי רדיו וטלוויזיה</div></div><div class="blk"><div class="t-body">WiFi ותקשורת סלולרית</div></div></div><div class="t-small" style="margin-top:calc(var(--u)*var(--sp-16))">כל אלה עוברים דרכנו כל הזמן, גם כשאיננו מרגישות אותם.</div></div><div class="wpanel r"><div class="orig-art wart"><svg class="swb-waves" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,60 C60,48 120,72 180,60 C240,48 300,72 360,60 C400,52 400,52 400,52" stroke="rgba(210,158,68,.38)" stroke-width="1.8" fill="none"/>
+          <path d="M0,100 C50,86 110,114 170,100 C230,86 290,114 350,100 C380,92 400,96 400,96" stroke="rgba(210,158,68,.26)" stroke-width="1.4" fill="none"/>
+          <path d="M0,140 C70,126 130,154 200,140 C270,126 330,154 400,140" stroke="rgba(210,158,68,.18)" stroke-width="1.1" fill="none"/>
+          <path d="M0,180 C55,166 115,194 175,180 C235,166 295,194 355,180 C375,174 400,178 400,178" stroke="rgba(210,158,68,.12)" stroke-width="0.9" fill="none"/>
+          <path d="M0,220 C65,206 125,234 185,220 C245,206 305,234 365,220 C385,214 400,218 400,218" stroke="rgba(210,158,68,.07)" stroke-width="0.7" fill="none"/>
+        </svg></div><div class="t-small" style="color:rgba(185,135,50,.95); font-weight:600">מה שהגוף שלנו פולט</div><div class="t-h2">גלים שאנחנו משדרים</div><div class="blocks list"><div class="blk"><div class="t-body">גלי מוח תדרים חשמליים</div></div><div class="blk"><div class="t-body">גלי לב שדה אלקטרומגנטי</div></div><div class="blk"><div class="t-body">חום גוף, קרינה אינפרא-אדומה</div></div></div><div class="t-small" style="margin-top:calc(var(--u)*var(--sp-16))">הגוף שלנו משדר ללא הרף, גם כשאיננו מודעות לכך.</div></div></div>
+      <div class="r wfoot"><div class="t-h2" style="text-align:center">אנחנו לא רק קולטות את העולם אנחנו גם <span class="mark">משדרות לתוכו</span>.</div><div class="t-small" style="text-align:center; margin-top:calc(var(--u)*var(--sp-8))">כשנדבר על גלי מוח נמדוד בהרץ. כשנשמע ״תדר גבוה״ בהקשר רוחני זו מטאפורה יפה, לא אותו מדד.</div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 r">כל גל חוזר על עצמו בקצב קבוע.</div>
+      <div class="t-h1 r" style="margin-top:calc(var(--u)*var(--sp-16))">הקצב הזה נקרא <span class="mark" style="--mark-at:0ms">תדר</span> ומודדים אותו בהרץ (Hz).</div>
+      <div class="r"><div class="rule"></div><div class="t-body">גל זה התנועה. תדר זה האופן שבו אנחנו מודדים אותה. והרץ זו יחידת המידה.</div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-compare dense s7" data-final>
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Electroencephalography · EEG</div><div class="t-h1">מצבי המח תדרים</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">מפת הגישה לתת-מודע</div></div><div class="head-en t-h2en">Brain Wave States</div></div>
+      <div class="drows">
+        <div class="drow wrow r dim-on-final"><div class="orig-art"><div class="name" style="color:rgba(90,185,210,.75)">דלתא</div><div class="lbl" dir="ltr" style="text-align:right">0.5–4 Hz</div><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C37,5 75,29 112,17 C150,5 188,29 225,17 C262,5 300,29 300,17" stroke="rgba(90,185,210,.4)" stroke-width="1.8" fill="none"/></svg></div><div class="tx">בדלתא המוח כמעט ולא מעבד מידע חיצוני. זו השינה העמוקה ביותר המוח פנימי לחלוטין, עסוק בתיקון פיזי והתחדשות.</div><div class="tx">מערכת חיסון עובדת. גירויים חיצוניים כמעט ולא נרשמים אין גישה לתת מודע. <span style="opacity:.6;font-style:italic;">Hobson &amp; Stickgold, 1995</span></div></div>
+        <div class="drow wrow r lift-on-final"><div class="orig-art"><div class="name" style="color:rgba(212,149,122,.92)">תטא</div><div class="lbl" dir="ltr" style="text-align:right">4–8 Hz</div><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C18,4 37,30 56,17 C75,4 94,30 112,17 C131,4 150,30 169,17 C188,4 206,30 225,17 C244,4 262,30 281,17 C300,4 300,17 300,17" stroke="rgba(212,149,122,.85)" stroke-width="2.2" fill="none"/></svg></div><div class="tx">הרגע שבין ערות לשינה הגוף כבר שוכב אבל המוח עדיין רואה תמונות. גם הילד מול הטלוויזיה ששקוע לגמרי ולא שומע אתכם קוראים לו.</div><div class="tx"><span class="s7c-tag s7c-tag-theta">↓ התת מודע הכי נגיש</span> מדיטציה עמוקה, היפנוזה, חלימה צלולה</div></div>
+        <div class="drow wrow r lift-on-final"><div class="orig-art"><div class="name" style="color:rgba(139,184,150,.9)">אלפא</div><div class="lbl" dir="ltr" style="text-align:right">8–12 Hz</div><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C9,7 19,27 28,17 C37,7 47,27 56,17 C66,7 75,27 84,17 C94,7 103,27 112,17 C122,7 131,27 140,17 C150,7 160,27 169,17 C178,7 188,27 197,17 C206,7 216,27 225,17 C234,7 244,27 253,17 C262,7 272,27 281,17 C291,7 300,27 300,17" stroke="rgba(139,184,150,.78)" stroke-width="1.8" fill="none"/></svg></div><div class="tx">הרגע שאחרי שיוצאים מהמקלחת. הטיול בטבע שבו הראש מתפנה. הנהיגה על כביש מוכר ערניים, אבל שקטים מבפנים.</div><div class="tx"><span class="s7c-tag s7c-tag-gate">↓ השער</span> ערנות נינוחה, נוכחות, "זרימה"</div></div>
+        <div class="drow wrow r dim-on-final"><div class="orig-art"><div class="name" style="color:rgba(192,85,85,.85)">בטא</div><div class="lbl" dir="ltr" style="text-align:right">12–38 Hz</div><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 Q4,9 8,17 Q12,25 16,17 Q20,9 24,17 Q28,25 32,17 Q36,9 40,17 Q44,25 48,17 Q52,9 56,17 Q60,25 64,17 Q68,9 72,17 Q76,25 80,17 Q84,9 88,17 Q92,25 96,17 Q100,9 104,17 Q108,25 112,17 Q116,9 120,17 Q124,25 128,17 Q132,9 136,17 Q140,25 144,17 Q148,9 152,17 Q156,25 160,17 Q164,9 168,17 Q172,25 176,17 Q180,9 184,17 Q188,25 192,17 Q196,9 200,17 Q204,25 208,17 Q212,9 216,17 Q220,25 224,17 Q228,9 232,17 Q236,25 240,17 Q244,9 248,17 Q252,25 256,17 Q260,9 264,17 Q268,25 272,17 Q276,9 280,17 Q284,25 288,17 Q292,9 296,17 Q300,25 300,17" stroke="rgba(192,85,85,.6)" stroke-width="1.4" fill="none"/></svg></div><div class="tx">רוב שעות הערות שלנו. ישיבה, מייל, החלטות בריא ונחוץ. אבל כשיש לחץ ודאגה ומחשבות חוזרות עולים לבטא גבוה. המוח עסוק בדבר אחד: לשרוד.</div><div class="tx"><span class="s7c-tag s7c-tag-warn">⚠ בבטא גבוה המוח במצב הישרדות. לא ניתן לתכנת מחדש.</span></div></div>
+        <div class="drow wrow r dim-on-final"><div class="orig-art"><div class="name" style="color:rgba(120,210,235,.85)">גמא</div><div class="lbl" dir="ltr" style="text-align:right">38–100 Hz</div><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 Q2,11 4,17 Q6,23 8,17 Q10,11 12,17 Q14,23 16,17 Q18,11 20,17 Q22,23 24,17 Q26,11 28,17 Q30,23 32,17 Q34,11 36,17 Q38,23 40,17 Q42,11 44,17 Q46,23 48,17 Q50,11 52,17 Q54,23 56,17 Q58,11 60,17 Q62,23 64,17 Q66,11 68,17 Q70,23 72,17 Q74,11 76,17 Q78,23 80,17 Q82,11 84,17 Q86,23 88,17 Q90,11 92,17 Q94,23 96,17 Q98,11 100,17 Q102,23 104,17 Q106,11 108,17 Q110,23 112,17 Q114,11 116,17 Q118,23 120,17 Q122,11 124,17 Q126,23 128,17 Q130,11 132,17 Q134,23 136,17 Q138,11 140,17 Q142,23 144,17 Q146,11 148,17 Q150,23 152,17 Q154,11 156,17 Q158,23 160,17 Q162,11 164,17 Q166,23 168,17 Q170,11 172,17 Q174,23 176,17 Q178,11 180,17 Q182,23 184,17 Q186,11 188,17 Q190,23 192,17 Q194,11 196,17 Q198,23 200,17 Q202,11 204,17 Q206,23 208,17 Q210,11 212,17 Q214,23 216,17 Q218,11 220,17 Q222,23 224,17 Q226,11 228,17 Q230,23 232,17 Q234,11 236,17 Q238,23 240,17 Q242,11 244,17 Q246,23 248,17 Q250,11 252,17 Q254,23 256,17 Q258,11 260,17 Q262,23 264,17 Q266,11 268,17 Q270,23 272,17 Q274,11 276,17 Q278,23 280,17 Q282,11 284,17 Q286,23 288,17 Q290,11 292,17 Q294,23 296,17 Q298,11 300,17" stroke="rgba(90,210,235,.5)" stroke-width="1.1" fill="none"/></svg></div><div class="tx">גמא הוא תדר של תובנה הרגע שהכל מתחבר. המוח שם פעיל מאוד והדלת לתת מודע סגורה.</div><div class="tx">לא נכנסים אליו ישירות. מגיע כתוצאה של עבודה עמוקה, לאחר שעברנו דרך אלפא ותטא.</div></div>
+      </div>
+      <div class="t-body final-only s7punch">אלפא היא השער המוח מתחיל להירגע ולרדת פנימה.<br>תטא היא היעד שם התת מודע נגיש לשינוי.<br>בבטא גבוה המוח במצב הישרדות. לא ניתן לשנות תבניות ישנות.</div>
+    </div>
+  </section>
+
+  <section class="slide slide--white s-number dense">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="r"><div class="ring" style="--val:95">
+        <svg viewBox="0 0 200 200"><circle class="track-c" cx="100" cy="100" r="94" pathLength="100"/><circle class="fill-c" cx="100" cy="100" r="94" pathLength="100"/></svg>
+        <div class="t-display"><span>95</span>%</div>
+      </div><div class="t-label" style="text-align:center; margin-top:calc(var(--u)*var(--sp-16))">Subconscious</div><div class="t-small" style="text-align:center; margin-top:calc(var(--u)*var(--sp-8))" dir="ltr">Source: Dispenza J. (2017) Becoming Supernatural<br>Lipton B. (2005) The Biology of Belief</div></div>
+      <div class="copy">
+        <div class="a" style="--i:0"><div class="t-label" style="text-align:right">Conscious vs. Subconscious · The 95 / 5 Split</div><div class="t-h1">מודע מול תת-מודע</div><div class="t-small rose">רוב מה שמניע אותנו רץ מתחת לסף ההכרה</div></div>
+        <div class="a" style="--i:1"><div class="t-h2"><span dir="ltr">95%</span> · Subconscious Autopilot</div><div class="t-body">התת מודע האוטומטי. מריץ הרגלים, אמונות, ותגובות אוטומטיות רובן נבנו בילדות. פועל מתחת לסף ההכרה.</div></div>
+        <div class="a" style="--i:2"><div class="t-h2"><span dir="ltr">5%</span> · Conscious Mind</div><div class="t-body">המוח המודע. חושב, מתכנן, מקבל החלטות.</div></div>
+        <div class="t-body a" style="--i:3">אנחנו חושבים שאנחנו בשליטה. אבל 5% מנסים לנהל את החיים בזמן שה-95% הנותרים רצים על תוכנית אחרת, אחת שנבנתה מזמן, מתחת לסף ההכרה.</div>
+        <div class="r"><div class="t-body">המודע מעבד 40 ביטים בשנייה. התת מודע, <b>11 מיליון</b>. הוא פועל מתוך תבנית מוכנה.<br>והוא תמיד קודם, הגוף כבר מגיב לפני שהמוח המודע הספיק להבין מה קרה.</div><div class="t-body-head rose">לא כוחות :)</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">The Subconscious Mind</div><div class="t-h1">תפקידו של התת מודע</div></div><div class="head-en t-h2en"></div></div>
+      <div class="blocks">
+        <div class="blk r"><div class="t-h2">התת מודע הוא גאון</div><div class="t-body">מטרתו לחסוך למוח אנרגיה ולשרוד. כל דבר שחוזר על עצמו מספיק פעמים, הוא לוקח ומריץ על אוטומט.</div></div>
+        <div class="blk r"><div class="t-h2">דוגמאות מהחיים</div><div class="t-body">נהיגה. שפה. תגובות רגשיות. הרגלי בוקר. בלעדיו היינו צריכות לחשוב על כל נשימה.</div></div>
+        <div class="blk r"><div class="t-h2"><span class="mark" style="--mark-at:0ms">95% מהחיים מנוהלים ממנו</span> בלי שנשים לב.</div><div class="t-body">הוא לא אויב. הוא מנגנון. מדויק ומהיר יותר מהמודע.</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content dense">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">The Subconscious Mind</div><div class="t-h1">איך ומתי נוצר</div></div><div class="head-en t-h2en"></div></div>
+      <div class="blocks">
+        <div class="blk r"><div class="t-h2">עד גיל 6–7: תדר תטא</div><div class="t-body">ילדים בשעות ערות נמצאים בעיקר בתדר תטא, אותו תדר שמבוגרים מגיעים אליו בהיפנוזה. מוח ספוג, פתוח לחלוטין, בלי סינון.</div></div>
+        <div class="blk r"><div class="t-h2">הקורטקס הפרה-פרונטלי, עדיין לא מפותח</div><div class="t-body">האזור שאחראי על שיפוט ביקורתי, הגנה, סינון, עדיין לא מפותח.</div></div>
+        <div class="blk r"><div class="t-body">שתי הסיבות יחד יוצרות מצע לספיגה ישירה של אינפורמציה, בלי שאלות, בלי סינון, בלי ביקורת.</div></div>
+        <div class="blk r"><div class="t-h2">התת מודע מנהל את חיינו. מאז ועד היום.</div><div class="t-body">התגובות האוטומטיות, ההרגלים, האמונות, כולן רצות על אותה תוכנית שנכתבה אז.</div><div class="t-small credit" dir="ltr" style="text-align:right">Source: Lipton B. (2005) The Biology of Belief · Dispenza J. (2017) Becoming Supernatural</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--burgundy s-quote">
+    <div class="fade-bottom"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 words">כל אותן תגובות, מחשבות חוזרות, לופים אינסופיים, הן <span class="mark">תוכנית הפעלה</span> שנכתבה כשהיית ילדה.</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-number dense smanage">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="r"><div class="t-label" style="text-align:right">Conscious vs. Subconscious · Recall · The 95 / 5 Split</div><div class="t-h1">מה יש בפנים?</div><div class="t-small rose">הרגלים · תגובות · אמונות</div></div>
+      <div class="r mbody">
+        <div><div class="ring" style="--val:95"><svg viewBox="0 0 200 200"><circle class="track-c" cx="100" cy="100" r="94" pathLength="100"/><circle class="fill-c" cx="100" cy="100" r="94" pathLength="100"/></svg><div class="t-display"><span>95</span>%</div></div><div class="t-label" style="text-align:center; margin-top:calc(var(--u)*var(--sp-16))">Subconscious</div></div>
+        
+        <div class="copy">
+          <div class="t-body">זוכרות ש-95% מהזמן התת מודע מנהל אותנו?<br>כולן נכנסו לשם לפני שהיה לנו מסנן.</div>
+          <div class="blocks list"><div class="blk"><div class="t-h2">הרגלים</div></div><div class="blk"><div class="t-h2">תגובות אוטומטיות</div></div><div class="blk emunot"><div class="t-h2"><span class="mark">אמונות</span></div></div></div>
+          <div class="r t-body">היום נתמקד באמונות, כי הן אלה שמעצבות איך את רואה את עצמך ומה אפשרי עבורך.</div>
+          <div class="r"><div class="t-body">״95% ממי שאנחנו עד גיל 35 הוא קבוצה של התנהגויות שגורות, תגובות, הרגלים ואמונות.״</div><div class="t-label" style="text-align:right">Dispenza</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-label a" style="--i:0">Subconscious Mind · תת מודע</div>
+      <div class="t-h1 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-16))">אמונות <span class="t-h2">(שחלקן גם מגבילות)</span></div>
+      <div class="t-h2en a" style="--i:2; color:var(--rose)">Beliefs</div>
+      <div class="rule a-line" style="--i:3"></div>
+      <div class="t-body a" style="--i:4">בתוך התת-מודע שמנהל <b>95% מחיינו</b>, חיות אמונות שנוצרו בילדות.<br>חלקן מניעות אותנו קדימה.<br>וחלקן עוצרות אותנו, עד היום.</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-compare dense voices">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Inner Voices</div><div class="t-h1">הקולות שמנהלים את חייך</div></div><div class="head-en t-h2en">The Voices Running Your Life</div></div>
+      <div class="colhead a vrow" style="--i:1"><div class="lbl">בחיים עצמם</div><div class="lbl">מה הקול הפנימי</div><div class="lbl">מאיפה זה הגיע</div></div>
+      <div class="drows">
+        <div class="drow vrow r"><div class="tx">נמנעת מלנסות דברים חדשים. נשארת באזור הנוחות, גם כשכבר יודעת שמשהו צריך להשתנות.</div><div class="name">"אני לא אצליח"</div><div class="tx">ניסיתי ולא הצלחתי. לא היה מי שאמר: "את יכולה." נשארה חוויה של לא-מצליחה.</div></div>
+        <div class="drow vrow r"><div class="tx">עובדת שעות ארוכות, מרגישה אשמה כשנח לה. מתקשה לגבות את המחיר שהיא שווה.</div><div class="name">"לעשות כסף זה קשה, חייבים לעבוד קשה"</div><div class="tx">ראיתי בבית דוגמא של עבודה קשה. נאמר שוב ושוב: "אין מה לעשות, תלמדי קשה ותצליחי."</div></div>
+        <div class="drow vrow r"><div class="tx">לוקחת הכל על עצמה, קשה לה לבקש עזרה. מה שאני לא אעשה, לא יקרה.</div><div class="name">"הכל תמיד עלי, אני לבד"</div><div class="tx">לא הרגשתי שיש לי גב. למדתי שאני צריכה להסתדר לבד, כי ככה זה.</div></div>
+        <div class="drow vrow r"><div class="tx">עוצרת בדיוק לפני פריצת דרך, מוצאת סיבות לא להמשיך.</div><div class="name">"אם אצליח יותר מדי, הכל יסתבך"</div><div class="tx">הצלחה גדולה = אין זמן למשפחה, לזוגיות, לעצמי. הצלחה תמיד עולה במחיר.</div></div>
+        <div class="drow vrow r"><div class="tx">דפוס מרצה. שמה את צרכי אחרים לפני שלה. אומרת כן כשרוצה להגיד לא. ערכה מרגיש מותנה במה שנותנת.</div><div class="name">"אני חייבת להרוויח את האהבה"</div><div class="tx">תשומת לב ואהבה הגיעו כשהייתי "כמו שצריך". למדתי: כדי שיאהבו אותי, אני חייבת לתת, לדאוג, לרצות.</div></div>
+        <div class="drow vrow r"><div class="tx">מתנצלת על דברים שאין צורך להתנצל עליהם. "סליחה שאני שואלת", "סליחה שאני מפריעה". הנוכחות שלה בחדר מרגישה לה כמו עול.</div><div class="name">"אני מפריעה. סליחה שאני כאן."</div><div class="tx">צרכים בילדות הרגישו כמו הפרעה. למדה שעצם הקיום שלה מכביד, ושעדיף להיות קטנה.</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Self-Awareness</div><div class="t-h1">איך לזהות אמונה מגבילה</div></div><div class="head-en t-h2en">Identify a Limiting Belief</div></div>
+      <div class="blocks">
+        <div class="blk num r"><span class="blk-num">1</span><div class="t-h2">תחושה שעולה בך שוב ושוב, בלי קשר לסיטואציה החיצונית</div><div class="t-body">לא משנה מה קורה סביבך, אותה תחושה מוכרת חוזרת. זה לא "הנסיבות", זה התבנית.</div></div>
+        <div class="blk num r"><span class="blk-num">2</span><div class="t-h2">רגש חזק שמקפיץ אותך, תגובה לא פרופורציונלית למה שקרה</div><div class="t-body">כשהתגובה גדולה בהרבה מהסיטואציה, זה סימן שנגעת בזיכרון ישן, לא רק באירוע הנוכחי.</div></div>
+        <div class="blk num r"><span class="blk-num">3</span><div class="t-h2">מחשבה שמרגישה כמו עובדה</div><div class="t-body">לא "אני חושב שאני לא מספיק טוב", אלא "אני לא מספיק טוב." כשאין ספק, כשזה מובן מאליו, שם יושבת האמונה.</div></div>
+        <div class="t-small note a" style="--i:2">ההבחנה: 1 היא על תחושה, 2 על תגובה, 3 על מחשבה.</div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-steps">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Exercise</div><div class="t-h1">עכשיו התור שלך</div></div><div class="head-en t-h2en">Your Turn</div></div>
+      <div class="t-body a" style="--i:1">רשמי 3 אמונות מגבילות, ונסי לאתר את השורש של כל אחת</div>
+      <div class="ex-grid"><div class="ex-card card a" style="--i:2"><div class="t-num">1</div><div class="t-small">הקול הפנימי:</div><div class="lines" style="height:calc(var(--u)*64)"></div><div class="t-small">השורש:</div><div class="lines" style="height:calc(var(--u)*64); margin-bottom:0"></div></div><div class="ex-card card a" style="--i:3"><div class="t-num">2</div><div class="t-small">הקול הפנימי:</div><div class="lines" style="height:calc(var(--u)*64)"></div><div class="t-small">השורש:</div><div class="lines" style="height:calc(var(--u)*64); margin-bottom:0"></div></div><div class="ex-card card a" style="--i:4"><div class="t-num">3</div><div class="t-small">הקול הפנימי:</div><div class="lines" style="height:calc(var(--u)*64)"></div><div class="t-small">השורש:</div><div class="lines" style="height:calc(var(--u)*64); margin-bottom:0"></div></div></div>
+      <div class="t-small note a" style="--i:5; text-align:center; margin-top:calc(var(--u)*var(--sp-24))">אין תשובות נכונות או שגויות · רק לשים לב · להיות עדה לעצמך</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 a" style="--i:0">אז מה עושים עם זה?</div>
+      <div class="rule a-line" style="--i:2"></div>
+      <div class="t-body a" style="--i:3">שני כלים · שניהם פשוטים · שניהם משנים</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--burgundy s-quote">
+    <div class="fade-bottom"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 words">לשנות את ה-95% אי אפשר מבטא גבוה.<br>צריך לרדת. לאלפא. <span class="mark">לתטא.</span></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-steps dense stool" data-final>
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Mindful Awareness</div><div class="t-h1">התרגול שלך - פרקטיקה</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">כשהאמונה עולה, מה לעשות</div></div><div class="head-en t-h2en">The Practice</div></div>
+      <div class="steps">
+        <div class="step r"><div class="dot t-num">1</div><div class="t-h2">לשים לב</div><div class="t-body">מתי עולה אותה אמונה מגבילה, באיזו סיטואציה, עם מי, בדרך כלל מתי.</div></div>
+        <div class="step r"><div class="dot t-num">2</div><div class="t-h2">לעצור</div><div class="t-body">רגע של הפסקה מודעת, לא להגיב מיד. לנשום. לצאת מהאוטומט.</div></div>
+        <div class="step r"><div class="dot t-num">3</div><div class="t-h2">לחוש</div><div class="t-body">לשים לב לרגש שעולה בגוף, לא לנתח, רק לחוש. איפה הוא יושב? מה הוא אומר?</div></div>
+        <div class="step r"><div class="dot t-num">4</div><div class="t-h2">לשאול</div><div class="t-body">האם הרגש הזה קשור לסיטואציה הנוכחית, או לזכרון עבר שעדיין מנהל אותי?</div></div>
+        <div class="step r"><div class="dot t-num">5</div><div class="t-h2">לבחור</div><div class="t-body">עכשיו, מתוך מודעות, איך אני רוצה להגיב? לא מתוך הפחד הישן, אלא מתוך מי שאני היום.</div></div>
+      </div>
+      <div class="t-h2 rose stpunch" style="text-align:center">זהו ההבדל בין תגובה אוטומטית לבין בחירה מודעת.</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Alpha · Theta · Access</div><div class="t-h1">מדיטציה ככלי</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">גישה לתת מודע דרך תדרי המח</div></div><div class="head-en t-h2en">The Inner Tool</div></div>
+      <div class="flow3 r">
+        <div><div class="t-small rose">מדיטציה</div><div class="t-h2">הכלי</div><div class="t-body">מורידה את קצב גלי המוח מבטא לאלפא ולתטא. מערנות פעילה לעבר שקט פנימי עמוק</div></div>
+        <div class="arr">←</div>
+        <div><div class="t-small rose">אלפא · תטא</div><div class="t-h2" dir="ltr">8–12 Hz · 4–8 Hz</div><div class="t-body">התדרים שבהם הדלת לתת מודע פתוחה</div></div>
+        <div class="arr">←</div>
+        <div><div class="t-small rose">תת מודע</div><div class="t-h2">שם נוצרו האמונות</div><div class="t-body">המקום שבו יושבות האמונות המגבילות ושם אפשר לשתול אמונות חדשות</div></div>
+      </div>
+      <div class="t-h2 r" style="text-align:center; margin-top:calc(var(--u)*var(--sp-48))">מדיטציה היא לא רק כלי רוחני היא הכלי המדעי לגשת למקום שבו האמונה נוצרה, ולשנות אותה <span class="mark" style="--mark-at:0ms">מהשורש</span></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Session 1 · Summary</div><div class="t-h1">מה למדנו היום</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">תובנות מפגש 1</div></div><div class="head-en t-h2en">What We Learned Today</div></div>
+      <div class="blocks list">
+        <div class="blk a" style="--i:1"><div class="t-body">הגוף הוא מערכת שקולטת ומשדרת גלים כל הזמן.</div></div>
+        <div class="blk a" style="--i:2"><div class="t-body">תדר המוח קובע מה אפשר לקלוט ולשנות. בבטא, המוח סגור ללמידה עמוקה. באלפא ותטא, הדלת פתוחה.</div></div>
+        <div class="blk a" style="--i:3"><div class="t-body">95% מהתגובות שלנו אוטומטיות, מגיעות ישירות מהתת מודע</div></div>
+        <div class="blk a" style="--i:4"><div class="t-body">התת מודע נבנה לפני גיל 6-7, כשהקורטקס הפרה-פרונטלי עדיין לא היה מפותח</div></div>
+        <div class="blk a" style="--i:5"><div class="t-body">האמונות המגבילות לא הגיעו מאיפשהו, הן נוצרו בנו כילדות</div></div>
+        <div class="blk a" style="--i:6"><div class="t-body">אפשר לזהות אותן, ואז אפשר לבחור אחרת</div></div>
+        <div class="blk a" style="--i:7"><div class="t-body">המודעות היא הצעד הראשון והחשוב ביותר לשינוי</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section">
+    <div class="breath-blob"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 en a" style="--i:1">Breathe in.</div>
+      <div class="cue t-h1 a" style="--i:2"><span class="cue-in">שאיפה</span><span class="cue-out">נשיפה</span></div>
+      <div class="t-body a" style="--i:3; margin-top:calc(var(--u)*var(--sp-24))">Notice · Don't analyze · לשים לב, לא לנתח</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-journey">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">The Journey · המסע</div><div class="t-h1">איפה אנחנו ולאן הולכות</div></div><div class="head-en t-h2en">5 Sessions · 5 מפגשים</div></div>
+      <div class="journey">
+        <svg class="path" viewBox="0 0 1000 400" preserveAspectRatio="none"><path class="path-line" pathLength="1" d="M 900 150 C 830 150, 770 250, 700 250 S 570 150, 500 150 S 370 250, 300 250 S 170 150, 100 150"/></svg>
+        <div class="stop is-now a" style="--i:1; left:90%; top:37.5%"><div class="node t-num">1</div><div class="now t-small">מפגש ראשון · היום</div><div class="t-body-head">המח והתת-מודע</div><div class="t-small">מה מפעיל אותנו?</div></div>
+        <div class="stop a" style="--i:2; left:70%; top:62.5%"><div class="node t-num">2</div><div class="t-small rose">מפגש שני</div><div class="t-body-head">שלושת המוחות</div><div class="t-small">ראש · לב · בטן</div></div>
+        <div class="stop a" style="--i:3; left:50%; top:37.5%"><div class="node t-num">3</div><div class="t-small rose">מפגש שלישי</div><div class="t-body-head">קוהרנטיות לב-מח</div><div class="t-small">כשהם מסונכרנים</div></div>
+        <div class="stop a" style="--i:4; left:30%; top:62.5%"><div class="node t-num">4</div><div class="t-small rose">מפגש רביעי</div><div class="t-body-head">יצירת מציאות</div><div class="t-small">קוונטום · כוונה · רגש</div></div>
+        <div class="stop a" style="--i:5; left:10%; top:37.5%"><div class="node t-num">5</div><div class="t-small rose">מפגש חמישי</div><div class="t-body-head">אינטגרציה</div><div class="t-small">בלוטת האצטרובל · זרימה ביולוגית · אינטגרציה</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">This Week's Practice</div><div class="t-h1">התרגול השבועי</div></div><div class="head-en t-h2en">Between Session 1 and Session 2</div></div>
+      <div class="t-h2 a" style="--i:1">כשעולה האמונה שזיהית היום, עצרי. ורשמי:</div>
+      <div class="blocks">
+        <div class="blk num r"><span class="blk-num">1.</span><div class="t-h2">מה קרה</div><div class="t-body">באיזו סיטואציה היא הופיעה</div></div>
+        <div class="blk num r"><span class="blk-num">2.</span><div class="t-h2">מה הגוף הרגיש</div><div class="t-body">איפה ואיך</div></div>
+        <div class="blk num r"><span class="blk-num">3.</span><div class="t-h2">מה הקול אמר</div><div class="t-body">המשפט המדויק שעלה בראש</div></div>
+        <div class="t-small note a" style="--i:2">אל תנתחי · אל תתקני · רק תהיי עדה לעצמך</div>
+      </div>
+      <div class="t-body en a" style="--i:3; text-align:center">"Awareness is the beginning of change." · Dr. Joe Dispenza</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--yellow s-close">
+    <div class="petals-top"></div>
+    <div class="content center">
+      <div class="t-display a" style="--i:0; font-family:var(--font-head-he); font-weight:var(--weight-head-he)">תודה</div>
+      <div class="t-body a" style="--i:1">על ההקשבה<br>על הזמן<br>על הפתיחות ללמוד משהו חדש</div>
+      <div class="t-h2 a" style="--i:2">נפגש בשבוע הבא</div>
+      <div class="t-label a" style="--i:3; margin-top:calc(var(--u)*var(--sp-16))">The Inner Shift · Session 1 of 5</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+</main>
+<script src="../brand/deck.js"></script>
+</body>
+</html>
