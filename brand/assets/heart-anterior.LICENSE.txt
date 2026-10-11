@@ -1,0 +1,5 @@
+heart-anterior.png
+Source: https://commons.wikimedia.org/wiki/File:Heart_anterior_exterior_view.jpg
+Author: Patrick J. Lynch, medical illustrator (Yale University School of Medicine)
+License: CC BY 2.5 · https://creativecommons.org/licenses/by/2.5/
+Changes: background removed, cropped

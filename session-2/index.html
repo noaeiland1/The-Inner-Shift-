@@ -1,1 +1,653 @@
-<!DOCTYPE html><meta http-equiv="refresh" content="0; url=../The%20inner%20shift/inner%20shift%20session2.html">
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Inner Shift · מפגש 3 · השדה שמסביבי</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../brand/tokens.css">
+<link rel="stylesheet" href="../brand/course.css">
+<style>
+  /* session 3 · layouts for the original's own content */
+  .s-content .head .t-label:empty { display: none; }
+  .s7 .content { padding-top: calc(var(--u) * 56); padding-bottom: calc(var(--u) * 32); }
+  .s7 .head { margin-bottom: calc(var(--u) * var(--sp-16)); padding-bottom: calc(var(--u) * var(--sp-16)); }
+  .s7 .drow { grid-template-columns: calc(var(--u) * 260) 1.4fr 1fr; padding: calc(var(--u) * 8) calc(var(--u) * 16); border-radius: calc(var(--u) * 20); transition: background 900ms var(--ease), box-shadow 900ms var(--ease); }
+  .s7 .name { font-family: var(--font-head-he); font-weight: var(--weight-head-he); font-size: calc(var(--u) * var(--size-body)); }
+  .s7 .tx { line-height: 1.35; }
+  .s7 .s7c-wave { display: block; width: 100%; height: calc(var(--u) * 24); margin-top: calc(var(--u) * 6); }
+  .s7 .s7c-tag { font-weight: 600; color: var(--rose); }
+  .s7 .s7punch { text-align: center; color: var(--rose); margin-top: calc(var(--u) * var(--sp-16)); }
+  .swave .concepts { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--u) * var(--sp-48)); margin-top: calc(var(--u) * var(--sp-24)); text-align: center; }
+  .swave .cicon { font-family: var(--font-head-en); font-weight: 700; color: var(--rose); font-size: calc(var(--u) * var(--size-h2)); line-height: 1; }
+  .swave .waverow { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * var(--sp-48)); margin-top: calc(var(--u) * var(--sp-16)); text-align: center; }
+  .swave .waverow svg { width: 100%; height: calc(var(--u) * 90); }
+  .stop.is-done .node { background: var(--pink-light); border-color: var(--pink-light); color: var(--white); }
+  .artrow { flex: 1; display: grid; grid-template-columns: 38% 1fr; gap: calc(var(--u) * var(--sp-64)); align-items: center; }
+  .artrow .orig-art svg { width: 100%; height: auto; max-height: calc(var(--u) * 640); display: block; }
+  .satom .atomtext, .sfield .fieldtext { display: flex; flex-direction: column; gap: calc(var(--u) * var(--sp-16)); }
+  .satom .t-display { font-size: calc(var(--u) * var(--size-h1)); line-height: 1.1; }
+  .sa3 .states { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--u) * var(--sp-64)); align-items: center; text-align: center; }
+  .sa3 .states svg { width: calc(var(--u) * 240); height: auto; margin: 0 auto calc(var(--u) * var(--sp-16)); display: block; }
+  .slide--burgundy .fb { max-width: 70%; line-height: 1.6; }
+  .sfu .blocks { flex: 1; justify-content: center; gap: calc(var(--u) * var(--sp-32)); }
+  .sfu .blocks > .r { display: flex; flex-direction: column; gap: calc(var(--u) * var(--sp-32)); }
+  .shb .heart4 { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(var(--u) * var(--sp-48)); align-content: center; }
+  .shb .hhead { display: flex; align-items: center; gap: calc(var(--u) * var(--sp-16)); margin-bottom: calc(var(--u) * var(--sp-16)); }
+  .shb .hhead .blk-num { font-family: var(--font-head-en); font-weight: 700; color: var(--rose); font-size: calc(var(--u) * var(--size-h2)); line-height: 1; }
+  .shb .hicon svg { width: calc(var(--u) * 96); height: calc(var(--u) * 96); display: block; }
+  .shb .heart4 .t-body-head { margin-top: calc(var(--u) * var(--sp-8)); }
+  .sfield .stats { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * var(--sp-48)); }
+  .sfield .stats .t-display { font-size: calc(var(--u) * var(--size-h1)); line-height: 1.1; text-align: right; }
+  .semotion .emos { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * var(--sp-64)); align-items: start; margin-top: calc(var(--u) * var(--sp-24)); }
+  .semotion .emo { padding-top: calc(var(--u) * var(--sp-24)); border-top: var(--hair); text-align: center; }
+  .semotion .emo svg { width: 100%; height: calc(var(--u) * 120); display: block; margin: calc(var(--u) * var(--sp-16)) 0; }
+  .sconnect .crow { display: grid; grid-template-columns: 1fr calc(var(--u) * 64) 1fr calc(var(--u) * 64) 1.2fr; align-items: center; text-align: center; padding: calc(var(--u) * var(--sp-24)) 0; }
+  .sconnect .crow + .crow, .sconnect .r + .crow { border-top: 1px solid rgba(200,158,152,.4); }
+  .sconnect .chead { padding-bottom: 0; margin-top: calc(var(--u) * var(--sp-24)); }
+  .sconnect .arr { color: var(--rose); font-size: calc(var(--u) * var(--size-h2)); }
+  .sres .blocks { gap: calc(var(--u) * var(--sp-24)); }
+  .smyfield .mrow { grid-template-columns: 1fr calc(var(--u) * 220) 1.2fr; align-items: center; }
+  .smyfield .mrow svg { width: 100%; height: auto; max-height: calc(var(--u) * 170); display: block; }
+  .smyfield .mrow .blocks.list { gap: calc(var(--u) * var(--sp-4)); }
+  .sixty { font-family: var(--font-head-en); font-weight: 700; color: var(--rose); font-size: calc(var(--u) * var(--size-display)); line-height: 1; vertical-align: middle; }
+  .stool2 .blocks { gap: calc(var(--u) * var(--sp-32)); }
+  .spractice .prs { margin-top: calc(var(--u) * var(--sp-24)); }
+  /* journey: only today is in focus, the rest at 30% */
+  .focus-now .stop:not(.is-now) { opacity: .3 !important; }
+  .focus-now .stop.is-now { opacity: 1; }
+  /* do you know that: the knowing is the moment, the question is the message, the rest serves them */
+  .sopening .op-lead { color: rgba(74,63,56,.85); max-width: 70%; }
+  .sopening .op-knew { font-family: var(--font-head-he); font-weight: 700; color: var(--rose); font-size: calc(var(--u) * var(--size-display)); line-height: 1.1; margin: calc(var(--u) * var(--sp-16)) 0 calc(var(--u) * var(--sp-32)); }
+  .sopening .op-main { max-width: 80%; }
+  .sopening .op-bridge { margin-top: calc(var(--u) * var(--sp-32)); color: var(--rose); }
+  /* emotions: one leading sentence, then two states; the details stay small */
+  .semotion .emo-lead { text-align: center; font-size: calc(var(--u) * var(--size-h2)); }
+  .semotion .emo-kind { font-weight: 600; }
+  .semotion .emo-note { color: rgba(74,63,56,.8); }
+  .semotion .emo .t-h2 { margin-top: calc(var(--u) * var(--sp-4)); }
+  .recap .blocks.list { gap: calc(var(--u) * var(--sp-24)); }
+  /* layout C · a sequence that builds, one part per click */
+  .seqslide .lead { text-align: center; }
+  .seqslide .seq { display: grid; grid-template-columns: 1fr calc(var(--u) * 72) 1fr calc(var(--u) * 72) 1fr; align-items: start; text-align: center; margin: calc(var(--u) * var(--sp-32)) 0; }
+  .seqslide .seq.four { grid-template-columns: 1fr calc(var(--u) * 56) 1fr calc(var(--u) * 56) 1fr calc(var(--u) * 56) 1fr; flex: 1; align-content: center; margin: 0; }
+  .seqslide .ic { font-family: var(--font-head-en); font-weight: 700; color: var(--rose); font-size: calc(var(--u) * var(--size-h1)); line-height: 1; }
+  .seqslide .stepc .t-body-head { margin: calc(var(--u) * var(--sp-16)) 0 calc(var(--u) * var(--sp-8)); }
+  .seqslide .stepc .t-h2 { margin: calc(var(--u) * var(--sp-16)) 0 calc(var(--u) * var(--sp-8)); }
+  .seqslide .stepc .t-small { color: rgba(74,63,56,.85); }
+  .swave .seq { margin: auto 0; }
+  .vsep { display: flex; justify-content: center; align-self: stretch; }
+  .vsep svg { width: calc(var(--u) * 20); height: 100%; min-height: calc(var(--u) * 220); }
+  .seqslide .arrow { height: 2px; background: var(--pink-light); margin-top: calc(var(--u) * 40); position: relative; opacity: .8; }
+  .seqslide .arrow::after { content: ''; position: absolute; left: -2px; top: -5px; border: 6px solid transparent; border-right-color: var(--pink-light); }
+  .seqslide .law { text-align: center; margin-top: auto; }
+  .seqslide .waves { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * var(--sp-64)); margin-bottom: calc(var(--u) * var(--sp-16)); }
+  .seqslide .waves svg { width: 100%; height: calc(var(--u) * 70); display: block; }
+  .shb .hhead { display: flex; justify-content: center; align-items: center; gap: calc(var(--u) * var(--sp-16)); }
+  .shb .hicon svg { width: calc(var(--u) * 80); height: calc(var(--u) * 80); display: block; }
+  .shb .bridge { margin-top: calc(var(--u) * var(--sp-16)); font-weight: 700; color: var(--rose) !important; }
+  .lawslide .lawwaves { display: grid; grid-template-columns: 1fr 1fr; gap: calc(var(--u) * var(--sp-96)); width: 80%; }
+  .lawslide .lawwaves svg { width: 100%; height: calc(var(--u) * 140); display: block; margin-bottom: calc(var(--u) * var(--sp-16)); }
+  /* small icons, gently alive */
+  .shb .hicon svg { animation: ic-pulse 2.4s ease-in-out infinite; transform-origin: center; }
+  .shb .stepc:nth-of-type(1) .hicon svg { animation: ic-beat 1.2s ease-in-out infinite; }
+  .shb .stepc:nth-of-type(2) .hicon svg { animation: ic-sway 2.4s ease-in-out infinite; }
+  .shb .stepc:nth-of-type(3) .hicon svg { animation: ic-slide 2.4s ease-in-out infinite; }
+  @keyframes ic-beat { 0%, 40%, 100% { transform: scale(1); } 10% { transform: scale(1.14); } 22% { transform: scale(1.03); } 30% { transform: scale(1.09); } }
+  @keyframes ic-sway { 0%, 100% { transform: translateX(-4%); } 50% { transform: translateX(4%); } }
+  @keyframes ic-slide { 0%, 100% { transform: translateX(-6%); opacity: .8; } 50% { transform: translateX(6%); opacity: 1; } }
+  @keyframes ic-pulse { 0%, 100% { transform: scale(.92); opacity: .75; } 50% { transform: scale(1.1); opacity: 1; } }
+  .sconnect .minwave svg { width: 70%; height: calc(var(--u) * 26); display: block; margin: calc(var(--u) * var(--sp-8)) auto 0; }
+  /* fields meeting: two soft fields drift together and pulse as one when the big sentence arrives */
+  .syncf { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .syncf .sf { position: absolute; top: 50%; width: 46%; aspect-ratio: 1; border-radius: 50%; translate: -50% -50%; filter: blur(calc(var(--u) * 30)); opacity: .55; transition: left 3s var(--ease), opacity 2s var(--ease); }
+  .syncf .a1 { left: 22%; background: radial-gradient(circle, rgba(200,158,152,.85), rgba(200,158,152,0) 68%); animation: sf-a 4.2s ease-in-out infinite; }
+  .syncf .a2 { left: 78%; background: radial-gradient(circle, rgba(242,217,160,.95), rgba(242,217,160,0) 68%); animation: sf-b 3.1s ease-in-out infinite; }
+  .sfm[data-at="3"] .syncf .a1 { left: 44%; animation: sf-a 3.6s ease-in-out infinite; opacity: .75; }
+  .sfm[data-at="3"] .syncf .a2 { left: 56%; animation: sf-a 3.6s ease-in-out infinite; opacity: .75; }
+  @keyframes sf-a { 0%, 100% { transform: scale(.9); } 50% { transform: scale(1.06); } }
+  @keyframes sf-b { 0%, 100% { transform: scale(1.04); } 50% { transform: scale(.88); } }
+  /* tools: when to use them */
+  .stool2 .when { display: flex; gap: calc(var(--u) * var(--sp-8)); flex-wrap: wrap; justify-content: flex-end; max-width: 50%; }
+  .pill-when { background: var(--yellow); color: var(--rose); font-weight: 600; font-size: calc(var(--u) * var(--size-small)); border-radius: 999px; padding: calc(var(--u) * 6) calc(var(--u) * var(--sp-24)); }
+  .weekly .blk.q .t-small { margin-top: calc(var(--u) * 4); }
+  .weekly .blk.q { padding-right: calc(var(--u) * 64); }
+  .weekly .blk.q .blk-num { font-size: calc(var(--u) * var(--size-body)); line-height: 1.4; }
+  /* the heart's field, animated */
+  .hfield { position: relative; width: calc(var(--u) * 900); height: calc(var(--u) * 760); }
+  .hfield.small { width: 100%; height: auto; aspect-ratio: 900 / 760; }
+  .hf-body { position: absolute; left: 50%; top: 2%; height: 160%; translate: -50% 0; opacity: .5; -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 62%); mask-image: linear-gradient(to bottom, #000 55%, transparent 62%); }
+  .hf-heart { position: absolute; left: 53%; top: 35%; width: 9%; translate: -50% -50%; filter: drop-shadow(0 calc(var(--u) * 6) calc(var(--u) * 10) rgba(140,85,80,.4)); animation: hf-beat 1.2s ease-in-out infinite; transform-origin: 50% 60%; z-index: 2; }
+  @keyframes hf-beat { 0%, 40%, 100% { transform: scale(1); } 10% { transform: scale(1.08); } 22% { transform: scale(1.02); } 30% { transform: scale(1.05); } }
+  .hf-glow { position: absolute; left: 53%; top: 35%; width: 70%; aspect-ratio: .8; translate: -50% -50%; border-radius: 50%; background: radial-gradient(ellipse, rgba(242,217,160,.55), rgba(200,158,152,.25) 45%, rgba(200,158,152,0) 70%); filter: blur(calc(var(--u) * 20)); animation: hf-breath 3.6s ease-in-out infinite; }
+  .hf-wave { position: absolute; left: 53%; top: 35%; width: 40%; aspect-ratio: .8; translate: -50% -50%; border-radius: 50%; background: radial-gradient(ellipse, rgba(200,158,152,0) 40%, rgba(200,158,152,.5) 58%, rgba(242,217,160,.25) 66%, rgba(200,158,152,0) 74%); filter: blur(calc(var(--u) * 6)); animation: hf-spread 3.6s cubic-bezier(.2,.6,.3,1) infinite; opacity: 0; }
+  @keyframes hf-spread { 0% { transform: scale(.25); opacity: .9; } 100% { transform: scale(2.4); opacity: 0; } }
+  @keyframes hf-breath { 0%, 100% { transform: scale(.94); opacity: .8; } 50% { transform: scale(1.06); opacity: 1; } }
+  .heartanim .hf-cap { margin-top: calc(var(--u) * var(--sp-8)); }
+  .sfield .artrow { grid-template-columns: 44% 1fr; }
+  /* the sea at sunset, gently alive */
+  .kavanah { background: #fbf6ef; }
+  .sea { inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .sea > div { position: absolute; left: -3%; right: -3%; background: url(../brand/assets/sea-sunset-horizon.png) center / 106% 100% no-repeat; }
+  .sea-sky { top: 38%; height: 50%; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); animation: sea-drift 26s ease-in-out infinite alternate; }
+  .sea-water { top: 38%; height: 50%; clip-path: inset(57% 0 0 0); -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); filter: url(#ripple); animation: sea-swell 5s ease-in-out infinite alternate; }
+  .sea-sun { top: calc(38% + 50% * .47); left: 47.6% !important; right: auto !important; width: 18%; aspect-ratio: 1; translate: -50% -50%; background: radial-gradient(circle, rgba(255,226,140,.95), rgba(255,226,140,0) 65%) !important; animation: sea-sun 8s ease-in-out infinite; }
+  .sea-shimmer { top: 66.5%; left: 47.6% !important; right: auto !important; width: 26%; height: 15%; translate: -50% 0; background: repeating-linear-gradient(to bottom, rgba(255,246,220,0) 0 calc(var(--u) * 7), rgba(255,246,222,.9) calc(var(--u) * 7) calc(var(--u) * 10)) !important; background-size: 100% calc(var(--u) * 34) !important; -webkit-mask-image: radial-gradient(ellipse 50% 60% at 50% 20%, #000 0%, rgba(0,0,0,.6) 45%, transparent 75%); mask-image: radial-gradient(ellipse 50% 60% at 50% 20%, #000 0%, rgba(0,0,0,.6) 45%, transparent 75%); filter: blur(calc(var(--u) * 1.2)); mix-blend-mode: screen; animation: sea-glint 3.2s linear infinite, sea-flicker 2.1s ease-in-out infinite; }
+  @keyframes sea-glint { to { background-position: 0 calc(var(--u) * 34); } }
+  @keyframes sea-flicker { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
+  @keyframes sea-drift { from { transform: translateX(-2.2%); } to { transform: translateX(2.2%); } }
+  @keyframes sea-swell { from { transform: translateX(2.5%) translateY(0) scaleY(1); } to { transform: translateX(-2.5%) translateY(1.5%) scaleY(1.08); } }
+  @keyframes sea-sun { 0%, 100% { transform: scale(.75); opacity: .6; } 50% { transform: scale(1.7); opacity: 1; } }
+  .sea-warm { top: calc(38% + 50% * .47); left: 47.6% !important; right: auto !important; width: 70%; aspect-ratio: 1.6; translate: -50% -50%; border-radius: 50%; background: radial-gradient(ellipse, rgba(255,214,150,.55) 0%, rgba(250,190,160,.3) 35%, rgba(250,200,170,0) 70%) !important; mix-blend-mode: soft-light; filter: blur(calc(var(--u) * 20)); animation: sea-warm 12s ease-in-out infinite; }
+  @keyframes sea-warm { 0%, 100% { transform: scale(.4); opacity: .2; } 50% { transform: scale(1.6); opacity: 1; } }
+  .kavanah .content { justify-content: flex-start; padding-top: calc(var(--u) * 150); }
+  .kavanah .sea-sun { mix-blend-mode: screen; }
+  .kv-sub { display: flex; gap: calc(var(--u) * var(--sp-16)); justify-content: center; margin-top: calc(var(--u) * var(--sp-32)); }
+  .kv-sub span { font-size: calc(var(--u) * var(--size-body)); color: var(--rose); padding: calc(var(--u) * 8) calc(var(--u) * var(--sp-32)); border-radius: 999px; background: radial-gradient(ellipse at 50% 60%, rgba(196,226,214,.55), rgba(249,226,200,.45) 55%, rgba(249,238,204,0) 85%); }
+  .weekly .wk { flex: 1; display: grid; grid-template-columns: 1.5fr 1fr; gap: calc(var(--u) * var(--sp-64)); align-items: center; }
+  .weekly .wk .blocks { gap: calc(var(--u) * var(--sp-24)); margin-top: calc(var(--u) * var(--sp-24)); }
+  .weekly .practise { padding: calc(var(--u) * var(--sp-48)); border-radius: calc(var(--u) * 40); background: rgba(249,238,204,.6); }
+  .weekly .practise .blocks { margin-top: calc(var(--u) * var(--sp-24)); gap: calc(var(--u) * var(--sp-24)); }
+  .heartanim .hf-cap { position: relative; z-index: 2; }
+  @media (prefers-reduced-motion: reduce) { .sea-warm, .hf-wave, .hf-glow, .hf-heart, .sea > div, .shb .hicon svg, .syncf .sf { animation: none !important; } .hf-wave { display: none; } }
+</style>
+</head>
+<body>
+<main class="deck">
+
+  <section class="slide slide--yellow s-open">
+    <div class="petals-top"></div>
+    <div class="content center">
+      <div class="pill a" style="--i:0"><span class="t-small">מפגש שני</span><span class="t-label">Session 02</span></div>
+      <div class="t-h2 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-24))">השדה שמסביבי</div>
+      <div class="t-display">The <span class="rose">Inner</span> Shift</div>
+      <div class="rule a-line" style="--i:6"></div>
+      <div class="t-body a" style="--i:7">המסע לשינוי מבפנים</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section ">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-label a" style="--i:0">The Inner Shift · Session 2 of 5</div>
+      <div class="t-h1 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-16))">כיף להיפגש שוב</div>
+      <div class="rule a-line" style="--i:3"></div>
+      <div class="t-label a" style="--i:4">Noa Eiland</div>
+    </div>
+    
+  </section>
+
+  <section class="slide s-content recap">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Session 1 · Recap</div><div class="t-h1">מה למדנו בפגישה הקודמת</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">חזרה קצרה לפני שממשיכים</div></div><div class="head-en t-h2en">What We Covered</div></div>
+      <div class="blocks list"><div class="blk r"><div class="t-body"><span class="mark soft">הכל רוטט · כולל אנחנו.</span> הגוף הוא מערכת שקולטת ומשדרת גלים כל הזמן.</div></div><div class="blk r"><div class="t-body"><span class="mark soft">תדר המוח קובע</span> מה אפשר לקלוט ולשנות. בבטא סגור. באלפא ותטא · הדלת פתוחה.</div></div><div class="blk r"><div class="t-body"><span class="mark soft">95% מהתגובות שלנו אוטומטיות</span> · מגיעות ישירות מהתת-מודע.</div></div><div class="blk r"><div class="t-body">התת-מודע נבנה <span class="mark soft">לפני גיל 6-7</span>, כשהקורטקס הפרה-פרונטלי עדיין לא היה מפותח.</div></div><div class="blk r"><div class="t-body">האמונות המגבילות <span class="mark soft">נוצרו בנו כילדות</span> · ועדיין מנהלות אותנו.</div></div><div class="blk r"><div class="t-body">אפשר לזהות אותן. ואז <span class="mark soft">אפשר לבחור אחרת</span>.</div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-compare dense s7" data-final>
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Electroencephalography · EEG</div><div class="t-h1">מצבי המח תדרים</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">מפת הגישה לתת-מודע</div></div><div class="head-en t-h2en">Brain Wave States</div></div>
+      <div class="drows">
+        <div class="drow wrow r dim-on-final"><div class="orig-art"><div class="name" style="color:rgba(90,185,210,.75)">דלתא</div><div class="lbl" dir="ltr" style="text-align:right">0.5–4 Hz</div><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C37,5 75,29 112,17 C150,5 188,29 225,17 C262,5 300,29 300,17" stroke="rgba(90,185,210,.4)" stroke-width="1.8" fill="none"/></svg></div><div class="tx">בדלתא המוח כמעט ולא מעבד מידע חיצוני. זו השינה העמוקה ביותר המוח פנימי לחלוטין, עסוק בתיקון פיזי והתחדשות.</div><div class="tx">מערכת חיסון עובדת. גירויים חיצוניים כמעט ולא נרשמים אין גישה לתת מודע. </div></div>
+        <div class="drow wrow r lift-on-final"><div class="orig-art"><div class="name" style="color:rgba(212,149,122,.92)">תטא</div><div class="lbl" dir="ltr" style="text-align:right">4–8 Hz</div><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C18,4 37,30 56,17 C75,4 94,30 112,17 C131,4 150,30 169,17 C188,4 206,30 225,17 C244,4 262,30 281,17 C300,4 300,17 300,17" stroke="rgba(212,149,122,.85)" stroke-width="2.2" fill="none"/></svg></div><div class="tx">הרגע שבין ערות לשינה הגוף כבר שוכב אבל המוח עדיין רואה תמונות. גם הילד מול הטלוויזיה ששקוע לגמרי ולא שומע אתכם קוראים לו.</div><div class="tx"><span class="s7c-tag s7c-tag-theta">↓ התת מודע הכי נגיש</span> מדיטציה עמוקה, היפנוזה, חלימה צלולה</div></div>
+        <div class="drow wrow r lift-on-final"><div class="orig-art"><div class="name" style="color:rgba(139,184,150,.9)">אלפא</div><div class="lbl" dir="ltr" style="text-align:right">8–12 Hz</div><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C9,7 19,27 28,17 C37,7 47,27 56,17 C66,7 75,27 84,17 C94,7 103,27 112,17 C122,7 131,27 140,17 C150,7 160,27 169,17 C178,7 188,27 197,17 C206,7 216,27 225,17 C234,7 244,27 253,17 C262,7 272,27 281,17 C291,7 300,27 300,17" stroke="rgba(139,184,150,.78)" stroke-width="1.8" fill="none"/></svg></div><div class="tx">הרגע שאחרי שיוצאים מהמקלחת. הטיול בטבע שבו הראש מתפנה. הנהיגה על כביש מוכר ערניים, אבל שקטים מבפנים.</div><div class="tx"><span class="s7c-tag s7c-tag-gate">↓ השער</span> ערנות נינוחה, נוכחות, "זרימה"</div></div>
+        <div class="drow wrow r dim-on-final"><div class="orig-art"><div class="name" style="color:rgba(192,85,85,.85)">בטא</div><div class="lbl" dir="ltr" style="text-align:right">12–38 Hz</div><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 Q4,9 8,17 Q12,25 16,17 Q20,9 24,17 Q28,25 32,17 Q36,9 40,17 Q44,25 48,17 Q52,9 56,17 Q60,25 64,17 Q68,9 72,17 Q76,25 80,17 Q84,9 88,17 Q92,25 96,17 Q100,9 104,17 Q108,25 112,17 Q116,9 120,17 Q124,25 128,17 Q132,9 136,17 Q140,25 144,17 Q148,9 152,17 Q156,25 160,17 Q164,9 168,17 Q172,25 176,17 Q180,9 184,17 Q188,25 192,17 Q196,9 200,17 Q204,25 208,17 Q212,9 216,17 Q220,25 224,17 Q228,9 232,17 Q236,25 240,17 Q244,9 248,17 Q252,25 256,17 Q260,9 264,17 Q268,25 272,17 Q276,9 280,17 Q284,25 288,17 Q292,9 296,17 Q300,25 300,17" stroke="rgba(192,85,85,.6)" stroke-width="1.4" fill="none"/></svg></div><div class="tx">רוב שעות הערות שלנו. ישיבה, מייל, החלטות בריא ונחוץ. אבל כשיש לחץ ודאגה ומחשבות חוזרות עולים לבטא גבוה. המוח עסוק בדבר אחד: לשרוד.</div><div class="tx"><span class="s7c-tag s7c-tag-warn">⚠ בבטא גבוה המוח במצב הישרדות. לא ניתן לתכנת מחדש.</span></div></div>
+        <div class="drow wrow r dim-on-final"><div class="orig-art"><div class="name" style="color:rgba(120,210,235,.85)">גמא</div><div class="lbl" dir="ltr" style="text-align:right">38–100 Hz</div><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 Q2,11 4,17 Q6,23 8,17 Q10,11 12,17 Q14,23 16,17 Q18,11 20,17 Q22,23 24,17 Q26,11 28,17 Q30,23 32,17 Q34,11 36,17 Q38,23 40,17 Q42,11 44,17 Q46,23 48,17 Q50,11 52,17 Q54,23 56,17 Q58,11 60,17 Q62,23 64,17 Q66,11 68,17 Q70,23 72,17 Q74,11 76,17 Q78,23 80,17 Q82,11 84,17 Q86,23 88,17 Q90,11 92,17 Q94,23 96,17 Q98,11 100,17 Q102,23 104,17 Q106,11 108,17 Q110,23 112,17 Q114,11 116,17 Q118,23 120,17 Q122,11 124,17 Q126,23 128,17 Q130,11 132,17 Q134,23 136,17 Q138,11 140,17 Q142,23 144,17 Q146,11 148,17 Q150,23 152,17 Q154,11 156,17 Q158,23 160,17 Q162,11 164,17 Q166,23 168,17 Q170,11 172,17 Q174,23 176,17 Q178,11 180,17 Q182,23 184,17 Q186,11 188,17 Q190,23 192,17 Q194,11 196,17 Q198,23 200,17 Q202,11 204,17 Q206,23 208,17 Q210,11 212,17 Q214,23 216,17 Q218,11 220,17 Q222,23 224,17 Q226,11 228,17 Q230,23 232,17 Q234,11 236,17 Q238,23 240,17 Q242,11 244,17 Q246,23 248,17 Q250,11 252,17 Q254,23 256,17 Q258,11 260,17 Q262,23 264,17 Q266,11 268,17 Q270,23 272,17 Q274,11 276,17 Q278,23 280,17 Q282,11 284,17 Q286,23 288,17 Q290,11 292,17 Q294,23 296,17 Q298,11 300,17" stroke="rgba(90,210,235,.5)" stroke-width="1.1" fill="none"/></svg></div><div class="tx">גמא הוא תדר של תובנה הרגע שהכל מתחבר. המוח שם פעיל מאוד והדלת לתת מודע סגורה.</div><div class="tx">לא נכנסים אליו ישירות. מגיע כתוצאה של עבודה עמוקה, לאחר שעברנו דרך אלפא ותטא.</div></div>
+      </div>
+      <div class="t-body final-only s7punch">אלפא היא השער המוח מתחיל להירגע ולרדת פנימה.<br>תטא היא היעד שם התת מודע נגיש לשינוי.<br>בבטא גבוה המוח במצב הישרדות. לא ניתן לשנות תבניות ישנות.</div>
+    </div>
+    <div class="src-note" dir="ltr">Hobson &amp; Stickgold, 1995</div>
+  </section>
+
+  <section class="slide s-content swave seqslide">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Session 1 Recap · Wave Physics</div><div class="t-h1">תדרים · תזכורת מהסשן הראשון</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">מה שלמדנו · ואיך זה מתחבר לשדה</div></div><div class="head-en t-h2en">Frequencies · A Reminder</div></div>
+      <div class="t-h2 lead r">גל זה התנועה. תדר זה האופן שבו אנחנו מודדים אותה. והרץ זו יחידת המידה.</div>
+      <div class="seq"><div class="stepc r"><span class="ic">↔</span><div class="t-body-head">אורך גל</div><div class="t-small">המרחק מפסגה לפסגה. ככל שהגל ארוך יותר, הוא רוטט לאט יותר.</div></div><div class="vsep"><svg viewBox="0 0 20 300" preserveAspectRatio="none"><defs><linearGradient id="vsg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c89e98" stop-opacity="0"/><stop offset=".3" stop-color="#c89e98" stop-opacity=".75"/><stop offset=".55" stop-color="#e2b98c" stop-opacity=".6"/><stop offset=".8" stop-color="#c89e98" stop-opacity=".7"/><stop offset="1" stop-color="#c89e98" stop-opacity="0"/></linearGradient></defs><path d="M10 0 C 13 50, 7 100, 10 150 S 13 250, 10 300" stroke="url(#vsg)" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="10" cy="150" r="3.4" fill="#e2b98c" opacity=".8"/></svg></div><div class="stepc r"><span class="ic">Hz</span><div class="t-body-head">תדר (הרץ)</div><div class="t-small">כמה פסגות עוברות בשנייה. זה המספר שמתאר את הגל. מדידה: Hz.</div></div><div class="vsep"><svg viewBox="0 0 20 300" preserveAspectRatio="none"><defs><linearGradient id="vsg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c89e98" stop-opacity="0"/><stop offset=".3" stop-color="#c89e98" stop-opacity=".75"/><stop offset=".55" stop-color="#e2b98c" stop-opacity=".6"/><stop offset=".8" stop-color="#c89e98" stop-opacity=".7"/><stop offset="1" stop-color="#c89e98" stop-opacity="0"/></linearGradient></defs><path d="M10 0 C 13 50, 7 100, 10 150 S 13 250, 10 300" stroke="url(#vsg)" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="10" cy="150" r="3.4" fill="#e2b98c" opacity=".8"/></svg></div><div class="stepc r"><span class="ic">⇄</span><div class="t-body-head">הקשר ביניהם</div><div class="t-small">תדר גבוה = גל קצר. תדר נמוך = גל ארוך. הם תמיד מנוגדים זה לזה.</div></div></div>
+    </div>
+    <div class="src-note" dir="auto">Source: Classical Wave Physics · Electromagnetic Theory</div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section lawslide">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="lawwaves">
+        <div class="a" style="--i:0"><div class="orig-art"><svg preserveAspectRatio="none" viewBox="0 0 400 55"  fill="none">
+              <path d="M0,27 C50,5 100,49 150,27 C200,5 250,49 300,27 C350,5 400,49 400,27" stroke="rgba(196,160,107,.75)" stroke-width="2.5" fill="none"/>
+              <line x1="15" y1="10" x2="15" y2="44" stroke="rgba(196,160,107,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+              <line x1="165" y1="10" x2="165" y2="44" stroke="rgba(196,160,107,.25)" stroke-width="1" stroke-dasharray="3,3"/>
+              <text x="90" y="52" font-size="9" fill="rgba(74,63,56,.52)" font-family="Jost,sans-serif" text-anchor="middle">← אורך גל ←</text>
+            </svg></div><div class="t-body">תדר נמוך, גל ארוך, רוטט לאט</div></div>
+        <div class="a" style="--i:1"><div class="orig-art"><svg preserveAspectRatio="none" viewBox="0 0 400 55"  fill="none">
+              <path d="M0,27 C14,9 28,45 42,27 C56,9 70,45 84,27 C98,9 112,45 126,27 C140,9 154,45 168,27 C182,9 196,45 210,27 C224,9 238,45 252,27 C266,9 280,45 294,27 C308,9 322,45 336,27 C350,9 364,45 378,27 C392,9 400,45 400,27" stroke="rgba(212,149,122,.85)" stroke-width="2.5" fill="none"/>
+            </svg></div><div class="t-body">תדר גבוה, גל קצר, רוטט מהר</div></div>
+      </div>
+      <div class="t-h1 r" style="margin-top:calc(var(--u)*var(--sp-48))"><span class="mark soft">תדר נמוך = גל ארוך</span><br><span class="mark soft">תדר גבוה = גל קצר</span></div>
+      <div class="t-body rose r" style="margin-top:calc(var(--u)*var(--sp-16))">זה חוק הפיזיקה הכי בסיסי, תמיד נכון</div>
+      <div class="t-small r" style="margin-top:calc(var(--u)*var(--sp-24))">וגובה הפסגות? זו העוצמה של הגל (אמפליטודה), לא התדר.</div>
+    </div>
+    <div class="src-note" dir="auto">Source: Classical Wave Physics · Electromagnetic Theory</div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-journey focus-now">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">The Journey · Session Map</div><div class="t-h1">איפה אנחנו במסע</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">פגישה ראשונה מאחורינו · הנה הפגישה השנייה</div></div><div class="head-en t-h2en">Where We Are</div></div>
+      <div class="journey">
+        <svg class="path" viewBox="0 0 1000 400" preserveAspectRatio="none"><path class="path-line" d="M 900 150 C 830 150, 770 250, 700 250 S 570 150, 500 150 S 370 250, 300 250 S 170 150, 100 150"/><path class="path-now" pathLength="1" d="M 900 150 C 830 150, 770 250, 700 250"/></svg>
+        <div class="stop is-done a" style="--i:1; left:90%; top:37.5%"><div class="node t-num">1</div><div class="t-small rose">מפגש ראשון · הושלם</div><div class="t-body-head">המח והתת-מודע</div><div class="t-small">מה מפעיל אותנו?</div><div class="t-small rose">✓ נעשה</div></div>
+        <div class="stop is-now a" style="--i:2; left:70%; top:62.5%"><div class="node t-num">2</div><div class="now t-small">מפגש שני · היום</div><div class="t-body-head">שלושת המוחות</div><div class="t-small">ראש · לב · בטן</div></div>
+        <div class="stop a" style="--i:3; left:50%; top:37.5%"><div class="node t-num">3</div><div class="t-small rose">מפגש שלישי</div><div class="t-body-head">קוהרנטיות לב-מח</div><div class="t-small">כשהם מסונכרנים</div></div>
+        <div class="stop a" style="--i:4; left:30%; top:62.5%"><div class="node t-num">4</div><div class="t-small rose">מפגש רביעי</div><div class="t-body-head">יצירת מציאות</div><div class="t-small">קוונטום · כוונה · רגש</div></div>
+        <div class="stop a" style="--i:5; left:10%; top:37.5%"><div class="node t-num">5</div><div class="t-small rose">מפגש חמישי</div><div class="t-body-head">אינטגרציה</div><div class="t-small">בלוטת האצטרובל · זרימה ביולוגית · אינטגרציה</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section kavanah">
+    <svg width="0" height="0" style="position:absolute"><filter id="ripple" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.004 0.09" numOctaves="2" seed="3" result="n"><animate attributeName="baseFrequency" dur="7s" values="0.003 0.07;0.006 0.12;0.003 0.07" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="26"/></filter><filter id="sunwarm"><feGaussianBlur stdDeviation="0"><animate attributeName="stdDeviation" dur="10s" values="0;1.4;0" repeatCount="indefinite"/></feGaussianBlur></filter></svg>
+    <div class="sea"><div class="sea-sky"></div><div class="sea-water"></div><div class="sea-warm"></div><div class="sea-sun"></div><div class="sea-shimmer"></div></div>
+    <div class="content center">
+      <div class="t-h1 a" style="--i:0">רגע של התכווננות</div>
+      <div class="kv-sub a" style="--i:1"><span>עצמי עיניים</span><span>שימי את היום בצד</span><span>הגיעי</span></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section sopening">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-small rose a" style="--i:0">מכירות את זה ש...</div>
+      <div class="t-body r op-lead" style="margin-top:calc(var(--u)*var(--sp-16))">ידעתן משהו עמוק לפני שזה קרה.<br>שידעתן לפני שידעתן.<br>ואז שזה קרה · אמרתן:</div>
+      <div class="r op-knew">ידעתי.</div>
+      <div class="t-h1 r op-main"><span class="mark soft">מה אם הגוף שלך קלט מידע שהמוח עוד לא עבד?</span></div>
+      <div class="t-body r op-bridge">יש לו מבנה שמאפשר את זה.<br>בואי נכיר אותו</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section ">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 a" style="--i:0">מתחילות מה<span class="rose">אטום</span></div>
+      <div class="rule a-line" style="--i:1"></div>
+      <div class="t-body a" style="--i:2">כי הוא היחידה הבסיסית ביותר שממנה הכל בנוי ·</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content dense satom">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Quantum Physics · Atoms</div><div class="t-h1">האטום · ברובו תנועה ואנרגיה</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">הגרעין נושא את המסה. כל השאר · תנועה מתמדת.</div></div><div class="head-en t-h2en">The Atom is Mostly Motion</div></div>
+      <div class="artrow">
+        <div class="orig-art atomart a" style="--i:1"><svg class="satom-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="אטום: גרעין של פרוטונים ונייטרונים ואלקטרונים בתנועה">
+  <defs><path id="atom-op" d="M 360,150 A 160,52 0 1,0 40,150 A 160,52 0 1,0 360,150"/>
+    <radialGradient id="atom-halo"><stop offset="0%" stop-color="rgba(249,238,204,1)"/><stop offset="100%" stop-color="rgba(249,238,204,0)"/></radialGradient></defs>
+  <circle cx="200" cy="150" r="46" fill="url(#atom-halo)"/>
+  <g fill="none" stroke="rgba(140,85,80,.55)" stroke-width="1.4">
+    <ellipse cx="200" cy="150" rx="160" ry="52"/>
+    <ellipse cx="200" cy="150" rx="160" ry="52" transform="rotate(65 200 150)"/>
+    <ellipse cx="200" cy="150" rx="160" ry="52" transform="rotate(130 200 150)"/>
+  </g>
+  <g transform="rotate(0 200 150)"><circle r="6" fill="rgb(70,165,195)"><animateMotion dur="3.4s" repeatCount="indefinite"><mpath href="#atom-op"/></animateMotion></circle></g>
+  <g transform="rotate(65 200 150)"><circle r="6" fill="rgb(70,165,195)"><animateMotion dur="4.8s" repeatCount="indefinite" begin="-1.8s"><mpath href="#atom-op"/></animateMotion></circle></g>
+  <g transform="rotate(130 200 150)"><circle r="6" fill="rgb(70,165,195)"><animateMotion dur="2.9s" repeatCount="indefinite" begin="-0.6s"><mpath href="#atom-op"/></animateMotion></circle></g>
+  <g stroke="#fff" stroke-width="1">
+    <circle cx="194" cy="145" r="7" fill="#8c5550"/><circle cx="206" cy="146" r="7" fill="#c4904a"/>
+    <circle cx="200" cy="156" r="7" fill="#8c5550"/><circle cx="190" cy="156" r="7" fill="#c4904a"/>
+    <circle cx="210" cy="157" r="7" fill="#8c5550"/><circle cx="201" cy="140" r="7" fill="#c4904a"/>
+  </g>
+  <text x="200" y="196" text-anchor="middle" font-family="Open Sans, sans-serif" font-size="13" font-weight="600" fill="#4a3f38">גרעין</text>
+  <text x="372" y="146" font-family="Open Sans, sans-serif" font-size="13" font-weight="600" fill="rgb(50,135,165)">e⁻</text>
+</svg></div>
+        <div class="atomtext">
+          <div class="r"><div class="t-display rose" dir="ltr" style="text-align:right">99.9999%</div><div class="t-h2">מנפח האטום אינו חומר מוצק</div></div>
+          <div class="blocks list"><div class="blk r"><div class="t-body"><b>הגרעין</b> · מכיל 99.97% מהמסה של האטום, אבל תופס פחות מ-0.00001% מהנפח שלו.</div></div><div class="blk r"><div class="t-body"><b>האלקטרונים</b> · לא חלקיקים קטנים שמסתובבים בסדר, אלא תנועה מתמדת ובלתי נחה.</div></div><div class="blk r"><div class="t-body"><b>מה שמרגיש "מוצק"</b> · דחייה אלקטרומגנטית בין אטומים. לא מגע בין חומר.</div></div></div>
+          <div class="t-h2 rose r" style="margin-top:calc(var(--u)*var(--sp-8))">אם הגרעין היה כדור טניס · האטום כולו היה גדול כמו אצטדיון.</div>
+        </div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--burgundy s-quote">
+    <div class="fade-bottom"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 words">האטום ברובו תנועה מתמדת ·<br>תנועה שחוזרת על עצמה יוצרת גל,<br>ולגל, כפי שכבר יודעות · <span class="mark">יש תדר.</span></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content sa3">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Atomic Physics · States of Matter</div><div class="t-h1">הכל בנוי מאטומים</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">ומה שמבדיל ביניהם · האופן שבו הם זזים</div></div><div class="head-en t-h2en">Everything Is Made of Atoms</div></div>
+      <div class="states"><div class="r"><div class="orig-art"><svg class="sa3-row-svg" viewBox="0 0 60 40" fill="none">
+            <circle cx="15" cy="10" r="3.5" fill="#4a3f38" fill-opacity=".65"/>
+            <circle cx="30" cy="10" r="3.5" fill="#4a3f38" fill-opacity=".65"/>
+            <circle cx="45" cy="10" r="3.5" fill="#4a3f38" fill-opacity=".65"/>
+            <circle cx="15" cy="20" r="3.5" fill="#4a3f38" fill-opacity=".65"/>
+            <circle cx="30" cy="20" r="3.5" fill="#4a3f38" fill-opacity=".65"/>
+            <circle cx="45" cy="20" r="3.5" fill="#4a3f38" fill-opacity=".65"/>
+            <circle cx="15" cy="30" r="3.5" fill="#4a3f38" fill-opacity=".65"/>
+            <circle cx="30" cy="30" r="3.5" fill="#4a3f38" fill-opacity=".65"/>
+            <circle cx="45" cy="30" r="3.5" fill="#4a3f38" fill-opacity=".65"/>
+          </svg></div><div class="t-h2">מוצק</div><div class="t-body">האטומים רוטטים במקומם · ארוזים צפוף, כמעט לא זזים ממקומם</div></div><div class="r"><div class="orig-art"><svg class="sa3-row-svg" viewBox="0 0 60 40" fill="none">
+            <circle cx="12" cy="11" r="3.5" fill="#4a3f38" fill-opacity=".58"/>
+            <circle cx="28" cy="7"  r="3.5" fill="#4a3f38" fill-opacity=".58"/>
+            <circle cx="44" cy="13" r="3.5" fill="#4a3f38" fill-opacity=".58"/>
+            <circle cx="19" cy="23" r="3.5" fill="#4a3f38" fill-opacity=".58"/>
+            <circle cx="36" cy="21" r="3.5" fill="#4a3f38" fill-opacity=".58"/>
+            <circle cx="50" cy="29" r="3.5" fill="#4a3f38" fill-opacity=".58"/>
+            <circle cx="8"  cy="32" r="3.5" fill="#4a3f38" fill-opacity=".42"/>
+            <circle cx="26" cy="34" r="3.5" fill="#4a3f38" fill-opacity=".42"/>
+            <circle cx="42" cy="36" r="3.5" fill="#4a3f38" fill-opacity=".35"/>
+          </svg></div><div class="t-h2">נוזל</div><div class="t-body">האטומים זורמים זה על זה · קרובים, אך בתנועה חופשית יחסית</div></div><div class="r"><div class="orig-art"><svg class="sa3-row-svg" viewBox="0 0 60 40" fill="none">
+            <circle cx="8"  cy="6"  r="3" fill="#4a3f38" fill-opacity=".5"/>
+            <circle cx="52" cy="9"  r="3" fill="#4a3f38" fill-opacity=".5"/>
+            <circle cx="24" cy="19" r="3" fill="#4a3f38" fill-opacity=".5"/>
+            <circle cx="46" cy="33" r="3" fill="#4a3f38" fill-opacity=".5"/>
+            <circle cx="10" cy="34" r="3" fill="#4a3f38" fill-opacity=".5"/>
+            <circle cx="38" cy="7"  r="3" fill="#4a3f38" fill-opacity=".5"/>
+          </svg></div><div class="t-h2">גז</div><div class="t-body">האטומים עפים חופשי בחלל · מרוחקים זה מזה, ללא סדר קבוע</div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--burgundy s-quote">
+    <div class="fade-bottom"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h2 words fb">הכל בנוי מאטומים.<br>אטומים בטבעם נעים כל הזמן.<br>התנועה שלהם מייצרת שדות חשמליים ואלקטרומגנטיים.<br>וככה גם הגוף שלך.<br>את לא רק גוף פיזי.<br><span class="mark">את שדה שמשדר כל הזמן.</span></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content sfu">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="r">
+      <div class="head"><div><div class="t-label">Physics · Medicine · Technology</div><div class="t-h1">שדות מגנטיים בחיים שלנו</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">הנה כמה שימושים ומדידות של שדות מגנטיים</div></div><div class="head-en t-h2en">Magnetic Fields</div></div></div>
+      <div class="blocks">
+        <div class="r"><div class="blk num"><span class="blk-num">1</span><div class="t-h2">MRI · בעולם הרפואה</div><div class="t-body">יוצר שדה מגנטי חזק שמצלם את הרקמות בגוף מבפנים · ללא ניתוח</div></div><div class="blk num"><span class="blk-num">2</span><div class="t-h2">מטען אלחוטי · בעולם הטכנולוגיה</div><div class="t-body">מעביר חשמל לטלפון דרך שדה מגנטי · בלי חוט ובלי מגע</div></div></div>
+        <div class="r"><div class="blk num"><span class="blk-num">3</span><div class="t-h2"><span class="mark">גם סביב הגוף שלנו יש שדה מגנטי</span></div><div class="t-body"></div></div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content shb seqslide">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Cardiac Physiology · Bioelectromagnetism</div><div class="t-h1">השדה שהלב מייצר</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">פיזיולוגיה בסיסית · ארבעה שלבים</div></div><div class="head-en t-h2en">How the Heart Creates a Field</div></div>
+      <div class="seq four"><div class="stepc r"><div class="hhead"><span class="ic">01</span><div class="orig-art hicon"><svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <path d="M22 36s-14-9.5-14-18a8 8 0 0 1 14-5.3A8 8 0 0 1 36 18c0 8.5-14 18-14 18z" stroke="rgba(46,185,195,.75)" stroke-width="1.5" fill="rgba(46,185,195,.08)"/>
+            <polyline points="8,22 13,22 16,16 19,28 22,20 25,24 28,22 36,22" stroke="rgba(46,185,195,.6)" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg></div></div><div class="t-body-head">הלב פועם</div><div class="t-small">הלב הוא שריר שמתכווץ ומתרחב<br>בצורה מחזורית ואוטומטית<br>כ-100,000 פעמים ביום</div><div class="t-small rose bridge">הפעימה לא רק מזיזה דם<br>היא מפעילה תאים.</div></div><div class="vsep"><svg viewBox="0 0 20 300" preserveAspectRatio="none"><defs><linearGradient id="vsg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c89e98" stop-opacity="0"/><stop offset=".3" stop-color="#c89e98" stop-opacity=".75"/><stop offset=".55" stop-color="#e2b98c" stop-opacity=".6"/><stop offset=".8" stop-color="#c89e98" stop-opacity=".7"/><stop offset="1" stop-color="#c89e98" stop-opacity="0"/></linearGradient></defs><path d="M10 0 C 13 50, 7 100, 10 150 S 13 250, 10 300" stroke="url(#vsg)" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="10" cy="150" r="3.4" fill="#e2b98c" opacity=".8"/></svg></div><div class="stepc r"><div class="hhead"><span class="ic">02</span><div class="orig-art hicon"><svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <circle cx="16" cy="22" r="6" stroke="rgba(46,185,195,.65)" stroke-width="1.2" fill="rgba(46,185,195,.06)"/>
+            <text x="13.5" y="26" font-size="8" fill="rgba(46,185,195,.85)" font-family="Jost,sans-serif">+</text>
+            <circle cx="30" cy="22" r="6" stroke="rgba(212,149,122,.55)" stroke-width="1.2" fill="rgba(212,149,122,.05)"/>
+            <text x="27.5" y="26" font-size="8" fill="rgba(212,149,122,.75)" font-family="Jost,sans-serif">−</text>
+            <line x1="16" y1="12" x2="16" y2="6" stroke="rgba(46,185,195,.4)" stroke-width="1" marker-end="none"/>
+            <polyline points="13,8 16,4 19,8" stroke="rgba(46,185,195,.4)" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <line x1="30" y1="32" x2="30" y2="38" stroke="rgba(212,149,122,.35)" stroke-width="1"/>
+            <polyline points="27,36 30,40 33,36" stroke="rgba(212,149,122,.35)" stroke-width="1" fill="none" stroke-linecap="round"/>
+          </svg></div></div><div class="t-body-head">מטענים חשמליים זזים</div><div class="t-small">תאי הלב מזיזים יוני Na⁺ ו-K⁺<br>דרך הממברנה, פנימה והחוצה.<br>זה יוצר פרץ של מטען חשמלי נע.</div><div class="t-small rose bridge">תנועת מטען = זרם.<br>זרם יוצר שדה, זה חוק פיזיקה.</div></div><div class="vsep"><svg viewBox="0 0 20 300" preserveAspectRatio="none"><defs><linearGradient id="vsg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c89e98" stop-opacity="0"/><stop offset=".3" stop-color="#c89e98" stop-opacity=".75"/><stop offset=".55" stop-color="#e2b98c" stop-opacity=".6"/><stop offset=".8" stop-color="#c89e98" stop-opacity=".7"/><stop offset="1" stop-color="#c89e98" stop-opacity="0"/></linearGradient></defs><path d="M10 0 C 13 50, 7 100, 10 150 S 13 250, 10 300" stroke="url(#vsg)" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="10" cy="150" r="3.4" fill="#e2b98c" opacity=".8"/></svg></div><div class="stepc r"><div class="hhead"><span class="ic">03</span><div class="orig-art hicon"><svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <path d="M4,22 Q8,10 12,22 Q16,34 20,22 Q24,10 28,22 Q32,34 36,22 Q38,16 40,22" stroke="rgba(46,185,195,.75)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <path d="M4,22 Q8,14 12,22 Q16,30 20,22 Q24,14 28,22 Q32,30 36,22 Q38,18 40,22" stroke="rgba(46,185,195,.25)" stroke-width="1" fill="none" stroke-linecap="round"/>
+          </svg></div></div><div class="t-body-head">התנועה יוצרת שדה</div><div class="t-small">חוק אמפר (1820): כל זרם חשמלי<br>מייצר סביבו שדה מגנטי, תמיד,<br>בכל מוליך, ללא יוצא מן הכלל.</div><div class="t-small rose bridge">השדה לא נעצר<br>בדופן הגוף.</div></div><div class="vsep"><svg viewBox="0 0 20 300" preserveAspectRatio="none"><defs><linearGradient id="vsg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c89e98" stop-opacity="0"/><stop offset=".3" stop-color="#c89e98" stop-opacity=".75"/><stop offset=".55" stop-color="#e2b98c" stop-opacity=".6"/><stop offset=".8" stop-color="#c89e98" stop-opacity=".7"/><stop offset="1" stop-color="#c89e98" stop-opacity="0"/></linearGradient></defs><path d="M10 0 C 13 50, 7 100, 10 150 S 13 250, 10 300" stroke="url(#vsg)" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="10" cy="150" r="3.4" fill="#e2b98c" opacity=".8"/></svg></div><div class="stepc r"><div class="hhead"><span class="ic">04</span><div class="orig-art hicon"><svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <circle cx="22" cy="22" r="5" fill="rgba(46,185,195,.55)"/>
+            <circle cx="22" cy="22" r="11" stroke="rgba(46,185,195,.38)" stroke-width="1"/>
+            <circle cx="22" cy="22" r="17" stroke="rgba(46,185,195,.22)" stroke-width="1" stroke-dasharray="2 3"/>
+            <circle cx="22" cy="22" r="23" stroke="rgba(46,185,195,.10)" stroke-width="1" stroke-dasharray="1 4"/>
+          </svg></div></div><div class="t-body-head">השדה יוצא מחוץ לגוף</div><div class="t-small">HeartMath מדד עד 3–4 מטרים.<br>חזק פי 60 מהמוח חשמלית,<br>פי 5,000 מגנטית.</div><div class="t-small rose bridge">זה לא מטאפורה<br>זה ניתן למדידה.</div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section heartanim">
+    <div class="content center">
+      <div class="hfield ">
+        <div class="hf-glow"></div><div class="hf-wave"></div><div class="hf-wave" style="animation-delay:1.2s"></div><div class="hf-wave" style="animation-delay:2.4s"></div>
+        <img class="hf-body" src="../brand/assets/female-silhouette.svg" alt="">
+        <img class="hf-heart" src="../brand/assets/heart-anterior.png" alt="לב אנושי">
+      </div>
+      <div class="t-label a hf-cap" style="--i:2">Every beat · a field that spreads out</div>
+    </div>
+    <div class="src-note" dir="ltr">Heart illustration: Patrick J. Lynch · CC BY 2.5</div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content dense sfield">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">HeartMath Institute · Bioelectromagnetism</div><div class="t-h1">השדה האלקטרומגנטי של הגוף</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">הלב מייצר את השדה החזק ביותר בגוף · ואפשר למדוד אותו מחוץ לך</div></div><div class="head-en t-h2en">The Body's Electromagnetic Field</div></div>
+      <div class="artrow">
+        <div class="fieldart a" style="--i:1"><div class="hfield small">
+        <div class="hf-glow"></div><div class="hf-wave"></div><div class="hf-wave" style="animation-delay:1.2s"></div><div class="hf-wave" style="animation-delay:2.4s"></div>
+        <img class="hf-body" src="../brand/assets/female-silhouette.svg" alt="">
+        <img class="hf-heart" src="../brand/assets/heart-anterior.png" alt="לב אנושי">
+      </div></div>
+        <div class="fieldtext">
+          <div class="stats r"><div><div class="t-display rose" dir="ltr">100×</div><div class="t-body">חזק יותר מגנטית מהשדה של המוח</div></div><div><div class="t-display rose" dir="ltr">1–3 m</div><div class="t-body">השדה נמדד מחוץ לגוף</div></div></div>
+          <div class="blocks list"><div class="blk r"><div class="t-body">הגוף כולו משדר · גלי חום, גלי מוח, ביופוטונים. כולם יוצאים ממך לחלל, כל הזמן.</div></div><div class="blk r"><div class="t-body">הלב מייצר שדה אלקטרומגנטי · לא כמטאפורה, אלא כעובדה פיזיקלית הניתנת למדידה.</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="src-note" dir="auto">Source: McCraty R. et al. (2015) · HeartMath Institute</div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section ">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 a" style="--i:0">אז למדנו שיש לך שדה שאת משדרת.</div>
+      <div class="t-h1 rose r" style="margin-top:calc(var(--u)*var(--sp-24))">אבל מה קובע את הדפוס שלו?</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content dense semotion">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">HeartMath · HRV Research</div><div class="t-h1">רגשות משנים את צורת השדה</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">מה שאת מרגישה · נמדד מחוץ לגוף שלך</div></div><div class="head-en t-h2en">Emotions Reshape the Field</div></div>
+      <div class="t-h2 r emo-lead">רגש הוא לא רק תחושה פנימית · <span class="mark soft">הוא תדר שיוצא ממך החוצה.</span></div>
+      <div class="emos"><div class="emo r"><div class="t-small rose emo-kind">דפוס HRV קוהרנטי</div><div class="t-body-head">רגיעה · נוכחות · הכרת תודה</div><div class="orig-art"><svg viewBox="0 0 320 55" style="width:100%;height:100%;" fill="none">
+              <path d="M0,28 C20,5 40,51 60,28 C80,5 100,51 120,28 C140,5 160,51 180,28 C200,5 220,51 240,28 C260,5 280,51 300,28 C310,16 315,22 320,28"
+                    stroke="rgba(139,184,150,.78)" stroke-width="2"/>
+            </svg></div><div class="t-body emo-note">תדר מוחי:</div><div class="t-body emo-note">אלפא / תטא · מערכת פתוחה</div><div class="t-body emo-note">השדה · פתוח, קולט, זמין</div></div><div class="emo r"><div class="t-small rose emo-kind">דפוס HRV כאוטי</div><div class="t-body-head">לחץ · פחד · חרדה</div><div class="orig-art"><svg viewBox="0 0 320 55" style="width:100%;height:100%;" fill="none">
+              <path d="M0,28 L12,18 L18,38 L26,12 L35,42 L43,22 L50,35 L58,14 L66,40 L75,20 L82,36 L90,10 L98,44 L107,24 L114,34 L122,15 L130,40 L138,22 L146,37 L155,13 L163,43 L171,21 L179,35 L188,12 L196,42 L204,26 L212,36 L220,16 L228,41 L237,23 L245,34 L253,11 L261,44 L269,25 L277,37 L285,14 L293,40 L301,22 L309,33 L317,19 L320,28"
+                    stroke="rgba(212,149,122,.72)" stroke-width="2" stroke-linejoin="round"/>
+            </svg></div><div class="t-body emo-note">תדר מוחי:</div><div class="t-body emo-note">בטא גבוה · מערכת בכוננות</div><div class="t-body emo-note">השדה · צפוף, סגור, מגנן</div></div></div>
+    </div>
+    <div class="src-note" dir="auto">Source: HeartMath Institute · The Science of the Heart</div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content dense sconnect">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Session 1 + Session 2 · Connection</div><div class="t-h1">החיבור המלא</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">מה שלמדנו בסשן 1 מקבל עכשיו שכבה שנייה</div></div><div class="head-en t-h2en">The Full Chain</div></div>
+      <div class="r">
+        <div class="t-h2" style="text-align:center">תדר המוח לא רק קובע מה שאת חושבת · הוא קובע מה שאת פולטת.</div>
+        <div class="crow chead"><div class="lbl">רגש</div><div></div><div class="lbl">תדר מוחי</div><div></div><div class="lbl">השדה שאת פולטת</div></div>
+      </div>
+      <div class="crow r"><div class="t-body-head">פחד · לחץ · חרדה</div><div class="arr">←</div><div><div class="t-body-head rose">בטא גבוה</div><div class="orig-art minwave"><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 Q4,9 8,17 Q12,25 16,17 Q20,9 24,17 Q28,25 32,17 Q36,9 40,17 Q44,25 48,17 Q52,9 56,17 Q60,25 64,17 Q68,9 72,17 Q76,25 80,17 Q84,9 88,17 Q92,25 96,17 Q100,9 104,17 Q108,25 112,17 Q116,9 120,17 Q124,25 128,17 Q132,9 136,17 Q140,25 144,17 Q148,9 152,17 Q156,25 160,17 Q164,9 168,17 Q172,25 176,17 Q180,9 184,17 Q188,25 192,17 Q196,9 200,17 Q204,25 208,17 Q212,9 216,17 Q220,25 224,17 Q228,9 232,17 Q236,25 240,17 Q244,9 248,17 Q252,25 256,17 Q260,9 264,17 Q268,25 272,17 Q276,9 280,17 Q284,25 288,17 Q292,9 296,17 Q300,25 300,17" stroke="rgba(192,85,85,.6)" stroke-width="1.4" fill="none"/></svg></div></div><div class="arr">←</div><div class="t-body">שדה צפוף, סגור, מגנן</div></div>
+      <div class="crow r"><div class="t-body-head">רגיעה · נוכחות · סקרנות</div><div class="arr">←</div><div><div class="t-body-head rose">אלפא</div><div class="orig-art minwave"><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C9,7 19,27 28,17 C37,7 47,27 56,17 C66,7 75,27 84,17 C94,7 103,27 112,17 C122,7 131,27 140,17 C150,7 160,27 169,17 C178,7 188,27 197,17 C206,7 216,27 225,17 C234,7 244,27 253,17 C262,7 272,27 281,17 C291,7 300,27 300,17" stroke="rgba(139,184,150,.78)" stroke-width="1.8" fill="none"/></svg></div></div><div class="arr">←</div><div class="t-body">שדה פתוח, קולט, זמין</div></div>
+      <div class="r"><div class="crow"><div class="t-body-head">כוונה · אהבה · הכרת תודה</div><div class="arr">←</div><div><div class="t-body-head rose">תטא · קוהרנטיות</div><div class="orig-art minwave"><svg class="s7c-wave" viewBox="0 0 300 34" fill="none"><path d="M0,17 C18,4 37,30 56,17 C75,4 94,30 112,17 C131,4 150,30 169,17 C188,4 206,30 225,17 C244,4 262,30 281,17 C300,4 300,17 300,17" stroke="rgba(212,149,122,.85)" stroke-width="2.2" fill="none"/></svg></div></div><div class="arr">←</div><div class="t-body">השדה הכי חזק שאת פולטת</div></div><div class="t-small rose" style="text-align:center; margin-top:calc(var(--u)*var(--sp-24))">סשן 1: למדנו מה תדרי המוח &nbsp;·&nbsp; סשן 2: מבינות למה זה חשוב לעולם שמסביבך</div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section sfm">
+    <div class="halo"></div><div class="syncf"><div class="sf a1"></div><div class="sf a2"></div></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h2 r">לכל אחת יש <span class="rose">שדה משלה</span>.</div>
+      <div class="t-h2 r" style="margin-top:calc(var(--u)*var(--sp-16))">ראינו שהשדה שלך מושפע <span class="rose">ממה שאת מרגישה</span>.</div>
+      <div class="r"><div class="rule"></div></div>
+      <div class="t-h1 r">אבל שדות לא נשארים בנפרד ·<br><span class="rose">הם נפגשים.</span> <span class="mark" style="--mark-at:0ms">ומסתנכרנים.</span></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content dense sres">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Physics · HeartMath · Neuroscience</div><div class="t-h1">שדות מסתנכרנים</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">כשגל חזק ופחות חזק נפגשים · הפחות חזק נמשך לכיוון החזק. זו פיזיקה.</div></div><div class="head-en t-h2en">Fields Synchronize</div></div>
+      <div class="blocks"><div class="blk num r"><span class="blk-num">1</span><div class="t-h2">אם ותינוק</div><div class="t-body">כשאם שלווה מחזיקה תינוק בוכה · קצב הלב של התינוק מסתנכרן עם שלה תוך דקות. לא דרך מילים, לא דרך מגע בלבד · דרך השדה האלקטרומגנטי שהלב של האם פולט. נמדד ונאמת בעשרות ניסויים.</div></div><div class="blk num r"><span class="blk-num">2</span><div class="t-h2">סנכרון מוחי בין שני אנשים שמדברים</div><div class="t-body">שני אנשים בסורק. אחד מספר, השני מקשיב. המוחות מסתנכרנים, לא רק באזורי השפה, גם באזורי הרגש, הדמיון, הזיכרון. ומה שהפתיע: המאזין לא חיזה מה יגידו, הוא כבר היה שם. אותו מצב רגשי, לפני שהמילים הגיעו. המידע עבר לפני השפה.</div></div><div class="blk num r"><span class="blk-num">3</span><div class="t-h2">מטרונומים על אותה מדף</div><div class="t-body">כריסטיאן האיינס, 1665 · הבחין ששני שעוני מטוטלת שתלה על אותה קיר מסתנכרנים תוך שעה, בלי שאף אחד נגע בהם. הוא קרא לזה "הסכמה מוזרה". היום קוראים לזה רזוננס · וזו הבסיס הפיזיקלי לכל סנכרון בין אוסילטורים, כולל בני אדם.</div></div></div>
+    </div>
+    <div class="src-note" dir="auto">HeartMath Institute · Rollin McCraty · The Science of the Heart · Uri Hasson · Princeton Neuroscience · 2010 · PNAS · Christiaan Huygens · 1665 · Entrainment / Coupled Oscillators</div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content dense smyfield">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Your Field · In Real Life</div><div class="t-h1">מה שאת נושאת · את משדרת</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">ואת משדרת · זה מה שמסתנכרן אליך</div></div><div class="head-en t-h2en">What You Carry, You Transmit</div></div>
+      <div class="drows"><div class="drow mrow r"><div><div class="t-h2">שדה של פחד</div><div class="t-body-head">"מה אם אני טועה.<br>מה אם זה לא יצליח."</div><div class="t-small rose">שדה מכווץ · שולח: אני לא בטוחה</div></div><div class="orig-art"><svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+              <ellipse cx="26" cy="26" rx="23" ry="23" stroke="rgba(212,149,122,.12)" stroke-width="1"/>
+              <ellipse cx="26" cy="26" rx="17" ry="17" stroke="rgba(212,149,122,.2)" stroke-width="1.2"/>
+              <ellipse cx="26" cy="26" rx="11" ry="11" stroke="rgba(212,149,122,.32)" stroke-width="1.5"/>
+              <ellipse cx="26" cy="26" rx="6"  ry="6"  stroke="rgba(212,149,122,.5)"  stroke-width="1.5"/>
+              <circle  cx="26" cy="26" r="2.5" fill="rgba(212,149,122,.8)"/>
+            </svg></div><div><div class="lbl">מסתנכרנת עם</div><div class="blocks list"><div class="blk a" style="--i:1"><div class="t-body">בדיוק הבן אדם שיזכיר לך את כל מה שיכול להשתבש</div></div><div class="blk a" style="--i:1"><div class="t-body">ההחלטה שדחית שוב, כי הרגע לא נראה נכון</div></div><div class="blk a" style="--i:1"><div class="t-body">הקול הפנימי שמוצא סיבה חדשה למה לא</div></div></div></div></div><div class="drow mrow r"><div><div class="t-h2">שדה של ריקון</div><div class="t-body-head">"אני נותנת הכל<br>ולא מקבלת הכרה."</div><div class="t-small rose">שדה שנחלש · שולח: אני בלתי נראית</div></div><div class="orig-art"><svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+              <ellipse cx="26" cy="26" rx="23" ry="23" stroke="rgba(74,63,56,.08)" stroke-width="1" stroke-dasharray="4 3"/>
+              <ellipse cx="26" cy="26" rx="16" ry="16" stroke="rgba(74,63,56,.12)" stroke-width="1" stroke-dasharray="3 3"/>
+              <ellipse cx="26" cy="26" rx="9"  ry="9"  stroke="rgba(74,63,56,.18)" stroke-width="1.2" stroke-dasharray="2 3"/>
+              <circle  cx="26" cy="26" r="2.5" fill="rgba(74,63,56,.28)"/>
+            </svg></div><div><div class="lbl">מסתנכרנת עם</div><div class="blocks list"><div class="blk a" style="--i:1"><div class="t-body">אנשים שמתקשרים רק כשהם צריכים משהו</div></div><div class="blk a" style="--i:1"><div class="t-body">פרויקט שהיה שלך · ומישהי אחרת קיבלה את הקרדיט</div></div><div class="blk a" style="--i:1"><div class="t-body">תחושה שאת נותנת · וה"תודה" לא מגיעה</div></div></div></div></div><div class="drow mrow r"><div><div class="t-h2">שדה של שמחה</div><div class="t-body-head">"הכל זורם.<br>אני במקום הנכון."</div><div class="t-small rose">שדה מורחב · שולח: אני פתוחה</div></div><div class="orig-art"><svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+              <ellipse cx="26" cy="26" rx="23" ry="23" stroke="rgba(139,184,150,.15)" stroke-width="1"/>
+              <ellipse cx="26" cy="26" rx="16" ry="16" stroke="rgba(139,184,150,.25)" stroke-width="1.3"/>
+              <ellipse cx="26" cy="26" rx="10" ry="10" stroke="rgba(139,184,150,.4)"  stroke-width="1.5"/>
+              <ellipse cx="26" cy="26" rx="5"  ry="5"  stroke="rgba(139,184,150,.6)"  stroke-width="1.5"/>
+              <circle  cx="26" cy="26" r="2.5" fill="rgba(139,184,150,.9)"/>
+            </svg></div><div><div class="lbl">מסתנכרנת עם</div><div class="blocks list"><div class="blk a" style="--i:1"><div class="t-body">שיחה אקראית שפותחת דלת שלא ציפית</div></div><div class="blk a" style="--i:1"><div class="t-body">מישהי שמושיטה יד בדיוק כשצריכה</div></div><div class="blk a" style="--i:1"><div class="t-body">את עצמך, קלה, נוכחת, מאמינה</div></div></div></div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--burgundy s-quote">
+    <div class="fade-bottom"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 words">תחשבי על משהו או מישהו שהגיע אליך.<br>ותשאלי: מה שידרתי לפני שזה הגיע?</div>
+      <div class="t-h2 a" style="--i:12; margin-top:calc(var(--u)*var(--sp-24)); color:var(--pink-light)">לא מה עשיתי, <span class="mark" style="--mark-at:2400ms">מה הייתי.</span></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section ">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="r"><div class="t-label">Magnetic Fields · Water Structure</div><div class="t-h1" style="margin-top:calc(var(--u)*var(--sp-16))">שדה מגנטי <b>משנה את המבנה המולקולרי של מים</b></div><div class="t-body" style="margin-top:calc(var(--u)*var(--sp-16))">קשרי המימן בין המולקולות משתנים · התכונות הפיזיות משתנות</div></div>
+      <div class="r"><div class="rule"></div><div class="t-h2 rose">שדה משפיע על מים <b>ברמה שניתן למדוד</b></div></div>
+    </div>
+    <div class="src-note" dir="auto">Wang, Wei &amp; Li · Results in Physics · Elsevier · 2018</div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section ">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="r"><div class="t-h2">שדה משפיע על מים.</div><div class="t-h2" style="margin-top:calc(var(--u)*var(--sp-16))">הגוף שלך עשוי <span class="sixty" dir="ltr">60%</span> מים.</div></div>
+      <div class="t-h1 rose r" style="margin-top:calc(var(--u)*var(--sp-32))"><b>מה השדה שאת נושאת עושה לגוף שלך?</b></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section ">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h2 a" style="--i:0">זוכרות שדיברנו על משהו שידעתן לפני שידעתן?</div>
+      <div class="t-body a" style="--i:1">ידעתן לפני שידעתן · ואז כשזה קרה אמרתן: ידעתי.</div>
+      <div class="rule a-line" style="--i:2"></div>
+      <div class="t-h2 r">הרגשת בגוף עוד לפני שהמוח ידע.</div>
+      <div class="t-body r" style="margin-top:calc(var(--u)*var(--sp-16))">הגוף שלך הרגיש את השינוי בשדה האלקטרומגנטי<br>עוד לפני שהמוח עיבד אותו.</div>
+      <div class="r" style="margin-top:calc(var(--u)*var(--sp-24))">זה לא אינטואיציה מסתורית.<br><span class="t-h1 rose" style="display:block">זו פיזיקה.</span><br>עכשיו את יודעת איך זה עובד</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section ">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h2 a" style="--i:0">עכשיו שאת יודעת שאת משדרת שדה ·</div>
+      <div class="t-h1 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-16))">האם את יכולה גם לבחור מה לשדר?</div>
+      <div class="rule a-line" style="--i:2"></div>
+      <div class="t-h2 rose a" style="--i:3">שני כלים פרקטיים</div>
+      <div class="t-body a" style="--i:4; margin-top:calc(var(--u)*var(--sp-8))">לשימוש יומיומי</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content stool2">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-small rose" style="font-weight:600">כלי 1</div><div class="t-h1">רגע עם הלב</div></div><div class="when"><span class="pill-when">לתרגל בבוקר ובערב</span></div></div>
+      <div class="blocks"><div class="blk num r"><span class="blk-num">1</span><div class="t-h2">הניחי יד על הלב. עצמי עיניים.</div><div class="t-body">שלוש נשימות איטיות · שאיפה דרך האף, נשיפה ארוכה דרך הפה.</div></div><div class="blk num r"><span class="blk-num">2</span><div class="t-h2">הביאי משהו אחד שאת אסירת תודה עליו · קטן, אמיתי, ספציפי.</div><div class="t-body">לא רעיון. זיכרון. תחושה. מישהי. רגע.</div></div><div class="blk num r"><span class="blk-num">3</span><div class="t-h2">תרגישי איך זה מתפשט בחזה · ותישארי שם.</div><div class="t-body">לא לנתח. לא לחשוב. רק לחוש.</div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content stool2">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-small rose" style="font-weight:600">כלי 2</div><div class="t-h1">ריסט לפני הכניסה</div></div><div class="when"><span class="pill-when">לפני פגישה</span><span class="pill-when">לפני שיחה</span><span class="pill-when">לפני שנכנסים הביתה</span></div></div>
+      <div class="blocks"><div class="blk num r"><span class="blk-num">1</span><div class="t-h2">עצרי לפני שנכנסת · לפגישה, לשיחה, לבית.</div><div class="t-body">60 שניות. לא יותר.</div></div><div class="blk num r"><span class="blk-num">2</span><div class="t-h2">יד על הלב. רגש אחד אמיתי · כל דבר שמרגיש חי ואמיתי עכשיו.</div><div class="t-body">זיכרון. מישהי. רגע. משהו קטן שמצית חום.</div></div><div class="blk num r"><span class="blk-num">3</span><div class="t-h2">שאלי: איזה שדה אני רוצה להביא לחדר הזה?</div><div class="t-body">לא להיות. לבחור. יש הבדל.</div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--burgundy s-quote">
+    <div class="fade-bottom"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 words">את לא צריכה לחכות שהשדה ישתנה.<br>את יכולה <span class="mark">לבחור אותו.</span></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section spractice">
+    <div class="breath-blob"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-body rose a" style="--i:0">תרגול · כלי 1 בפעולה</div>
+      <div class="t-display a" style="--i:1; font-family:var(--font-head-he); font-weight:var(--weight-head-he); font-size:calc(var(--u)*var(--size-h1)); margin-top:calc(var(--u)*var(--sp-16))">להרחיב את הלב</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content weekly">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">This Week's Practice</div><div class="t-h1">התרגול השבועי</div></div><div class="head-en t-h2en">Between Session 2 and Session 3</div></div>
+      <div class="wk"><div class="wk-notice"><div class="t-h2 a" style="--i:1">דומה מושך דומה · בואי נבדוק את זה מקרוב.</div>
+      <div class="blocks"><div class="blk num q r"><span class="blk-num">1.</span><div class="t-body-head">מה משכת אליך לאחרונה שלא רצית?</div><div class="t-small">אנשים · מצבים · תבניות שחוזרות</div></div><div class="blk num q r"><span class="blk-num">2.</span><div class="t-body-head">באיזה שדה היית כשזה הגיע?</div><div class="t-small">לחץ · ריקון · ציפייה · משהו אחר?</div></div><div class="blk num q r"><span class="blk-num">3.</span><div class="t-body-head">ומה היית רוצה לפגוש?</div><div class="t-small">מה השדה שתרצי לשדר מחר?</div></div>
+        <div class="t-body-head rose r">זו לא ביקורת עצמית. זו מפת הדרכים.</div>
+      </div></div>
+      <div class="r practise"><div class="t-h2">ולתרגל:</div><div class="blocks list"><div class="blk"><div class="t-body"><b>בבוקר ובערב</b> · כלי 1, רגע עם הלב</div></div><div class="blk"><div class="t-body"><b>לפני כל כניסה</b> · כלי 2, ריסט לפני הכניסה</div></div></div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--yellow s-close">
+    <div class="petals-top"></div>
+    <div class="content center">
+      <div class="t-display a" style="--i:0; font-family:var(--font-head-he); font-weight:var(--weight-head-he)">תודה</div>
+      <div class="t-body a" style="--i:1">על ההקשבה<br>על הזמן<br>על הפתיחות ללמוד משהו חדש</div>
+      <div class="t-h2 a" style="--i:2">נפגש בשבוע הבא</div>
+      <div class="t-label a" style="--i:3; margin-top:calc(var(--u)*var(--sp-16))">The Inner Shift · Session 2 of 5</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+</main>
+<script src="../brand/deck.js"></script>
+</body>
+</html>

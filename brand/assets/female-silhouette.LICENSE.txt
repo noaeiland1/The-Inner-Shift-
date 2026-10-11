@@ -1,0 +1,5 @@
+female-silhouette.svg
+Source: https://commons.wikimedia.org/wiki/File:Female_shadow.svg
+Author: Mikael Häggström
+License: Public domain
+Changes: recolored to the brand palette

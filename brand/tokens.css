@@ -1,0 +1,71 @@
+/* Inner Shift · tokens
+   כל ערך כאן הוא החלטה מתוך brief.md. ערך שלא מופיע בבריף לא נכנס לכאן,
+   ומספר שמופיע בבריף חייב להופיע כאן. */
+
+:root {
+  /* ── color · source: inner-shift-landing-pages (1x1, 15-min-guide) ── */
+  --cream:      #f5eae6;  /* main background */
+  --yellow:     #f9eecc;  /* secondary background and marker, never text or lines */
+  --dark:       #4a3f38;  /* all body text, 8.6 on cream */
+  --rose:       #8c5550;  /* highlights, headings, numbers, 5.0 on cream */
+  --pink-light: #c89e98;  /* lines and surfaces on light bg (2.0 on cream), text only on burgundy (6.5) */
+  --burgundy:   #3d1a1c;  /* the only dark background */
+  --marker:     #e9bcb5;  /* the marker: a soft pink brush stroke (Noa, 2026-10-11) */
+  --brush: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 60' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='1' x2='0'%3E%3Cstop offset='0' stop-color='%23ecc6bf'/%3E%3Cstop offset='1' stop-color='%23e2b2aa'/%3E%3C/linearGradient%3E%3Cfilter id='f' x='-5%25' y='-30%25' width='110%25' height='160%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035 0.18' numOctaves='3' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='9'/%3E%3CfeGaussianBlur stdDeviation='.6'/%3E%3C/filter%3E%3C/defs%3E%3Cpath filter='url%28%23f%29' fill='url%28%23g%29' opacity='0.72' d='M6 34 C 20 16%2C 60 13%2C 120 15 C 200 11%2C 300 14%2C 388 19 C 396 24%2C 394 40%2C 384 44 C 300 49%2C 200 47%2C 110 48 C 60 49%2C 22 50%2C 8 44 C 2 41%2C 2 37%2C 6 34 Z'/%3E%3C/svg%3E");
+  --white:      #ffffff;  /* text on burgundy (15.4), cards, marker on yellow */
+
+  /* ── type · chosen in explorations/fonts-2.html, version C ── */
+  --font-head-he: 'Open Sans', sans-serif;             /* Hebrew headings, weight 700, as on the landing pages */
+  --font-head-en: 'Fraunces', serif;                   /* English headings, numbers, signature, weight 700, from noaeiland.com */
+  --font-body:    'Open Sans', sans-serif;             /* everything else, he + en, from landing pages */
+  --weight-head-he: 700;
+  --weight-head-en: 700;
+
+  /* size · px on a 1920x1080 slide; the slide scales as a whole.
+     in a slide use calc(var(--u) * var(--size-x)), where --u = 100cqw / 1920 */
+  --size-display: 172;  /* "The Inner Shift", big numbers, "תודה" */
+  --size-h1:       68;  /* slide heading */
+  --size-h2:       48;  /* sub heading, English heading, voice, step verb */
+  --size-body:     34;  /* all regular text, never smaller */
+  --size-small:    24;  /* labels and the signature only */
+
+  /* ── space · one scale; every padding, margin and gap is one of these ── */
+  --sp-4:     4;
+  --sp-8:     8;
+  --sp-16:   16;
+  --sp-24:   24;
+  --sp-32:   32;
+  --sp-48:   48;
+  --sp-64:   64;
+  --sp-96:   96;
+  --sp-128: 128;
+  --pad-y:    96;   /* slide inner margin, top and bottom */
+  --pad-x:   128;   /* slide inner margin, sides */
+  --sig-zone: 150;  /* bottom area reserved for the signature; content never enters it */
+
+  /* ── shape ── */
+  --radius-card:  32;   /* cards, the current step */
+  --radius-panel: 40;   /* image frames */
+  --radius-pill: 999;   /* tags */
+
+  /* ── surface ── */
+  --grain: .07;          /* paper grain over every slide */
+
+  /* ── motion ── */
+  --ease:          cubic-bezier(.22, 1, .36, 1);  /* long, soft landing */
+  --enter:        1200ms;  /* each element: out of a blur, rising, fading in */
+  --stagger:       120ms;  /* gap between elements arriving one after another */
+  --enter-delay:   150ms;  /* before the first element */
+  --rise:            24;   /* how far an element rises as it arrives (px on 1920) */
+  --blur-in:       10px;   /* how blurred an element starts */
+  --line-grow:    1400ms;  /* thin lines growing from their center */
+  --word-enter:   1100ms;  /* central sentence: each word */
+  --word-stagger:   70ms;  /* central sentence: gap between words */
+  --mark-draw:    1100ms;  /* marker stroke, right to left */
+  --mark-delay:   1500ms;  /* marker starts after the slide enters */
+  --title-focus:  1800ms;  /* "The Inner Shift" coming into focus */
+  --count-up:     2600ms;  /* big number counting up, ring filling */
+  --breath:         10s;   /* 5s in, 5s out */
+  --light-drift:    26s;   /* the light moving across every slide */
+  --petal-sway:     22s;   /* petals swaying */
+}
