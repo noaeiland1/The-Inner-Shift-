@@ -148,6 +148,12 @@
   .weekly .practise .blocks { margin-top: calc(var(--u) * var(--sp-24)); gap: calc(var(--u) * var(--sp-24)); }
   .heartanim .hf-cap { position: relative; z-index: 2; }
   @media (prefers-reduced-motion: reduce) { .sea-warm, .hf-wave, .hf-glow, .hf-heart, .sea > div, .shb .hicon svg, .syncf .sf { animation: none !important; } .hf-wave { display: none; } }
+
+  .recapall .drows { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .recapall .drow { grid-template-columns: calc(var(--u) * 330) 1fr; align-items: baseline; padding: calc(var(--u) * 20) 0; transition: opacity 900ms var(--ease); }
+  .recapall .lab { font-weight: 600; }
+  .recapall .det { color: rgba(74,63,56,.85); margin-top: calc(var(--u) * 4); }
+  .recapall .drow.shown:not(.is-on) { opacity: .4; }
 </style>
 </head>
 <body>
@@ -176,11 +182,11 @@
     
   </section>
 
-  <section class="slide s-content recap">
+  <section class="slide s-content recapall">
     <div class="petals-bottom"></div>
     <div class="content">
-      <div class="head a" style="--i:0"><div><div class="t-label">Session 2 · Recap</div><div class="t-h1">מה למדנו בפגישה הקודמת</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">חזרה קצרה לפני שממשיכים</div></div><div class="head-en t-h2en">What We Covered</div></div>
-      <div class="blocks list"><div class="blk r"><div class="t-body"><span class="mark soft">הכל רוטט · כולל אנחנו.</span> הגוף הוא מערכת שקולטת ומשדרת גלים כל הזמן.</div></div><div class="blk r"><div class="t-body"><span class="mark soft">תדר המוח קובע</span> מה אפשר לקלוט ולשנות. בבטא סגור. באלפא ותטא · הדלת פתוחה.</div></div><div class="blk r"><div class="t-body"><span class="mark soft">95% מהתגובות שלנו אוטומטיות</span> · מגיעות ישירות מהתת-מודע.</div></div><div class="blk r"><div class="t-body">התת-מודע נבנה <span class="mark soft">לפני גיל 6-7</span>, כשהקורטקס הפרה-פרונטלי עדיין לא היה מפותח.</div></div><div class="blk r"><div class="t-body">האמונות המגבילות <span class="mark soft">נוצרו בנו כילדות</span> · ועדיין מנהלות אותנו.</div></div><div class="blk r"><div class="t-body">אפשר לזהות אותן. ואז <span class="mark soft">אפשר לבחור אחרת</span>.</div></div></div>
+      <div class="head a" style="--i:0"><div><div class="t-label">Sessions 1–2 · Recap</div><div class="t-h1">מה למדנו עד כה</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">שכבה על שכבה</div></div><div class="head-en t-h2en">What We Covered</div></div>
+      <div class="drows"><div class="drow r"><div class="t-small rose lab">Session 1 · Safety</div><div><div class="t-body-head">מערכת העצבים · חיבור, דריכות, כיבוי</div><div class="t-small det">הגוף מחליט אם בטוח לפני שהראש מספיק לחשוב. שלושה מצבים, ואנחנו נעות ביניהם כל הזמן. חוסן זה לא להישאר רגועה, זה לדעת לחזור.</div></div></div><div class="drow r"><div class="t-small rose lab">Session 2 · Foundation</div><div><div class="t-body-head">תדרי המח · תת-מודע · אמונות מגבילות</div><div class="t-small det">95% מהתגובות שלנו אוטומטיות. אמונות שנטענו לפני גיל 7 עדיין מנהלות אותנו. תדרי המח קובעים מה ניתן לשנות, בתטא הדלת פתוחה.</div></div></div></div>
     </div>
     <div class="sig">Inner Shift · Noa Eiland</div>
   </section>
