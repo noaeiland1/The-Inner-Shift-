@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Inner Shift · מפגש 6 · אינטגרציה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../brand/tokens.css">
+<link rel="stylesheet" href="../brand/course.css">
+<style>
+  /* session 6 · layouts for the original's own content */
+  .s-content .head .t-label:empty, .head-en:empty { display: none; }
+  .slide--burgundy .rose { color: var(--pink-light); }
+  .words .w:has(> br) { display: block; height: 0; }
+  .vsep { display: flex; justify-content: center; align-self: stretch; }
+  .vsep svg { width: calc(var(--u) * 20); height: 100%; min-height: calc(var(--u) * 220); }
+  .vcell { display: flex; align-self: stretch; justify-content: center; }
+  .det { color: rgba(74,63,56,.85); margin-top: calc(var(--u) * 4); }
+  .c-punch { text-align: center; margin-top: calc(var(--u) * var(--sp-24)); }
+  .s-content .blocks.list { gap: calc(var(--u) * var(--sp-24)); }
+  /* rows: a label, a title and its description */
+  .conn .drow { grid-template-columns: calc(var(--u) * 300) 1fr; align-items: baseline; padding: calc(var(--u) * 14) 0; }
+  .conn .lab { font-weight: 600; }
+  .conn .tags { margin-top: calc(var(--u) * 6); opacity: .85; }
+  .conn2 .drow { grid-template-columns: calc(var(--u) * 170) 1fr; padding: calc(var(--u) * 12) 0; }
+  /* the pineal gland: the original image beside the facts */
+  .spinpre .pp { flex: 1; display: grid; grid-template-columns: calc(var(--u) * 640) 1fr; gap: calc(var(--u) * var(--sp-64)); align-items: center; direction: ltr; }
+  .spinpre .pp > div:last-child { direction: rtl; }
+  .spinpre .pp-img { border-radius: calc(var(--u) * 40); overflow: hidden; box-shadow: 0 calc(var(--u) * 20) calc(var(--u) * 60) rgba(61,26,28,.22); }
+  .spinpre .pp-img img { width: 100%; display: block; }
+  .spinpre .eyeb { font-weight: 600; margin-bottom: calc(var(--u) * var(--sp-16)); }
+  .spinl .src { margin-top: calc(var(--u) * 4); opacity: .7; text-align: right; }
+  .scirc .cc { flex: 1; display: grid; grid-template-columns: 1.25fr calc(var(--u) * 72) 1fr; align-items: center; }
+  .scirc .blocks.list { gap: calc(var(--u) * var(--sp-32)); }
+  .scirc .sym { color: var(--rose); }
+  /* day and night: the watercolor sun and moon */
+  .sky { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .sky img { position: absolute; opacity: .3; transform: rotate(var(--rot)); animation: sky-float 22s ease-in-out infinite alternate; }
+  .sky img.moon { opacity: .4; }
+  @keyframes sky-float { from { translate: 0 0; } to { translate: calc(var(--u) * 14) calc(var(--u) * -18); } }
+  .ico { height: 1.5em; width: auto; vertical-align: -.25em; margin-left: .15em; }
+  .recap4 .drow { transition: opacity 900ms var(--ease); }
+  .recap4 .drow { padding: calc(var(--u) * 8) 0 !important; grid-template-columns: calc(var(--u) * 250) 1fr !important; }
+  .recap4 .head { margin-bottom: calc(var(--u) * var(--sp-24)); }
+  .recap4 .c-punch { margin-top: calc(var(--u) * var(--sp-16)) !important; }
+  .recap4 .drow.shown:not(.is-on) { opacity: .4; }
+  .wk6 { display: flex; flex-direction: column; gap: calc(var(--u) * var(--sp-24)); align-items: flex-start; }
+  .wk6 > div { display: flex; gap: calc(var(--u) * var(--sp-24)); align-items: baseline; }
+  .wk6 .t-body-head { min-width: calc(var(--u) * 150); }
+  @media (prefers-reduced-motion: reduce) { .sky img { animation: none !important; } }
+  .scirc .wsub { font-weight: 600; margin-top: calc(var(--u) * 4); }
+  /* they all knew */
+  .spinmy .my { flex: 1; display: grid; grid-template-columns: calc(var(--u) * 520) 1fr; gap: calc(var(--u) * var(--sp-64)); align-items: center; direction: ltr; }
+  .spinmy .my > * { direction: rtl; }
+  .spinmy .my-frame { border-radius: calc(var(--u) * 40); overflow: hidden; box-shadow: 0 calc(var(--u) * 20) calc(var(--u) * 60) rgba(61,26,28,.22); }
+  .spinmy .my-frame img { width: 100%; display: block; }
+  .spinmy .cap { margin-top: calc(var(--u) * var(--sp-16)); text-align: center; color: rgba(74,63,56,.85); }
+  .spinmy .drow { grid-template-columns: calc(var(--u) * 240) 1fr; align-items: baseline; }
+  /* biological flow */
+  .sbio .bflow { display: flex; align-items: flex-start; justify-content: center; gap: calc(var(--u) * var(--sp-48)); margin-top: calc(var(--u) * var(--sp-16)); }
+  .sbio .bf .t-body { margin-top: calc(var(--u) * var(--sp-8)); }
+  .sbio .bf-sep { color: var(--rose); font-size: calc(var(--u) * var(--size-h2)); line-height: 1.2; }
+  /* morning, evening: the words, then the line, and the words step back */
+  .sbad .bd { flex: 1; display: grid; grid-template-columns: calc(var(--u) * 560) calc(var(--u) * 72) 1fr; align-items: center; }
+  .sbad .bd-t .t-small { font-weight: 600; margin-bottom: calc(var(--u) * var(--sp-16)); }
+  .sbad .bd-t .t-h1 { line-height: 1.25; }
+  .sbad .cloud { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: calc(var(--u) * 14) calc(var(--u) * 30); transition: opacity 900ms var(--ease); }
+  .sbad .cloud span { font-size: calc(var(--u) * var(--size-body)); line-height: 1.35; }
+  .sbad .cloud .w0 { color: var(--rose); font-weight: 600; }
+  .sbad .cloud .w1 { color: var(--dark); }
+  .sbad .cloud .w2 { color: rgba(74,63,56,.7); font-size: calc(var(--u) * var(--size-small)); }
+  .sbad .cloud .w3 { color: var(--rose); font-size: calc(var(--u) * var(--size-small)); }
+  .sbad[data-at="1"] .cloud { opacity: .3; }
+  .sbad .bd-punch { text-align: center; margin-top: calc(var(--u) * var(--sp-24)); }
+  .q-sub { color: var(--pink-light); margin-top: calc(var(--u) * var(--sp-48)); line-height: 1.6; }
+  /* two windows */
+  .smagic .mg { flex: 1; display: grid; grid-template-columns: 1fr calc(var(--u) * 72) 1fr calc(var(--u) * 72) 1fr; align-items: start; align-content: center; }
+  .smagic .mcol .t-small.rose { font-weight: 600; margin-bottom: calc(var(--u) * var(--sp-16)); }
+  .smagic .prac { display: flex; flex-direction: column; gap: calc(var(--u) * var(--sp-24)); }
+  .smagic .rrule { width: calc(var(--u) * 96); height: 2px; border-radius: 2px; margin: calc(var(--u) * var(--sp-16)) 0; background: linear-gradient(270deg, var(--pink-light), rgba(200,158,152,0)); }
+  .smagic .mcol .t-body-head { margin-top: calc(var(--u) * var(--sp-8)); }
+  .smagic .c-punch { margin-top: calc(var(--u) * var(--sp-32)); }
+  /* one biological story */
+  .smapsl .smap { width: calc(var(--u) * 1300); text-align: right; flex: none; }
+  .smapsl .drow { grid-template-columns: calc(var(--u) * 220) 1fr; align-items: baseline; padding: calc(var(--u) * 12) 0; }
+  .smapsl .lab { color: var(--rose); }
+  /* the tools: number and name always there, details arrive per click */
+  .stools .drow.tl { grid-template-columns: calc(var(--u) * 72) calc(var(--u) * 380) 1fr; align-items: start; padding: calc(var(--u) * var(--sp-24)) 0; }
+  .stools .blk-n { font-family: var(--font-head-en); font-weight: 700; color: var(--rose); font-size: calc(var(--u) * var(--size-h2)); line-height: 1.2; }
+  .stools .t-h2 { line-height: 1.25; }
+  .stools .chunks { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(var(--u) * var(--sp-32)); }
+  .stools .chunks .t-small.rose { font-weight: 600; }
+  /* how we want to feel */
+  .sfeel .t-h2.r { margin-top: calc(var(--u) * var(--sp-8)); }
+  .sfeel .fl { margin-top: calc(var(--u) * var(--sp-24)); line-height: 1.55; }
+  .sfeel .emph .sep { margin: 0 calc(var(--u) * var(--sp-16)); opacity: .6; }
+  /* sharing */
+  .sshare .share { width: auto; flex: none; margin-top: calc(var(--u) * var(--sp-32)); text-align: right; gap: calc(var(--u) * var(--sp-24)); }
+  /* the sea at sunset, gently alive (as in sessions 3 to 5) */
+  .kavanah { background: #fbf6ef; }
+  .sea { inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .sea > div { position: absolute; left: -3%; right: -3%; background: url(../brand/assets/sea-sunset-horizon.png) center / 106% 100% no-repeat; }
+  .sea-sky { top: 38%; height: 50%; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); animation: sea-drift 26s ease-in-out infinite alternate; }
+  .sea-water { top: 38%; height: 50%; clip-path: inset(57% 0 0 0); -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); animation: sea-swell 5s ease-in-out infinite alternate; }
+  .sea-sun { top: calc(38% + 50% * .47); left: 47.6% !important; right: auto !important; width: 18%; aspect-ratio: 1; translate: -50% -50%; background: radial-gradient(circle, rgba(255,226,140,.95), rgba(255,226,140,0) 65%) !important; animation: sea-sun 8s ease-in-out infinite; mix-blend-mode: screen; }
+  .sea-shimmer { top: 66.5%; left: 47.6% !important; right: auto !important; width: 26%; height: 15%; translate: -50% 0; background: repeating-linear-gradient(to bottom, rgba(255,246,220,0) 0 calc(var(--u) * 7), rgba(255,246,222,.9) calc(var(--u) * 7) calc(var(--u) * 10)) !important; background-size: 100% calc(var(--u) * 34) !important; -webkit-mask-image: radial-gradient(ellipse 50% 60% at 50% 20%, #000 0%, rgba(0,0,0,.6) 45%, transparent 75%); mask-image: radial-gradient(ellipse 50% 60% at 50% 20%, #000 0%, rgba(0,0,0,.6) 45%, transparent 75%); filter: blur(calc(var(--u) * 1.2)); mix-blend-mode: screen; animation: sea-glint 3.2s linear infinite, sea-flicker 2.1s ease-in-out infinite; }
+  .sea-warm { top: calc(38% + 50% * .47); left: 47.6% !important; right: auto !important; width: 70%; aspect-ratio: 1.6; translate: -50% -50%; border-radius: 50%; background: radial-gradient(ellipse, rgba(255,214,150,.55) 0%, rgba(250,190,160,.3) 35%, rgba(250,200,170,0) 70%) !important; mix-blend-mode: soft-light; filter: blur(calc(var(--u) * 20)); animation: sea-warm 12s ease-in-out infinite; }
+  @keyframes sea-glint { to { background-position: 0 calc(var(--u) * 34); } }
+  @keyframes sea-flicker { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
+  @keyframes sea-drift { from { transform: translateX(-2.2%); } to { transform: translateX(2.2%); } }
+  @keyframes sea-swell { from { transform: translateX(2.5%) translateY(0) scaleY(1); } to { transform: translateX(-2.5%) translateY(1.5%) scaleY(1.08); } }
+  @keyframes sea-sun { 0%, 100% { transform: scale(.75); opacity: .6; } 50% { transform: scale(1.7); opacity: 1; } }
+  @keyframes sea-warm { 0%, 100% { transform: scale(.4); opacity: .2; } 50% { transform: scale(1.6); opacity: 1; } }
+  .kavanah .content { justify-content: flex-start; padding-top: calc(var(--u) * 150); }
+  @media (prefers-reduced-motion: reduce) { .sea > div { animation: none !important; } }
+</style>
+</head>
+<body>
+<main class="deck">
+
+  <section class="slide slide--yellow s-open">
+    <div class="petals-top"></div>
+    <div class="content center">
+      <div class="pill a" style="--i:0"><span class="t-small">מפגש שישי</span><span class="t-label">Session 06</span></div>
+      <div class="t-h2 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-24))">אינטגרציה · The Final Session</div>
+      <div class="t-display">The <span class="rose">Inner</span> Shift</div>
+      <div class="rule a-line" style="--i:6"></div>
+      <div class="t-body a" style="--i:7">המסע לשינוי מבפנים</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content conn recap4">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Sessions 1–5 · Summary · The Full Arc</div><div class="t-h1">מה למדנו עד כה</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">שכבה על שכבה, כל מפגש בנה על הקודם</div></div><div class="head-en t-h2en">What We've Learned</div></div>
+      <div class="drows"><div class="drow r"><div class="t-small rose lab">Session 1 · Safety</div><div><div class="t-body-head">מערכת העצבים · חיבור, דריכות, כיבוי</div><div class="t-small det">הגוף מחליט אם בטוח לפני שהראש מספיק לחשוב. שלושה מצבים, ואנחנו נעות ביניהם כל הזמן. חוסן זה לא להישאר רגועה, זה לדעת לחזור.</div></div></div><div class="drow r"><div class="t-small rose lab">Session 2 · Foundation</div><div><div class="t-body-head">תדרי המח · תת-מודע · אמונות מגבילות</div><div class="t-small det">95% מהתגובות שלנו אוטומטיות. אמונות שנטענו לפני גיל 7, עדיין מנהלות אותנו. תדרי המח קובעים מה ניתן לשנות, בתטא הדלת פתוחה.</div></div></div><div class="drow r"><div class="t-small rose lab">Session 3 · Perception</div><div><div class="t-body-head">שדה אלקרומגנטי · RAS · ראייה סלקטיבית</div><div class="t-small det">ה-RAS מסנן את המציאות לפי מה שאת מוגדרת לראות. שתי נשים, אותו עולם, מציאויות שונות. הגוף משדר שדה אלקטרומגנטי שאחרים חשים.</div></div></div><div class="drow r"><div class="t-small rose lab">Session 4 · Coherence</div><div><div class="t-body-head">שלושת המוחות · קוהרנטיות לב-מח</div><div class="t-small det">ראש, לב ובטן, שלושה מרכזי עיבוד. כשהלב והמח בסנכרון, ה-PFC נפתח, קורטיזול יורד, ואות הכוונה הופך חזק פי כמה.</div></div></div><div class="drow r"><div class="t-small rose lab">Session 5 · Reality</div><div><div class="t-body-head">מהי מציאות · יצירת מציאות</div><div class="t-small det">הקוונטום הוכיח: המציאות לא קבועה עד שנצפית. כוונה + רגש גבוה = שינוי בתבנית המציאות. פלצבו הוכיח: מחשבה משנה ביולוגיה, ממש.</div></div></div></div>
+      <div class="t-h2 rose r c-punch">כל שכבה בנויה על הקודמת, <span class="mark"><b>היום מחברות הכל.</b></span></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-journey focus-now">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">The Journey · Session Map</div><div class="t-h1">איפה אנחנו במסע</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">חמש פגישות מאחורינו · הנה הפגישה השישית</div></div><div class="head-en t-h2en">Where We Are</div></div>
+      <div class="journey">
+        <svg class="path" viewBox="0 0 1000 400" preserveAspectRatio="none"><path class="path-line" d="M 930 250 C 870 250, 820 150, 760 150 S 650 250, 590 250 S 470 150, 410 150 S 300 250, 240 250 S 130 150, 70 150"/><path class="path-now" pathLength="1" d="M 930 250 C 870 250, 820 150, 760 150 S 650 250, 590 250 S 470 150, 410 150 S 300 250, 240 250 S 130 150, 70 150"/></svg>
+        <div class="stop is-done a" style="--i:1; left:93%; top:62.5%; width:calc(var(--u)*270)"><div class="node t-num">1</div><div class="t-small rose">מפגש 1</div><div class="t-body-head">מערכת העצבים</div><div class="t-small">לפני שמשנים משהו</div></div>
+        <div class="stop is-done a" style="--i:2; left:76%; top:37.5%; width:calc(var(--u)*270)"><div class="node t-num">2</div><div class="t-small rose">מפגש 2</div><div class="t-body-head">מערכת ההפעלה</div><div class="t-small">הסיפור שמנהל אותך</div></div>
+        <div class="stop is-done a" style="--i:3; left:59%; top:62.5%; width:calc(var(--u)*270)"><div class="node t-num">3</div><div class="t-small rose">מפגש 3</div><div class="t-body-head">השדה שמסביבי</div><div class="t-small">מה שבתוכי ומה שסביבי</div></div>
+        <div class="stop is-done a" style="--i:4; left:41%; top:37.5%; width:calc(var(--u)*270)"><div class="node t-num">4</div><div class="t-small rose">מפגש 4</div><div class="t-body-head">שלושת המוחות</div><div class="t-small">ראש · לב · בטן</div></div>
+        <div class="stop is-done a" style="--i:5; left:24%; top:62.5%; width:calc(var(--u)*270)"><div class="node t-num">5</div><div class="t-small rose">מפגש 5</div><div class="t-body-head">יצירת מציאות</div><div class="t-small">מה אני באמת רואה?</div></div>
+        <div class="stop is-now a" style="--i:6; left:7%; top:37.5%; width:calc(var(--u)*270)"><div class="node t-num">6</div><div class="now t-small">מפגש 6 · היום</div><div class="t-body-head">אינטגרציה</div><div class="t-small">הגרסה החדשה שלי</div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section kavanah ">
+    <svg width="0" height="0" style="position:absolute"><filter id="ripple" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.004 0.09" numOctaves="2" seed="3" result="n"><animate attributeName="baseFrequency" dur="7s" values="0.003 0.07;0.006 0.12;0.003 0.07" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="26"/></filter></svg>
+    <div class="sea"><div class="sea-sky"></div><div class="sea-water" style="filter:url(#ripple)"></div><div class="sea-warm"></div><div class="sea-sun"></div><div class="sea-shimmer"></div></div>
+    <div class="content center">
+      <div class="t-h1 a" style="--i:0">רגע של התכווננות</div>
+      <div class="t-label a" style="--i:1; margin-top:calc(var(--u)*var(--sp-24))">MOMENT OF ALIGNMENT</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content spinpre">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Anatomy · Neuroscience · Unique Structure</div><div class="t-h1">בלוטת האצטרובל</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">הבלוטה הכי קטנה, הכי מוזנחת, הכי מיוחדת</div></div><div class="head-en t-h2en">The Pineal Gland</div></div>
+      <div class="pp">
+        <div class="pp-img a" style="--i:1"><img src="images/pineal-location.png" alt="בלוטת האצטרובל, מיקום במח"></div>
+        <div><div class="t-small rose eyeb">עובדות מבניות</div><div class="blocks list"><div class="blk r"><div class="t-body-head">מיקום:</div><div class="t-small det">במרכז המוח, בגובה העיניים. אינה מוגנת על ידי מחסום הדם-מח, חומרים מגיעים אליה <b>ישירות, ללא סינון.</b> רגישה יותר מכל רקמה אחרת במוח, להורמונים, לכימיה, ואולי גם למה שעוד לא מיפינו.</div></div><div class="blk r"><div class="t-body-head">יחידה ולא מזווגת:</div><div class="t-small det">כל מבנה במוח כפול, שתי אמיגדלות, שתי המיספרות, שני היפוקמפוסים. היא <b>אחת בלבד,</b> בדיוק במרכז. כאילו הגוף הניח שם משהו שלא ניתן לפצל.</div></div><div class="blk r"><div class="t-body-head">קטנה בגודל, גדולה בהשפעה:</div><div class="t-small det">כ-150 מ"ג, אבל מסנכרנת את השעון הביולוגי של כל תא בגוף. <b>היא קובעת את הקצב.</b></div></div></div></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content spinl">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Melatonin · DMT · Piezoelectric Crystals · Rhythm</div><div class="t-h1">תפקודים ביולוגיים</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">מה המדע יודע, מה שמוכח ומה שמתגלה</div></div><div class="head-en t-h2en">Biological Functions</div></div>
+      <div class="blocks list"><div class="blk r"><div class="t-body-head">מלטונין, הורמון החשכה:</div><div class="t-small det">מיוצר רק בחושך, נחסם מיד עם אור. לא רק "הורמון שינה", מווסת שינה ותיקון, מחזורים הורמונליים, מערכת חיסון והזדקנות תאים. <b>כשנחסם לילה אחר לילה, הגוף מפסיק להתחדש.</b></div></div><div class="blk r"><div class="t-body-head">DMT אנדוגני:</div><div class="t-small det">הגוף מייצר את החומר הפסיכואקטיבי החזק ביותר הידוע לנו. נוכח ברגעי לידה, מוות ומדיטציה עמוקה. <b>למה? עוד לא ידוע בוודאות.</b></div><div class="t-small src" dir="ltr">Rick Strassman MD · DMT: The Spirit Molecule · 2001</div></div><div class="blk r"><div class="t-body-head">קריסטלים פיזואלקטריים (Baconnier et al., 2002):</div><div class="t-small det">קריסטלי סידן בתוך הבלוטה שמגיבים לשדות, כמו אנטנה דו-כיוונית:<br><b>קולטת:</b> שדה אלקטרומגנטי מהסביבה (כוונה, רגש, תדר) ← הקריסטל רוטט ← מייצר אות חשמלי שהמח קורא.<br><b>משדרת:</b> כוונה ורגש חזקים מהמח ← הקריסטל רוטט ← מוקרן כשדה EM החוצה.<br>בדיוק כמו WiFi, קולטת ומשדרת בו-זמנית. <b>הבלוטה היא האנטנה הביולוגית שלך.</b></div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content spinl">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">DMT · Piezoelectric · Alpha / Theta · Unified Field</div><div class="t-h1">המיסטיקה שמתבססת על הביולוגיה</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">מהממצא המדעי, לשאלה שהמדע עדיין חוקר</div></div><div class="head-en t-h2en">Mystical Inferences</div></div>
+      <div class="blocks list"><div class="blk r"><div class="t-body-head">DMT, השער?</div><div class="t-small det">הגוף מייצר את החומר הפסיכואקטיבי החזק ביותר הידוע לנו. סטראסמן ודיספנזה מציעים: ייתכן שברגעי מוות, לידה ומדיטציה עמוקה, הפרשתו היא השער לחוויות שמחוץ למרחב-זמן הרגיל. <b>זה עדיין השערה. אבל חוויות עקביות חוצות תרבויות ומחייבות הסבר.</b></div></div><div class="blk r"><div class="t-body-head">קריסטלי סידן, עין פנימית?</div><div class="t-small det">הקריסטלים הפיזואלקטריים שהתגלו בה מגיבים לשדות אלקטרומגנטיים ומייצרים אות חשמלי. ג'ו דיספנזה: הבלוטה פועלת כאנטנה ביולוגית, <b>לא רואה עם עיניים, אלא קולטת תדרים שלא נגישים לחושים הרגילים.</b></div></div><div class="blk r"><div class="t-body-head">למה דווקא אלפא-תטא (4–12Hz)?</div><div class="t-small det">בבטא, המח רועש, קורטיזול גבוה, הבלוטה מדוכאת. באלפא-תטא, נוירונים מסתנכרנים, שדה EM מסודר ורחב. הקריסטלים הפיזואלקטריים מתעוררים, הפרשת DMT עולה. <b>תדר נמוך = קוהרנטיות = בלוטה ערה = קליטת אות.</b> לא מיסטיקה, ביולוגיה.</div></div></div>
+      <div class="t-h2 rose r c-punch">הביולוגיה מצביעה.<br><b>השאלות גדולות ממנה.</b></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content spinl">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head r"><div><div class="t-label">Pineal Gland</div><div class="t-h1">מה פוגע בה</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">ההסתיידות שאף אחד לא מדבר עליה</div></div><div class="head-en t-h2en">What Damages It</div></div>
+      <div class="blocks list"><div class="blk r"><div class="t-body-head">פלואוריד</div><div class="t-small det">מחקרים מראים שפלואוריד מצטבר בבלוטת האצטרובל יותר מכל רקמה אחרת בגוף. מחקר של <b>Jennifer Luke (2001)</b> מצא ריכוזי פלואוריד גבוהים פי 9 מהסף הבטוח בבלוטות מחושבות. תוצאה: גיבוש קריסטלים של זרחן סידן, ההסתיידות.</div></div><div class="blk r"><div class="t-body-head">מסכים ואור כחול</div><div class="t-small det">הבלוטה רגישה לאור. חשיפה לאור כחול בלילה, ממסכים, טלפונים, תאורת LED, מדכאת את ייצור המלטונין ב־<b>50% עד 90%</b>. ללא מלטונין, מחזורי השינה מתבלבלים ופעילות הבלוטה יורדת.</div></div><div class="blk r"><div class="t-body-head">חוסר שינה ומתח כרוני</div><div class="t-small det">קורטיזול גבוה (הורמון הסטרס) מעכב את ייצור המלטונין ישירות. שינה מקוטעת = בלוטה שלא מקבלת חלון הפעולה הלילי שלה. לאורך זמן: ירידה בתפקוד ועלייה בהסתיידות.</div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content spinmy">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Ancient Wisdom · Symbolism · Three Traditions</div><div class="t-h1">כולם ידעו</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">תרבויות שלא דיברו זו עם זו, הצביעו על אותו מקום</div></div><div class="head-en t-h2en">They All Knew</div></div>
+      <div class="my">
+        <div class="r my-img"><div class="my-frame"><img src="images/eye-of-horus.jpg" alt="עין הורוס, קמיע מצרי עתיק, מוזיאון קליבלנד"></div><div class="t-small cap">עין הורוס (Wedjat) · מצרים העתיקה · ~3000 לפנה"ס · מוזיאון קליבלנד</div></div>
+        <div class="r drows"><div class="drow"><div class="t-body-head">מצרים העתיקה</div><div class="t-small det">עין הורוס: ידע אלוהי, ראייה מעבר לנראה. ב-1997 נמצא שמבנהּ זהה לחתך הסגיטלי של המוח ברמת הבלוטה.</div></div><div class="drow"><div class="t-body-head">הינדואיזם</div><div class="t-small det">העין השלישית (אג'נה צ'אקרה): מרכז התפיסה הפנימית מעבר לחמשת החושים, בין הגבות, בגובה הבלוטה.</div></div><div class="drow"><div class="t-body-head">ותיקן</div><div class="t-small det">פסל אצטרובל ברונזה ענק בכניסה לוותיקן. דקארט (1649): <b>"הנשמה מופעלת רק בבלוטה זו."</b></div></div></div>
+      </div>
+      <div class="t-h2 rose r c-punch">לפני שהמדע ידע מה זו הבלוטה, <b>הם כבר ידעו שהיא שם.</b></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section sbio">
+    <div class="halo"></div><div class="sky" aria-hidden="true"><img class="sun" src="../brand/assets/watercolor-sun.png" style="left:66%; top:4%; width:calc(var(--u)*460); --rot:8deg; animation-delay:-3s" alt=""><img class="moon" src="../brand/assets/watercolor-moon.png" style="left:8%; top:52%; width:calc(var(--u)*400); --rot:-10deg; animation-delay:-11s" alt=""></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 a" style="--i:0">זרימה ביולוגית</div>
+      <div class="rule a-line" style="--i:1"></div>
+      <div class="bflow"><div class="bf a" style="--i:3"><div class="t-h2">מקצב של 24 שעות</div></div><div class="bf-sep a" style="--i:3">·</div><div class="bf a" style="--i:4"><div class="t-h2">שני הורמונים, שני מצבים</div><div class="t-body rose">קורטיזול · מלטונין</div></div><div class="bf-sep a" style="--i:4">·</div><div class="bf a" style="--i:5"><div class="t-h2">שני חלונות ביום</div><div class="t-body rose">בוקר · ערב</div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content conn">
+    <div class="sky" aria-hidden="true"><img class="moon" src="../brand/assets/watercolor-moon.png" style="left:3%; top:22%; width:calc(var(--u)*340); --rot:-6deg; animation-delay:-5s" alt=""><img class="sun" src="../brand/assets/watercolor-sun.png" style="left:80%; top:58%; width:calc(var(--u)*360); --rot:12deg; animation-delay:-14s" alt=""></div><div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Melatonin · Cortisol · Biological Stakes</div><div class="t-h1">מלטונין וקורטיזול</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">הסיסאו הביולוגי שקובע הכל</div></div><div class="head-en t-h2en">Melatonin vs. Cortisol</div></div>
+      <div class="drows"><div class="drow r"><div class="t-small rose lab">הקשר ההפוך</div><div><div class="t-body-head">כשקורטיזול עולה, מלטונין יורד. כשקורטיזול יורד, מלטונין עולה.</div><div class="t-small det">זה לא מקרי, זו מערכת יחסים הפוכה ישירה. מתח כרוני = קורטיזול גבוה = בלוטת האצטרובל כבויה. הגוף בחר הישרדות על פני שיקום.</div></div></div><div class="drow r"><div class="t-small rose lab">מה מלטונין עושה בפועל</div><div><div class="t-body-head">הרבה יותר מ"הורמון שינה"</div><div class="t-small det">עוצר הפרשת קורטיזול תחת לחץ · מגן על נוירונים (מאריך חיי תאי עצב ב-25%) · מגביר שנת REM · מסייע בתיקון DNA · נוגד חמצון חזק המאט הזדקנות.</div></div></div><div class="drow r"><div class="t-small rose lab">המשמעות</div><div><div class="t-body-head">גוף בהישרדות לא יכול להיות גם בשיקום</div><div class="t-small det">כשאנחנו חיות בסטרס כרוני, הבלוטה לא מקבלת את החלון הלילי שלה. שנה אחרי שנה של מלטונין נמוך = גוף שמזדקן מהר יותר, מתחדש פחות.</div></div></div></div>
+      <div class="r c-punch"><div class="t-h2">הבלוטה לא יכולה לעבוד כשהגוף בהישרדות.</div><div class="t-h2 rose">רוגע הוא לא פינוק, הוא <span class="mark">תנאי ביולוגי.</span></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content spinl scirc">
+    <div class="sky" aria-hidden="true"><img class="sun" src="../brand/assets/watercolor-sun.png" style="left:82%; top:26%; width:calc(var(--u)*340); --rot:0deg; animation-delay:-7s" alt=""><img class="moon" src="../brand/assets/watercolor-moon.png" style="left:1%; top:56%; width:calc(var(--u)*360); --rot:8deg; animation-delay:-2s" alt=""></div><div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Circadian Rhythm · Melatonin · Alpha Windows</div><div class="t-h1">הזרימה הצרקדית</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">הגוף תכנן שני חלונות ביום, ורובנו לא יודעות</div></div><div class="head-en t-h2en">The Circadian Flow</div></div>
+      <div class="cc"><div class="blocks list"><div class="blk r"><div class="t-body-head">שעון ביולוגי ומלטונין:</div><div class="t-small det">בחושך, האצטרובל מייצרת מלטונין, לא רק "הורמון שינה" אלא <b>האות הביולוגי שמסנכרן כל תא בגוף.</b> מערכת חיסון, תיקון DNA, מחזורים הורמונליים, הזדקנות תאים, הכל מווסת על ידו.</div></div><div class="blk r"><div class="t-body-head">אלפא, הגשר:</div><div class="t-small det">כשמלטונין עולה, גלי הבטא שוקעים ואלפא (8–12 Hz) עולה. <b>המח רגוע אך ער.</b> בתדר הזה המח הרציונלי מרפה, התת-מודע נגיש. אפשר לשתול תבניות חדשות ישירות לשכבה העמוקה.</div></div><div class="blk r"><div class="t-body-head">שני חלונות טבעיים ביום</div><div class="t-small det">בהם המח עובר דרך אלפא/תטא ופתוח לתת-מודע:</div></div></div><div class="vcell"><div class="vsep"><svg viewBox="0 0 20 300" preserveAspectRatio="none"><defs><linearGradient id="vsg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c89e98" stop-opacity="0"/><stop offset=".3" stop-color="#c89e98" stop-opacity=".75"/><stop offset=".55" stop-color="#e2b98c" stop-opacity=".6"/><stop offset=".8" stop-color="#c89e98" stop-opacity=".7"/><stop offset="1" stop-color="#c89e98" stop-opacity="0"/></linearGradient></defs><path d="M10 0 C 13 50, 7 100, 10 150 S 13 250, 10 300" stroke="url(#vsg1)" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="10" cy="150" r="3.4" fill="#e2b98c" opacity=".8"/></svg></div></div><div class="blocks list"><div class="blk r win"><div class="t-body-head"><span class="sym"><img class="ico" src="../brand/assets/watercolor-sun.png" alt=""></span> חלון הבוקר</div><div class="t-small det">~30–45 דקות אחרי יקיצה, לפני שבטא מופעלת. המח עדיין באלפא/תטא, שאריות מלטונין עדיין בדם. <b>הדלת פתוחה.</b></div><div class="t-small rose wsub">מה שתזיני אותו, יצבע את כל היום.</div></div><div class="blk r win"><div class="t-body-head"><span class="sym"><img class="ico" src="../brand/assets/watercolor-moon.png" alt=""></span> חלון הערב</div><div class="t-small det">~90 דקות לפני שינה, כשהאור יורד והבלוטה מגבירה מלטונין. אלפא עולה שוב. <b>החלון השני נפתח.</b></div><div class="t-small rose wsub">התת-מודע יעבד כל הלילה.</div></div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content sbad">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="bd">
+        <div class="bd-t a" style="--i:0"><div class="t-small rose">רגע לפני שמתחילות</div><div class="t-h1">אז בואי נדבר<br>על מה אנחנו<br>עושות סמוך לקימה</div></div>
+        <div class="vcell"><div class="vsep"><svg viewBox="0 0 20 300" preserveAspectRatio="none"><defs><linearGradient id="vsg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c89e98" stop-opacity="0"/><stop offset=".3" stop-color="#c89e98" stop-opacity=".75"/><stop offset=".55" stop-color="#e2b98c" stop-opacity=".6"/><stop offset=".8" stop-color="#c89e98" stop-opacity=".7"/><stop offset="1" stop-color="#c89e98" stop-opacity="0"/></linearGradient></defs><path d="M10 0 C 13 50, 7 100, 10 150 S 13 250, 10 300" stroke="url(#vsg2)" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="10" cy="150" r="3.4" fill="#e2b98c" opacity=".8"/></svg></div></div>
+        <div class="r cloud"><span class="w0">נוטיפיקיישן</span><span class="w1">ווטסאפ</span><span class="w2">חדשות</span><span class="w3">פיד</span><span class="w0">אינסטגרם</span><span class="w1">מיילים</span><span class="w2">פייסבוק</span><span class="w3">הודעות</span><span class="w0">גלילה</span><span class="w1">דאגות</span><span class="w2">השוואות</span><span class="w3">ועוד גלילה</span><span class="w0">כל הבעיות קפצו עלינו</span><span class="w1">לא ישנת מספיק</span><span class="w2">ריצות מחשבות</span><span class="w3">ואנחנו בלופים</span><span class="w0">ועוד...</span><span class="w1">עוד גלילה</span><span class="w2">גלילה ועוד גלילה</span><span class="w3">פיד</span></div>
+      </div>
+      <div class="r bd-punch"><div class="t-h2">ישר קופצות לבטא</div><div class="t-h2 rose">החלון נסגר</div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content sbad">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="bd">
+        <div class="bd-t a" style="--i:0"><div class="t-small rose">ומה עם הערב?</div><div class="t-h1">מה אנחנו עושות<br>לפני השינה</div></div>
+        <div class="vcell"><div class="vsep"><svg viewBox="0 0 20 300" preserveAspectRatio="none"><defs><linearGradient id="vsg3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c89e98" stop-opacity="0"/><stop offset=".3" stop-color="#c89e98" stop-opacity=".75"/><stop offset=".55" stop-color="#e2b98c" stop-opacity=".6"/><stop offset=".8" stop-color="#c89e98" stop-opacity=".7"/><stop offset="1" stop-color="#c89e98" stop-opacity="0"/></linearGradient></defs><path d="M10 0 C 13 50, 7 100, 10 150 S 13 250, 10 300" stroke="url(#vsg3)" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="10" cy="150" r="3.4" fill="#e2b98c" opacity=".8"/></svg></div></div>
+        <div class="r cloud"><span class="w0">תאורה חזקה</span><span class="w1">Netflix</span><span class="w2">עבודה על המחשב</span><span class="w3">ווטסאפ</span><span class="w0">אימיילים</span><span class="w1">אינסטגרם</span><span class="w2">TikTok</span><span class="w3">חדשות</span><span class="w0">טלפון במיטה</span><span class="w1">עוד פרק</span><span class="w2">YouTube</span><span class="w3">רילס</span><span class="w0">גלילה</span><span class="w1">פודקאסט</span><span class="w2">סדרה</span><span class="w3">ספורת ערב</span><span class="w0">לא הייתי עייפה עדיין</span><span class="w1">שיחות טלפון</span><span class="w2">עוד חצי שעה</span><span class="w3">מוזיקה</span><span class="w0">ועוד ועוד</span><span class="w1">Spotify</span><span class="w2">עוד גלילה</span><span class="w3">פיד ועוד פיד</span><span class="w0">עוד קצת</span><span class="w1">פיד</span></div>
+      </div>
+      <div class="r bd-punch"><div class="t-h2">אור כחול עוצר את המלטונין</div><div class="t-h2 rose">החלון נסגר לפני שנפתח</div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--burgundy s-quote ">
+    <div class="fade-bottom"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 words">שני החלונות מבוזבזים,<br>בלי לדעת שהם <span class="mark">בכלל קיימים</span></div>
+      <div class="t-body r q-sub">הגוף תכנן לך שני חלונות ביום לגשת לתת-מודע.<br>רובנו מפספסות אותם, כל יום מחדש.</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content smagic">
+    <div class="sky" aria-hidden="true"><img class="sun" src="../brand/assets/watercolor-sun.png" style="left:40%; top:30%; width:calc(var(--u)*380); --rot:-8deg; animation-delay:-9s" alt=""><img class="moon" src="../brand/assets/watercolor-moon.png" style="left:6%; top:34%; width:calc(var(--u)*380); --rot:6deg; animation-delay:-4s" alt=""></div><div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Alpha Window · Morning & Evening · Practice</div><div class="t-h1">שני חלונות. אותה פרקטיקה.</div></div><div class="head-en t-h2en">Two Windows. One Practice.</div></div>
+      <div class="mg">
+        <div class="mcol a" style="--i:1"><div class="t-small rose">הפרקטיקה</div><div class="prac"><div class="t-h2">כוונה</div><div class="t-h2">הכרת תודה</div><div class="t-h2">ויזואליזציה עם רגש</div></div></div>
+        <div class="vcell"><div class="vsep"><svg viewBox="0 0 20 300" preserveAspectRatio="none"><defs><linearGradient id="vsg4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c89e98" stop-opacity="0"/><stop offset=".3" stop-color="#c89e98" stop-opacity=".75"/><stop offset=".55" stop-color="#e2b98c" stop-opacity=".6"/><stop offset=".8" stop-color="#c89e98" stop-opacity=".7"/><stop offset="1" stop-color="#c89e98" stop-opacity="0"/></linearGradient></defs><path d="M10 0 C 13 50, 7 100, 10 150 S 13 250, 10 300" stroke="url(#vsg4)" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="10" cy="150" r="3.4" fill="#e2b98c" opacity=".8"/></svg></div></div><div class="r mcol"><div class="t-small rose"><img class="ico" src="../brand/assets/watercolor-sun.png" alt=""> · חלון הבוקר</div><div class="t-h2">30–45 דקות<br>אחרי יקיצה</div><div class="rrule"></div><div class="t-body-head">גלי מוח עדיין איטיים</div><div class="t-body-head">האמיגדלה רגועה</div><div class="t-small det">מרכז האיום והדאגה במח, עדיין ישן</div><div class="t-body-head">גישה ישירה לתת-מודע</div></div>
+        <div class="vcell"><div class="vsep"><svg viewBox="0 0 20 300" preserveAspectRatio="none"><defs><linearGradient id="vsg5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c89e98" stop-opacity="0"/><stop offset=".3" stop-color="#c89e98" stop-opacity=".75"/><stop offset=".55" stop-color="#e2b98c" stop-opacity=".6"/><stop offset=".8" stop-color="#c89e98" stop-opacity=".7"/><stop offset="1" stop-color="#c89e98" stop-opacity="0"/></linearGradient></defs><path d="M10 0 C 13 50, 7 100, 10 150 S 13 250, 10 300" stroke="url(#vsg5)" stroke-width="3.2" fill="none" stroke-linecap="round"/><circle cx="10" cy="150" r="3.4" fill="#e2b98c" opacity=".8"/></svg></div></div><div class="r mcol"><div class="t-small rose"><img class="ico" src="../brand/assets/watercolor-moon.png" alt=""> · חלון הערב</div><div class="t-h2">90 דקות<br>לפני שינה</div><div class="rrule"></div><div class="t-body-head">מלטונין בעלייה</div><div class="t-body-head">סוגסטיביליות גבוהה</div><div class="t-small det">המח פתוח לקבל תכנות, כמו היפנוזה קלה</div><div class="t-body-head">עיבוד עמוק כל הלילה</div></div>
+      </div>
+      <div class="t-h2 r c-punch"><span class="rose">הבוקר</span> מכוון 45 דקות. <span class="rose">הערב</span>, שותל 8 שעות של עיבוד טהור.</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section smapsl">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 a" style="--i:0">סיפור ביולוגי אחד שלם</div>
+      <div class="t-body rose a" style="--i:1; margin-top:calc(var(--u)*var(--sp-16))">הכל קשור להכל. הכל משפיע על הכל.</div>
+      <div class="rule a-line" style="--i:2"></div>
+      <div class="drows smap a" style="--i:3"><div class="drow"><div class="t-label lab">Session 1</div><div class="t-body">סימפתטי · פאראסימפתטי · עצב הוואגוס · חיבור · דריכות · כיבוי</div></div><div class="drow"><div class="t-label lab">Session 2</div><div class="t-body">תת מודע · אלפא · תטא · בטא · בטא גבוהה · אמונות מגבילות</div></div><div class="drow"><div class="t-label lab">Session 3</div><div class="t-body">שדה אלקטרומגנטי · RAS · המסנן של המח</div></div><div class="drow"><div class="t-label lab">Session 4</div><div class="t-body">מח לב · מח מעיים · מח · קוהרנטיות מח-לב</div></div><div class="drow"><div class="t-label lab">Session 5</div><div class="t-body">פלצבו · נוצבו · מהי מציאות · אפשרויות קוונטיות</div></div></div>
+      <div class="t-h2 r" style="margin-top:calc(var(--u)*var(--sp-32))">עכשיו שהכל פרוס, נראה איך הכל פועל ביחד.</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--burgundy s-quote ">
+    <div class="fade-bottom"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-h1 words">יש לך את הכלים. המח. הלב. האנטנה.<br><span class="mark">עכשיו נראה איך מחברים הכל.</span></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content conn conn2">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Sessions 1–6 · Cross-System Connections · Part 1</div><div class="t-h1">הקשרים שמחברים הכל</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">שישה שיעורים, רשת אחת שפועלת כל הזמן</div></div><div class="head-en t-h2en">Everything Connects</div></div>
+      <div class="drows"><div class="drow r"><div class="t-small rose lab">S1 · S2 · S4 · S6</div><div><div class="t-body-head">לחץ כרוני לא מקשה על שינוי, הוא סוגר את הדלת הביולוגית</div><div class="t-small det">לחץ כרוני משאיר את מערכת העצבים בדריכות (S1), אמונות נטענו בתטא (S2) → גישה לתטא דורשת קורטיזול נמוך (S6) → קורטיזול יורד רק בקוהרנטיות ורוגע (S4). כדי לשכתב את עצמנו, הגוף חייב להיות ברוגע, זו ביולוגיה, לא עצלות.</div><div class="t-small rose tags">אמונות מגבילות · תטא · קוהרנטיות · קורטיזול · מלטונין</div></div></div><div class="drow r"><div class="t-small rose lab">S1 · S3 · S4 · S5</div><div><div class="t-body-head">נשימות ← שדה לב ← RAS ← שדה קוונטי ← מציאות</div><div class="t-small det">נשיפה ארוכה מפעילה את עצב הוואגוס ומחזירה את הגוף לחיבור (S1), נשימות יוצרות קוהרנטיות (S4) ← שדה הלב גדל ומח עוקב (S3) ← RAS מכוון לחפש הזדמנויות (S3) ← שדה קוונטי רגיש לאות (S5). מה שהלב משדר, הסביבה מגיבה. דומה מושך דומה.</div><div class="t-small rose tags">שדה אלקטרומגנטי · RAS · קוהרנטיות מח-לב · אפשרויות קוונטיות</div></div></div><div class="drow r"><div class="t-small rose lab">S2 · S5</div><div><div class="t-body-head">פלצבו הוא לא חריגה מהמדע, הוא בדיוק המדע</div><div class="t-small det">אמונה מלאה יוצרת תטא (S2) ← התת-מודע פתוח ← הגוף מגיב לתבנית הפנימית כאילו היא חיצונית (S5). כשהציפייה מלאה, הביולוגיה זזת. זו לא מיסטיקה.</div><div class="t-small rose tags">תת מודע · תטא · אמונות · פלצבו · מהי מציאות</div></div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content conn conn2">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">Sessions 1–6 · Cross-System Connections · Part 2</div><div class="t-h1">הקשרים שמחברים הכל</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">המשך, עוד שלושה קשרים שמשנים הכל</div></div><div class="head-en t-h2en">Everything Connects</div></div>
+      <div class="drows"><div class="drow r"><div class="t-small rose lab">S5 · S3 · S2</div><div><div class="t-body-head">בכל רגע, כל הפוטנציאלים קיימים. הציפייה היא זו שמגבשת מציאות</div><div class="t-small det">המציאות קורסת לפוטנציאל שאנחנו מצפות לו (S5) ← ה-RAS מסנן לפי הציפייה (S3) ← אמונות מגבילות מצמצמות את טווח הציפייה (S2). הרחבת הציפייה בכוונה, היא הפעולה הקוונטית הכי ישירה שיש.</div><div class="t-small rose tags">אפשרויות קוונטיות · מהי מציאות · RAS · אמונות מגבילות</div></div></div><div class="drow r"><div class="t-small rose lab">S2 · S5 · S6</div><div><div class="t-body-head">בתדר תטא, אמונות + בלוטה + שדה קוונטי, הכל פתוח בו-זמנית</div><div class="t-small det">תטא הוא התדר שבו אמונות נגישות (S2), הבלוטה פעילה (S6), והשדה הקוונטי רגיש לכוונה (S5). מדיטציה עמוקה עם כוונה ורגש, היא הנוסחה הביולוגית-פיזיקלית המדויקת. לא טכניקה, תדר.</div><div class="t-small rose tags">תטא · תת מודע · שדה קוונטי · בלוטת האצטרובל · מלטונין</div></div></div><div class="drow r"><div class="t-small rose lab">S3 · S4 · S5</div><div><div class="t-body-head">כוונה בלי רגש = מחשבה. רגש בלי קוהרנטיות = רעש</div><div class="t-small det">כשכוונה + רגש גבוה + קוהרנטיות פועלים יחד, ה-RAS מכוון, השדה משדר, המציאות מסתנכרנת (S3+S4+S5). לא חשיבה חיובית, פיזיקה.</div><div class="t-small rose tags">שדה אלקטרומגנטי · RAS · קוהרנטיות מח-לב · אפשרויות קוונטיות</div></div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section ">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-body rose a" style="--i:0">אבל בואו נזכור</div>
+      <div class="t-h1 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-16))">אנחנו לא חיות ב-6 שיעורים.<br>אנחנו חיות במערכת אחת שפועלת. <span class="mark">תמיד.</span></div>
+      <div class="rule a-line" style="--i:2"></div>
+      <div class="t-h2 rose r">הנה כמה תרגולים</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section ">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-label a" style="--i:0">כלים לחיים · Session 6</div>
+      <div class="t-h1 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-16))">ארגז הכלים</div>
+      <div class="t-body rose a" style="--i:2">כלים שתמיד בכיס</div>
+      <div class="rule a-line" style="--i:3"></div>
+      <div class="t-body r" style="line-height:1.7">חלקם דורשים זמן. חלקם לא.<br>כולם מחוברים למה שלמדנו.<br>כולם עובדים, <b>אם עובדים איתם.</b></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content stools">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">On The Go · No Setup Required</div><div class="t-h1">בשוטף</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">בלי לעצור</div></div><div class="head-en t-h2en">In The Flow</div></div>
+      <div class="drows"><div class="drow tl a" style="--i:1"><div class="blk-n">01</div><div class="t-h2">עצירה של 3 שניות</div><div class="r chunks"><div><div class="t-small rose">מתי</div><div class="t-small det">לפני כל תגובה אוטומטית, ויכוח, החלטה, תגובה למסר.</div></div><div><div class="t-small rose">מה עושה</div><div class="t-small det">מפסיקה את הלופ לפני שהוא קורה. <b>מחזירה את הבחירה אליך.</b></div></div><div><div class="t-small rose">על מה לשים לב</div><div class="t-small det">האם מה שעולה זו בחירה, או תוכנית ישנה?</div></div></div></div><div class="drow tl a" style="--i:2"><div class="blk-n">02</div><div class="t-h2">עיגון גוף</div><div class="r chunks"><div><div class="t-small rose">מתי</div><div class="t-small det">כשהראש רץ. כשיש עומס. כשאת מרגישה שאבדת את עצמך.</div></div><div><div class="t-small rose">איך</div><div class="t-small det">יד על הלב ← שלוש נשימות ← <b>שאלי: איפה אני עכשיו?</b></div></div><div><div class="t-small rose">מה עושה</div><div class="t-small det">מחזיר לאלפא תוך 30 שניות. <b>מפעיל פאראסימפתטית.</b></div></div></div></div><div class="drow tl a" style="--i:3"><div class="blk-n">03</div><div class="t-h2">רגע תודה על הדרך</div><div class="r chunks"><div><div class="t-small rose">מתי</div><div class="t-small det">שטיפת פנים. כוס קפה. שמש על הפנים. כל מה שנוגע.</div></div><div><div class="t-small rose">מה עושה</div><div class="t-small det">מכניסה את הלב לקוהרנטיות בלי שום מאמץ. <b>משנה את מה ה-RAS מחפש.</b></div></div><div><div class="t-small rose">על מה לשים לב</div><div class="t-small det">לא רעיון של תודה, <b>תחושה בגוף.</b> ההבדל קריטי.</div></div></div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content stools">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">5–10 Minutes · High Return</div><div class="t-h1">בקטנה</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">5–10 דקות</div></div><div class="head-en t-h2en">Small Investment</div></div>
+      <div class="drows"><div class="drow tl a" style="--i:1"><div class="blk-n">01</div><div class="t-h2">נשימת 4-7-8</div><div class="r chunks"><div><div class="t-small rose">מתי</div><div class="t-small det">לפני שינה. אחרי יום קשה. כשמערכת העצבים בסטרס.</div></div><div><div class="t-small rose">איך</div><div class="t-small det">שאיפה 4 ← עצירה 7 ← נשיפה 8. <b>חזרי 4 פעמים.</b></div></div><div><div class="t-small rose">על מה לשים לב</div><div class="t-small det">הנשיפה הארוכה היא המפתח, <b>היא מה שמפעילה את עצב הוואגוס.</b></div></div></div></div><div class="drow tl a" style="--i:2"><div class="blk-n">02</div><div class="t-h2">שאלת הבוקר</div><div class="r chunks"><div><div class="t-small rose">מתי</div><div class="t-small det">לפני שהיום מתחיל. <b>לפני שהטלפון נפתח.</b></div></div><div><div class="t-small rose">השאלה</div><div class="t-small det">"מה פעולה אחת קטנה שהגרסא העתידית שלי הייתה עושה היום?"</div></div><div><div class="t-small rose">על מה לשים לב</div><div class="t-small det">לא לנתח את התשובה, <b>לפעול לפיה.</b></div></div></div></div><div class="drow tl a" style="--i:3"><div class="blk-n">03</div><div class="t-h2">סריקת גוף + שחרור</div><div class="r chunks"><div><div class="t-small rose">מתי</div><div class="t-small det">רגעים פנויים. אחרי ישיבה ארוכה. לפני שיחה חשובה.</div></div><div><div class="t-small rose">איך</div><div class="t-small det">עצמי עיניים ← סרקי מכף רגל לראש ← <b>איפה יש מתח?</b> → נשמי לתוכו שלוש פעמים ← נשפי ושחררי.</div></div><div><div class="t-small rose">על מה לשים לב</div><div class="t-small det">הגוף לא מחכה שתתפנה אליו, <b>הוא מצטבר.</b> הסריקה נותנת לו איתות ששמת לב.</div></div></div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-content stools">
+    <div class="petals-bottom"></div>
+    <div class="content">
+      <div class="head a" style="--i:0"><div><div class="t-label">10+ Minutes · Deep Work</div><div class="t-h1">משקיעה</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">10 דקות ומעלה</div></div><div class="head-en t-h2en">Going Deep</div></div>
+      <div class="drows"><div class="drow tl a" style="--i:1"><div class="blk-n">01</div><div class="t-h2">מדיטציה לכוונה</div><div class="r chunks"><div><div class="t-small rose">מתי</div><div class="t-small det">בוקר. ערב. כשרוצות לעבוד עם משהו ספציפי.</div></div><div><div class="t-small rose">הנוסחה</div><div class="t-small det">תדר נכון + כוונה ברורה + רגש אמיתי בגוף = <b>שדה קוהרנטי.</b></div></div><div><div class="t-small rose">על מה לשים לב</div><div class="t-small det">כוונה בלי רגש = אפירמציה. <b>כוונה עם רגש = שינוי.</b></div></div></div></div><div class="drow tl a" style="--i:2"><div class="blk-n">02</div><div class="t-h2">מכתב מהעתיד</div><div class="r chunks"><div><div class="t-small rose">מתי</div><div class="t-small det">פעם בשבוע. בנקודות מעבר. כשמרגישות תקועות.</div></div><div><div class="t-small rose">איך</div><div class="t-small det">כתבי מכתב מהגרסא שלך בעוד שנה, לך היום. <b>היא כבר שם.</b></div></div><div><div class="t-small rose">על מה לשים לב</div><div class="t-small det">לא לכתוב מה את רוצה, <b>לכתוב מה היא כבר חיה.</b> ההבדל הוא הכל.</div></div></div></div></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section sfeel">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-label a" style="--i:0">Reality Creation · Emotion · The Field</div>
+      <div class="rule a-line" style="--i:1"></div>
+      <div class="t-h2 r">כשאנחנו יודעות שנדרש שינוי<br>אבל אין לנו תמונה ברורה של מה.</div>
+      <div class="t-body r fl">אנחנו לא תמיד יודעות מה בדיוק אנחנו רוצות.<br>אבל אנחנו <b>תמיד</b> יודעות <span class="mark">איך אנחנו רוצות להרגיש.</span><br>אנחנו נעבוד עם זה.</div>
+      <div class="t-h2 rose r fl emph">הרגש הוא הדלק<span class='sep'>·</span>הוא מהדהד החוצה<span class='sep'>·</span>הוא השדה שאת משדרת</div>
+      <div class="t-body r fl">הגוף מגיב לרגש, לא לתמונה.<br><b>החלק הכי משמעותי ביצירת מציאות הוא הרגש שאת יוצרת עכשיו.</b></div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section sgate">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-display a" style="--i:0; font-family:var(--font-head-he); font-weight:var(--weight-head-he)">מהראש לגוף</div>
+      <div class="rule a-line" style="--i:1"></div>
+      <div class="t-h2 a" style="--i:2">עד עכשיו הבנו. עכשיו הגוף.</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section kavanah smed">
+    <svg width="0" height="0" style="position:absolute"><filter id="ripple2" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.004 0.09" numOctaves="2" seed="3" result="n"><animate attributeName="baseFrequency" dur="7s" values="0.003 0.07;0.006 0.12;0.003 0.07" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="26"/></filter></svg>
+    <div class="sea"><div class="sea-sky"></div><div class="sea-water" style="filter:url(#ripple2)"></div><div class="sea-warm"></div><div class="sea-sun"></div><div class="sea-shimmer"></div></div>
+    <div class="content center">
+      <div class="t-h1 a" style="--i:0">מדיטציה אחורנה לסיום</div>
+      <div class="t-h2 r" style="margin-top:calc(var(--u)*var(--sp-32))">עצמי עיניים.</div>
+      <div class="t-h2 r"><b>מה הרגשת כשנכנסת? מה את מרגישה עכשיו?</b></div>
+      <div class="t-h2 rose r">הגוף קלט יותר ממה שהמח רשם.</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide s-section wk6s">
+    <div class="halo"></div><div class="petals-bottom"></div>
+    <div class="content center">
+      <div class="t-label a" style="--i:0">This Week's Practice</div>
+      <div class="t-h1 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-16))">מכאן זה שלך</div>
+      <div class="rule a-line" style="--i:2"></div>
+      <div class="wk6 a" style="--i:3">
+        <div><span class="t-body-head rose">בשוטף</span><span class="t-body">עצירה של 3 שניות, כמה פעמים ביום</span></div>
+        <div><span class="t-body-head rose">בקטנה</span><span class="t-body">5–10 דקות, באחד משני החלונות</span></div>
+        <div><span class="t-body-head rose">משקיעה</span><span class="t-body">פעם בשבוע, מדיטציה לכוונה</span></div>
+      </div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+  <section class="slide slide--yellow s-close">
+    <div class="petals-top"></div>
+    <div class="content center">
+      <div class="t-label a" style="--i:0">Session 6 · The Inner Shift · Complete</div>
+      <div class="t-h1 r" style="margin-top:calc(var(--u)*var(--sp-32))">את לא יוצאת מכאן עם ידע בלבד.<br><span class="rose">את יוצאת עם שפה חדשה.</span></div>
+      <div class="t-body r" style="margin-top:calc(var(--u)*var(--sp-32))" dir="ltr">The Inner Shift, last session, it was a pleasure</div>
+    </div>
+    <div class="sig">Inner Shift · Noa Eiland</div>
+  </section>
+
+</main>
+<script src="../brand/deck.js"></script>
+</body>
+</html>

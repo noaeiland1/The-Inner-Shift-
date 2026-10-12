@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Inner Shift · מפגש 1 · מערכת ההפעלה</title>
+<title>The Inner Shift · מפגש 2 · מערכת ההפעלה</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Fraunces:opsz,wght@9..144,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../brand/tokens.css">
@@ -57,6 +57,25 @@
   .smanage .copy { max-width: none; flex: 1; }
   .smanage .ring { width: calc(var(--u) * 320); height: calc(var(--u) * 320); }
   .s-number.dense .copy { max-width: calc(var(--u) * 1040); }
+  .recap .blocks.list { gap: calc(var(--u) * var(--sp-24)); }
+
+  /* the sea at sunset, gently alive (as in sessions 3 to 5) */
+  .kavanah { background: #fbf6ef; }
+  .sea { inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .sea > div { position: absolute; left: -3%; right: -3%; background: url(../brand/assets/sea-sunset-horizon.png) center / 106% 100% no-repeat; }
+  .sea-sky { top: 38%; height: 50%; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); animation: sea-drift 26s ease-in-out infinite alternate; }
+  .sea-water { top: 38%; height: 50%; clip-path: inset(57% 0 0 0); -webkit-mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent); animation: sea-swell 5s ease-in-out infinite alternate; }
+  .sea-sun { top: calc(38% + 50% * .47); left: 47.6% !important; right: auto !important; width: 18%; aspect-ratio: 1; translate: -50% -50%; background: radial-gradient(circle, rgba(255,226,140,.95), rgba(255,226,140,0) 65%) !important; animation: sea-sun 8s ease-in-out infinite; mix-blend-mode: screen; }
+  .sea-shimmer { top: 66.5%; left: 47.6% !important; right: auto !important; width: 26%; height: 15%; translate: -50% 0; background: repeating-linear-gradient(to bottom, rgba(255,246,220,0) 0 calc(var(--u) * 7), rgba(255,246,222,.9) calc(var(--u) * 7) calc(var(--u) * 10)) !important; background-size: 100% calc(var(--u) * 34) !important; -webkit-mask-image: radial-gradient(ellipse 50% 60% at 50% 20%, #000 0%, rgba(0,0,0,.6) 45%, transparent 75%); mask-image: radial-gradient(ellipse 50% 60% at 50% 20%, #000 0%, rgba(0,0,0,.6) 45%, transparent 75%); filter: blur(calc(var(--u) * 1.2)); mix-blend-mode: screen; animation: sea-glint 3.2s linear infinite, sea-flicker 2.1s ease-in-out infinite; }
+  .sea-warm { top: calc(38% + 50% * .47); left: 47.6% !important; right: auto !important; width: 70%; aspect-ratio: 1.6; translate: -50% -50%; border-radius: 50%; background: radial-gradient(ellipse, rgba(255,214,150,.55) 0%, rgba(250,190,160,.3) 35%, rgba(250,200,170,0) 70%) !important; mix-blend-mode: soft-light; filter: blur(calc(var(--u) * 20)); animation: sea-warm 12s ease-in-out infinite; }
+  @keyframes sea-glint { to { background-position: 0 calc(var(--u) * 34); } }
+  @keyframes sea-flicker { 0%, 100% { opacity: .65; } 50% { opacity: 1; } }
+  @keyframes sea-drift { from { transform: translateX(-2.2%); } to { transform: translateX(2.2%); } }
+  @keyframes sea-swell { from { transform: translateX(2.5%) translateY(0) scaleY(1); } to { transform: translateX(-2.5%) translateY(1.5%) scaleY(1.08); } }
+  @keyframes sea-sun { 0%, 100% { transform: scale(.75); opacity: .6; } 50% { transform: scale(1.7); opacity: 1; } }
+  @keyframes sea-warm { 0%, 100% { transform: scale(.4); opacity: .2; } 50% { transform: scale(1.6); opacity: 1; } }
+  .kavanah .content { justify-content: flex-start; padding-top: calc(var(--u) * 150); }
+  @media (prefers-reduced-motion: reduce) { .sea > div { animation: none !important; } }
 </style>
 </head>
 <body>
@@ -65,7 +84,7 @@
   <section class="slide slide--yellow s-open">
     <div class="petals-top"></div>
     <div class="content center">
-      <div class="pill a" style="--i:0"><span class="t-small">מפגש ראשון</span><span class="t-label">Session 01</span></div>
+      <div class="pill a" style="--i:0"><span class="t-small">מפגש שני</span><span class="t-label">Session 02</span></div>
       <div class="t-h2 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-24))">להבין את מערכת ההפעלה שלנו</div>
       <div class="t-display">The <span class="rose">Inner</span> Shift</div>
       <div class="rule a-line" style="--i:6"></div>
@@ -77,108 +96,45 @@
   <section class="slide s-section">
     <div class="halo"></div><div class="petals-bottom"></div>
     <div class="content center">
-      <div class="t-label a" style="--i:0">The Inner Shift · Session 1 of 5</div>
-      <div class="t-h1 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-16))">איזה כיף שאתן פה</div>
+      <div class="t-label a" style="--i:0">The Inner Shift · Session 2 of 6</div>
+      <div class="t-h1 a" style="--i:1; margin-top:calc(var(--u)*var(--sp-16))">כיף להיפגש שוב</div>
       <div class="rule a-line" style="--i:3"></div>
-      <div class="t-body a" style="--i:4">נעים מאד, אני נועה איילנד</div>
-      <div class="t-label a" style="--i:5; margin-top:calc(var(--u)*var(--sp-16))">Noa Eiland</div>
+      <div class="t-label a" style="--i:4">Noa Eiland</div>
     </div>
   </section>
 
-  <section class="slide s-image dense about">
+  <section class="slide s-content recap">
     <div class="petals-bottom"></div>
     <div class="content">
-      <div class="text">
-        <div class="t-h1 a" style="--i:1">אם עוד לא הכרנו, אני נועה איילנד.</div>
-        <div class="t-body a" style="--i:2">במשך 17 שנה הובלתי, הקמתי, וניהלתי קבוצות בחברות גלובליות.<br>הגעתי לשם מעולם ההנדסה, טיפחתי קריירה מפוארת.<br>הייתי במשרת החלומות שלי, מבחוץ הכל היה נראה מעולה.</div>
-        <div class="t-body-head a" style="--i:3">אבל מבפנים זה הרגיש אחרת.</div>
-        <div class="t-body a" style="--i:4">הרגשתי שאני בתפעול אינסופי של משימות לאורך כל היום, ותוהה מתי יגיע הזמן שלי. בסוף היום הייתי מותשת, וחסרת סבלנות.<br>הרגשתי שאני לא ממצה את עצמי וחייתי בתחושת חוסר סיפוק.<br>לא פעם הייתה לי המחשבה שהיה הרבה יותר קל אם פשוט הייתי מרוצה ממה שיש לי - היה לי ברור שיש לי המון.<br>אבל אני לא חיפשתי עוד, חיפשתי משהו אחר, חיפשתי לקום בתשוקה לעשייה שלי.</div>
-        <div class="t-body-head a" style="--i:5">וזה כבר לא היה שם.<br>אבל לא ידעתי איפה זה כן.</div>
-        <div class="creds a" style="--i:6">
-          <div class="t-body-head rose">לאורך כל הדרך למדתי:</div>
-          <div class="blocks list creds-list">
-            <div class="blk"><div class="t-body">הוראת יוגה ומדיטציה</div></div>
-            <div class="blk"><div class="t-body">התמחות ביוגה נשית</div></div>
-            <div class="blk"><div class="t-body">תזונה מבוססת גישת הרמב״ם</div></div>
-            <div class="blk"><div class="t-body">NLP</div></div>
-            <div class="blk wide"><div class="t-body">Health Coach מטעם <bdi dir="ltr">Institute for Integrative Nutrition (IIN)</bdi>, ניו יורק</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="frame portrait a" style="--i:0"><div class="photo"><img src="../brand/assets/noa-portrait.png" alt="נועה איילנד"></div></div>
+      <div class="head a" style="--i:0"><div><div class="t-label">Recap · The Nervous System</div><div class="t-h1">מה למדנו בפגישה הקודמת</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">חזרה קצרה לפני שממשיכים</div></div><div class="head-en t-h2en">What We Covered</div></div>
+      <div class="blocks list"><div class="blk r"><div class="t-body"><span class="mark soft">הגוף מחליט אם בטוח</span> לפני שהראש מספיק לחשוב.</div></div><div class="blk r"><div class="t-body"><span class="mark soft">כשהאזעקה לא נכבית,</span> הגוף משלם מחיר. בשינה, בעיכול, בחיסון.</div></div><div class="blk r"><div class="t-body"><span class="mark soft">שלושה מצבים: חיבור, דריכות, כיבוי.</span> ואנחנו נעות ביניהם כל הזמן.</div></div><div class="blk r"><div class="t-body"><span class="mark soft">מתוך אזעקה אי אפשר למצוא את הדבר הבא.</span> רק לברוח או לקפוא.</div></div><div class="blk r"><div class="t-body"><span class="mark soft">חוסן זה לא להישאר רגועה.</span> זה לדעת לחזור.</div></div></div>
     </div>
     <div class="sig">Inner Shift · Noa Eiland</div>
   </section>
 
-  <section class="slide s-content dense">
+  <section class="slide s-journey focus-now">
     <div class="petals-bottom"></div>
     <div class="content">
-      <div class="head a" style="--i:0"><div><div class="t-label">About This Course</div><div class="t-h1">על הקורס הזה</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">מה נלמד, ולמה זה חשוב</div></div><div class="head-en t-h2en">The Foundation</div></div>
-      <div class="blocks">
-        <div class="blk r"><div class="t-h2">מה שלא רואים מבחוץ</div><div class="t-body">הצלחת בכל מה שהצבת לעצמך. ובכל זאת משהו חסר. סביב גיל 40 קורים שני דברים יחד. העומס של שנים מתחיל לרדת, ובראש מתפנה מקום לשאלה מי אני ומה אני רוצה. ובמקביל האסטרוגן משתנה, ואיתו הדופמין והסרוטונין. מה שנתן סיפוק שנים, פתאום משאיר אותך אדישה.</div><div class="t-small credit">35 שנה החיים של נשים השתפרו בכל מדד חיצוני, והאושר שהן מדווחות עליו ירד · <bdi dir="ltr">Stevenson &amp; Wolfers, 2009</bdi></div></div>
-        <div class="blk r"><div class="t-h2">למה זה קורה</div><div class="t-body">עד גיל 35, 95% ממי שאנחנו הם הרגלים, תגובות ואמונות שהמח כבר יודע בעל פה. זה אומר שרוב החיים שלנו רצים על תוכנית שנכתבה מזמן. אנחנו מרגישות שאנחנו בוחרות, אבל בעיקר חוזרות.</div><div class="t-small credit">ד״ר ג׳ו דיספנזה · 43% מהפעולות היומיומיות הן הרגל · <bdi dir="ltr">Wood, 2002</bdi></div></div>
-        <div class="blk r"><div class="t-h2">מה נעשה כאן</div><div class="t-body">נלמד לעבוד עם המערכת שפועלת גם בלי שנשים לב. זה כוח עצום. נכיר את מערכת העצבים, את התת מודע והאמונות שבו, את הקשר בין המח ללב, תדרים ועוד. הכל בצורה פשוטה ונגישה. ובין מפגש למפגש, תרגול. בלעדיו זו שעת העשרה בשבוע. איתו, השינוי נכנס למערכת.</div><div class="t-small credit">8 שבועות של תרגול שינו את מבנה המח · <bdi dir="ltr">Hölzel</bdi>, הרווארד 2011</div></div>
-      </div>
-    </div>
-    <div class="sig">Inner Shift · Noa Eiland</div>
-  </section>
-
-  <section class="slide s-steps sstruct" data-steps="4">
-    <div class="petals-bottom"></div>
-    <div class="content">
-      <div class="head a" style="--i:0">
-        <div><div class="t-label">How It Works</div><div class="t-h1">מבנה הקורס</div></div>
-        <div class="head-en t-h2en">The Structure</div>
-      </div>
-      <div class="steps">
-        <div class="step r"><div class="dot t-num">1</div><div class="t-h2">חומר שבועי</div><div class="t-body">כל שבוע נפתח חומר חדש. כל שבוע נבנה על הקודם, כך שהתמונה מתמלאת לאורך כל הדרך.</div></div>
-        <div class="step r"><div class="dot t-num">2</div><div class="t-h2">מפגש קבוצתי</div><div class="t-body">פעם בשבוע, בין שעה לשעה ורבע. כולל תרגול משותף.</div></div>
-        <div class="step r"><div class="dot t-num">3</div><div class="t-h2">תרגול בבית</div><div class="t-body">בין מפגש למפגש. כאן ההבנה הופכת להרגל חדש.</div></div>
-        <div class="step r"><div class="dot t-num">4</div><div class="t-h2">מפגשים אישיים</div><div class="t-body">שלושה מפגשים אישיים איתי לאורך הקורס.</div></div>
-      </div>
-    </div>
-    <div class="sig">Inner Shift · Noa Eiland</div>
-  </section>
-
-  <section class="slide s-content">
-    <div class="petals-bottom"></div>
-    <div class="content">
-      <div class="head a" style="--i:0"><div><div class="t-h1">להבין את מערכת ההפעלה שלך ,</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">מתוך הבנה, לא מאמץ</div></div><div class="head-en t-h2en"></div></div>
-      <div class="t-h2 a" style="--i:1">ולדעת איך לעבוד איתה, בשביל:</div>
-      <div class="blocks list">
-        <div class="blk a" style="--i:2"><div class="t-body">לפרוץ את הגבולות של עצמך</div></div>
-        <div class="blk a" style="--i:3"><div class="t-body">לעצור לופים אינסופיים</div></div>
-        <div class="blk a" style="--i:4"><div class="t-body">להחזיר תחושת שליטה אליך</div></div>
-        <div class="blk a" style="--i:5"><div class="t-body">לזהות את הדפוס בזמן אמת, לא שעה אחרי</div></div>
-        <div class="blk a" style="--i:6"><div class="t-body">להפסיק להילחם בעצמך ולהתחיל לעבוד איתך</div></div>
-        <div class="blk a" style="--i:7"><div class="t-body">למצוא את העוגן הפנימי שלך בעולם לא רגוע</div></div>
-      </div>
-    </div>
-    <div class="sig">Inner Shift · Noa Eiland</div>
-  </section>
-
-  <section class="slide s-journey">
-    <div class="petals-bottom"></div>
-    <div class="content">
-      <div class="head a" style="--i:0"><div><div class="t-label">The Journey · Session Map</div><div class="t-h1">איפה אנחנו ולאן הולכות</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">5 מפגשים · המסע המלא</div></div><div class="head-en t-h2en">5 Sessions</div></div>
+      <div class="head a" style="--i:0"><div><div class="t-label">The Journey · Session Map</div><div class="t-h1">איפה אנחנו במסע</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">פגישה אחת מאחורינו · הנה הפגישה השנייה</div></div><div class="head-en t-h2en">Where We Are</div></div>
       <div class="journey">
-        <svg class="path" viewBox="0 0 1000 400" preserveAspectRatio="none"><path class="path-line" pathLength="1" d="M 900 150 C 830 150, 770 250, 700 250 S 570 150, 500 150 S 370 250, 300 250 S 170 150, 100 150"/></svg>
-        <div class="stop is-now a" style="--i:1; left:90%; top:37.5%"><div class="node t-num">1</div><div class="now t-small">מפגש ראשון · היום</div><div class="t-body-head">המח והתת-מודע</div><div class="t-small">מה מפעיל אותנו?</div></div>
-        <div class="stop a" style="--i:2; left:70%; top:62.5%"><div class="node t-num">2</div><div class="t-small rose">מפגש שני</div><div class="t-body-head">שלושת המוחות</div><div class="t-small">ראש · לב · בטן</div></div>
-        <div class="stop a" style="--i:3; left:50%; top:37.5%"><div class="node t-num">3</div><div class="t-small rose">מפגש שלישי</div><div class="t-body-head">קוהרנטיות לב-מח</div><div class="t-small">כשהם מסונכרנים</div></div>
-        <div class="stop a" style="--i:4; left:30%; top:62.5%"><div class="node t-num">4</div><div class="t-small rose">מפגש רביעי</div><div class="t-body-head">יצירת מציאות</div><div class="t-small">קוונטום · כוונה · רגש</div></div>
-        <div class="stop a" style="--i:5; left:10%; top:37.5%"><div class="node t-num">5</div><div class="t-small rose">מפגש חמישי</div><div class="t-body-head">אינטגרציה</div><div class="t-small">בלוטת האצטרובל · זרימה ביולוגית · אינטגרציה</div></div>
+        <svg class="path" viewBox="0 0 1000 400" preserveAspectRatio="none"><path class="path-line" d="M 930 250 C 870 250, 820 150, 760 150 S 650 250, 590 250 S 470 150, 410 150 S 300 250, 240 250 S 130 150, 70 150"/><path class="path-now" pathLength="1" d="M 930 250 C 870 250, 820 150, 760 150"/></svg>
+        <div class="stop is-done a" style="--i:1; left:93%; top:62.5%; width:calc(var(--u)*270)"><div class="node t-num">1</div><div class="t-small rose">מפגש 1</div><div class="t-body-head">מערכת העצבים</div><div class="t-small">לפני שמשנים משהו</div></div>
+        <div class="stop is-now a" style="--i:2; left:76%; top:37.5%; width:calc(var(--u)*270)"><div class="node t-num">2</div><div class="now t-small">מפגש 2 · היום</div><div class="t-body-head">מערכת ההפעלה</div><div class="t-small">הסיפור שמנהל אותך</div></div>
+        <div class="stop a" style="--i:3; left:59%; top:62.5%; width:calc(var(--u)*270)"><div class="node t-num">3</div><div class="t-small rose">מפגש 3</div><div class="t-body-head">השדה שמסביבי</div><div class="t-small">מה שבתוכי ומה שסביבי</div></div>
+        <div class="stop a" style="--i:4; left:41%; top:37.5%; width:calc(var(--u)*270)"><div class="node t-num">4</div><div class="t-small rose">מפגש 4</div><div class="t-body-head">שלושת המוחות</div><div class="t-small">ראש · לב · בטן</div></div>
+        <div class="stop a" style="--i:5; left:24%; top:62.5%; width:calc(var(--u)*270)"><div class="node t-num">5</div><div class="t-small rose">מפגש 5</div><div class="t-body-head">יצירת מציאות</div><div class="t-small">מה אני באמת רואה?</div></div>
+        <div class="stop a" style="--i:6; left:7%; top:37.5%; width:calc(var(--u)*270)"><div class="node t-num">6</div><div class="t-small rose">מפגש 6</div><div class="t-body-head">אינטגרציה</div><div class="t-small">הגרסה החדשה שלי</div></div>
       </div>
     </div>
     <div class="sig">Inner Shift · Noa Eiland</div>
   </section>
 
-  <section class="slide s-section">
-    <div class="breath-blob"></div><div class="petals-bottom"></div>
+  <section class="slide s-section kavanah ">
+    <svg width="0" height="0" style="position:absolute"><filter id="ripple" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.004 0.09" numOctaves="2" seed="3" result="n"><animate attributeName="baseFrequency" dur="7s" values="0.003 0.07;0.006 0.12;0.003 0.07" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="26"/></filter></svg>
+    <div class="sea"><div class="sea-sky"></div><div class="sea-water" style="filter:url(#ripple)"></div><div class="sea-warm"></div><div class="sea-sun"></div><div class="sea-shimmer"></div></div>
     <div class="content center">
-      <div class="t-h2 a" style="--i:1">רגע של התכווננות</div>
-      <div class="cue t-h1 a" style="--i:2"><span class="cue-in">שאיפה</span><span class="cue-out">נשיפה</span></div>
-      <div class="t-body a" style="--i:3; margin-top:calc(var(--u)*var(--sp-24))">עצמי עיניים · שימי את היום בצד · הגיעי</div>
+      <div class="t-h1 a" style="--i:0">רגע של התכווננות</div>
+      <div class="t-body a" style="--i:1; margin-top:calc(var(--u)*var(--sp-24))">עצמי עיניים · שימי את היום בצד · הגיעי</div>
     </div>
     <div class="sig">Inner Shift · Noa Eiland</div>
   </section>
@@ -456,7 +412,7 @@
   <section class="slide s-content">
     <div class="petals-bottom"></div>
     <div class="content">
-      <div class="head a" style="--i:0"><div><div class="t-label">Session 1 · Summary</div><div class="t-h1">מה למדנו היום</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">תובנות מפגש 1</div></div><div class="head-en t-h2en">What We Learned Today</div></div>
+      <div class="head a" style="--i:0"><div><div class="t-label">Session 2 · Summary</div><div class="t-h1">מה למדנו היום</div><div class="t-small rose" style="margin-top:calc(var(--u)*var(--sp-8))">תובנות מפגש 2</div></div><div class="head-en t-h2en">What We Learned Today</div></div>
       <div class="blocks list">
         <div class="blk a" style="--i:1"><div class="t-body">הגוף הוא מערכת שקולטת ומשדרת גלים כל הזמן.</div></div>
         <div class="blk a" style="--i:2"><div class="t-body">תדר המוח קובע מה אפשר לקלוט ולשנות. בבטא, המוח סגור ללמידה עמוקה. באלפא ותטא, הדלת פתוחה.</div></div>
@@ -470,28 +426,22 @@
     <div class="sig">Inner Shift · Noa Eiland</div>
   </section>
 
-  <section class="slide s-section">
-    <div class="breath-blob"></div><div class="petals-bottom"></div>
+  <section class="slide s-section sgate">
+    <div class="halo"></div><div class="petals-bottom"></div>
     <div class="content center">
-      <div class="t-h1 en a" style="--i:1">Breathe in.</div>
-      <div class="cue t-h1 a" style="--i:2"><span class="cue-in">שאיפה</span><span class="cue-out">נשיפה</span></div>
-      <div class="t-body a" style="--i:3; margin-top:calc(var(--u)*var(--sp-24))">Notice · Don't analyze · לשים לב, לא לנתח</div>
+      <div class="t-display a" style="--i:0; font-family:var(--font-head-he); font-weight:var(--weight-head-he)">מהראש לגוף</div>
+      <div class="rule a-line" style="--i:1"></div>
+      <div class="t-h2 a" style="--i:2">עד עכשיו הבנו. עכשיו הגוף.</div>
     </div>
     <div class="sig">Inner Shift · Noa Eiland</div>
   </section>
 
-  <section class="slide s-journey">
-    <div class="petals-bottom"></div>
-    <div class="content">
-      <div class="head a" style="--i:0"><div><div class="t-label">The Journey · המסע</div><div class="t-h1">איפה אנחנו ולאן הולכות</div></div><div class="head-en t-h2en">5 Sessions · 5 מפגשים</div></div>
-      <div class="journey">
-        <svg class="path" viewBox="0 0 1000 400" preserveAspectRatio="none"><path class="path-line" pathLength="1" d="M 900 150 C 830 150, 770 250, 700 250 S 570 150, 500 150 S 370 250, 300 250 S 170 150, 100 150"/></svg>
-        <div class="stop is-now a" style="--i:1; left:90%; top:37.5%"><div class="node t-num">1</div><div class="now t-small">מפגש ראשון · היום</div><div class="t-body-head">המח והתת-מודע</div><div class="t-small">מה מפעיל אותנו?</div></div>
-        <div class="stop a" style="--i:2; left:70%; top:62.5%"><div class="node t-num">2</div><div class="t-small rose">מפגש שני</div><div class="t-body-head">שלושת המוחות</div><div class="t-small">ראש · לב · בטן</div></div>
-        <div class="stop a" style="--i:3; left:50%; top:37.5%"><div class="node t-num">3</div><div class="t-small rose">מפגש שלישי</div><div class="t-body-head">קוהרנטיות לב-מח</div><div class="t-small">כשהם מסונכרנים</div></div>
-        <div class="stop a" style="--i:4; left:30%; top:62.5%"><div class="node t-num">4</div><div class="t-small rose">מפגש רביעי</div><div class="t-body-head">יצירת מציאות</div><div class="t-small">קוונטום · כוונה · רגש</div></div>
-        <div class="stop a" style="--i:5; left:10%; top:37.5%"><div class="node t-num">5</div><div class="t-small rose">מפגש חמישי</div><div class="t-body-head">אינטגרציה</div><div class="t-small">בלוטת האצטרובל · זרימה ביולוגית · אינטגרציה</div></div>
-      </div>
+  <section class="slide s-section kavanah ">
+    <svg width="0" height="0" style="position:absolute"><filter id="ripple2" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.004 0.09" numOctaves="2" seed="3" result="n"><animate attributeName="baseFrequency" dur="7s" values="0.003 0.07;0.006 0.12;0.003 0.07" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" in2="n" scale="26"/></filter></svg>
+    <div class="sea"><div class="sea-sky"></div><div class="sea-water" style="filter:url(#ripple2)"></div><div class="sea-warm"></div><div class="sea-sun"></div><div class="sea-shimmer"></div></div>
+    <div class="content center">
+      <div class="t-h1 en a" style="--i:0">Breathe in.</div>
+      <div class="t-body a" style="--i:1; margin-top:calc(var(--u)*var(--sp-24))">Notice · Don't analyze · לשים לב, לא לנתח</div>
     </div>
     <div class="sig">Inner Shift · Noa Eiland</div>
   </section>
@@ -499,7 +449,7 @@
   <section class="slide s-content">
     <div class="petals-bottom"></div>
     <div class="content">
-      <div class="head a" style="--i:0"><div><div class="t-label">This Week's Practice</div><div class="t-h1">התרגול השבועי</div></div><div class="head-en t-h2en">Between Session 1 and Session 2</div></div>
+      <div class="head a" style="--i:0"><div><div class="t-label">This Week's Practice</div><div class="t-h1">מכאן זה שלך</div></div><div class="head-en t-h2en">Between Session 2 and Session 3</div></div>
       <div class="t-h2 a" style="--i:1">כשעולה האמונה שזיהית היום, עצרי. ורשמי:</div>
       <div class="blocks">
         <div class="blk num r"><span class="blk-num">1.</span><div class="t-h2">מה קרה</div><div class="t-body">באיזו סיטואציה היא הופיעה</div></div>
@@ -518,7 +468,7 @@
       <div class="t-display a" style="--i:0; font-family:var(--font-head-he); font-weight:var(--weight-head-he)">תודה</div>
       <div class="t-body a" style="--i:1">על ההקשבה<br>על הזמן<br>על הפתיחות ללמוד משהו חדש</div>
       <div class="t-h2 a" style="--i:2">נפגש בשבוע הבא</div>
-      <div class="t-label a" style="--i:3; margin-top:calc(var(--u)*var(--sp-16))">The Inner Shift · Session 1 of 5</div>
+      <div class="t-label a" style="--i:3; margin-top:calc(var(--u)*var(--sp-16))">The Inner Shift · Session 2 of 6</div>
     </div>
     <div class="sig">Inner Shift · Noa Eiland</div>
   </section>

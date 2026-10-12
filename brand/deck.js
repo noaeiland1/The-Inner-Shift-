@@ -17,6 +17,17 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
+  // a soft brush texture any line can use (CSS: filter: url(#brush-stroke)): uneven edges, a dry grain, slightly soft
+  const fx = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  fx.setAttribute('width', '0'); fx.setAttribute('height', '0'); fx.setAttribute('aria-hidden', 'true'); fx.style.position = 'absolute';
+  fx.innerHTML = '<filter id="brush-stroke" x="-5%" y="-25%" width="110%" height="150%">'
+    + '<feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="warp"/>'
+    + '<feDisplacementMap in="SourceGraphic" in2="warp" scale="4" xChannelSelector="R" yChannelSelector="G" result="w"/>'
+    + '<feTurbulence type="fractalNoise" baseFrequency="0.45 0.07" numOctaves="2" seed="3" result="grain"/>'
+    + '<feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.8 1.2" result="mask"/>'
+    + '<feComposite in="w" in2="mask" operator="in" result="dry"/><feGaussianBlur in="dry" stdDeviation=".8"/></filter>';
+  document.body.append(fx);
+
   // central sentence: split into words that surface one at a time; the marker stays one unit
   document.querySelectorAll('.words').forEach(el => {
     let n = 0;

@@ -247,8 +247,9 @@
 /* 9 · journey: a soft curved path that draws itself */
 .journey { position: relative; flex: 1; }
 .journey svg.path { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.journey .path-line { fill: none; stroke: rgba(200,158,152,.55); stroke-width: 2.5; vector-effect: non-scaling-stroke; stroke-linecap: round; }
-.journey .path-now { fill: none; stroke: var(--rose); stroke-width: 3.5; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.journey .path-line { fill: none; stroke: rgba(200,158,152,.45); stroke-width: 7; stroke-linecap: round; }   /* no non-scaling stroke: the line swells a little along the curve, like a brush */
+.journey .path-now { fill: none; stroke: rgba(150,95,88,.62); stroke-width: 7.5; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.journey svg.path { filter: url(#brush-stroke); }
 .play .journey .path-now { animation: draw 2200ms var(--ease) 500ms forwards; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 .stop { position: absolute; translate: -50% calc(var(--u) * -42); display: flex; flex-direction: column; align-items: center; text-align: center; gap: calc(var(--u) * var(--sp-16)); width: calc(var(--u) * 300); }
@@ -257,6 +258,12 @@
 .stop.is-now .node::after { content: ''; position: absolute; inset: calc(var(--u) * -18); border-radius: 50%; border: 2px solid rgba(200,158,152,.5); animation: halo 3.2s ease-out infinite; }
 @keyframes halo { from { transform: scale(.8); opacity: .9; } to { transform: scale(1.35); opacity: 0; } }
 .stop .now { background: var(--yellow); border-radius: 999px; padding: calc(var(--u) * var(--sp-4)) calc(var(--u) * var(--sp-24)); }
+/* the line runs under the stops: the node stays solid, only what is not today steps back to 30% */
+.stop { z-index: 1; }
+.stop.is-done .node { background: var(--pink-light); border-color: var(--pink-light); color: var(--white); }
+.focus-now .stop:not(.is-now) > :not(.node) { opacity: .3; }
+.focus-now .stop:not(.is-now) .node { color: rgba(74,63,56,.35); border-color: rgba(200,158,152,.45); box-shadow: none; }
+.focus-now .stop.is-done:not(.is-now) .node { background: #ecdcd8; border-color: #ecdcd8; color: var(--white); }
 
 /* 10 · closing */
 .s-close .t-h2 { margin-top: calc(var(--u) * var(--sp-24)); color: var(--rose); }

@@ -1,0 +1,7 @@
+nervous-system-diagram.svg
+Source: https://commons.wikimedia.org/wiki/File:Nervous_system_diagram_unlabeled.svg
+Authors: Medium69, Jmarchn (Wikimedia Commons)
+License: CC BY-SA 4.0 · https://creativecommons.org/licenses/by-sa/4.0/
+Used in the Inner Shift decks recolored to the brand palette, with the vertebra numbers removed
+and organs, a sympathetic chain and highlight states added (brand/tools/nsfig.py).
+The adapted illustration is shared under the same license (CC BY-SA 4.0).
