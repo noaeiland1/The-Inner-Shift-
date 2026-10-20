@@ -240,6 +240,9 @@
 .ring .track-c { fill: none; stroke: rgba(200,158,152,.25); stroke-width: 6; }
 .ring .fill-c { fill: none; stroke: var(--rose); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 100 100; stroke-dashoffset: 100; }
 .play .ring .fill-c { animation: ring-fill var(--count-up) var(--ease) 400ms forwards; }
+/* a ring inside a click-revealed item fills on its click, not on slide entry */
+.play .r .ring .fill-c { animation: none; }
+.play .r.shown .ring .fill-c { animation: ring-fill var(--count-up) var(--ease) 400ms forwards; }
 @keyframes ring-fill { to { stroke-dashoffset: calc(100 - var(--val)); } }
 .ring .t-display { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--rose); }
 .s-number .copy { max-width: calc(var(--u) * 820); display: flex; flex-direction: column; gap: calc(var(--u) * var(--sp-24)); }

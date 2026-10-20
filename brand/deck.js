@@ -50,8 +50,10 @@
   });
 
   // big numbers count up from 0 to their value
-  function countUp(slide) {
-    slide.querySelectorAll('[data-count]').forEach(el => {
+  // a number inside a click-revealed item (.r) waits for its click
+  function countUp(slide, scope) {
+    (scope || slide).querySelectorAll('[data-count]').forEach(el => {
+      if (!scope && el.closest('.r')) { el.textContent = 0; return; }
       const to = +el.dataset.count;
       if (reduced) { el.textContent = to; return; }
       const dur = parseFloat(css('--count-up')) || 2600, t0 = performance.now() + 400;
@@ -70,7 +72,7 @@
   function setStep(slide, k) {
     slide.dataset.at = k;
     const its = items(slide);
-    its.forEach((el, i) => { el.classList.toggle('shown', i <= k); el.classList.toggle('is-on', i === k); });
+    its.forEach((el, i) => { const was = el.classList.contains('shown'); el.classList.toggle('shown', i <= k); el.classList.toggle('is-on', i === k); if (!was && i <= k) countUp(slide, el); });
     // data-final: one more click after the last item puts the slide in its focus state (as in the original)
     slide.classList.toggle('is-final', slide.dataset.final !== undefined && k >= its.length);
   }
