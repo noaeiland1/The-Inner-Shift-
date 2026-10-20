@@ -355,3 +355,10 @@
   .cue .cue-out { opacity: 0; }
   .r, .final-only, .is-final .dim-on-final, .r .mark::before { transition: none !important; }
 }
+
+/* תגית כלי (נועה, 2026-10-20, אפשרות א): כשמפגש מציג כמה כלים, כל שקף כלי פותח בתגית
+   "כלי 1 · כלי פרקטי". כפתור מעוגל ברקע צהוב וקו ורוד דק, "כלי N" ברוז מודגש, בגודל טקסט רגיל */
+.tooltag { display: inline-flex; align-items: center; gap: calc(var(--u) * 12); margin-bottom: calc(var(--u) * var(--sp-16));
+  padding: calc(var(--u) * 10) calc(var(--u) * 34); border-radius: 999px; background: var(--yellow);
+  border: 1px solid rgba(200,158,152,.6); font-size: calc(var(--u) * var(--size-body)); color: var(--dark); }
+.tooltag b { color: var(--rose); font-weight: 700; }
